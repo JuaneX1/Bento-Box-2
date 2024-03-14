@@ -7,6 +7,19 @@ function CardUI()
     const [searchResults,setResults] = useState('');
     const [cardList,setCardList] = useState('');
 
+    const app_name = 'bento-box-2-c00801a6c9a4'
+    function buildPath(route)
+    {
+        if (process.env.NODE_ENV === 'production')
+        {
+            return 'https://' + app_name + '.herokuapp.com/' + route;
+        }
+        else
+        {
+            return 'http://localhost:5000/' + route;
+        }
+    }
+
     let _ud = localStorage.getItem('user_data');
     let ud = JSON.parse(_ud);
     let userId = ud.id;
@@ -19,7 +32,7 @@ function CardUI()
         let js = JSON.stringify(obj);
         try
         {
-            const response = await fetch('http://localhost:5000/api/addcard', {method:'POST',body:js,headers:{'Content-Type':'application/json'}});
+            const response = await fetch(buildPath('api/addcard'), {method:'POST',body:js,headers:{'Content-Type':'application/json'}});
             let txt = await response.text();
             let res = JSON.parse(txt);
             if( res.error.length > 0 )
@@ -45,7 +58,7 @@ function CardUI()
         try
         {
             const response = await
-            fetch('http://localhost:5000/api/searchcards', {method:'POST',body:js,headers:{'Content-Type':'application/json'}});
+            fetch(buildPath('api/searchcards'), {method:'POST',body:js,headers:{'Content-Type':'application/json'}});
             let txt = await response.text();
             let res = JSON.parse(txt);
             let _results = res.results;
