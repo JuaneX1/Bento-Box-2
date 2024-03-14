@@ -7,7 +7,7 @@ function CardUI()
     const [searchResults,setResults] = useState('');
     const [cardList,setCardList] = useState('');
 
-    const app_name = 'bento-box-2-c00801a6c9a4'
+    const app_name = 'bento-box-2-df32a7e90651'
     function buildPath(route)
     {
         if (process.env.NODE_ENV === 'production')
