@@ -62,7 +62,7 @@ app.post('/api/register', async (req, res, next) => {
 });
 
 app.post('/api/login', async (req, res, next) => {
-    const { login, password } = req.body;
+    const { email, password } = req.body;
 
     try {
         const client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -71,7 +71,7 @@ app.post('/api/login', async (req, res, next) => {
         const db = client.db("AppNameDB");
         const collection = db.collection("users");
 
-        const user = await collection.findOne({ login: login, password: password });
+        const user = await collection.findOne({ email: email, password: password });
 
         if (user) {
             const ret = {
