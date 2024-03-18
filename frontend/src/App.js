@@ -7,7 +7,7 @@ import backgroundVideo from './assets/animeclip1.mp4';
 import logo from './assets/FinalLogo.png';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Dashboard from './components/DashboardPage';
-
+import HomePage from './pages/HomePage';
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(true);
@@ -29,15 +29,19 @@ function App() {
         </video>
         <div className="topbar">
           <img src={logo} alt="Logo" className="topbar-logo" />
+          <div className="buttons-container">
+            <button className="get-started-btn" onClick={() => switchForm('login')}>GET STARTED</button>
+          </div>
         </div>
-        
+        <HomePage />
         <Modal isOpen={isModalOpen} onClose={() => {
+          toggleModal();
           setActiveForm('login');
         }}>
           {activeForm === 'login' ? (
             <LoginForm 
               onClose={() => {
-
+                toggleModal();
                 setActiveForm('login');
               }} 
               onSwitchForm={() => switchForm('signup')} 
@@ -45,12 +49,14 @@ function App() {
           ) : (
             <SignUpForm 
               onClose={() => {
-                setActiveForm('signup');
+                toggleModal();
+                setActiveForm('login');
               }} 
               onSwitchBack={() => switchForm('login')}
             />
           )}
         </Modal>
+        {}
         <Routes>
           <Route path="/dashboard" element={<Dashboard />} />
           {}
