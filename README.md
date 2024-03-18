@@ -23,7 +23,7 @@ This is provided in Discord.
 **DO NOT** PUSH THE .env file to Github. It should be already ignored in .gitignore, but that contains secrets you should not push, etc.
 
 ### Contributing & Making Edits
-Once you have the files you can begin working on the project. For more details in how to create a branch, commit, etc., please view the CONTRIBUTION guide.
+Once you have the files you can begin working on the project. For more details in how to create a branch, commit, etc., please view the [CONTRIBUTION guide](CONTRIBUTION.md).
 
 If you have the application already running and making changes it is recommended to kill both server and 
 

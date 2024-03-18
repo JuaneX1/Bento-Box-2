@@ -18,7 +18,6 @@ Personally I like to name the branch issue/{the auto generated text github does 
 
 Once your branch is created, go to your code.
 
-
 ## Committing and Editing Your Branch
 
 ### Editing the Custom Branch
