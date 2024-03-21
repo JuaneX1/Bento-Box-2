@@ -41,8 +41,6 @@ export default function SearchStack() {
             backgroundColor:'#111920',
             headerTintColor: '#111920',
           },
-
-
         }}
         />
          <Stack.Screen 
