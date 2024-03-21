@@ -12,7 +12,13 @@ function HomeStack() {
   return (
     <Tab.Navigator 
       initialRouteName="Collection" 
-      barStyle={{ backgroundColor: '#111920' }}
+      screenOptions={{
+        tabBarInactiveTintColor:"white",
+        tabBarActiveTintColor:"#3077b2",
+        tabBarStyle:{ backgroundColor: '#111920',
+        borderBlockColor:"#111920" }
+      }}
+      
     >
       <Tab.Screen 
         name="Collection"  

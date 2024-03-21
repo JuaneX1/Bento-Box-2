@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, TextInput, View, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
+import { StyleSheet, TextInput, View, ScrollView, TouchableOpacity, Dimensions, SafeAreaView} from 'react-native';
 import SearchResults from '../Components/SearchResults';
+import { AntDesign } from '@expo/vector-icons';
+import {NavigationContainer, useNavigation} from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
 
 global.s =''
 const windowWidth = Dimensions.get('window').width;
@@ -9,11 +12,12 @@ const windowHeight = Dimensions.get('window').height;
 const SearchScreen = () => {
     const [searchedItem, setSearchedItem] = useState('');
     const [searchList, setSearchList] = useState([]);
+    const navigation = useNavigation()
 
     const getSearched = async (searchedItem) => {
         try {
             if (searchedItem !== '') {
-                const search = 'https://api.jikan.moe/v4/anime?sfw&order_by=popularity&q=' + searchedItem;
+                const search = 'https://api.jikan.moe/v4/anime?order_by=popularity&genres_exclude=9,49,12&q=' + searchedItem;
                 console.log(search);
                 const response = await fetch(search);
                 if (!response.ok) {
@@ -21,8 +25,10 @@ const SearchScreen = () => {
                 }
                 const temp = await response.json();
                 if (temp && temp.data) {
-                    setSearchList(temp.data.slice(0, 25));
-
+                    const filteredData = temp.data.filter(anime => {
+                        return anime.type === 'TV'&& anime.source==='Manga' || anime.type === 'Movie'&& anime.source==='Manga';
+                    });
+                    setSearchList(filteredData.slice(0, 25));
                 } else {
                     console.error('Data structure is not as expected:', temp);
                 }
@@ -40,31 +46,34 @@ const SearchScreen = () => {
     console.log(searchList.length);
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
+            <TouchableOpacity 
+                    onPress={() => 
+                        navigation.goBack()}
+                    style={styles.searchButton}>
+                        <Ionicons name="arrow-back" size={32} color="white" />
+                </TouchableOpacity>
             <View style={styles.searchContainer}>
                 <TextInput
                     style={styles.input}
                     placeholder="Search Here....*"
                     onChangeText={setSearchedItem}
                 />
-                <TouchableOpacity 
-                    onPress={() => 
-                        getSearched(searchedItem)}
-                    style={styles.searchButton}>
-                </TouchableOpacity>
+               
             </View>
             
                 <SearchResults searchList={searchList} />
-        </View>
+        </SafeAreaView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex:1,
         backgroundColor: '#111920',
-        alignItems: 'center',
-        justifyContent: 'center',
+        alignItems:'flex-start',
+        justifyContent:'flex-start',
+        padding:10
     },
     searchContainer: {
         flexDirection: 'row',
@@ -73,21 +82,11 @@ const styles = StyleSheet.create({
         width: '100%',
         paddingHorizontal: 10,
     },
-    searchBarContainer: {
-        width: '75%',
-        backgroundColor: '#111920',
-        alignSelf: 'baseline',
-        borderBlockColor: '#111920',
-    },
-    searchBarInputContainer: {
-        borderColor: '#111920',
-        height: 35,
-    },
     input: {
         height: "60%",
         margin: 12,
         borderWidth: 2,
-        width: "75%",
+        width: "95%",
         padding: 10,
         borderRadius: 15,
         color:"#ffffff",
@@ -95,11 +94,12 @@ const styles = StyleSheet.create({
         borderColor:'#3077b2'
       },
     searchButton: {
-        backgroundColor: '#ef4136',
-        width: 60,
-        height: 30,
-        borderRadius: 7,
-        alignSelf: 'center',
+        backgroundColor: '#3077b2',
+        width: 35,
+        height: 35,
+        borderRadius: '50%',
+        marginLeft:20
+        
     }
 });
 
