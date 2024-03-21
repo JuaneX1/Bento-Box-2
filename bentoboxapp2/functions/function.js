@@ -26,5 +26,5 @@ export function formatPlot(plot){
 
     const format = plot.split("[Written by MAL Rewrite]");
 
-    return format;
+    return format[0].trim();
 }

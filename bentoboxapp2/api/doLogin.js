@@ -3,9 +3,9 @@ const PRODUCTION = true;
 
 export async function doLogin(formData, navigation){
     //route.preventDefault();
-
+    if(formData.email == null || formData.password){
         try {
-            console.log("rgmk")
+            
             const response = await fetch(buildPath('api/login'), {
                 method: 'POST',
                 headers: {
@@ -13,8 +13,7 @@ export async function doLogin(formData, navigation){
                 },
                 body: JSON.stringify(formData)
             });
-            
-            console.log("pmmrpgr")
+    
             if (response.ok) {
 
                 console.log(formData.email)
@@ -27,6 +26,10 @@ export async function doLogin(formData, navigation){
         } catch (error) {
             console.error('Error:', error);
         }
+    }
+    else{
+        console.log("invalid input");
+    }
 }
 
 function buildPath(route)
