@@ -5,15 +5,28 @@ import LoginForm from './LoginForm';
 import SignUpForm from './SignUpForm';
 import backgroundVideo from './assets/animeclip1.mp4';
 import logo from './assets/FinalLogo.png';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Dashboard from './DashboardPage';
+
+const ConditionalBackground = () => {
+  const location = useLocation();
+  const showBackground = location.pathname !== "/dashboard";
+
+  return showBackground ? (
+    <>
+      <div className="video-overlay"></div>
+      <video autoPlay loop muted id="background-video">
+        <source src={backgroundVideo} type="video/mp4" />
+      </video>
+    </>
+  ) : null;
+};
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeForm, setActiveForm] = useState('login');
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
-
   const switchForm = (form) => {
     setActiveForm(form);
     setIsModalOpen(true);
@@ -22,10 +35,8 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <div className="video-overlay"></div>
-        <video autoPlay loop muted id="background-video">
-          <source src={backgroundVideo} type="video/mp4" />
-        </video>
+        {}
+        <ConditionalBackground />
         <div className="topbar">
           <img src={logo} alt="Logo" className="topbar-logo" />
           <div className="buttons-container">
@@ -57,10 +68,8 @@ function App() {
             />
           )}
         </Modal>
-        {}
         <Routes>
           <Route path="/dashboard" element={<Dashboard />} />
-          {}
         </Routes>
       </div>
     </BrowserRouter>
