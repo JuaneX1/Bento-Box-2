@@ -1,66 +1,25 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, Button, Image, Pressable, FlatList, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Image, Pressable, FlatList, ActivityIndicator, ScrollView } from 'react-native';
 import React, { PureComponent } from 'react';
 import TopAnimeBox from '../Components/TopAnimeBox';
 import CurrentSeason from '../Components/CurrentSeason';
-import StudioGhibliList from '../Components/StudioGhibliList';
+import UpcomingAnime from './UpcomingAnime';
 
 class MainDisplay extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            topAnime: [],
-            seasonAnime: [],
-            ghibliAnime: [],
-            ninetiesAnime: []
+            ninetiesAnime: [],
+            loading: false
         };
     }
 
     componentDidMount() {
         var startTime = performance.now();
-        this.getTopAnime();
-        this.getSeasonAnime();
-        this.getGhibliAnime();
-        this.getNineties();
-
         var endTime = performance.now();
         console.log(`Call to fetch anime took ${endTime - startTime} milliseconds`);
     }
 
-    getTopAnime = async () => {
-        try {
-            const response = await fetch(`https://api.jikan.moe/v4/top/anime?filter=bypopularity&limit=25`);
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const temp = await response.json();
-            if (temp && temp.data) {
-                this.setState({ topAnime: temp.data.slice(0, 25) });
-            } else {
-                console.error('Data structure is not as expected:', data);
-            }
-        } catch (error) {
-            console.error('Error fetching top anime:', error);
-        }
-    }
-
-    getSeasonAnime = async () => {
-        try {
-            const response = await fetch(`https://api.jikan.moe/v4/seasons/now?sfw`);
-            
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const temp = await response.json();
-            if (temp && temp.data) {
-                this.setState({ seasonAnime: temp.data.slice(0, 25) });
-            } else {
-                console.error('Data structure is not as expected:', data);
-            }
-        } catch (error) {
-            console.error('Error fetching season anime:', error);
-        }
-    }
 
     getGhibliAnime = async () => {
         try {
@@ -77,6 +36,7 @@ class MainDisplay extends PureComponent {
         } catch (error) {
             console.error('Error fetching ghibli anime:', error);
         }
+        
     }
 
     getNineties = async ()=> {
@@ -96,21 +56,34 @@ class MainDisplay extends PureComponent {
         }
     }
     render() {
-        const { topAnime, seasonAnime, ghibliAnime } = this.state;
-        return (
-            <View >
-                    <TopAnimeBox topAnime={topAnime} />
-                    <CurrentSeason seasonAnime={seasonAnime} />
-                    <StudioGhibliList ghibliAnime={ghibliAnime} />
-            </View>
-        );
+        const { loading } = this.state;
+
+        if (loading) {
+            return (
+                <View style={styles.container}>
+                    <ActivityIndicator size="large" color="#ffffff" />
+                </View>
+            );
+        }
+        else{
+            this.setState({loading: false})
+            return (
+                <View >
+                        <TopAnimeBox/>
+                        <CurrentSeason/>
+                        <UpcomingAnime/>
+                </View>
+            );
+            
+        }
+        
     }
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#111920',
+        backgroundColor: '#000000',
         alignItems: 'center',
         justifyContent: 'center',
     },

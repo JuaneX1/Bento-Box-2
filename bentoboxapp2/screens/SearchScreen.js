@@ -4,8 +4,9 @@ import SearchResults from '../Components/SearchResults';
 import { AntDesign } from '@expo/vector-icons';
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
+import { debounce} from '../functions/function'; // Import the debounce function
 
-global.s =''
+global.s = ''
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -38,8 +39,10 @@ const SearchScreen = () => {
         }
     };
 
+    const debouncedGetSearched = debounce(getSearched, 1000); // Debounce getSearched function
+
     useEffect(() => {
-        getSearched(searchedItem);
+        debouncedGetSearched(searchedItem); // Call debounced function
     }, [searchedItem]);
 
     console.log('Searched item:', searchedItem);
@@ -97,7 +100,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#3077b2',
         width: 35,
         height: 35,
-        borderRadius: '50%',
+        borderRadius: 17.5,
         marginLeft:20
         
     }
