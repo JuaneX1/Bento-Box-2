@@ -102,6 +102,17 @@ body {
     margin-left: 30px;
 }
 
+.logo-and-form-container {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 20px;
+    height: calc(100vh - 100px);
+}
+
+
 .buttons {
     display: flex;
     justify-content: center;
