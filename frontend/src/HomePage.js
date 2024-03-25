@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import './HomePage.css';
 import AnimeList from './AnimeList';
-import AnimeInfo from './AnimeInfo';
 import bigLogo from './BB_Logo_Horizontal_COLOR_1.png';
 import LoginForm from './LoginForm';
 import SignUpForm from './SignUpForm';
+import ForgotPassword from './ForgotPassword';
 
 const HomePage = () => {
     const [search, setSearch] = useState();
     const [animeData, setAnimeData] = useState();
-    const [animeInfo, setAnimeInfo] = useState();
-    const [showLoginForm, setShowLoginForm] = useState(false);
-    const [showSignUpForm, setShowSignUpForm] = useState(false);
+    const [currentForm, setCurrentForm] = useState('');
 
     const getData = async () => {
         const res = await fetch(`https://api.jikan.moe/v4/seasons/2024/spring`);
@@ -23,29 +21,12 @@ const HomePage = () => {
         getData();
     }, [search]);
 
-    const handleLoginButtonClick = () => {
-        setShowLoginForm(true);
-        setShowSignUpForm(false);
-    };
-
-    const handleSignUpButtonClick = () => {
-        setShowSignUpForm(true);
-        setShowLoginForm(false);
+    const handleSwitchForm = (formType) => {
+        setCurrentForm(formType);
     };
 
     const handleCloseForms = () => {
-        setShowLoginForm(false);
-        setShowSignUpForm(false);
-    };
-
-    const handleSwitchToLogin = () => {
-        setShowLoginForm(true);
-        setShowSignUpForm(false);
-    };
-
-    const handleSwitchToSignUp = () => {
-        setShowSignUpForm(true);
-        setShowLoginForm(false);
+        setCurrentForm('');
     };
 
     return (
@@ -53,27 +34,25 @@ const HomePage = () => {
             <div className="topbar">
                 <button className="about-us-button">About Us</button>
             </div>
-
             <div className='container'>
                 <div className='anime-row'>
                     <div className='row'>
-                        <AnimeList
-                            animelist={animeData}
-                            setAnimeInfo={setAnimeInfo}
-                        />
+                        <AnimeList animelist={animeData} />
                     </div>
                 </div>
                 <div className="logo-and-form-container">
-                    {showLoginForm ? (
-                        <LoginForm onClose={handleCloseForms} onSwitchForm={handleSwitchToSignUp} />
-                    ) : showSignUpForm ? (
-                        <SignUpForm onClose={handleCloseForms} onSwitchBack={handleSwitchToLogin} />
+                    {currentForm === 'login' ? (
+                        <LoginForm onClose={handleCloseForms} onSwitchForm={() => handleSwitchForm('signup')} onShowForgotPassword={() => handleSwitchForm('forgot')} />
+                    ) : currentForm === 'signup' ? (
+                        <SignUpForm onClose={handleCloseForms} onSwitchBack={() => handleSwitchForm('login')} />
+                    ) : currentForm === 'forgot' ? (
+                        <ForgotPassword onClose={handleCloseForms} onSwitchForm={() => handleSwitchForm('login')} />
                     ) : (
                         <div className="logo-container">
                             <img src={bigLogo} alt="Big Logo" />
                             <div className="buttons">
-                                <button className="button" onClick={handleLoginButtonClick}>Login</button>
-                                <button className="button" onClick={handleSignUpButtonClick}>Sign Up</button>
+                                <button className="button" onClick={() => handleSwitchForm('login')}>Login</button>
+                                <button className="button" onClick={() => handleSwitchForm('signup')}>Sign Up</button>
                             </div>
                         </div>
                     )}
