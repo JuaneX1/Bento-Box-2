@@ -1,6 +1,6 @@
 export async function doSignUp(firstName, lastName, username, email, password) {
     const PRODUCTION = true;
-    const app_name = 'bento-box-mobile-c040aef8aea0'; // Replace with your actual app name
+    const app_name = 'bento-box-mobile-c040aef8aea0'; 
 
     try {
         const formData = {
@@ -21,14 +21,14 @@ export async function doSignUp(firstName, lastName, username, email, password) {
 
         if (response.ok) {
             console.log('Signup success!');
-            return { success: true }; // Return success as an object
+            return { success: true }; 
         } else {
             console.error('Failed to sign up:', response.status);
-            return { success: false, error: 'Failed to sign up' }; // Return failure as an object with an error message
+            return { success: false, error: 'Failed to sign up' }; 
         }
     } catch (error) {
         console.error('Error:', error);
-        return { success: false, error: 'An error occurred' }; // Return failure in case of an exception
+        return { success: false, error: 'An error occurred' };
     }
 }
 
