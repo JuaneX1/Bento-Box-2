@@ -28,6 +28,7 @@ export default function SignUp() {
 
       if (success) {
         Alert.alert('Registration successful');
+        
         // Navigate to login screen or perform any other action
         navigation.navigate('Home');
       } else {

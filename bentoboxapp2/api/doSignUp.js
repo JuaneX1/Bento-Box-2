@@ -4,9 +4,9 @@ export async function doSignUp(firstName, lastName, username, email, password) {
 
     try {
         const formData = {
-            firstName: firstName,
-            lastName: lastName,
-            username: username,
+            first: firstName,
+            last: lastName,
+            login: username,
             email: email,
             password: password
         };
