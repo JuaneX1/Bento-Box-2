@@ -3,13 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import './LoginForm.css';
 import logo from './assets/FinalLogo.png';
 
-
 const app_name = 'bento-box-2-df32a7e90651'
 //const app_name = 'bento-box-3-c00801a6c9a4'
-=======
+
 /*
 
-Commented out buildPath function as a function is made in Path.js (following proffessors mern c document) 
+Commented out buildPath function as a function is made in Path.js (following proffessors mern c document)
 
 function buildPath(route)
 {
@@ -22,12 +21,9 @@ function buildPath(route)
         return 'http://localhost:5000/' + route;
     }
 }
-
 */
-const LoginForm = ({ onClose, onSwitchForm, onShowForgotPassword }) => {
-=======
 
-const LoginForm = ({ onClose, onSwitchForm }) => {
+const LoginForm = ({ onClose, onSwitchForm, onShowForgotPassword }) => {
     var bp = require('./Path.js');
 
     const navigate = useNavigate();
