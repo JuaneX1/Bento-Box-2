@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './LoginForm.css';
 import logo from './assets/FinalLogo.png';
 
+
+const app_name = 'bento-box-2-df32a7e90651'
+//const app_name = 'bento-box-3-c00801a6c9a4'
+=======
 /*
 
 Commented out buildPath function as a function is made in Path.js (following proffessors mern c document) 
@@ -18,7 +22,11 @@ function buildPath(route)
         return 'http://localhost:5000/' + route;
     }
 }
+
 */
+const LoginForm = ({ onClose, onSwitchForm, onShowForgotPassword }) => {
+=======
+
 const LoginForm = ({ onClose, onSwitchForm }) => {
     var bp = require('./Path.js');
 
@@ -49,7 +57,6 @@ const LoginForm = ({ onClose, onSwitchForm }) => {
                 onClose();
                 navigate('/dashboard');
             } else {
-                // Handle incorrect login credentials
                 console.error('Incorrect email or password');
             }
         } catch (error) {
@@ -80,7 +87,10 @@ const LoginForm = ({ onClose, onSwitchForm }) => {
                     />
                     <button type="submit" className="login-submit-btn">Login</button>
                 </form>
-                <a href="#forgot" className="forgot-password-link">Forgot Password?</a>
+                <a href="#forgot" className="forgot-password-link" onClick={(e) => {
+                    e.preventDefault();
+                    onShowForgotPassword();
+                }}>Forgot Password?</a>
                 <div className="login-form-footer">
                     <button onClick={onClose} className="close-button">Close</button>
                     <button onClick={() => onSwitchForm('signup')} className="signup-button">Sign Up</button>
