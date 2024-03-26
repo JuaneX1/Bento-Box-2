@@ -25,7 +25,7 @@ export default function Login() {
             <Text style={styles.text}>Login: </Text>
             <TextInput
                 style={styles.input}
-                placeholder="Username*"
+                placeholder="Email*"
                 value={signIn.email}
                 onChangeText={text => handleChange('email', text)}
             />

@@ -1,9 +1,12 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage
+import { useNavigation } from '@react-navigation/native'; // Import useNavigation hook
 
 const ProfileScreen = ({ username }) => {
   const [expanded, setExpanded] = useState(false);
   const flatListRef = useRef(null);
+  const navigation = useNavigation(); // Get navigation object
 
   const toggleExpand = () => {
     setExpanded(!expanded);
@@ -12,11 +15,40 @@ const ProfileScreen = ({ username }) => {
     }
   };
 
-  const renderListItem = ({ item }) => (
-    <TouchableOpacity style={styles.option}>
-      <Text style={styles.optionText}>{item}</Text>
-    </TouchableOpacity>
-  );
+  // Function to handle sign-out action
+  const handleSignOut = async () => {
+    Alert.alert('Sign Out', 'Are you sure you want to sign out?', [
+      { text: 'Cancel', onPress: () => console.log('Cancel Pressed') },
+      { text: 'OK', onPress: signOut }, // Call the signOut function
+    ]);
+  };
+
+  const signOut = async () => {
+    try {
+      await AsyncStorage.clear(); // Clear user session data
+      // Navigate back to the login screen or perform any other necessary action
+      navigation.navigate('Login');
+      console.log('User signed out successfully');
+    } catch (error) {
+      console.error('Error signing out:', error.message);
+    }
+  };
+
+  const renderListItem = ({ item }) => {
+    if (item === 'Sign Out') {
+      return (
+        <TouchableOpacity style={styles.option} onPress={handleSignOut}>
+          <Text style={styles.optionText}>{item}</Text>
+        </TouchableOpacity>
+      );
+    } else {
+      return (
+        <TouchableOpacity style={styles.option}>
+          <Text style={styles.optionText}>{item}</Text>
+        </TouchableOpacity>
+      );
+    }
+  };
 
   const options = [
     'Change Password',

@@ -3,8 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import './LoginForm.css';
 import logo from './assets/FinalLogo.png';
 
+
 const app_name = 'bento-box-2-df32a7e90651'
 //const app_name = 'bento-box-3-c00801a6c9a4'
+=======
+/*
+
+Commented out buildPath function as a function is made in Path.js (following proffessors mern c document) 
 
 function buildPath(route)
 {
@@ -18,7 +23,13 @@ function buildPath(route)
     }
 }
 
+*/
 const LoginForm = ({ onClose, onSwitchForm, onShowForgotPassword }) => {
+=======
+
+const LoginForm = ({ onClose, onSwitchForm }) => {
+    var bp = require('./Path.js');
+
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         email: '',
@@ -34,7 +45,7 @@ const LoginForm = ({ onClose, onSwitchForm, onShowForgotPassword }) => {
         event.preventDefault();
 
         try {
-            const response = await fetch(buildPath('api/login'), {
+            const response = await fetch(bp.buildPath('api/login'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

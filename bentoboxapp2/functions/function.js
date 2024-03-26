@@ -16,15 +16,36 @@ export function formatDuration(durationString){
 
 export function ratingFormat(rating){
 
-    let array = rating.split('-');
-
-
-    return array[0]
+    if(rating != null){
+        let array = rating.split('-');
+        return array[0]
+    }
+   else{
+    return null;
+   }
 }
 
 export function formatPlot(plot){
 
-    const format = plot.split("[Written by MAL Rewrite]");
+    if(plot != null){
+        const format = plot.split("[Written by MAL Rewrite]");
 
     return format[0].trim();
+    }
+    else{
+        return null;
+    }
 }
+
+// Throttle function
+export const debounce = (func, delay) => {
+    let timeoutId;
+    return function() {
+        const context = this;
+        const args = arguments;
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+            func.apply(context, args);
+        }, delay);
+    };
+};

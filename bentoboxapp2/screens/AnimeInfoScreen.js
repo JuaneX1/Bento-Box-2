@@ -1,10 +1,11 @@
-import React from 'react';
-import { Dimensions, ScrollView, StyleSheet, Text, View, FlatList, Pressable, Image } from 'react-native';
+import * as React from 'react';
+import { Dimensions, TouchableOpacity, ScrollView, StyleSheet, Text, View, FlatList, Pressable, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, Ionicons, FontAwesome } from '@expo/vector-icons';
 import { ratingFormat, formatDuration, formatPlot } from '../functions/function';
 import {LinearGradient} from 'expo-linear-gradient';
+
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -13,6 +14,8 @@ const windowHeight = Dimensions.get('window').height;
 const AnimeInfoScreen = ({ route }) => {
     const { anime } = route.params;
     const navigation = useNavigation();
+
+    const [favorite, setFavorite]= React.useState(0);
 
     const s = Math.round(anime.score/2);
     console.log(s);
@@ -27,8 +30,27 @@ const AnimeInfoScreen = ({ route }) => {
     }
 
     return (
-        <View >     
+        <View >    
                     <ScrollView>
+                        
+                            <TouchableOpacity 
+                            onPress={() => 
+                                navigation.goBack()}
+                            style={styles.searchButton}>
+                                <Ionicons name="arrow-back" size={24} color="white" />
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                             style={styles.likeButton}>
+                             <AntDesign
+                                 name="heart"
+                                 size={24}
+                                 color={favorite ? "red" : "white"}
+                                 onPress={() => setFavorite(favorite ? 0 : 1)}
+                                 />
+                            </TouchableOpacity>
+                        
+                    
+
                         <Image style={styles.imageBackground} source={{ uri: anime.images.jpg.large_image_url }} />
                         <LinearGradient 
                             colors={['transparent', 'rgba(17,25,32,0.8)', 'rgba(17,25,32,1)']}
@@ -37,12 +59,12 @@ const AnimeInfoScreen = ({ route }) => {
                             end={{x:0.5, y:1}}
                             position="absolute"
                         />
-                    
-                    
-                   
-                        <View 
+
+
+                        <View
                         style={styles.container}
                         >
+                            
                             <View style={styles.titleBox}>
                                 <Text style = {styles.animeTitleText}> {anime.title_english ? anime.title_english: anime.title} </Text>
                             </View>
@@ -56,7 +78,7 @@ const AnimeInfoScreen = ({ route }) => {
 
                             <View style={styles.genreBox}>
                                 {anime.genres.map((genre, index) => (
-                                    <Text key={index} 
+                                    <Text key={genre.mal_id} 
                                     style={styles.genre}
                                     >
                                         {genre.name}{}
@@ -141,6 +163,28 @@ const styles = StyleSheet.create({
         width: windowWidth,
         height: windowHeight,
         position:'fixed'
+    },
+    searchButton: {
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        width: 28,
+        height: 30,
+        borderRadius: '50%',
+        marginLeft:20,
+        marginTop:20,
+        position:'absolute',
+        justifyContent:'center',
+        zIndex:2
+        
+    },
+    likeButton: {
+        alignSelf:'flex-end',
+        width: 35,
+        height: 35,
+        marginRight:20,
+        marginTop:25,
+        position:'absolute',
+        zIndex:2
+        
     }
 });
 
