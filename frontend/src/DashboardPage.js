@@ -8,10 +8,10 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [animeList, SetAnimeList] = useState([]);
   const [search, SetSearch] = useState("");
-  const [topAnime, SetTopAnime] = useState([]); // State to hold top current anime
+  const [topAnime, SetTopAnime] = useState([]);
 
   useEffect(() => {
-    FetchTopAnime(); // Fetch top current anime when component mounts
+    FetchTopAnime();
   }, []);
 
   const HandleSearch = e => {
@@ -51,7 +51,7 @@ const Dashboard = () => {
           HandleSearch={HandleSearch}
           search={search}
           SetSearch={SetSearch}
-          animeList={search ? animeList : topAnime} // Display topAnime if search hasn't been used
+          animeList={search ? animeList : topAnime}
         />
       </div>
     </div>
