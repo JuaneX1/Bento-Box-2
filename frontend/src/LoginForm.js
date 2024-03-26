@@ -3,25 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './LoginForm.css';
 import logo from './assets/FinalLogo.png';
 
-const app_name = 'bento-box-2-df32a7e90651'
-//const app_name = 'bento-box-3-c00801a6c9a4'
-
-/*
-
-Commented out buildPath function as a function is made in Path.js (following proffessors mern c document)
-
-function buildPath(route)
-{
-    if (process.env.NODE_ENV === 'production')
-    {
-        return 'https://' + app_name + '.herokuapp.com/' + route;
-    }
-    else
-    {
-        return 'http://localhost:5000/' + route;
-    }
-}
-*/
+const app_name = 'bento-box-2-df32a7e90651';
 
 const LoginForm = ({ onClose, onSwitchForm, onShowForgotPassword }) => {
     var bp = require('./Path.js');
@@ -31,6 +13,7 @@ const LoginForm = ({ onClose, onSwitchForm, onShowForgotPassword }) => {
         email: '',
         password: ''
     });
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -53,7 +36,7 @@ const LoginForm = ({ onClose, onSwitchForm, onShowForgotPassword }) => {
                 onClose();
                 navigate('/dashboard');
             } else {
-                console.error('Incorrect email or password');
+                setErrorMessage('Incorrect email or password');
             }
         } catch (error) {
             console.error('Error:', error);
@@ -82,6 +65,7 @@ const LoginForm = ({ onClose, onSwitchForm, onShowForgotPassword }) => {
                         onChange={handleChange}
                     />
                     <button type="submit" className="login-submit-btn">Login</button>
+                    {errorMessage && <p className="error-message">{errorMessage}</p>}
                 </form>
                 <a href="#forgot" className="forgot-password-link" onClick={(e) => {
                     e.preventDefault();
