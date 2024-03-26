@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import DiscoverScreen from "../screens/DiscoverScreen";
 import AnimeInfoScreen from"../screens/AnimeInfoScreen";
 import SearchScreen from '../screens/SearchScreen';
+import { AntDesign, Ionicons, FontAwesome } from '@expo/vector-icons';
 
 const Stack = createNativeStackNavigator()
 
@@ -24,10 +25,8 @@ export default function SearchStack() {
           },
           headerTintColor: '#111920',
           headerRight: () => (
-            <Button
-              onPress={() => navigation.navigate('Search')}
-              title="Search"
-              color="#fff"
+            <FontAwesome name="search" size={24} color="white" 
+            onPress={() => navigation.navigate('Search')}
             />
           ),
         }}
@@ -42,15 +41,13 @@ export default function SearchStack() {
             backgroundColor:'#111920',
             headerTintColor: '#111920',
           },
-
-
         }}
         />
          <Stack.Screen 
         name="Search"
         component = {SearchScreen}
         options = {{
-          headerShown:true,
+          headerShown:false,
           headerStyle:{
             backgroundColor:'#111920',
             headerTintColor: '#111920',

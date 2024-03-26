@@ -3,13 +3,10 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import './LoginForm.css';
 import logo from './assets/FinalLogo.png';
 
-// comment and uncomment depending on where deploying on heroku
-// if this is our produnction, use Bento box 2
-// if this is our test, use Bento box 3
-const app_name = 'bento-box-2-df32a7e90651'
-//const app_name = 'bento-box-3-c00801a6c9a4'
+/*
 
-// builds path if we local or if we are on heroku
+Commented out buildPath function as a function is made in Path.js (following proffessors mern c document) 
+
 function buildPath(route)
 {
     if (process.env.NODE_ENV === 'production')
@@ -21,8 +18,10 @@ function buildPath(route)
         return 'http://localhost:5000/' + route;
     }
 }
-
+*/
 const LoginForm = ({ onClose, onSwitchForm }) => {
+    var bp = require('./Path.js');
+
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         email: '',
@@ -38,7 +37,7 @@ const LoginForm = ({ onClose, onSwitchForm }) => {
         event.preventDefault();
 
         try {
-            const response = await fetch(buildPath('api/login'), {
+            const response = await fetch(bp.buildPath('api/login'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

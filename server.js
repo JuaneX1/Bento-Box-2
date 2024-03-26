@@ -10,12 +10,14 @@ app.use(bodyParser.json());
 app.use(cors());
 
 require('dotenv').config();
-
 const url = process.env.MONGODB_URI;
-const MongoClient = require('mongodb').MongoClient;
 
+const MongoClient = require('mongodb').MongoClient;
 const client = new MongoClient(url);
 client.connect(console.log("mongodb connected"));
+
+var api = require('./api.js');
+api.setApp( app, client );
 
 // Server static assets if in production
 if (process.env.NODE_ENV === 'production')
@@ -28,33 +30,21 @@ if (process.env.NODE_ENV === 'production')
     });
 }
 
+/* Moved login/register API to API.js following MERN C document
 
-app.use((req, res, next) =>
-{
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-    res.setHeader('Access-Control-Allow-Methods','GET, POST, PATCH, DELETE, OPTIONS');
-    next();
-});
 
 app.post('/api/register', async (req, res, next) => {
     const { first, last, login, email, password } = req.body;
     const newUser = { first: first, last: last, login: login, email: email, password: password };
 
     try {
-        const client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true });
-        await client.connect();
-
+        
         const db = client.db("AppNameDB");
         const collection = db.collection("users");
 
         const result = await collection.insertOne(newUser);
 
-        // Return success response with the inserted user's details
-        const ret = { userID: result.insertedId, error: '' };
-        res.status(200).json(ret);
-
-        client.close();
+        res.status(200).json({ userID: result.insertedId.toString(), error: '' });
     } catch (e) {
         console.error(e);
         res.status(500).json({ error: 'Internal server error' });
@@ -65,35 +55,36 @@ app.post('/api/login', async (req, res, next) => {
     const { email, password } = req.body;
 
     try {
-        const client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true });
-        await client.connect();
-
         const db = client.db("AppNameDB");
         const collection = db.collection("users");
 
         const user = await collection.findOne({ email: email, password: password });
 
         if (user) {
-            const ret = {
-                id: user._id, // Assuming the _id field is used for userID
+            res.status(200).json({
+                id: user._id.toString(),
                 firstName: user.first,
                 lastName: user.last,
                 email: user.email,
                 error: ''
-            };
-            res.status(200).json(ret);
+            });
         } else {
             res.status(401).json({ error: 'Invalid user name/password' });
         }
-
-        client.close();
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+*/
 
-
+app.use((req, res, next) =>
+{
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    res.setHeader('Access-Control-Allow-Methods','GET, POST, PATCH, DELETE, OPTIONS');
+    next();
+});
 
 app.listen(PORT, () =>
 {

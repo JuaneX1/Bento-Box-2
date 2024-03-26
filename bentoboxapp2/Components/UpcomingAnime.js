@@ -2,59 +2,63 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, FlatList } from 'react-native';
 import React, { PureComponent } from 'react';
 import AnimeListing from './AnimeListing';
-import { Dimensions } from 'react-native';
 import { debounce } from '../functions/function';
-import axios from 'axios';
+import { Dimensions } from 'react-native';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-class TopAnimeBox extends PureComponent {
+class UpcomingAnime extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            topAnime: []
+            upcomingAnime: []
         };
     }
 
     componentDidMount() {
-        this.throttledGetTopAnime = debounce(this.getTopAnime, 1000); // Adjust the delay as needed
-        this.throttledGetTopAnime();
+        var startTime = performance.now();
+        this.throttledGetUpcomingAnime = debounce(this.getUpcomingAnime, 1000); // Adjust the delay as needed
+        this.throttledGetUpcomingAnime();
+        var endTime = performance.now();
+        console.log(`Call to fetch upComing anime took ${endTime - startTime} milliseconds`);
     }
 
-    getTopAnime = async () => {
+    getUpcomingAnime = async () => {
         try {
-            const response = await axios.get('https://api.jikan.moe/v4/top/anime', {
-                params: {
-                    sfw: true,
-                    filter: 'bypopularity'
-                }
-            });
-            const data = response.data;
-            if (data && data.data) {
-                this.setState({ topAnime: data.data.slice(0, 25) });
+            const response = await fetch(`https://api.jikan.moe/v4/top/anime?sfw&filter=upcoming`);
+            
+            if (!response.ok) {
+                console.log(response);
+                throw new Error('Network response was not ok');
+            }
+            const temp = await response.json();
+            if (temp && temp.data) {
+                this.setState({ upcomingAnime: temp.data.slice(0, 25) });
             } else {
                 console.error('Data structure is not as expected:', data);
             }
         } catch (error) {
-            console.error('Error fetching top anime:', error);
+            console.error('Error fetching Upcoming anime:', error);
         }
     }
 
     render() {
-        const { topAnime } = this.state;
+        const { upcomingAnime } = this.state;
 
         return (
             <View style={styles.container}>
-                <Text style={styles.headerText}>Most Popular</Text>
+                <Text style={styles.headerText}>
+                   Upcoming
+                </Text>
                 <FlatList
                     keyExtractor={(item) => item.mal_id}
                     horizontal={true}
-                    data={topAnime}
+                    data={upcomingAnime}
                     renderItem={({ item }) => (
-                        <AnimeListing anime={item} />
-                    )}
-                />
+                        <AnimeListing
+                            anime={item} />
+                    )} />
             </View>
         );
     }
@@ -82,4 +86,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default TopAnimeBox;
+export default UpcomingAnime;
