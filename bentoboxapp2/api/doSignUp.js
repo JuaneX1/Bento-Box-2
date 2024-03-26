@@ -34,8 +34,9 @@ export async function doSignUp(firstName, lastName, username, email, password) {
 
 function buildPath(route) {
     const PRODUCTION = true;
-    const app_name = 'bento-box-mobile-c040aef8aea0'; // Replace with your actual app name
-
+    //const app_name = 'bento-box-mobile-c040aef8aea0'; // Replace with your actual app name
+    const app_name = 'bento-box-2-df32a7e90651';
+    
     if (PRODUCTION) {
         console.log('production');
         return 'https://' + app_name + '.herokuapp.com/' + route;
