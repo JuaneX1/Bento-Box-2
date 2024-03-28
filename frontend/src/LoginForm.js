@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './LoginForm.css';
 import logo from './assets/FinalLogo.png';
 
 const app_name = 'bento-box-2-df32a7e90651';
@@ -25,7 +24,7 @@ const LoginForm = ({ onClose, onSwitchForm, onShowForgotPassword }) => {
 
         try {
             const response = await fetch(bp.buildPath('api/login'), {
-                method: 'POST',
+                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
                 },

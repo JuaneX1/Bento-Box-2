@@ -9,6 +9,7 @@ import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Dashboard from './DashboardPage';
 import HomePage from './HomePage'; // Keep import for HomePage
+import Verification from './Verification';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/Verification" element={<Verification />} />
         </Routes>
       </div>
     </BrowserRouter>
