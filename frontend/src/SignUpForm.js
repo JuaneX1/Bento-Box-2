@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './SignUpForm.css';
 import logo from './assets/FinalLogo.png';
 
-
-
 /*
 
-Commented out buildPath function as a function is made in Path.js (following proffessors mern c document) 
+Commented out buildPath function as a function is made in Path.js (following professors mern c document) 
 
 function buildPath(route)
 {
@@ -21,8 +19,8 @@ function buildPath(route)
     }
 }
 */
-const SignUpForm = ({ onClose, onSwitchBack }) => {
 
+const SignUpForm = ({ onClose, onSwitchBack }) => {
   var bp = require('./Path.js');
 
   const navigate = useNavigate();
@@ -63,7 +61,7 @@ const SignUpForm = ({ onClose, onSwitchBack }) => {
     }
   };
 
-return (
+  return (
     <div className="signup-form-container">
       <img src={logo} alt="Logo" className="signup-logo" />
       <div className="signup-content">
@@ -73,7 +71,7 @@ return (
             name="first"
             placeholder="First name"
             className="signup-input"
-            value={formData.name}
+            value={formData.first}
             onChange={handleChange}
           />
           <input
@@ -81,7 +79,7 @@ return (
             name="last"
             placeholder="Last name"
             className="signup-input"
-            value={formData.name}
+            value={formData.last}
             onChange={handleChange}
           />
           <input
@@ -89,7 +87,7 @@ return (
             name="login"
             placeholder="Username"
             className="signup-input"
-            value={formData.name}
+            value={formData.login}
             onChange={handleChange}
           />
           <input
@@ -112,14 +110,14 @@ return (
             Sign Up
           </button>
         </form>
-        <div className="signup-form-footer">
-          <button onClick={onClose} className="close-button">
-            Close
-          </button>
-        </div>
         <div className="back-to-login-container">
           <button onClick={onSwitchBack} className="back-to-login-btn">
             Back to Login
+          </button>
+        </div>
+        <div className="signup-form-footer">
+          <button onClick={onClose} className="signup-close-btn">
+            Close
           </button>
         </div>
       </div>

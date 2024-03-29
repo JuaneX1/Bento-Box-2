@@ -42,8 +42,8 @@ const ForgotPassword = ({ onClose, onSwitchForm }) => {
                     <button type="submit" className="forgot-password-submit-btn">Submit</button>
                 </form>
                 <div className="forgot-password-form-footer">
-                    <button onClick={onClose} className="close-button">Close</button>
                     <button onClick={onSwitchForm} className="return-login-button">Return to Login</button>
+                    <button onClick={onClose} className="close-button">Close</button>
                 </div>
 
             </div>

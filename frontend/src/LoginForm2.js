@@ -75,8 +75,8 @@ const LoginForm2 = ({ onClose, onSwitchForm }) => {
                     onSwitchForm('forgot');
                 }}>Forgot Password?</a>
                 <div className="login-form-footer">
-                    <button onClick={onClose} className="close-button">Close</button>
                     <button onClick={() => onSwitchForm('signup')} className="signup-button">Sign Up</button>
+                    <button onClick={onClose} className="close-button">Close</button>
                 </div>
             </div>
         </div>
