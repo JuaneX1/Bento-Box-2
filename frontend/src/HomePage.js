@@ -3,6 +3,7 @@ import './HomePage.css';
 import AnimeList from './AnimeList';
 import bigLogo from './BB_Logo_Horizontal_COLOR_1.png';
 import LoginForm from './LoginForm';
+import LoginForm2 from './LoginForm2';
 import SignUpForm from './SignUpForm';
 import ForgotPassword from './ForgotPassword';
 
@@ -41,13 +42,7 @@ const HomePage = () => {
                     </div>
                 </div>
                 <div className="logo-and-form-container">
-                    {currentForm === 'login' ? (
-                        <LoginForm onClose={handleCloseForms} onSwitchForm={() => handleSwitchForm('signup')} onShowForgotPassword={() => handleSwitchForm('forgot')} />
-                    ) : currentForm === 'signup' ? (
-                        <SignUpForm onClose={handleCloseForms} onSwitchBack={() => handleSwitchForm('login')} />
-                    ) : currentForm === 'forgot' ? (
-                        <ForgotPassword onClose={handleCloseForms} onSwitchForm={() => handleSwitchForm('login')} />
-                    ) : (
+                    {currentForm === '' && (
                         <div className="logo-container">
                             <img src={bigLogo} alt="Big Logo" />
                             <div className="buttons">
@@ -55,6 +50,18 @@ const HomePage = () => {
                                 <button className="button" onClick={() => handleSwitchForm('signup')}>Sign Up</button>
                             </div>
                         </div>
+                    )}
+                    {currentForm === 'login' && (
+                        <LoginForm onClose={handleCloseForms} onSwitchForm={handleSwitchForm} onShowForgotPassword={() => handleSwitchForm('forgot')} />
+                    )}
+                    {currentForm === 'LoginForm2' && (
+                        <LoginForm2 onClose={handleCloseForms} onSwitchForm={handleSwitchForm} />
+                    )}
+                    {currentForm === 'signup' && (
+                        <SignUpForm onClose={handleCloseForms} onSwitchBack={() => handleSwitchForm('login')} />
+                    )}
+                    {currentForm === 'forgot' && (
+                        <ForgotPassword onClose={handleCloseForms} onSwitchForm={() => handleSwitchForm('login')} />
                     )}
                 </div>
             </div>

@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import './LoginForm.css';
 import logo from './assets/FinalLogo.png';
 
-const app_name = 'bento-box-2-df32a7e90651';
-
 const LoginForm = ({ onClose, onSwitchForm, onShowForgotPassword }) => {
     var bp = require('./Path.js');
 
@@ -67,6 +65,10 @@ const LoginForm = ({ onClose, onSwitchForm, onShowForgotPassword }) => {
                     <button type="submit" className="login-submit-btn">Login</button>
                     {errorMessage && <p className="error-message">{errorMessage}</p>}
                 </form>
+                <a href="#" className="signin-username-link" onClick={(e) => {
+                    e.preventDefault();
+                    onSwitchForm('LoginForm2');
+                }}>Sign in With Username</a>
                 <a href="#forgot" className="forgot-password-link" onClick={(e) => {
                     e.preventDefault();
                     onShowForgotPassword();

@@ -16,7 +16,6 @@ const ForgotPassword = ({ onClose, onSwitchForm }) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         console.log('Form data submitted:', formData);
-        // Here we gotta put the stuff foor handling input
     };
 
     return (
