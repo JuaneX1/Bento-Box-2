@@ -109,7 +109,7 @@ exports.setApp = function ( app, client ) {
 
 			if (user) {
 				// Create a JWT token once the user is found
-				const tokenData = jwtUtils.createToken(user.first, user.last, user._id.toString());
+				const tokenData = jwtUtils.createToken(user.first, user.last, user.email, user._id.toString());
 
 				// Respond with user details and JWT token
 				res.status(200).json({

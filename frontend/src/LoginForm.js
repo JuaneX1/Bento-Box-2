@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from './assets/FinalLogo.png';
+import { instance } from './App';
 
 const app_name = 'bento-box-2-df32a7e90651';
 
 const LoginForm = ({ onClose, onSwitchForm, onShowForgotPassword }) => {
-    var bp = require('./Path.js');
 
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
@@ -23,15 +23,11 @@ const LoginForm = ({ onClose, onSwitchForm, onShowForgotPassword }) => {
         event.preventDefault();
 
         try {
-            const response = await fetch(bp.buildPath('api/login'), {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
+            const response = await instance.get('api/login', { formData} );
 
-            if (response.ok) {
+            if (response.status === 200) {
+				// After successful login
+				sessionStorage.setItem('token', response.data.token);
                 onClose();
                 navigate('/dashboard');
             } else {
