@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
 const cron = require('node-cron');
+const os = require('os');
 
 const MongoClient = require('mongodb').MongoClient;
 
@@ -47,9 +48,8 @@ async function clearOldVerifications() {
 
 		let dt = new Date();
 		dt.setMinutes(dt.getMinutes() - 30);
-		dt.setHours(dt.getHours() + 4);
 		
-		console.log(dt.toString());
+		console.log(dt);
 
 		const result = await tempusertable.deleteMany({ enteredOn: { $lt: dt } });
 		console.log(`${result.deletedCount} document(s) deleted`);

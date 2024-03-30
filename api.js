@@ -1,17 +1,13 @@
 require('dotenv').config();
 
-require('express');
+const express = require('express');
 const { ObjectId } = require('mongodb');
 const nodemailer = require('nodemailer');
 const emailConfig = require('./emailTemplate');
 const jwtUtils = require('./createJWT');
 
-async function verifyEmail (db, tempusertable) {
-	const result = await tempusertable.deleteOne({ _id: new ObjectId(recordId) })
-}
-
-exports.setApp = function ( app, client )
-{
+exports.setApp = function ( app, client ) {
+	
 	app.post('/api/register', async (req, res, next) => {
 		const { first, last, login, email, password } = req.body;
 		const newUser = { first: first, last: last, login: login, email: email, password: password };
@@ -38,7 +34,6 @@ exports.setApp = function ( app, client )
 			});
 		}
 		
-		//SEND AN EMAIL
 		let ems;
 		
 		try {
@@ -59,7 +54,8 @@ exports.setApp = function ( app, client )
 			});
 		}
 		
-		const emc = emailConfig.regEmailTemplate(first, last, login, email, process.env.SERVER_EMAIL, process.env.EMAIL_PASSWORD);
+		const emc = emailConfig.regEmailTemplate(result.insertedId, first, last, login, email,
+			process.env.SERVER_EMAIL, process.env.EMAIL_PASSWORD);
 		
 		try {
 			await ems.sendMail(emc);
@@ -69,6 +65,37 @@ exports.setApp = function ( app, client )
 				error: 'Failed to send registration email'
 			});
 		}
+	});
+	
+	app.get('/api/verify/:objId', async (req, res) => {
+		const { objId } = req.params;
+		
+		try {
+			db = client.db("AppNameDB");
+			tempusertable = db.collection("unregisteredusers");
+		} catch (e) {
+			console.error(e);
+			res.status(500).json({
+				error: 'Could not connect to database or collection'
+			});
+		}
+		
+		let user = await tempusertable.findOne({ _id: new ObjectId(objId) } );
+		await tempusertable.deleteOne({ _id: user._id });
+		
+		try {
+			users = db.collection('users');
+		} catch (e) {
+			console.error(e);
+			res.status(500).json({
+				error: 'Could not connect to database or collection'
+			});
+		}
+		
+		delete user._id;
+		users.insertOne(user);
+		
+		return res.status(200).json(user);
 	});
 
 	app.get('/api/login', async (req, res, next) => {
@@ -82,16 +109,11 @@ exports.setApp = function ( app, client )
 
 			if (user) {
 				// Create a JWT token once the user is found
-				//const tokenData = jwtUtils.createToken(user.first, user.last, user._id.toString());
+				const tokenData = jwtUtils.createToken(user.first, user.last, user._id.toString());
 
 				// Respond with user details and JWT token
 				res.status(200).json({
-					id: user._id.toString(),
-					firstName: user.first,
-					lastName: user.last,
-					email: user.email,
-					//token: tokenData.accessToken,
-					error: ''
+					token: tokenData.accessToken
 				});
 			} else {
 				res.status(401).json({ error: 'Invalid user name/password' });
@@ -100,9 +122,5 @@ exports.setApp = function ( app, client )
 			console.error(err);
 			res.status(500).json({ error: 'Internal server error' });
 		}
-	});
-	
-	app.get('/api/login', async (req, res, next) => {
-		console.log("hello world!");
 	});
 }

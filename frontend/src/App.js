@@ -1,15 +1,14 @@
 import React from 'react';
-// import { useState } from 'react'; // Commented out as not used
+import axios from 'axios';
 import './App.css';
-// import Modal from './Modal';
-// import LoginForm from './LoginForm';
-// import SignUpForm from './SignUpForm';
-// import backgroundVideo from './assets/animeclip1.mp4';
-// import logo from './assets/FinalLogo.png';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Dashboard from './DashboardPage';
-import HomePage from './HomePage'; // Keep import for HomePage
-import Verification from './Verification';
+import HomePage from './HomePage';
+import Verify from './Verify';
+
+const instance = axios.create({
+	baseURL: 'http://localhost:5000/api'
+});
 
 function App() {
   return (
@@ -18,11 +17,12 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/Verification" element={<Verification />} />
+          <Route path="/verify/:objId" element={<Verify />} />
         </Routes>
       </div>
     </BrowserRouter>
   );
 }
 
+export { instance };
 export default App;
