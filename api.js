@@ -1,116 +1,154 @@
-require('express');
-require('mongodb');
+require('dotenv').config();
+
+const express = require('express');
+const { ObjectId } = require('mongodb');
+const nodemailer = require('nodemailer');
+const emailTemplates = require('./emailTemplates');
 const jwtUtils = require('./createJWT');
 
-exports.setApp = function ( app, client )
-{
-    app.post('/api/register', async (req, res, next) => {
-        const { first, last, login, email, password } = req.body;
-        const newUser = { first: first, last: last, login: login, email: email, password: password };
-    
-        try {
-            const db = client.db("AppNameDB");
-            const collection = db.collection("users");
-    
-            const result = await collection.insertOne(newUser);
-    
-            // If the user is successfully created, create a JWT token for them
-            const tokenData = jwtUtils.createToken(newUser.first, newUser.last, result.insertedId.toString());
-    
-            res.status(200).json({
-                userID: result.insertedId.toString(),
-                token: tokenData.accessToken,
-                error: ''
-            });
-        } catch (e) {
-            console.error(e);
-            res.status(500).json({ error: 'Internal server error' });
+exports.setApp = function ( app, client ) {
+	
+	const db = client.db("AppNameDB");
+	const users = db.collection("users");
+	const tempusertable = db.collection("unregisteredusers");
+	
+	const ems = nodemailer.createTransport({
+		service: 'Gmail',
+		host: 'smtp.gmail.com',
+		port: 465,
+		secure: true,
+		auth: {
+			user: process.env.SERVER_EMAIL,
+			pass: process.env.EMAIL_PASSWORD
+		}
+	});
+	
+	app.post('/api/forgotPassword', async (req, res,next) => {
+
+		const { email } = req.body;
+		
+		console.log(email);
+		
+		try{
+			const user = await users.findOne({ email: email});
+			
+			if (!user) {
+				return res.status(404).json({ error: 'User not found' });
+			}
+			
+			const token = jwtUtils.createToken( user );
+
+			const rpem = emailTemplates.resetPassword( user, token.token );
+			
+			try {
+				await ems.sendMail(rpem);
+			} catch (e) {
+				res.status(500).json({
+					error: 'Failed to send registration email'
+				});
+			}
+			
+			return res.status(200).json({
+				message: 'Email sent for user',
+				user: user
+			});
+
+		} catch (e){
+			console.error(e);
+			res.status(500).json({error: 'Internal server error'});
+		}
+	});
+	
+	app.post('/api/resetPassword/:token', async (req, res) => {
+		const tokenData = jwtUtils.getURItoken(req.params.token);
+		const { password } = req.body
+		
+		console.log(password);
+		
+		const user = await users.updateOne({ email: tokenData.email }, { $set: { password: password } } );
+		
+		if (!user) {
+            return res.status(404).json({ error: 'User not found' });
         }
-    });
+		
+		return res.status(200).json(user);
 
-    app.post('/api/login', async (req, res, next) => {
-        const { email, password } = req.body;
+	});
+	
+	app.post('/api/register', async (req, res, next) => {
 
-        try {
-            const db = client.db("AppNameDB");
-            const collection = db.collection("users");
-
-            const user = await collection.findOne({ email: email, password: password });
-
-            if (user) {
-                // Create a JWT token once the user is found
-                const tokenData = jwtUtils.createToken(user.first, user.last, user._id.toString());
-
-                // Respond with user details and JWT token
-                res.status(200).json({
-                    /*
-                    id: user._id.toString(),
-                    firstName: user.first,
-                    lastName: user.last,
-                    email: user.email,
-                    */
-                    token: tokenData.accessToken,
-                    error: ''
-                });
-            } else {
-                res.status(401).json({ error: 'Invalid user name/password' });
-            }
-        } catch (err) {
-            console.error(err);
-            res.status(500).json({ error: 'Internal server error' });
+		const newUser = {
+			...req.body,
+			enteredOn: new Date()
+		};
+		
+		try {
+			const result = await tempusertable.insertOne(newUser);
+			
+			const token = jwtUtils.createToken(newUser);
+			
+			console.log(token);
+			
+			const rpem = emailTemplates.register( newUser, token.token );
+			
+			try {
+				await ems.sendMail(rpem);
+			} catch (e) {
+				console.error('Error sending email:', e);
+				res.status(500).json({
+					error: 'Failed to send registration email'
+				});
+			}
+			return res.status(200).json({ message: 'User registration email sent', newUser });
+		} catch (e) {
+			console.error(e);
+			res.status(500).json({
+				message: 'Failed to create registration request'
+			});
+		}
+	});
+	
+	app.get('/api/verify/:token', async (req, res) => {
+		const tokenData = jwtUtils.getURItoken(req.params.token);
+		
+		let user = await tempusertable.findOne({ _id: new ObjectId(tokenData._id) } );
+		
+		if (!user) {
+            return res.status(404).json({ error: 'User not found' });
         }
-    });
+		
+		await tempusertable.deleteOne({ _id: user._id });
+		
+		delete user._id;
+		await users.insertOne(user);
+		return res.status(200).json(user);
+	});
 
-    /* non jwt login & register endpoints
-    
-    app.post('/api/register', async (req, res, next) => {
-        const { first, last, login, email, password } = req.body;
-        const newUser = { first: first, last: last, login: login, email: email, password: password };
-    
-        try {
-            
-            const db = client.db("AppNameDB");
-            const collection = db.collection("users");
-    
-            const result = await collection.insertOne(newUser);
-    
-            res.status(200).json({ userID: result.insertedId.toString(), error: '' });
-        } catch (e) {
-            console.error(e);
-            res.status(500).json({ error: 'Internal server error' });
-        }
-    });
-    
-    
-    app.post('/api/login', async (req, res, next) => {
-        const { email, password } = req.body;
-    
-        try {
-            const db = client.db("AppNameDB");
-            const collection = db.collection("users");
-    
-            const user = await collection.findOne({ email: email, password: password });
-    
-            if (user) {
-                res.status(200).json({
-                    id: user._id.toString(),
-                    firstName: user.first,
-                    lastName: user.last,
-                    email: user.email,
-                    error: ''
-                });
-            } else {
-                res.status(401).json({ error: 'Invalid user name/password' });
-            }
-        } catch (err) {
-            console.error(err);
-            res.status(500).json({ error: 'Internal server error' });
-        }
-    });
-    */
+	app.get('/api/login', async (req, res, next) => {
+		
+		//this function is completely broken i guess
+		const { email, password } = req.body;
 
-    
-    
-   
-    
+		try {
+
+			const user = await users.findOne({ email: email, password: password });
+
+			if (user) {
+				// Create a JWT token once the user is found
+				const tokenData = jwtUtils.createToken(user.first, user.last, user.email, user._id.toString());
+
+				// Respond with user details and JWT token
+				res.status(200).json({
+					token: tokenData.accessToken
+				});
+			} else {
+				res.status(401).json({ error: 'Invalid user name/password' });
+			}
+		} catch (err) {
+			console.error(err);
+			res.status(500).json({ error: 'Internal server error' });
+		}
+	});
+
+	
 }

@@ -2,23 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SignUpForm.css';
 import logo from './assets/FinalLogo.png';
+const SignUpForm = ({ onClose, onSwitchBack }) => {
 
-/*
-
-Commented out buildPath function as a function is made in Path.js (following professors mern c document) 
-
-function buildPath(route)
-{
-    if (process.env.NODE_ENV === 'production')
-    {
-        return 'https://' + app_name + '.herokuapp.com/' + route;
-    }
-    else
-    {
-        return 'http://localhost:5000/' + route;
-    }
-}
-*/
 
 const SignUpForm = ({ onClose, onSwitchBack }) => {
   var bp = require('./Path.js');

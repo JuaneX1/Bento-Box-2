@@ -1,10 +1,10 @@
+import { useParams, useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import './LoginForm.css';
 import logo from './assets/FinalLogo.png';
+import { instance } from './App';
 
 const LoginForm = ({ onClose, onSwitchForm, onShowForgotPassword }) => {
-    var bp = require('./Path.js');
 
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
@@ -22,15 +22,10 @@ const LoginForm = ({ onClose, onSwitchForm, onShowForgotPassword }) => {
         event.preventDefault();
 
         try {
-            const response = await fetch(bp.buildPath('api/login'), {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
+            const response = await instance.get('login', { formData} );
 
-            if (response.ok) {
+            if (response.status === 200) {
+				sessionStorage.setItem('token', response.data.token);
                 onClose();
                 navigate('/dashboard');
             } else {
