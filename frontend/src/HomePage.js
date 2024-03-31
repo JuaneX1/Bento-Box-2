@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './HomePage.css';
 import AnimeList from './AnimeList';
-import bigLogo from './BB_Logo_Horizontal_COLOR_1.png';
+import bigLogo from './assets/BB_Logo_Horizontal_COLOR_1.png';
 import LoginForm from './LoginForm';
 import LoginForm2 from './LoginForm2';
 import SignUpForm from './SignUpForm';

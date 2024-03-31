@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './SignUpForm.css';
+import './css/SignUpForm.css';
 import logo from './assets/FinalLogo.png';
 const SignUpForm = ({ onClose, onSwitchBack }) => {
 

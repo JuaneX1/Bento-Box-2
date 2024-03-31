@@ -1,7 +1,7 @@
 // LoginForm2.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './LoginForm.css';
+import './css/LoginForm.css';
 import logo from './assets/FinalLogo.png';
 
 const LoginForm2 = ({ onClose, onSwitchForm }) => {

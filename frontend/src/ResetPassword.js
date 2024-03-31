@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Routes, Route, useParams, useNavigate } from 'react-router-dom';
-import './ResetPassword.css';
+import './css/ResetPassword.css';
 import logo from './assets/FinalLogo.png';
 import { instance } from './App';
 

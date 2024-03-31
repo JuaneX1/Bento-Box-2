@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import logo from './assets/FinalLogo.png';
 import { instance } from './App';
-import './ForgotPassword.css';
+import './css/ForgotPassword.css';
 
 const ForgotPassword = ({ onClose, onSwitchForm }) => {
 	const navigate = useNavigate();

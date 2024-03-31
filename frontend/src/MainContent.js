@@ -1,6 +1,6 @@
 import React from 'react'
 import AnimeCard from './AnimeCard'
-import './MainContent.css'
+import './css/MainContent.css'
 
 function MainContent(props) {
     return (

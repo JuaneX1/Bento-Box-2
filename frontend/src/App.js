@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import './App.css';
+import './css/App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Dashboard from './DashboardPage';
 import HomePage from './HomePage';

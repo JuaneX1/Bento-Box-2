@@ -1,5 +1,5 @@
 import React from 'react'
-import './AnimeCard.css'
+import './css/AnimeCard.css'
 
 function AnimeCard({anime}) {
     return (
