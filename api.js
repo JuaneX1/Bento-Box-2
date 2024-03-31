@@ -120,9 +120,8 @@ exports.setApp = function ( app, client ) {
 		return res.status(200).json(user);
 	});
 
-	app.get('/api/login', async (req, res, next) => {
+	app.post('/api/login', async (req, res, next) => {
 		
-		//this function is completely broken i guess
 		const { email, password } = req.body;
 
 		try {
@@ -130,19 +129,17 @@ exports.setApp = function ( app, client ) {
 			const user = await users.findOne({ email: email, password: password });
 
 			if (user) {
-				// Create a JWT token once the user is found
-				const tokenData = jwtUtils.createToken(user.first, user.last, user.email, user._id.toString());
+				const token = jwtUtils.createToken( user );
 
-				// Respond with user details and JWT token
-				res.status(200).json({
-					token: tokenData.accessToken
+				return res.status(200).json({
+					token: token.token
 				});
 			} else {
-				res.status(401).json({ error: 'Invalid user name/password' });
+				return res.status(401).json({ error: 'Invalid user name/password' });
 			}
 		} catch (err) {
 			console.error(err);
-			res.status(500).json({ error: 'Internal server error' });
+			return res.status(500).json({ error: 'Internal server error' });
 		}
 	});
 
