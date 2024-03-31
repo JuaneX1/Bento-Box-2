@@ -22,7 +22,7 @@ const LoginForm = ({ onClose, onSwitchForm, onShowForgotPassword }) => {
         event.preventDefault();
 
         try {
-            const response = await instance.get('api/login', { formData} );
+            const response = await instance.get('login', { formData} );
 
             if (response.status === 200) {
 				sessionStorage.setItem('token', response.data.token);
