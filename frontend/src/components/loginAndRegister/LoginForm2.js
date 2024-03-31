@@ -1,11 +1,11 @@
 // LoginForm2.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './css/LoginForm.css';
-import logo from './assets/FinalLogo.png';
+import '../../css/LoginForm.css';
+import logo from '../../assets/FinalLogo.png';
 
 const LoginForm2 = ({ onClose, onSwitchForm }) => {
-    var bp = require('./Path.js');
+    var bp = require('../Path.js');
 
     const navigate = useNavigate();
     const [formData, setFormData] = useState({

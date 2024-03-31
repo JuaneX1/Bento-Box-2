@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Routes, Route, useParams, useNavigate } from 'react-router-dom';
-import './css/ResetPassword.css';
-import logo from './assets/FinalLogo.png';
-import { instance } from './App';
+import '../../css/ResetPassword.css';
+import logo from '../../assets/FinalLogo.png';
+import { instance } from '../../App';
 
 const ResetPasswordForm = ({ onClose, onSwitchBack }) => {
 	const { token } = useParams();

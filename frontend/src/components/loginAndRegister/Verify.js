@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { instance } from './App';
+import { instance } from '../../App';
 
 const Verify = () => {
 	const { token } = useParams();

@@ -2,10 +2,10 @@ import React from 'react';
 import axios from 'axios';
 import './css/App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Dashboard from './DashboardPage';
-import HomePage from './HomePage';
-import Verify from './Verify';
-import ResetPassword from './ResetPassword';
+import Dashboard from './pages/DashboardPage';
+import HomePage from './pages/HomePage';
+import Verify from './components/loginAndRegister/Verify';
+import ResetPassword from './components/loginAndRegister/ResetPassword';
 
 const instance = axios.create({
 	baseURL: 'http://localhost:5000/api'
