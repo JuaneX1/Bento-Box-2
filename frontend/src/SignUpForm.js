@@ -4,8 +4,6 @@ import './SignUpForm.css';
 import logo from './assets/FinalLogo.png';
 const SignUpForm = ({ onClose, onSwitchBack }) => {
 
-
-const SignUpForm = ({ onClose, onSwitchBack }) => {
   var bp = require('./Path.js');
 
   const navigate = useNavigate();
@@ -46,7 +44,7 @@ const SignUpForm = ({ onClose, onSwitchBack }) => {
     }
   };
 
-  return (
+return (
     <div className="signup-form-container">
       <img src={logo} alt="Logo" className="signup-logo" />
       <div className="signup-content">
@@ -56,7 +54,7 @@ const SignUpForm = ({ onClose, onSwitchBack }) => {
             name="first"
             placeholder="First name"
             className="signup-input"
-            value={formData.first}
+            value={formData.name}
             onChange={handleChange}
           />
           <input
@@ -64,7 +62,7 @@ const SignUpForm = ({ onClose, onSwitchBack }) => {
             name="last"
             placeholder="Last name"
             className="signup-input"
-            value={formData.last}
+            value={formData.name}
             onChange={handleChange}
           />
           <input
@@ -72,7 +70,7 @@ const SignUpForm = ({ onClose, onSwitchBack }) => {
             name="login"
             placeholder="Username"
             className="signup-input"
-            value={formData.login}
+            value={formData.name}
             onChange={handleChange}
           />
           <input
@@ -95,14 +93,14 @@ const SignUpForm = ({ onClose, onSwitchBack }) => {
             Sign Up
           </button>
         </form>
+        <div className="signup-form-footer">
+          <button onClick={onClose} className="close-button">
+            Close
+          </button>
+        </div>
         <div className="back-to-login-container">
           <button onClick={onSwitchBack} className="back-to-login-btn">
             Back to Login
-          </button>
-        </div>
-        <div className="signup-form-footer">
-          <button onClick={onClose} className="signup-close-btn">
-            Close
           </button>
         </div>
       </div>
