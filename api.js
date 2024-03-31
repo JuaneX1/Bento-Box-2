@@ -63,8 +63,6 @@ exports.setApp = function ( app, client ) {
 		const tokenData = jwtUtils.getURItoken(req.params.token);
 		const { password } = req.body
 		
-		console.log(password);
-		
 		const user = await users.updateOne({ email: tokenData.email }, { $set: { password: password } } );
 		
 		if (!user) {
@@ -86,8 +84,6 @@ exports.setApp = function ( app, client ) {
 			const result = await tempusertable.insertOne(newUser);
 			
 			const token = jwtUtils.createToken(newUser);
-			
-			console.log(token);
 			
 			const rpem = emailTemplates.register( newUser, token.token );
 			
