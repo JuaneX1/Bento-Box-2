@@ -24,5 +24,5 @@ function App() {
   );
 }
 
-export { instance };
+export { instance, generateToken };
 export default App;

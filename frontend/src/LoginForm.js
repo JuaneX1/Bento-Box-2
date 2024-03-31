@@ -1,9 +1,7 @@
+import { useParams, useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import logo from './assets/FinalLogo.png';
 import { instance } from './App';
-
-const app_name = 'bento-box-2-df32a7e90651';
 
 const LoginForm = ({ onClose, onSwitchForm, onShowForgotPassword }) => {
 
@@ -26,7 +24,6 @@ const LoginForm = ({ onClose, onSwitchForm, onShowForgotPassword }) => {
             const response = await instance.get('api/login', { formData} );
 
             if (response.status === 200) {
-				// After successful login
 				sessionStorage.setItem('token', response.data.token);
                 onClose();
                 navigate('/dashboard');

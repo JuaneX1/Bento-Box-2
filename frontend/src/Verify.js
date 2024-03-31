@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { instance } from './App';
 
 const Verify = () => {
@@ -14,11 +14,9 @@ const Verify = () => {
 			if (!ignore) {
 				try {
 					await instance.get(`/verify/${objId}`);
-					// Verification successful, redirect user
 					navigate('/');
 				} catch (error) {
-				// Handle verification failure
-				//navigate('/error');
+					//do nothing yet
 				}
 			}
 		}

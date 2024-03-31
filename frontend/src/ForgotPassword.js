@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
-import './ForgotPassword.css';
+import { useParams, useNavigate } from 'react-router-dom';
 import logo from './assets/FinalLogo.png';
+import { instance, generateToken } from './App';
+import './ForgotPassword.css';
 
 const ForgotPassword = ({ onClose, onSwitchForm }) => {
+	const { objId } = useParams();
+	const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
-        email: '',
-        username: ''
+        email: ''
     });
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -15,8 +20,20 @@ const ForgotPassword = ({ onClose, onSwitchForm }) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log('Form data submitted:', formData);
-        // Here we gotta put the stuff foor handling input
+		
+        try {
+			
+            const response = await instance.post('api/resetPassword', formData );
+
+            if (response.status === 200) {
+                onClose();
+                navigate('/');
+            } else {
+                setErrorMessage(response.error);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
     };
 
     return (
@@ -30,14 +47,6 @@ const ForgotPassword = ({ onClose, onSwitchForm }) => {
                         placeholder="Email"
                         className="forgot-password-input"
                         value={formData.email}
-                        onChange={handleChange}
-                    />
-                    <input
-                        type="text"
-                        name="username"
-                        placeholder="Username"
-                        className="forgot-password-input"
-                        value={formData.username}
                         onChange={handleChange}
                     />
                     <button type="submit" className="forgot-password-submit-btn">Submit</button>
