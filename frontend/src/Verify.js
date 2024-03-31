@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { instance } from './App';
 
 const Verify = () => {
-	const { objId } = useParams();
+	const { token } = useParams();
 	const navigate = useNavigate();
 	let ignore = false;
 
@@ -13,7 +13,7 @@ const Verify = () => {
 			console.log(ignore);
 			if (!ignore) {
 				try {
-					await instance.get(`/verify/${objId}`);
+					await instance.get(`/verify/${token}`);
 					navigate('/');
 				} catch (error) {
 					//do nothing yet
@@ -25,7 +25,7 @@ const Verify = () => {
 		return () => {
 			ignore = true;
 		};
-	}, [objId, navigate]);
+	}, [token, navigate]);
 
 	return (
 		<div>

@@ -48,8 +48,6 @@ async function clearOldVerifications() {
 
 		let dt = new Date();
 		dt.setMinutes(dt.getMinutes() - 30);
-		
-		console.log(dt);
 
 		const result = await tempusertable.deleteMany({ enteredOn: { $lt: dt } });
 		console.log(`${result.deletedCount} document(s) deleted`);

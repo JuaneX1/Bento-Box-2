@@ -23,9 +23,11 @@ exports.setApp = function ( app, client ) {
 		}
 	});
 	
-	app.get('/api/forgotPassword', async (req, res,next) => {
+	app.post('/api/forgotPassword', async (req, res,next) => {
 
 		const { email } = req.body;
+		
+		console.log(email);
 		
 		try{
 			const user = await users.findOne({ email: email});
@@ -33,13 +35,14 @@ exports.setApp = function ( app, client ) {
 			if (!user) {
 				return res.status(404).json({ error: 'User not found' });
 			}
+			
+			const token = jwtUtils.createToken( user );
 
-			const rpem = emailTemplates.resetPassword( user );
+			const rpem = emailTemplates.resetPassword( user, token.token );
 			
 			try {
 				await ems.sendMail(rpem);
 			} catch (e) {
-				console.error('Error sending email:', e);
 				res.status(500).json({
 					error: 'Failed to send registration email'
 				});
@@ -56,11 +59,13 @@ exports.setApp = function ( app, client ) {
 		}
 	});
 	
-	app.get('/api/resetPassword', async (req, res) => {
-	
-		const { email, password } = req.body;
+	app.post('/api/resetPassword/:token', async (req, res) => {
+		const tokenData = jwtUtils.getURItoken(req.params.token);
+		const { password } = req.body
 		
-		const user = await users.update({ email: email }, { password: password } );
+		console.log(password);
+		
+		const user = await users.updateOne({ email: tokenData.email }, { $set: { password: password } } );
 		
 		if (!user) {
             return res.status(404).json({ error: 'User not found' });
@@ -79,8 +84,12 @@ exports.setApp = function ( app, client ) {
 		
 		try {
 			const result = await tempusertable.insertOne(newUser);
-
-			const rpem = passEmailConfig.passEmailTemplate( user );
+			
+			const token = jwtUtils.createToken(newUser);
+			
+			console.log(token);
+			
+			const rpem = emailTemplates.register( newUser, token.token );
 			
 			try {
 				await ems.sendMail(rpem);
@@ -90,20 +99,19 @@ exports.setApp = function ( app, client ) {
 					error: 'Failed to send registration email'
 				});
 			}
-			
+			return res.status(200).json({ message: 'User registration email sent', newUser });
 		} catch (e) {
 			console.error(e);
 			res.status(500).json({
 				message: 'Failed to create registration request'
 			});
 		}
-	
 	});
 	
-	app.get('/api/verify/:objId', async (req, res) => {
-		const { objId } = req.params;
+	app.get('/api/verify/:token', async (req, res) => {
+		const tokenData = jwtUtils.getURItoken(req.params.token);
 		
-		let user = await tempusertable.findOne({ _id: new ObjectId(objId) } );
+		let user = await tempusertable.findOne({ _id: new ObjectId(tokenData._id) } );
 		
 		if (!user) {
             return res.status(404).json({ error: 'User not found' });
@@ -111,17 +119,9 @@ exports.setApp = function ( app, client ) {
 		
 		await tempusertable.deleteOne({ _id: user._id });
 		
-		try {
-			users = db.collection('users');
-			delete user._id;
-			users.insertOne(user);
-			return res.status(200).json(user);
-		} catch (e) {
-			console.error(e);
-			return res.status(500).json({
-				error: 'Could not connect to database or collection'
-			});
-		}
+		delete user._id;
+		await users.insertOne(user);
+		return res.status(200).json(user);
 	});
 
 	app.get('/api/login', async (req, res, next) => {

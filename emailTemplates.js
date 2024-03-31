@@ -1,8 +1,9 @@
-const register = (user) => {
+const register = (user, token) => {
 	const textStr = 'Register for our app';
 	const htmlStr = '<p>Register for our app</p>';
+	const tokenURI = encodeURIComponent(token);
 	
-	const verifyLink = `http://localhost:3000/verify/${user._id}`;
+	const verifyLink = `http://localhost:3000/verify/${tokenURI}`;
     const textContent = `${textStr}\n\n${verifyLink}`;
     const htmlContent = `${htmlStr}<br><a href="${verifyLink}">Click here to verify</a>`;
 	
@@ -14,11 +15,12 @@ const register = (user) => {
 	};
 };
 
-const resetPassword = (user) => {
+const resetPassword = (user, token) => {
 	const textStr = 'New password for BentoBox';
 	const htmlStr = '<p>Request for forgot Password</p>';
+	const tokenURI = encodeURIComponent(token);
 	
-	const resetLink = `http://localhost:3000/resetPassword/${user._id}`;
+	const resetLink = `http://localhost:3000/resetPassword/${tokenURI}`;
     const textContent = `${textStr}\n\n${resetLink}`;
     const htmlContent = `${htmlStr}<br><a href="${resetLink}">Click here to reset password</a>`;
 	

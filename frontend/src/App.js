@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Dashboard from './DashboardPage';
 import HomePage from './HomePage';
 import Verify from './Verify';
+import ResetPassword from './ResetPassword';
 
 const instance = axios.create({
 	baseURL: 'http://localhost:5000/api'
@@ -17,12 +18,13 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/verify/:objId" element={<Verify />} />
+          <Route path="/verify/:token" element={<Verify />} />
+		  <Route path="/resetPassword/:token" element={<ResetPassword />} />
         </Routes>
       </div>
     </BrowserRouter>
   );
 }
 
-export { instance, generateToken };
+export { instance };
 export default App;

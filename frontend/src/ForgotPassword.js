@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import logo from './assets/FinalLogo.png';
-import { instance, generateToken } from './App';
+import { instance } from './App';
 import './ForgotPassword.css';
 
 const ForgotPassword = ({ onClose, onSwitchForm }) => {
-	const { objId } = useParams();
 	const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
@@ -23,7 +22,7 @@ const ForgotPassword = ({ onClose, onSwitchForm }) => {
 		
         try {
 			
-            const response = await instance.post('api/resetPassword', formData );
+            const response = await instance.post('/forgotPassword', formData );
 
             if (response.status === 200) {
                 onClose();
@@ -50,12 +49,12 @@ const ForgotPassword = ({ onClose, onSwitchForm }) => {
                         onChange={handleChange}
                     />
                     <button type="submit" className="forgot-password-submit-btn">Submit</button>
+					{errorMessage && <p>{errorMessage}</p>}
                 </form>
                 <div className="forgot-password-form-footer">
                     <button onClick={onClose} className="close-button">Close</button>
                     <button onClick={onSwitchForm} className="return-login-button">Return to Login</button>
                 </div>
-
             </div>
         </div>
     );
