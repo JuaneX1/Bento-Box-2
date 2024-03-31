@@ -25,11 +25,12 @@ api.setApp( app, client );
 
 // Server static assets if in production
 if (process.env.NODE_ENV === 'production') {
-	// use https://bento-box-2-df32a7e90651.herokuapp.com/ for production
-	// use https://bento-box-3-c00801a6c9a4.herokuapp.com/ for testing
-    app.listen(PORT, 'https://bento-box-3-c00801a6c9a4.herokuapp.com/', () => {
-        console.log('Server listening on port ' + PORT);
-    });
+	  // Set static folder
+	  app.use(express.static('frontend/build'));
+	  app.get('*', (req, res) =>
+  {
+	  res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
+  });
 } else {
     // For local development
     app.listen(PORT, () => {
