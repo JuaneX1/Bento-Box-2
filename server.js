@@ -31,12 +31,7 @@ if (process.env.NODE_ENV === 'production') {
 	{
 		res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
 	});
-} else {
-    // For local development
-    app.listen(PORT, () => {
-        console.log('Server listening on port ' + PORT);
-    });
-}
+} 
 
 cron.schedule('* * * * *', async () => {
 	console.log('Running verification clean up');
