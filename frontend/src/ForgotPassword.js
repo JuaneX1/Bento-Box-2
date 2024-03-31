@@ -19,7 +19,8 @@ const ForgotPassword = ({ onClose, onSwitchForm }) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-		
+        console.log('Form data submitted:', formData);
+      
         try {
 			
             const response = await instance.post('/forgotPassword', formData );
@@ -52,8 +53,8 @@ const ForgotPassword = ({ onClose, onSwitchForm }) => {
 					{errorMessage && <p>{errorMessage}</p>}
                 </form>
                 <div className="forgot-password-form-footer">
-                    <button onClick={onClose} className="close-button">Close</button>
                     <button onClick={onSwitchForm} className="return-login-button">Return to Login</button>
+                    <button onClick={onClose} className="close-button">Close</button>
                 </div>
             </div>
         </div>
