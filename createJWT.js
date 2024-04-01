@@ -1,24 +1,16 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-exports.createToken = function (fn, ln, id) {
-    return _createToken(fn, ln, id);
+exports.createToken = function ( user ) {
+    return _createToken( user );
 }
 
-_createToken = function (fn, ln, id) {
+_createToken = function ( user ) {
     try {
         const expiration = new Date();
-        const user = { userId: id, firstName: fn, lastName: ln };
-        const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
-        // In order to exoire with a value other than the default, use the
-        // following
-        /*
-        const accessToken= jwt.sign(user,process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: '30m'} );
-        '24h'
-        '365d'
-        */
-        var ret = { accessToken: accessToken };
+        const userData = { ...user };
+        const token = jwt.sign(userData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' });
+        var ret = { token: token };
     }
     catch (e) {
         var ret = { error: e.message };
@@ -27,6 +19,10 @@ _createToken = function (fn, ln, id) {
 }
 
 exports.isExpired = function (token) {
+	return _isExpired(token);
+}
+
+_isExpired = function (token) {
     var isError = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET,
         (err, verifiedJwt) => {
             if (err) {
@@ -39,10 +35,15 @@ exports.isExpired = function (token) {
     return isError;
 }
 
+exports.getURItoken = function (URIcomponent) {
+	const token = decodeURIComponent(URIcomponent);
+	if (_isExpired(token)){
+		return { error: 'Token has expired' };
+	}
+	return jwt.decode(token);
+}
+
 exports.refresh = function (token) {
     var ud = jwt.decode(token, { complete: true });
-    var userId = ud.payload.id;
-    var firstName = ud.payload.firstName;
-    var lastName = ud.payload.lastName;
-    return _createToken(firstName, lastName, userId);
+    return _createToken(ud);
 }

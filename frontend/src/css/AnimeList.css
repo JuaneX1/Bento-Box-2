@@ -1,0 +1,61 @@
+.anime-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  
+  .card {
+    position: relative;
+    background-color: #FF8E2B;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .card img {
+    width: 110%;
+    height: auto;
+    border-radius: 10px 10px 0 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .card:hover img {
+    opacity: 0;
+  }
+  
+  .card .anime-info {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 40px);
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .card:hover .anime-info {
+    opacity: 1;
+  }
+  
+  .card .anime-info .title,
+  .card .anime-info .synopsis {
+    text-align: center;
+    margin: 0;
+  }
+  
+  .card .anime-info .synopsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+  }
+  
+  .card .anime-info h4 {
+    margin-bottom: 10px;
+  }
+  

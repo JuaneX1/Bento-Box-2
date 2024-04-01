@@ -18,7 +18,15 @@ You will also need to add a .env file. Create one using any method, just ensure 
 
 Then you will need to add the MONGODB_URI="{whatever_database_connection_string_is}"
 
-This is provided in Discord.
+There are a few other fields as well such as:
+ACCESS_TOKEN_SECRET
+EMAIL_SECRET
+FRONTEND_URL
+SERVER_EMAIL
+EMAIL_PASSWORD
+
+These are all for node email so if running locally, check your configuration to see what they should be. 
+If maintainer and on Discord, check there or the settings as all above are provided. 
 
 **DO NOT** PUSH THE .env file to Github. It should be already ignored in .gitignore, but that contains secrets you should not push, etc.
 
