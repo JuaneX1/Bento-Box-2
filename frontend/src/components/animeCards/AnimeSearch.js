@@ -14,21 +14,11 @@ function AnimeSearch({ typeDefault }) {
         }
     }, [typeDefault]);
 
-    // Debounce function
-    const debounce = (func, delay) => {
-        let timeoutId;
-        return function (...args) {
-            clearTimeout(timeoutId);
-            timeoutId = setTimeout(() => func.apply(this, args), delay);
-        };
-    };
-
-    // Debounced function for fetching anime
-    const debouncedFetchAnime = debounce(async (query) => {
+    const fetchAnime = async (query) => {
         const temp = await fetch(`https://api.jikan.moe/v4/anime?q=${query}&order_by=title&sort=asc&limit=10&genres_excluded=9,45,12`)
             .then(res => res.json());
         setAnimeList(temp.data);
-    }, 1000); // Adjust the delay as needed (1000 milliseconds in this example)
+    };
 
     const fetchTopAnime = async () => {
         const temp = await fetch(`https://api.jikan.moe/v4/top/anime?filter=bypopularity&limit=20&genres_excluded=9,45,12`)
@@ -36,16 +26,18 @@ function AnimeSearch({ typeDefault }) {
         setAnimeFound(temp.data);
     };
 
-    const handleSearchChange = (e) => {
-        const query = e.target.value;
-        setSearch(query);
-        debouncedFetchAnime(query); // Call the debounced fetch function
-    };
+    useEffect(() => {
+        const delaySearch = setTimeout(() => {
+            fetchAnime(search); // Trigger the fetchAnime function after the user stops typing for 1 second
+        }, 2000); // Adjust the delay as needed (1000 milliseconds in this example)
+
+        return () => clearTimeout(delaySearch); // Clear the timeout on component unmount or when search changes
+    }, [search]);
 
     return (
         <div className="content-wrap">
             <BrowseContent
-                handleSearchChange={handleSearchChange}
+                handleSearchChange={(e) => setSearch(e.target.value)}
                 search={search}
                 setSearch={setSearch}
                 animeList={search ? animeList : animeFound}
