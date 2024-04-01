@@ -3,7 +3,11 @@ const register = (user, token) => {
 	const htmlStr = '<p>Register for our app</p>';
 	const tokenURI = encodeURIComponent(token);
 	
-	const verifyLink = `http://localhost:3000/verify/${tokenURI}`;
+	// Update paths depending on location
+	// for test env on heroku: https://bento-box-3-c00801a6c9a4.herokuapp.com/
+	// for production: 
+
+	const verifyLink = `https://bento-box-3-c00801a6c9a4.herokuapp.com/verify/${tokenURI}`;
     const textContent = `${textStr}\n\n${verifyLink}`;
     const htmlContent = `${htmlStr}<br><a href="${verifyLink}">Click here to verify</a>`;
 	
@@ -20,7 +24,11 @@ const resetPassword = (user, token) => {
 	const htmlStr = '<p>Request for forgot Password</p>';
 	const tokenURI = encodeURIComponent(token);
 	
-	const resetLink = `http://localhost:3000/resetPassword/${tokenURI}`;
+	// Update paths depending on location
+	// for test env on heroku: https://bento-box-3-c00801a6c9a4.herokuapp.com/
+	// for production: 
+
+	const resetLink = `https://bento-box-3-c00801a6c9a4.herokuapp.com/resetPassword/${tokenURI}`;
     const textContent = `${textStr}\n\n${resetLink}`;
     const htmlContent = `${htmlStr}<br><a href="${resetLink}">Click here to reset password</a>`;
 	
