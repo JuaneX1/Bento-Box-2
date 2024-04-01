@@ -13,8 +13,9 @@ const HomePage = () => {
     const [currentForm, setCurrentForm] = useState('');
     const animeRowRef = useRef(null);
 
+    // gets the animes to display in sidebar, 24 is to make it flush since in 3 by 3 grid
     const getData = async () => {
-        const res = await fetch(`https://api.jikan.moe/v4/seasons/2024/spring`);
+        const res = await fetch(`https://api.jikan.moe/v4/seasons/2024/spring?limit=24&genres_excluded=9,45,12`);
         const resData = await res.json();
         setAnimeData(resData.data);
     };
