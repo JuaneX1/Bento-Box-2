@@ -23,7 +23,7 @@ const ForgotPassword = ({ onClose, onSwitchForm }) => {
       
         try {
 			
-            const response = await instance.post('/forgotPassword', formData );
+            const response = await instance.post(`/forgotPassword`, formData );
 
             if (response.status === 200) {
                 onClose();

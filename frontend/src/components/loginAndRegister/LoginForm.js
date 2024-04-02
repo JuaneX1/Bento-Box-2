@@ -8,7 +8,7 @@ const LoginForm = ({ onClose, onSwitchForm, onShowForgotPassword }) => {
 
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
-        email: '',
+        login: '',
         password: ''
     });
     const [errorMessage, setErrorMessage] = useState('');
@@ -43,8 +43,8 @@ const LoginForm = ({ onClose, onSwitchForm, onShowForgotPassword }) => {
                 <form onSubmit={handleSubmit}>
                     <input
                         type="text"
-                        name="email"
-                        placeholder="Email"
+                        name="login"
+                        placeholder="Username or Email"
                         className="login-input"
                         value={formData.email}
                         onChange={handleChange}

@@ -122,15 +122,14 @@ exports.setApp = function ( app, client ) {
 
 	app.post('/api/login', async (req, res, next) => {
 		
-		const { email, password } = req.body;
+		const { login, password } = req.body;
 
 		try {
 
-			const user = await users.findOne({ email: email, password: password });
+			const user = await users.findOne({ $or: [{email: login }, {login: login}], password: password });
 
 			if (user) {
 				const token = jwtUtils.createToken( user );
-
 				return res.status(200).json({
 					token: token.token
 				});

@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../css/SignUpForm.css';
 import logo from '../../assets/FinalLogo.png';
-const SignUpForm = ({ onClose, onSwitchBack }) => {
+import { instance } from '../../App';
 
-  var bp = require('../Path.js');
+const SignUpForm = ({ onClose, onSwitchBack }) => {
 
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -24,17 +24,11 @@ const SignUpForm = ({ onClose, onSwitchBack }) => {
     event.preventDefault();
 
     try {
-      const response = await fetch(bp.buildPath('api/register'), {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
+      const response = await instance.post(`/register`, formData);
 
       if (response.ok) {
         onClose();
-        navigate('/dashboard');
+        navigate('/');
       } else {
         // Handle error response
         console.error('Failed to sign up');
