@@ -35,8 +35,8 @@ export async function doLogin(formData, navigation){
 function buildPath(route)
 {
     //const app_name = 'bento-box-mobile-c040aef8aea0'
-    const app_name = 'bento-box-2-df32a7e90651'
-    //const app_name = 'bento-box-3-c00801a6c9a4'
+    //const app_name = 'bento-box-2-df32a7e90651'
+    const app_name = 'bento-box-3-c00801a6c9a4'
     
     // builds path if we local or if we are on heroku
 
