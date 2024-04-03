@@ -81,6 +81,19 @@ exports.setApp = function ( app, client ) {
 		};
 		
 		try {
+			const result = await users.findOne({ $or: [{email: newUser.email }, {login: newUser.login}] });
+			
+			if (result) {
+				return res.status(401).json({error: "Username or email already in use"});
+			}
+		} catch (e) {
+			console.error(e);
+			res.status(500).json({
+				message: 'Failed to connect to database'
+			});
+		}
+		
+		try {
 			const result = await tempusertable.insertOne(newUser);
 			
 			const token = jwtUtils.createToken(newUser);
@@ -124,23 +137,20 @@ exports.setApp = function ( app, client ) {
 		
 		const { login, password } = req.body;
 
-		try {
-
-			const user = await users.findOne({ $or: [{email: login }, {login: login}], password: password });
-
-			if (user) {
-				const token = jwtUtils.createToken( user );
+		await users.findOne({ $or: [{email: login }, {login: login}], password: password }).then( result => {
+			if (result !== null) {
+				const token = jwtUtils.createToken( result );
 				return res.status(200).json({
 					token: token.token
 				});
 			} else {
-				return res.status(401).json({ error: 'Invalid user name/password' });
+				console.log(result);
+				return res.status(401).json({
+					error: "Username/email or password is incorrect"
+				});
 			}
-		} catch (err) {
-			console.error(err);
-			return res.status(500).json({ error: 'Internal server error' });
-		}
+		}).catch ( error => {
+			return res.status(500).json({ error: 'Failed to connect to database' });
+		});
 	});
-
-	
 }

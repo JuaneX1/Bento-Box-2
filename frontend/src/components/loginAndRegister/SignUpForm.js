@@ -14,29 +14,29 @@ const SignUpForm = ({ onClose, onSwitchBack }) => {
     email: '',
     password: ''
   });
+  
+  const [error, setError] = useState('');
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+	const handleSubmit = async (event) => {
+		event.preventDefault();
 
-    try {
-      const response = await instance.post(`/register`, formData);
-
-      if (response.ok) {
-        onClose();
-        navigate('/');
-      } else {
-        // Handle error response
-        console.error('Failed to sign up');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
+		await instance.post(`/register`, formData).then( response => {
+			if( response.status === 200 ){
+				onClose();
+				navigate(`/`);
+			} else {
+				console.log(response);
+				setError(response);
+			}
+		}).catch( error => {
+			setError( error.message );
+		});
+	};
 
 return (
     <div className="signup-form-container">

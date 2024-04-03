@@ -57,6 +57,12 @@
   background-image: linear-gradient(to right, #1976D2, #d32f2f);
 }
 
+.error-message {
+  color: #f44336;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
 .forgot-password-link, .signin-username-link {
   display: block;
   text-align: center;
