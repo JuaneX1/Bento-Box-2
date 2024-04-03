@@ -40,6 +40,12 @@
   border-color: #f44336;
 }
 
+.error-message {
+  color: #f44336;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
 .login-submit-btn {
   padding: 12px;
   margin-bottom: 16px;
@@ -55,12 +61,6 @@
 
 .login-submit-btn:hover {
   background-image: linear-gradient(to right, #1976D2, #d32f2f);
-}
-
-.error-message {
-  color: #f44336;
-  font-size: 14px;
-  margin-bottom: 16px;
 }
 
 .forgot-password-link, .signin-username-link {

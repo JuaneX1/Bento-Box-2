@@ -26,8 +26,7 @@ const LoginForm = ({ onClose, onSwitchForm, onShowForgotPassword }) => {
 			onClose();
 			navigate('/dashboard');
 		}).catch( error => {
-			console.log(error);
-			setError(error.response.data.error);
+			setError( error.response.data.error );
 		});
     };
 

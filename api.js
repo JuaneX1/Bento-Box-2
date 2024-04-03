@@ -6,6 +6,16 @@ const nodemailer = require('nodemailer');
 const emailTemplates = require('./emailTemplates');
 const jwtUtils = require('./createJWT');
 
+function isComplex (str) {
+	return ([
+		{bullet: "Must contain at least 8 characters", valid: str.length >= 8 },
+		{bullet: "Must contain an uppercase letter", valid: /[A-Z]/.test(str) },
+		{bullet: "Must contain a lowercase letter", valid: /[a-z]/.test(str) },
+		{bullet: "Must contain a numeric character", valid: /[0-9]/.test(str) },
+		{bullet: "Must contain a special character", valid: /[^A-Za-z0-9]/.test(str) },
+	]).filter(rule => !rule.valid).map(rule => rule.bullet);
+}
+
 exports.setApp = function ( app, client ) {
 	
 	const db = client.db("AppNameDB");
@@ -80,40 +90,26 @@ exports.setApp = function ( app, client ) {
 			enteredOn: new Date()
 		};
 		
+		const passComplexity = isComplex(newUser.password);
+
 		try {
-			const result = await users.findOne({ $or: [{email: newUser.email }, {login: newUser.login}] });
-			
-			if (result) {
-				return res.status(401).json({error: "Username or email already in use"});
+			const existingUser = await users.findOne({ $or: [{ email: newUser.email }, { login: newUser.login }] });
+			if (existingUser) {
+				return res.status(401).json({ error: "Username or email already in use" });
+			} else if (passComplexity.length != 0) {
+				return res.status(400).json({ error: "Password does not meet complexity requirements", passComplexity });
 			}
-		} catch (e) {
-			console.error(e);
-			res.status(500).json({
-				message: 'Failed to connect to database'
-			});
-		}
-		
-		try {
-			const result = await tempusertable.insertOne(newUser);
-			
+
+			await tempusertable.insertOne(newUser);
+
 			const token = jwtUtils.createToken(newUser);
-			
-			const rpem = emailTemplates.register( newUser, token.token );
-			
-			try {
-				await ems.sendMail(rpem);
-			} catch (e) {
-				console.error('Error sending email:', e);
-				res.status(500).json({
-					error: 'Failed to send registration email'
-				});
-			}
+			const rpem = emailTemplates.register(newUser, token.token);
+			await ems.sendMail(rpem);
+
 			return res.status(200).json({ message: 'User registration email sent', newUser });
-		} catch (e) {
-			console.error(e);
-			res.status(500).json({
-				message: 'Failed to create registration request'
-			});
+		} catch (error) {
+			console.error(error);
+			return res.status(500).json({ error: 'Failed to connect to database' });
 		}
 	});
 	
@@ -144,7 +140,6 @@ exports.setApp = function ( app, client ) {
 					token: token.token
 				});
 			} else {
-				console.log(result);
 				return res.status(401).json({
 					error: "Username/email or password is incorrect"
 				});

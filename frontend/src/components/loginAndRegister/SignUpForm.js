@@ -26,15 +26,11 @@ const SignUpForm = ({ onClose, onSwitchBack }) => {
 		event.preventDefault();
 
 		await instance.post(`/register`, formData).then( response => {
-			if( response.status === 200 ){
-				onClose();
-				navigate(`/`);
-			} else {
-				console.log(response);
-				setError(response);
-			}
+			onClose();
+			navigate(`/`);
 		}).catch( error => {
-			setError( error.message );
+			console.log(error);
+			setError( error.response.data );
 		});
 	};
 
@@ -83,6 +79,15 @@ return (
             value={formData.password}
             onChange={handleChange}
           />
+		  {error && Array.isArray(error.passComplexity) ? (
+			<div className="error-message"> Your password must include:
+				<ul className="error-message-list">
+					{error.passComplexity.map((e, i) => <li className="error-message-list-items" key={i}>{e}</li>)}
+				</ul>
+			</div>
+			) : (
+			<div className="error-message"> {error.message} </div>
+          )}
           <button type="submit" className="signup-submit-btn">
             Sign Up
           </button>
