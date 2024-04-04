@@ -47,3 +47,7 @@ exports.refresh = function (token) {
     var ud = jwt.decode(token, { complete: true });
     return _createToken(ud);
 }
+
+exports.expireToken = function (token) {
+	this.invalidateToken(token);
+}

@@ -113,7 +113,7 @@ exports.setApp = function ( app, client ) {
 		}
 	});
 	
-	app.get('/api/verify/:token', async (req, res) => {
+	app.post('/api/verify/:token', async (req, res) => {
 		const tokenData = jwtUtils.getURItoken(req.params.token);
 		
 		let user = await tempusertable.findOne({ _id: new ObjectId(tokenData._id) } );
@@ -136,6 +136,7 @@ exports.setApp = function ( app, client ) {
 		await users.findOne({ $or: [{email: login }, {login: login}], password: password }).then( result => {
 			if (result !== null) {
 				const token = jwtUtils.createToken( result );
+				console.log(token);
 				return res.status(200).json({
 					token: token.token
 				});
@@ -146,6 +147,21 @@ exports.setApp = function ( app, client ) {
 			}
 		}).catch ( error => {
 			return res.status(500).json({ error: 'Failed to connect to database' });
+		});
+	});
+	
+	app.delete('/api/deleteUser', async (req, res) => {
+		
+		const tokenData = jwtUtils.getURItoken(req.params.token);
+		
+		users.deleteOne({ _id: new ObjectId(tokenData._id) }).then( result => {
+			if (result.deletedCount !== 0) {
+				return res.status(200).json({ message: "User was successfully deleted" });
+			} else {
+				return res.status(401).json({ message: "User record not found", result, tokenData });
+			}
+		}).catch( error => {
+			return res.status(500).json({ error: error });
 		});
 	});
 }
