@@ -18,6 +18,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/verify/:token" element={<Verify />} />
 		  <Route path="/resetPassword/:token" element={<ResetPassword />} />
         </Routes>
