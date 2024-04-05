@@ -4,7 +4,26 @@ const express = require('express');
 const { ObjectId } = require('mongodb');
 const nodemailer = require('nodemailer');
 const emailTemplates = require('./emailTemplates');
+const jwt = require("jsonwebtoken");
 const jwtUtils = require('./createJWT');
+
+const authToken = (req, res, next) => {
+	
+	const token = req.headers.authorization;
+	
+	if (!token) {
+		return res.sendStatus(401);
+	}
+
+	jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (error, decodedToken) => {
+		
+		if (error) {
+			return res.sendStatus(403);
+		}
+		req.user = decodedToken.user;
+		next();
+	});
+}
 
 function isComplex (str) {
 	return ([
@@ -116,7 +135,7 @@ exports.setApp = function ( app, client ) {
 	app.post('/api/verify/:token', async (req, res) => {
 		const tokenData = jwtUtils.getURItoken(req.params.token);
 		
-		let user = await tempusertable.findOne({ _id: new ObjectId(tokenData._id) } );
+		let user = await tempusertable.findOne({ _id: new ObjectId(tokenData.user._id) } );
 		
 		if (!user) {
             return res.status(404).json({ error: 'User not found' });
@@ -136,7 +155,6 @@ exports.setApp = function ( app, client ) {
 		await users.findOne({ $or: [{email: login }, {login: login}], password: password }).then( result => {
 			if (result !== null) {
 				const token = jwtUtils.createToken( result );
-				console.log(token);
 				return res.status(200).json({
 					token: token.token
 				});
@@ -150,15 +168,15 @@ exports.setApp = function ( app, client ) {
 		});
 	});
 	
-	app.delete('/api/deleteUser', async (req, res) => {
+	app.delete('/api/deleteUser', authToken, async (req, res) => {
 		
-		const tokenData = jwtUtils.getURItoken(req.params.token);
+		const user = req.user;
 		
-		users.deleteOne({ _id: new ObjectId(tokenData._id) }).then( result => {
+		users.deleteOne({ _id: new ObjectId(user._id) }).then( result => {
 			if (result.deletedCount !== 0) {
 				return res.status(200).json({ message: "User was successfully deleted" });
 			} else {
-				return res.status(401).json({ message: "User record not found", result, tokenData });
+				return res.status(401).json({ message: "User record not found", result });
 			}
 		}).catch( error => {
 			return res.status(500).json({ error: error });

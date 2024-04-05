@@ -6,6 +6,7 @@ import Dashboard from './pages/DashboardPage';
 import HomePage from './pages/HomePage';
 import Verify from './components/loginAndRegister/Verify';
 import ResetPassword from './components/loginAndRegister/ResetPassword';
+import ProfilePage from './pages/ProfilePage';
 
 const instance = axios.create({
 	baseURL: 'http://localhost:5000/api'
