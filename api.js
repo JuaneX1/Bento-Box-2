@@ -72,7 +72,7 @@ exports.setApp = function ( app, client ) {
 			try {
 				await ems.sendMail(rpem);
 			} catch (e) {
-				res.status(500).json({
+				return res.status(500).json({
 					error: 'Failed to send registration email'
 				});
 			}
