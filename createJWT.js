@@ -8,9 +8,8 @@ exports.createToken = function ( user ) {
 _createToken = function ( user ) {
     try {
         const expiration = new Date();
-        const userData = { ...user };
-        const token = jwt.sign(userData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' });
-        var ret = { token: token };
+        const token = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' });
+        var ret = { token };
     }
     catch (e) {
         var ret = { error: e.message };
@@ -23,16 +22,12 @@ exports.isExpired = function (token) {
 }
 
 _isExpired = function (token) {
-    var isError = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET,
-        (err, verifiedJwt) => {
-            if (err) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        });
-    return isError;
+	try {
+		const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+		return false;
+	} catch (error) {
+		return true;
+	}
 }
 
 exports.getURItoken = function (URIcomponent) {
@@ -44,6 +39,10 @@ exports.getURItoken = function (URIcomponent) {
 }
 
 exports.refresh = function (token) {
-    var ud = jwt.decode(token, { complete: true });
+    var ud = jwt.decode(token);
     return _createToken(ud);
+}
+
+exports.expireToken = function (token) {
+	this.invalidateToken(token);
 }

@@ -40,6 +40,17 @@
   border-color: #f44336;
 }
 
+.error-message {
+  color: #f44336;
+  font-size: 14px;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  margin-bottom: 16px;
+  width: calc(100% - 24px);
+  list-style-position: inside;
+}
+
 .login-submit-btn {
   padding: 12px;
   margin-bottom: 16px;
