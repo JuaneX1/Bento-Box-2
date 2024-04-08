@@ -1,0 +1,25 @@
+.browse {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+}
+
+.category {
+    margin-bottom: 40px;
+    width: 100%;
+}
+
+.category-title {
+    margin-bottom: 20px;
+    color: #fff;
+    text-align: left;
+}
+
+.anime-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
