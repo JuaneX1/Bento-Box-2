@@ -1,8 +1,6 @@
-
 const PRODUCTION = true;
 
 export async function doLogin(formData, navigation){
-    //route.preventDefault();
     if(formData.email != null || formData.password != null){
         try {
             
