@@ -1,53 +1,59 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import AnimeCard from '../components/animeCards/AnimeCard';
 import '../css/Browse.css';
 
 const Browse = () => {
-    const [categories, setCategories] = useState([]);
-    const [animeByCategory, setAnimeByCategory] = useState({});
-    const [isLoading, setIsLoading] = useState(true);
+    const [selectedCategory, setSelectedCategory] = useState('');
+    const [animeList, setAnimeList] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
 
-    useEffect(() => {
-        const categoriesToFetch = [
-            { name: 'top rated', endpoint: 'https://api.jikan.moe/v4/top/anime' },
-            { name: 'upcoming', endpoint: 'https://api.jikan.moe/v4/seasons/upcoming' },
-            { name: 'currently airing', endpoint: 'https://api.jikan.moe/v4/seasons/now' },
-        ];
+    const categories = [
+        { name: 'top rated', endpoint: 'https://api.jikan.moe/v4/top/anime' },
+        { name: 'upcoming', endpoint: 'https://api.jikan.moe/v4/seasons/upcoming' },
+        { name: 'currently airing', endpoint: 'https://api.jikan.moe/v4/seasons/now' },
+    ];
 
-        setCategories(categoriesToFetch.map(category => category.name));
-
-        Promise.all(categoriesToFetch.map(category =>
-            fetch(category.endpoint)
+    const fetchAnimeByCategory = (endpoint, categoryName) => {
+        setIsLoading(true);
+        setError('');
+        fetch(endpoint)
             .then(response => response.json())
-            .then(data => ({ name: category.name, data: data.data }))
-        ))
-        .then(results => {
-            const newAnimeByCategory = results.reduce((acc, { name, data }) => {
-                acc[name] = data;
-                return acc;
-            }, {});
-            setAnimeByCategory(newAnimeByCategory);
-        })
-        .catch(error => console.log(error))
-        .finally(() => setIsLoading(false));
-    }, []);
-
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
+            .then(data => {
+                setAnimeList(data.data);
+                setSelectedCategory(categoryName);
+            })
+            .catch(error => {
+                console.error(`Error fetching ${categoryName}:`, error);
+                setError(`Error fetching data: ${error.message}`);
+                setAnimeList([]);
+            })
+            .finally(() => setIsLoading(false));
+    };
 
     return (
         <div className="browse">
-            {categories.map(category => (
-                <div key={category} className="category">
-                    <h2 className="category-title">{category.toUpperCase()}</h2>
-                    <div className="anime-list">
-                        {animeByCategory[category]?.map(anime => (
-                            <AnimeCard key={anime.mal_id} anime={anime} />
-                        ))}
+            <div className="category-buttons">
+                {categories.map(category => (
+                    <button key={category.name} onClick={() => fetchAnimeByCategory(category.endpoint, category.name)}>
+                        {category.name.toUpperCase()}
+                    </button>
+                ))}
+            </div>
+            <div className="category-display">
+                {isLoading && <div>Loading...</div>}
+                {error && <div>Error: {error}</div>}
+                {!isLoading && !error && (
+                    <div>
+                        <h2 className="category-title">{selectedCategory.toUpperCase()}</h2>
+                        <div className="anime-list">
+                            {animeList.map(anime => (
+                                <AnimeCard key={anime.mal_id} anime={anime} />
+                            ))}
+                        </div>
                     </div>
-                </div>
-            ))}
+                )}
+            </div>
         </div>
     );
 };
