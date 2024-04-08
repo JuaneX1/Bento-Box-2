@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList, Alert, Modal, TextInput, Button } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState, useRef } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage
+import { useNavigation } from '@react-navigation/native'; // Import useNavigation hook
+import { useAuth } from '../Components/AuthContext';
 
 const ProfileScreen = () => {
   const [username, setUsername] = useState('');
@@ -11,36 +12,9 @@ const ProfileScreen = () => {
   const [newUsername, setNewUsername] = useState('');
   const [newEmail, setNewEmail] = useState('');
   const flatListRef = useRef(null);
-  const navigation = useNavigation();
+  const { logOut } = useAuth();
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        // Fetch stored email from AsyncStorage
-        const userEmail = await AsyncStorage.getItem('email');
-        if (userEmail) {
-          // Fetch username from backend based on the email
-          const response = await fetchUsernameFromBackend(userEmail);
-          const userData = await response.json();
-          setUsername(userData.username);
-        }
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    };
-
-    fetchUserData();
-  }, []);
-
-  const fetchUsernameFromBackend = async (email) => {
-    try {
-      const response = await fetch(`your_backend_endpoint/user?email=${encodeURIComponent(email)}`);
-      return response;
-    } catch (error) {
-      console.error('Error fetching username from backend:', error);
-      throw error;
-    }
-  };
+  const navigation = useNavigation(); // Get navigation object
 
   const toggleExpand = () => {
     setExpanded(!expanded);
@@ -58,8 +32,7 @@ const ProfileScreen = () => {
 
   const signOut = async () => {
     try {
-      await AsyncStorage.clear();
-      navigation.navigate('Login');
+      await logOut();
       console.log('User signed out successfully');
     } catch (error) {
       console.error('Error signing out:', error.message);
