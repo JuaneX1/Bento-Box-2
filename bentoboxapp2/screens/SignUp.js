@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Image, Pressable, Alert } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { doSignUp } from '../api/doSignUp';
+import { useAuth } from '../Components/AuthContext';
 import {Dimensions} from 'react-native';
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
 
@@ -10,6 +11,9 @@ const windowHeight = Dimensions.get('window').height;
 
 export default function SignUp() {
   const navigation = useNavigation()
+  const { signUp } = useAuth();
+
+  const [formData, setFormData] = useState({});
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -24,8 +28,8 @@ export default function SignUp() {
         return;
       }
       
-      const { success, error, data } = await doSignUp(firstName, lastName, username, email, password);
-
+      //const { success, error, data } = await doSignUp(firstName, lastName, username, email, password);
+      await signUp(formData);
       if (success) {
         Alert.alert('Registration successful');
         
@@ -47,28 +51,28 @@ export default function SignUp() {
       <TextInput
         style={styles.input}
         placeholder="First Name*"
-        onChangeText={setFirstName}
+        onChangeText={(text) => setFormData({ ...formData, firstName: text })}
       />
 
       <Text style= {styles.inputTitle}>Last Name</Text>
       <TextInput
         style={styles.input}
         placeholder="Last Name*"
-        onChangeText={setLastName}
+        onChangeText={(text) => setFormData({ ...formData, lastName: text })}
       />
 
       <Text style= {styles.inputTitle}>Username</Text>
       <TextInput
         style={styles.input}
         placeholder="Username*"
-        onChangeText={setUsername}
+        onChangeText={(text) => setFormData({ ...formData, username: text })}
       />
 
       <Text style= {styles.inputTitle}>Email Address</Text>
       <TextInput
         style={styles.input}
         placeholder="Email Address*"
-        onChangeText={setEmail}
+        onChangeText={(text) => setFormData({ ...formData, email: text })}
       />
 
       <Text style= {styles.inputTitle}>Password</Text>
@@ -76,7 +80,7 @@ export default function SignUp() {
         style={styles.input}
         placeholder="Password*"
         secureTextEntry={true}
-        onChangeText={setPassword}
+        onChangeText={(text) => setFormData({ ...formData, password: text })}
       />
 
       <Pressable

@@ -1,30 +1,31 @@
-export async function doSignUp(firstName, lastName, username, email, password) {
+export async function doSignUp(formData) {
     const PRODUCTION = true;
     const app_name = 'bento-box-mobile-c040aef8aea0'; 
 
-    try {
-        const formData = {
-            first: firstName,
-            last: lastName,
-            login: username,
-            email: email,
-            password: password
-        };
+    const instance = axios.create({
+        baseURL: 'https://bento-box-3-c00801a6c9a4.herokuapp.com/api',
+      });
 
-        const response = await fetch(buildPath('api/register'), {
+    try {
+       
+
+        /*const response = await fetch(buildPath('api/register'), {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(formData)
-        });
+        });*/
+
+        const response = await instance.post(`/register`, formData);
 
         if (response.ok) {
             console.log('Signup success!');
-            return { success: true }; 
+            const { token } = response.data; // Assuming the server responds with a token
+            await AsyncStorage.setItem('token', token.token);
+            return token.token;
         } else {
             console.error('Failed to sign up:', response.status);
-            return { success: false, error: 'Failed to sign up' }; 
         }
     } catch (error) {
         console.error('Error:', error);

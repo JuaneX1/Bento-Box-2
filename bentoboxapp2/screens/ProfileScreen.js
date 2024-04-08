@@ -2,10 +2,13 @@ import React, { useState, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage
 import { useNavigation } from '@react-navigation/native'; // Import useNavigation hook
+import { useAuth } from '../Components/AuthContext';
 
 const ProfileScreen = ({ username }) => {
   const [expanded, setExpanded] = useState(false);
   const flatListRef = useRef(null);
+  const { logOut } = useAuth();
+
   const navigation = useNavigation(); // Get navigation object
 
   const toggleExpand = () => {
@@ -25,9 +28,7 @@ const ProfileScreen = ({ username }) => {
 
   const signOut = async () => {
     try {
-      await AsyncStorage.clear(); // Clear user session data
-      // Navigate back to the login screen or perform any other necessary action
-      navigation.navigate('Login');
+      await logOut();
       console.log('User signed out successfully');
     } catch (error) {
       console.error('Error signing out:', error.message);

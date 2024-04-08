@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 const PRODUCTION = true;
 
-export async function doLogin(formData, navigation) {
+export async function doLogin(formData) {
   // State for error handling
 
   const instance = axios.create({
@@ -18,9 +18,11 @@ export async function doLogin(formData, navigation) {
 
       // Handle successful login
       if (response.status === 200) {
-        await AsyncStorage.setItem('token', response.data.token);
+        const { token } = response.data; // Assuming the server responds with a token
+        await AsyncStorage.setItem('token', token);
+        return token;
        console.log('oou oou ouu!'); // Assuming this is the correct route
-        navigation.navigate('Home');
+        
       } else {
         console.log('Unexpected response status:', response.status);
       }

@@ -3,22 +3,24 @@ import { StyleSheet, Text, View, TextInput, Pressable } from 'react-native';
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { doLogin } from '../api/doLogin';
+import { useAuth } from '../Components/AuthContext';
 
 export default function Login() {
     const navigation = useNavigation();
+    const { signIn } = useAuth();
 
-    const [signIn, setSignIn] = useState({
+    const [formData, setFormData] = useState({
         email: '',
         password: ''
     });
 
     const handleClick = async () => {
-        await doLogin(signIn, navigation);
+        await signIn(formData);
     };
 
-    const handleChange = (name, value) => {
-        setSignIn({ ...signIn, [name]: value });
-    };
+    /*const handleChange = (name, value) => {
+        setSignIn({ ...formData, [name]: value });
+    };*/
 
     return (
         <View style={styles.container}>
@@ -26,16 +28,14 @@ export default function Login() {
             <TextInput
                 style={styles.input}
                 placeholder="Email*"
-                value={signIn.email}
-                onChangeText={text => handleChange('email', text)}
+                onChangeText={(text) => setFormData({ ...formData, email: text })}
             />
             <Text style={styles.text}>Password: </Text>
             <TextInput
                 style={styles.input}
                 placeholder="Password*"
                 secureTextEntry={true}
-                value={signIn.password}
-                onChangeText={text => handleChange('password', text)}
+                onChangeText={(text) => setFormData({ ...formData, password: text })}
             />
             <Pressable
                 style={styles.submitButton}
