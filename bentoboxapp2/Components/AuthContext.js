@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
   const signUp = async (formData) => {
     // Call doSignUp with form data
     const _authData = await doSignUp(formData);
-    
+    console.log("auth data: "+_authData);
     setAuthData(_authData);
   };
 

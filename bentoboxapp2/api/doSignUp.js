@@ -4,24 +4,25 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export async function doSignUp(formData) {
   const instance = axios.create({
     //'http://localhost:5000/api https://bento-box-3-c00801a6c9a4.herokuapp.com/api',
-    baseURL: 'https://bento-box-3-c00801a6c9a4.herokuapp.com/api' 
+    baseURL: 'https://bento-box-3-c00801a6c9a4.herokuapp.com/api' //'https://bento-box-2-df32a7e90651.herokuapp.com/api' 
   });
 
   try {
     const response = await instance.post(`/register`, formData);
     
-    if (response.status === 200) {
-
-      const { message, token, newUser } = response.data;
-      console.log("skbfaskjdnaskj");
-      console.log(message);
+    const { message, token, newUser } = response.data;
+    if (message === "User registration email sent" && newUser) {
+      console.log(response.data);
       console.log(token);
-      console.log(token.token);
-      console.log(newUser);
+      //const { message, token, newUser } = response.data;
+     // console.log("skbfaskjdnaskj");
+      //console.log(message);
+      //console.log(token);
+      //console.log(newUser);
        // Assuming the server responds with a token
       
-      await AsyncStorage.setItem('token',token.token);
-      return token;
+      //await AsyncStorage.setItem('token',token.token);
+      //return token;
      // Assuming this is the correct route
       
     } else {

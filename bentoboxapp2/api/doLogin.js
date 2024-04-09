@@ -15,12 +15,18 @@ export async function doLogin(formData) {
   if (formData.email !== null || formData.password !== null) {
     try {
       // Use await to wait for response from API call
+      console.log(' ouu!');
+      console.log(formData);
       const response = await instance.post(`/login`, formData);
-
+      console.log('oou oou ouu!');
       // Handle successful login
       if (response.status === 200) {
-        const { token } = response.data; // Assuming the server responds with a token
+        console.log('yippie!');
+        const { token } = response.data;
+        console.log('yappa!');
+        // Assuming the server responds with a token
         await AsyncStorage.setItem('token', token);
+        console.log('woooo!');
         return token;
        console.log('oou oou ouu!'); // Assuming this is the correct route
         
@@ -30,7 +36,7 @@ export async function doLogin(formData) {
     } catch (error) {
       console.error('Error:', error);
       // Handle network errors or other exceptions
-      setError('Network error or other issue. Please try again.');
+      //setError('Network error or other issue. Please try again.');
     }
   } else {
     console.log("Invalid input");
