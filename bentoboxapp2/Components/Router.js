@@ -7,6 +7,7 @@ import { useAuth } from './AuthContext';
 export const Router = () => {
 //More explanations about "authData" below
 const { authData } = useAuth();
+
   return (
     <NavigationContainer>
       {authData ? < HomeStack/> : <StartStack />}

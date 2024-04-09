@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Pressable, Alert } from 'react-native';
 import doSignUp from '../api/doSignUp';
-
+import { useAuth } from '../Components/AuthContext';
 export default function SignUp() {
   const [formData, setFormData] = useState({
     firstName: '',
@@ -10,6 +10,8 @@ export default function SignUp() {
     email: '',
     password: ''
   });
+
+  const { signUp } = useAuth();
 
   const handleSignUp = async () => {
     try {
@@ -20,7 +22,7 @@ export default function SignUp() {
       }
   
       // Perform signup
-      const success = await doSignUp(formData);
+      const success = signUp(formData);
   
       if (success) {
         // Display success message
