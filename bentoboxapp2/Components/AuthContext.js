@@ -15,14 +15,10 @@ export const AuthProvider = ({ children }) => {
     setAuthData(_authData);
   };
 
-  const handleToken = (token) => {
-    console.log("Token received:", token);
-    // Now you can use the token as needed in this file
-};
 
   const signUp = async (formData) => {
     // Call doSignUp with form data
-    const _authData = await doSignUp(formData, handleToken);
+    const _authData = await doSignUp(formData);
     
     setAuthData(_authData);
   };
