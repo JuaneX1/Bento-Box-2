@@ -1,4 +1,6 @@
-const serverLink = `http://localhost:3000`;
+require('dotenv').config();
+
+const serverLink = process.env.FRONTEND_URL;
 
 const register = (user, token) => {
 	const textStr = 'Register for our app';
@@ -9,7 +11,7 @@ const register = (user, token) => {
 	// for test env on heroku: https://bento-box-3-c00801a6c9a4.herokuapp.com/
 	// for production: https://bento-box-2-df32a7e90651.herokuapp.com/
 
-	const verifyLink = serverLink + `/verify/${tokenURI}`;
+	const verifyLink = serverLink + `verify/${tokenURI}`;
     const textContent = `${textStr}\n\n${verifyLink}`;
     const htmlContent = `${htmlStr}<br><a href="${verifyLink}">Click here to verify</a>`;
 	
