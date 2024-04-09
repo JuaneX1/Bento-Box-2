@@ -11,11 +11,16 @@ export async function doSignUp(formData) {
     const response = await instance.post(`/register`, formData);
     
     if (response.status === 200) {
+
+      const { message, token, newUser } = response.data;
       console.log("skbfaskjdnaskj");
-     
+      console.log(message);
+      console.log(token);
+      console.log(token.token);
+      console.log(newUser);
        // Assuming the server responds with a token
       
-      await AsyncStorage.setItem('token', formData.email);
+      await AsyncStorage.setItem('token',token.token);
       return token;
      // Assuming this is the correct route
       

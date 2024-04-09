@@ -122,10 +122,12 @@ exports.setApp = function ( app, client ) {
 			await tempusertable.insertOne(newUser);
 
 			const token = jwtUtils.createToken(newUser);
+			console.log("testing token");
+			console.log(token);
 			const rpem = emailTemplates.register(newUser, token.token);
 			await ems.sendMail(rpem);
 
-			return res.status(200).json({ message: 'User registration email sent', newUser });
+			return res.status(200).json({ message: 'User registration email sent', ...token,newUser });
 		} catch (error) {
 			console.error(error);
 			return res.status(500).json({ error: 'Failed to connect to database' });
