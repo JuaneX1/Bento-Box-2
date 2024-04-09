@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AnimeCard from '../components/animeCards/AnimeCard';
 import '../css/Browse.css';
 
@@ -30,6 +30,13 @@ const Browse = () => {
             })
             .finally(() => setIsLoading(false));
     };
+
+    useEffect(() => {
+        const topRated = categories.find(category => category.name === 'top rated');
+        if (topRated) {
+            fetchAnimeByCategory(topRated.endpoint, topRated.name);
+        }
+    }, []);
 
     return (
         <div className="browse">

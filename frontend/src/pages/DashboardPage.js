@@ -7,7 +7,7 @@ import Browse from '../components/Browse';
 
 const Dashboard = () => {
     const navigate = useNavigate();
-    const [showSearch, setShowSearch] = useState(false);
+    const [showSearch, setShowSearch] = useState(true);
     const [showBrowse, setShowBrowse] = useState(false);
 
     const handleLogOut = () => {
@@ -33,8 +33,8 @@ const Dashboard = () => {
             </header>
 
             <div className="navigation-buttons">
-                <button onClick={toggleSearch} className={`navigation-btn navigation-btn-blue`}>Search</button>
-                <button onClick={toggleBrowse} className={`navigation-btn navigation-btn-red`}>Browse</button>
+                <button onClick={toggleSearch} className={`navigation-btn navigation-btn-blue ${showSearch ? 'active' : ''}`}>Search</button>
+                <button onClick={toggleBrowse} className={`navigation-btn navigation-btn-red ${showBrowse ? 'active' : ''}`}>Browse</button>
                 <button className="navigation-btn navigation-btn-white" disabled>Favorites</button>
             </div>
 
