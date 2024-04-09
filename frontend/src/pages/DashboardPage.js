@@ -7,7 +7,6 @@ import Browse from '../components/Browse';
 
 const Dashboard = () => {
     const navigate = useNavigate();
-    // State to manage the visibility
     const [showSearch, setShowSearch] = useState(false);
     const [showBrowse, setShowBrowse] = useState(false);
 
@@ -15,15 +14,14 @@ const Dashboard = () => {
         navigate('/');
     };
 
-    // Toggle visibility functions
     const toggleSearch = () => {
         setShowSearch(!showSearch);
-        if (showBrowse) setShowBrowse(false); // Close Browse if open
+        if (showBrowse) setShowBrowse(false);
     };
 
     const toggleBrowse = () => {
         setShowBrowse(!showBrowse);
-        if (showSearch) setShowSearch(false); // Close Search if open
+        if (showSearch) setShowSearch(false);
     };
 
     return (
@@ -35,9 +33,9 @@ const Dashboard = () => {
             </header>
 
             <div className="navigation-buttons">
-                <button onClick={toggleSearch} className="navigation-btn">Search</button>
-                <button onClick={toggleBrowse} className="navigation-btn">Browse</button>
-                <button className="navigation-btn" disabled>Favorites</button>
+                <button onClick={toggleSearch} className={`navigation-btn navigation-btn-blue`}>Search</button>
+                <button onClick={toggleBrowse} className={`navigation-btn navigation-btn-red`}>Browse</button>
+                <button className="navigation-btn navigation-btn-white" disabled>Favorites</button>
             </div>
 
             {showSearch && <AnimeSearch typeDefault={"topAnime"} />}

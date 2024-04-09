@@ -35,7 +35,11 @@ const Browse = () => {
         <div className="browse">
             <div className="category-buttons">
                 {categories.map(category => (
-                    <button key={category.name} onClick={() => fetchAnimeByCategory(category.endpoint, category.name)}>
+                    <button
+                      className="category-btn"
+                      key={category.name}
+                      onClick={() => fetchAnimeByCategory(category.endpoint, category.name)}
+                    >
                         {category.name.toUpperCase()}
                     </button>
                 ))}
