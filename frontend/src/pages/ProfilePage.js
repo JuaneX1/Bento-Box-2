@@ -3,6 +3,7 @@ import { Container, Form, Button, Image } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/FinalLogo.png';
 import '../css/ProfilePage.css';
+
 import { instance } from '../App';
 
 const ProfilePage = () => {
@@ -52,7 +53,7 @@ const ProfilePage = () => {
 	console.log("Logging out...");
 	navigate('/');
 	};
-
+  
   return (
     <>
       <header className="topbar">
