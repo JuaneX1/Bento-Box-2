@@ -7,7 +7,7 @@ function BrowseContent(props) {
     return (
         <main>
             <div className="main-head">
-                <h1 className="browse-title">Browse</h1>
+                <h1 className="browse-title">Search</h1>
                 <form className='search-box' onSubmit={props.handleSearch}>
                     <input
                         type="search"

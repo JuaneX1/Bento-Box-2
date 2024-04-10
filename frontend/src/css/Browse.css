@@ -1,0 +1,47 @@
+.browse {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+}
+
+.category {
+    margin-bottom: 40px;
+    width: 100%;
+}
+
+.category-title {
+    margin-bottom: 20px;
+    color: #fff;
+    text-align: left;
+}
+
+.anime-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.category-btn {
+    background: none;
+    color: white;
+    border: 2px solid white;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 0 10px;
+    font-family: 'Bangers', cursive;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+    text-decoration: none;
+    opacity: 0.8;
+  }
+  
+  .category-btn:hover {
+    background-color: white;
+    color: #111920;
+    opacity: 1;
+  }
+  
