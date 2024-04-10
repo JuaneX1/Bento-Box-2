@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../css/SignUpForm.css';
 import logo from '../../assets/FinalLogo.png';
-import { instance } from '../../App';
-
 const SignUpForm = ({ onClose, onSwitchBack }) => {
+
+  var bp = require('../Path.js');
 
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -14,25 +14,35 @@ const SignUpForm = ({ onClose, onSwitchBack }) => {
     email: '',
     password: ''
   });
-  
-  const [error, setError] = useState('');
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
 
-	const handleSubmit = async (event) => {
-		event.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-		await instance.post(`/register`, formData).then( response => {
-			onClose();
-			navigate(`/`);
-		}).catch( error => {
-			console.log(error);
-			setError( error.response.data );
-		});
-	};
+    try {
+      const response = await fetch(bp.buildPath('api/register'), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if (response.ok) {
+        onClose();
+        navigate('/dashboard');
+      } else {
+        // Handle error response
+        console.error('Failed to sign up');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
 return (
     <div className="signup-form-container">
@@ -79,15 +89,6 @@ return (
             value={formData.password}
             onChange={handleChange}
           />
-		  {error && Array.isArray(error.passComplexity) ? (
-			<div className="error-message"> Your password must include:
-				<ul className="error-message-list">
-					{error.passComplexity.map((e, i) => <li className="error-message-list-items" key={i}>{e}</li>)}
-				</ul>
-			</div>
-			) : (
-			<div className="error-message"> {error.message} </div>
-          )}
           <button type="submit" className="signup-submit-btn">
             Sign Up
           </button>

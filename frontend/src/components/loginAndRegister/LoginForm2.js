@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../css/LoginForm.css';
 import logo from '../../assets/FinalLogo.png';
-import { instance } from '../../App';
 
 const LoginForm2 = ({ onClose, onSwitchForm }) => {
+    var bp = require('../Path.js');
 
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
@@ -23,7 +23,13 @@ const LoginForm2 = ({ onClose, onSwitchForm }) => {
         event.preventDefault();
 
         try {
-            const response = await instance.post(`/login`, formData);
+            const response = await fetch(bp.buildPath('api/login'), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
 
             if (response.ok) {
                 onClose();

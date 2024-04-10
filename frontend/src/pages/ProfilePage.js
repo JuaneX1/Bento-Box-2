@@ -4,56 +4,42 @@ import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/FinalLogo.png';
 import '../css/ProfilePage.css';
 
-import { instance } from '../App';
-
 const ProfilePage = () => {
-	const [userData, setUserData] = useState({
-		firstName: '',
-		lastName: '',
-		username: '',
-		email: '',
-		password: '',
-	});
+  const [userData, setUserData] = useState({
+    firstName: '',
+    lastName: '',
+    username: '',
+    email: '',
+    password: '',
+  });
 
-	const token = sessionStorage.getItem('token');
-	const headers = { 'Authorization': token };
-	const navigate = useNavigate();
+  const navigate = useNavigate();
 
-	const handleChange = (e) => {
-		const { name, value } = e.target;
-		setUserData(prevState => ({
-			...prevState,
-			[name]: value,
-		}));
-	};
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUserData(prevState => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		console.log(userData);
-		// Update user profile here
-	};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(userData);
+    // Update user profile here
+  };
 
-	const handleDeleteAccount = async (event) => {
-		console.log("Account deletion initiated...");
+  const handleDeleteAccount = () => {
+    console.log("Account deletion initiated...");
+    // Deletion logic here
+    navigate('/');
+  };
 
-		const token = sessionStorage.getItem('token');
+  const handleLogOut = () => {
+    console.log("Logging out...");
+    navigate('/');
+  };
 
-		console.log(token);
-
-		await instance.delete(`/deleteUser`, { headers }).then( result => {
-			sessionStorage.removeItem('token');
-		}).catch( error => {
-			console.log({ error: error });
-		});
-
-		navigate('/');
-	};
-
-	const handleLogOut = () => {
-	console.log("Logging out...");
-	navigate('/');
-	};
-  
   return (
     <>
       <header className="topbar">

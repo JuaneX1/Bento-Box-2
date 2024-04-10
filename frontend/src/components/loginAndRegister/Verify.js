@@ -13,7 +13,7 @@ const Verify = () => {
 			console.log(ignore);
 			if (!ignore) {
 				try {
-					await instance.post(`/verify/${token}`);
+					await instance.get(`/verify/${token}`);
 					navigate('/');
 				} catch (error) {
 					//do nothing yet
