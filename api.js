@@ -1,10 +1,12 @@
 require('dotenv').config();
+
 const express = require('express');
 const { ObjectId } = require('mongodb');
 const nodemailer = require('nodemailer');
 const emailTemplates = require('./emailTemplates');
 const jwt = require("jsonwebtoken");
 const jwtUtils = require('./createJWT');
+
 const authToken = (req, res, next) => {
 	
 	const token = req.headers.authorization;
@@ -12,6 +14,7 @@ const authToken = (req, res, next) => {
 	if (!token) {
 		return res.sendStatus(401);
 	}
+
 	jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (error, decodedToken) => {
 		
 		if (error) {
@@ -21,6 +24,7 @@ const authToken = (req, res, next) => {
 		next();
 	});
 }
+
 function isComplex (str) {
 	return ([
 		{bullet: "Must contain at least 8 characters", valid: str.length >= 8 },
@@ -30,6 +34,7 @@ function isComplex (str) {
 		{bullet: "Must contain a special character", valid: /[^A-Za-z0-9]/.test(str) },
 	]).filter(rule => !rule.valid).map(rule => rule.bullet);
 }
+
 exports.setApp = function ( app, client ) {
 	
 	const db = client.db("AppNameDB");
@@ -48,6 +53,7 @@ exports.setApp = function ( app, client ) {
 	});
 	
 	app.post('/api/forgotPassword', async (req, res,next) => {
+
 		const { email } = req.body;
 		
 		console.log(email);
@@ -60,6 +66,7 @@ exports.setApp = function ( app, client ) {
 			}
 			
 			const token = jwtUtils.createToken( user );
+
 			const rpem = emailTemplates.resetPassword( user, token.token );
 			
 			try {
@@ -74,6 +81,7 @@ exports.setApp = function ( app, client ) {
 				message: 'Email sent for user',
 				user: user
 			});
+
 		} catch (e){
 			console.error(e);
 			res.status(500).json({error: 'Internal server error'});
@@ -91,15 +99,18 @@ exports.setApp = function ( app, client ) {
         }
 		
 		return res.status(200).json(user);
+
 	});
 	
 	app.post('/api/register', async (req, res, next) => {
+
 		const newUser = {
 			...req.body,
 			enteredOn: new Date()
 		};
 		
 		const passComplexity = isComplex(newUser.password);
+
 		try {
 			const existingUser = await users.findOne({ $or: [{ email: newUser.email }, { login: newUser.login }] });
 			if (existingUser) {
@@ -107,7 +118,9 @@ exports.setApp = function ( app, client ) {
 			} else if (passComplexity.length != 0) {
 				return res.status(400).json({ error: "Password does not meet complexity requirements", passComplexity });
 			}
+
 			await tempusertable.insertOne(newUser);
+
 			const token = jwtUtils.createToken(newUser);
 			const rpem = emailTemplates.register(newUser, token.token);
 			await ems.sendMail(rpem);
@@ -116,17 +129,6 @@ exports.setApp = function ( app, client ) {
 		} catch (error) {
 			console.error(error);
 			return res.status(500).json({ error: 'Failed to connect to database' });
-
-    
-          
-            
-    
-
-          
-          Expand Down
-    
-    
-  
 		}
 	});
 	
@@ -145,9 +147,11 @@ exports.setApp = function ( app, client ) {
 		await users.insertOne(user);
 		return res.status(200).json(user);
 	});
+
 	app.post('/api/login', async (req, res, next) => {
 		
 		const { login, password } = req.body;
+
 		await users.findOne({ $or: [{email: login }, {login: login}], password: password }).then( result => {
 			if (result !== null) {
 				const token = jwtUtils.createToken( result );
