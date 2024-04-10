@@ -8,10 +8,10 @@ const LoginForm = ({ onClose, onSwitchForm, onShowForgotPassword }) => {
 
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
-        email: '',
+        login: '',
         password: ''
     });
-    const [errorMessage, setErrorMessage] = useState('');
+    const [error, setError] = useState('');
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -20,20 +20,14 @@ const LoginForm = ({ onClose, onSwitchForm, onShowForgotPassword }) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
-        try {
-            const response = await instance.post(`/login`, formData );
-
-            if (response.status === 200) {
-				sessionStorage.setItem('token', response.data.token);
-                onClose();
-                navigate('/dashboard');
-            } else {
-                setErrorMessage('Incorrect email or password');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-        }
+		
+        await instance.post(`/login`, formData ).then( result => {
+			sessionStorage.setItem('token', result.data.token);
+			onClose();
+			navigate('/dashboard');
+		}).catch( error => {
+			setError( error.response.data.error );
+		});
     };
 
     return (
@@ -43,8 +37,8 @@ const LoginForm = ({ onClose, onSwitchForm, onShowForgotPassword }) => {
                 <form onSubmit={handleSubmit}>
                     <input
                         type="text"
-                        name="email"
-                        placeholder="Email"
+                        name="login"
+                        placeholder="Username or Email"
                         className="login-input"
                         value={formData.email}
                         onChange={handleChange}
@@ -57,8 +51,8 @@ const LoginForm = ({ onClose, onSwitchForm, onShowForgotPassword }) => {
                         value={formData.password}
                         onChange={handleChange}
                     />
+					{error && <p className="error-message">{error}</p>}
                     <button type="submit" className="login-submit-btn">Login</button>
-                    {errorMessage && <p className="error-message">{errorMessage}</p>}
                 </form>
                 <a href="#" className="signin-username-link" onClick={(e) => {
                     e.preventDefault();
