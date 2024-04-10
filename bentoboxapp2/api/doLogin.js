@@ -15,15 +15,13 @@ export async function doLogin(formData) {
   if (formData.email !== null || formData.password !== null) {
     try {
       // Use await to wait for response from API call
-      console.log(' ouu!');
-      console.log(formData);
       const response = await instance.post(`/login`, formData);
-      console.log('oou oou ouu!');
+      
       // Handle successful login
       if (response.status === 200) {
-        console.log('yippie!');
+       
         const { token } = response.data;
-        console.log('yappa!');
+        
         // Assuming the server responds with a token
         await AsyncStorage.setItem('token', token);
         console.log('woooo!');

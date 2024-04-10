@@ -12,8 +12,7 @@ export async function doSignUp(formData) {
     
     const { message, token, newUser } = response.data;
     if (message === "User registration email sent" && newUser) {
-      console.log(response.data);
-      console.log(token);
+      
       //const { message, token, newUser } = response.data;
      // console.log("skbfaskjdnaskj");
       //console.log(message);
@@ -21,8 +20,8 @@ export async function doSignUp(formData) {
       //console.log(newUser);
        // Assuming the server responds with a token
       
-      //await AsyncStorage.setItem('token',token.token);
-      //return token;
+      await AsyncStorage.setItem('token',newUser._id);
+      return newUser._id;
      // Assuming this is the correct route
       
     } else {
