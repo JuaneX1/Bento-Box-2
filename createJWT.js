@@ -1,8 +1,10 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+
 exports.createToken = function ( user ) {
     return _createToken( user );
 }
+
 _createToken = function ( user ) {
     try {
         const expiration = new Date();
@@ -11,20 +13,10 @@ _createToken = function ( user ) {
     }
     catch (e) {
         var ret = { error: e.message };
-
-    
-        
-          
-    
-
-        
-        Expand All
-    
-    @@ -22,12 +23,16 @@ exports.isExpired = function (token) {
-  
     }
     return ret;
 }
+
 exports.isExpired = function (token) {
 	return _isExpired(token);
 }
@@ -39,17 +31,6 @@ _isExpired = function (token) {
 }
 
 exports.getURItoken = function (URIcomponent) {
-
-    
-        
-          
-    
-
-        
-        Expand All
-    
-    @@ -39,10 +44,6 @@ exports.getURItoken = function (URIcomponent) {
-  
 	const token = decodeURIComponent(URIcomponent);
 	if (_isExpired(token)){
 		return { error: 'Token has expired' };
