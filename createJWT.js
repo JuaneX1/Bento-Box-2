@@ -1,41 +1,55 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-
 exports.createToken = function ( user ) {
     return _createToken( user );
 }
-
 _createToken = function ( user ) {
     try {
         const expiration = new Date();
-        const userData = { ...user };
-        const token = jwt.sign(userData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' });
-        var ret = { token: token };
+        const token = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' });
+        var ret = { token };
     }
     catch (e) {
         var ret = { error: e.message };
+
+    
+        
+          
+    
+
+        
+        Expand All
+    
+    @@ -22,12 +23,16 @@ exports.isExpired = function (token) {
+  
     }
     return ret;
 }
-
 exports.isExpired = function (token) {
 	return _isExpired(token);
 }
 
 _isExpired = function (token) {
-    var isError = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET,
-        (err, verifiedJwt) => {
-            if (err) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        });
-    return isError;
+	try {
+		const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+		return false;
+	} catch (error) {
+		return true;
+	}
 }
 
 exports.getURItoken = function (URIcomponent) {
+
+    
+        
+          
+    
+
+        
+        Expand All
+    
+    @@ -39,10 +44,6 @@ exports.getURItoken = function (URIcomponent) {
+  
 	const token = decodeURIComponent(URIcomponent);
 	if (_isExpired(token)){
 		return { error: 'Token has expired' };
@@ -44,6 +58,10 @@ exports.getURItoken = function (URIcomponent) {
 }
 
 exports.refresh = function (token) {
-    var ud = jwt.decode(token, { complete: true });
+    var ud = jwt.decode(token);
     return _createToken(ud);
+}
+
+exports.expireToken = function (token) {
+	this.invalidateToken(token);
 }
