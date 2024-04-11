@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, Pressable, Dimensions } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useNavigation } from '@react-navigation/native';
@@ -11,7 +11,7 @@ const windowHeight = Dimensions.get('window').height;
 
 export default function StartScreen() {
   const navigation = useNavigation();
-  const [selectedTab, setSelectedTab] = React.useState(0);
+  const [selectedTab, setSelectedTab] = useState(0);
 
   const handleTabChange = (tab) => {
     setSelectedTab(tab);
