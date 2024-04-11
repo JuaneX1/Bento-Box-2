@@ -10,7 +10,7 @@ export default function ForgotPassword() {
 
   const handleForgotPassword = async () => {
     try {
-      const response = await axios.post(buildPath('api/forgot-password'), { email });
+      const response = await axios.post(buildPath('api/forgotPassword'), { email });
       // Handle successful response here
       Alert.alert('Password Reset Email Sent', 'An email with instructions to reset your password has been sent to your email address.');
     } catch (error) {
