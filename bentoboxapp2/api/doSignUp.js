@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export async function doSignUp(formData) {
   const instance = axios.create({
     //'http://localhost:5000/api https://bento-box-3-c00801a6c9a4.herokuapp.com/api',
-    baseURL: 'https://bento-box-3-c00801a6c9a4.herokuapp.com/api' //'https://bento-box-2-df32a7e90651.herokuapp.com/api' 
+    baseURL: 'https://bento-box-2-df32a7e90651.herokuapp.com/api' //'https://bento-box-2-df32a7e90651.herokuapp.com/api' 
   });
 
   try {
