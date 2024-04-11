@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, Button, Alert } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Button, Alert, Image } from 'react-native';
 import axios from 'axios'; // Import axios for API requests
 
 const PRODUCTION = true;
@@ -12,10 +12,10 @@ export default function ForgotPassword() {
     try {
       const response = await axios.post(buildPath('api/forgot-password'), { email });
       // Handle successful response here
-      Alert.alert('Email sent for password reset');
+      Alert.alert('Password Reset Email Sent', 'An email with instructions to reset your password has been sent to your email address.');
     } catch (error) {
       // Handle error response here
-      Alert.alert('Failed to send email for password reset');
+      Alert.alert('Failed to Send Email', 'Failed to send the email for password reset. Please try again later.');
       console.error(error);
     }
   };
@@ -30,7 +30,13 @@ export default function ForgotPassword() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Forgot Password Screen</Text>
+      <View style={styles.logoContainer}>
+        <Image
+        style={styles.image}
+         source={require('../assets/BB Logo Icon_COLOR.png')}
+        />
+      </View>
+      <Text style={styles.text}>Enter your email address below to reset your password:</Text>
       <TextInput
         placeholder="Enter your email"
         onChangeText={setEmail}
@@ -47,18 +53,31 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#111920', // Match the background color of your other screens
+  },
+  logoContainer: {
+    alignItems: 'center',
+    marginBottom: 30, // Adjust as needed to reduce whitespace
+  },
+  image: {
+    width: 100, // Adjust the size of the logo as needed
+    height: 100,
   },
   text: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: 'bold',
+    color: '#fff', // White text color to match your other screens
+    textAlign: 'center',
+    marginBottom: 20, // Add some margin for better spacing
   },
   input: {
     width: '80%',
     height: 40,
     marginVertical: 10,
     paddingHorizontal: 10,
-    borderColor: 'gray',
+    borderColor: '#fff', // White border color to match your other screens
     borderWidth: 1,
+    borderRadius: 5, // Add border radius for better appearance
+    color: '#fff', // White text color to match your other screens
   },
 });
