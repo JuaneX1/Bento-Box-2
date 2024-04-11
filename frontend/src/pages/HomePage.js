@@ -1,11 +1,10 @@
-import React, { useEffect, useState, useRef } from 'react';
-import '../css/HomePage.css';
-import AnimeList from '../components/animeCards/AnimeList';
+import React, { useEffect, useRef, useState } from 'react';
 import bigLogo from '../assets/BB_Logo_Horizontal_COLOR_1.png';
-import LoginForm from '../components/loginAndRegister/LoginForm';
-import LoginForm2 from '../components/loginAndRegister/LoginForm2';
-import SignUpForm from '../components/loginAndRegister/SignUpForm';
+import AnimeList from '../components/animeCards/AnimeList';
 import ForgotPassword from '../components/loginAndRegister/ForgotPassword';
+import LoginForm from '../components/loginAndRegister/LoginForm';
+import SignUpForm from '../components/loginAndRegister/SignUpForm';
+import '../css/HomePage.css';
 
 const HomePage = () => {
     const [search, setSearch] = useState();
@@ -70,9 +69,6 @@ const HomePage = () => {
                     )}
                     {currentForm === 'login' && (
                         <LoginForm onClose={handleCloseForms} onSwitchForm={handleSwitchForm} onShowForgotPassword={() => handleSwitchForm('forgot')} />
-                    )}
-                    {currentForm === 'LoginForm2' && (
-                        <LoginForm2 onClose={handleCloseForms} onSwitchForm={handleSwitchForm} />
                     )}
                     {currentForm === 'signup' && (
                         <SignUpForm onClose={handleCloseForms} onSwitchBack={() => handleSwitchForm('login')} />
