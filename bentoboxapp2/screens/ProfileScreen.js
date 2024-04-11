@@ -2,10 +2,18 @@ import React, { useState, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage
 import { useNavigation } from '@react-navigation/native'; // Import useNavigation hook
+import { useAuth } from '../Components/AuthContext';
 
-const ProfileScreen = ({ username }) => {
+const ProfileScreen = () => {
+  const [username, setUsername] = useState('');
   const [expanded, setExpanded] = useState(false);
+  const [editUsernameModalVisible, setEditUsernameModalVisible] = useState(false);
+  const [editEmailModalVisible, setEditEmailModalVisible] = useState(false);
+  const [newUsername, setNewUsername] = useState('');
+  const [newEmail, setNewEmail] = useState('');
   const flatListRef = useRef(null);
+  const { logOut } = useAuth();
+
   const navigation = useNavigation(); // Get navigation object
 
   const toggleExpand = () => {
@@ -15,19 +23,16 @@ const ProfileScreen = ({ username }) => {
     }
   };
 
-  // Function to handle sign-out action
   const handleSignOut = async () => {
     Alert.alert('Sign Out', 'Are you sure you want to sign out?', [
       { text: 'Cancel', onPress: () => console.log('Cancel Pressed') },
-      { text: 'OK', onPress: signOut }, // Call the signOut function
+      { text: 'OK', onPress: signOut },
     ]);
   };
 
   const signOut = async () => {
     try {
-      await AsyncStorage.clear(); // Clear user session data
-      // Navigate back to the login screen or perform any other necessary action
-      navigation.navigate('Login');
+      await logOut();
       console.log('User signed out successfully');
     } catch (error) {
       console.error('Error signing out:', error.message);
@@ -35,45 +40,107 @@ const ProfileScreen = ({ username }) => {
   };
 
   const renderListItem = ({ item }) => {
-    if (item === 'Sign Out') {
-      return (
-        <TouchableOpacity style={styles.option} onPress={handleSignOut}>
-          <Text style={styles.optionText}>{item}</Text>
-        </TouchableOpacity>
-      );
-    } else {
-      return (
-        <TouchableOpacity style={styles.option}>
-          <Text style={styles.optionText}>{item}</Text>
-        </TouchableOpacity>
-      );
+    switch (item) {
+      case 'Sign Out':
+        return (
+          <TouchableOpacity style={styles.option} onPress={handleSignOut}>
+            <Text style={styles.optionText}>{item}</Text>
+          </TouchableOpacity>
+        );
+      case 'Edit Username':
+        return (
+          <TouchableOpacity style={styles.option} onPress={() => setEditUsernameModalVisible(true)}>
+            <Text style={styles.optionText}>{item}</Text>
+          </TouchableOpacity>
+        );
+      case 'Edit Email':
+        return (
+          <TouchableOpacity style={styles.option} onPress={() => setEditEmailModalVisible(true)}>
+            <Text style={styles.optionText}>{item}</Text>
+          </TouchableOpacity>
+        );
+      default:
+        return (
+          <TouchableOpacity style={styles.option}>
+            <Text style={styles.optionText}>{item}</Text>
+          </TouchableOpacity>
+        );
     }
   };
 
-  const options = [
-    'Change Password',
-    'Edit Username',
-    'Edit Email',
-    'Sign Out'
-  ];
+  const saveNewUsername = async () => {
+    try {
+      // Save new username to AsyncStorage
+      await AsyncStorage.setItem('username', newUsername);
+      setUsername(newUsername);
+      setEditUsernameModalVisible(false);
+    } catch (error) {
+      console.error('Error saving username:', error);
+    }
+  };
+
+  const saveNewEmail = () => {
+    // Implement logic to save new email
+    setEditEmailModalVisible(false);
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <Text style={styles.title}>Welcome, {username}!</Text>
+        <Text style={styles.title}>Welcome back, {username || 'Guest'}!</Text>
         <TouchableOpacity onPress={toggleExpand} style={styles.toggleButton}>
           <Text style={styles.toggleButtonText}>{expanded ? 'Hide Options' : 'Show Options'}</Text>
         </TouchableOpacity>
         {expanded && (
           <FlatList
             ref={flatListRef}
-            data={options}
+            data={['Edit Username', 'Edit Email', 'Sign Out']}
             renderItem={renderListItem}
             keyExtractor={(item, index) => index.toString()}
             style={styles.optionsList}
           />
         )}
       </View>
+      {/* Edit Username Modal */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={editUsernameModalVisible}
+        onRequestClose={() => setEditUsernameModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Edit Username</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="New Username"
+              value={newUsername}
+              onChangeText={setNewUsername}
+            />
+            <Button title="Save" onPress={saveNewUsername} />
+          </View>
+        </View>
+      </Modal>
+      {/* Edit Email Modal */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={editEmailModalVisible}
+        onRequestClose={() => setEditEmailModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Edit Email</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="New Email"
+              value={newEmail}
+              onChangeText={setNewEmail}
+            />
+            <Button title="Save" onPress={saveNewEmail} />
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -82,7 +149,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#111920',
-    justifyContent: 'center', // Center content vertically
+    justifyContent: 'center',
     alignItems: 'center',
   },
   content: {
@@ -116,6 +183,30 @@ const styles = StyleSheet.create({
   optionText: {
     color: '#fff',
     fontSize: 16,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 10,
+    width: '80%',
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 10,
   },
 });
 

@@ -23,7 +23,8 @@
     "react-native-unimodules": "^0.14.10"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "jasmine": "^5.1.0"
   },
   "private": true
 }

@@ -3,30 +3,12 @@ import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import {NavigationContainer} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import StartScreen from "./screens/StartScreen";
-import HomeStack from './Navigation/HomeStack';
+import StartScreen from "../screens/StartScreen";
+
 
 const Stack = createNativeStackNavigator()
 
-export default function StartStack() {
-  return (
-    <NavigationContainer
-    >
-      <Stack.Navigator >
-        <Stack.Screen 
-        name="Welcome" 
-        component = {StartScreen}
-        options = {{
-          title:"Welcome",
-          headerShown:false,
-          headerStyle:{
-            backgroundColor:'#111920'
-          },
-          headerTintColor: '#111920',
-
-        }}
-        />
-        <Stack.Screen  
+/* <Stack.Screen  
         name = "Home" 
         component = {HomeStack}
         
@@ -47,9 +29,25 @@ export default function StartStack() {
           
         }}
 
+        />*/ 
+export default function StartStack() {
+  return (
+      <Stack.Navigator >
+        <Stack.Screen 
+        name="Welcome" 
+        component = {StartScreen}
+        options = {{
+          title:"Welcome",
+          headerShown:false,
+          headerStyle:{
+            backgroundColor:'#111920'
+          },
+          headerTintColor: '#111920',
+
+        }}
         />
+       
       </Stack.Navigator>
-    </NavigationContainer>
   
   );
 }
