@@ -10,7 +10,7 @@ export default function Login() {
     const { signIn } = useAuth();
 
     const [formData, setFormData] = useState({
-        email: '',
+        login: '',
         password: ''
     });
 

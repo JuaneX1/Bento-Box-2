@@ -18,6 +18,7 @@ export const AuthProvider = ({ children }) => {
 
   const signUp = async (formData) => {
     // Call doSignUp with form data
+    console.log("Auth Context SIGN UP.js "+ formData.first +" "+formData.last + " "+formData.login +" "+formData.email+" "+formData.password);
     const _authData = await doSignUp(formData);
     console.log("auth data: "+_authData);
     setAuthData(_authData);

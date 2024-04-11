@@ -8,8 +8,9 @@ export async function doSignUp(formData) {
   });
 
   try {
+    console.log("do sign up.js " + formData.first +" "+formData.last + " "+formData.login +" "+formData.email+" "+formData.password);
     const response = await instance.post(`/register`, formData);
-    
+    console.log("skbfaskjdnaskj");
     const { message, token, newUser } = response.data;
     if (message === "User registration email sent" && newUser) {
       
@@ -19,9 +20,15 @@ export async function doSignUp(formData) {
       console.log(token);
       //console.log(newUser);
        // Assuming the server responds with a token
+      try{
+        await instance.post(`/verify/${token}`);
+        await AsyncStorage.setItem('token',token);
+        return token;
+      }
+      catch(error){
+        console.error('Unexpected Error:', error);
+      }
       
-      await AsyncStorage.setItem('token',token);
-      return token;
      // Assuming this is the correct route
       
     } else {

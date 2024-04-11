@@ -4,9 +4,9 @@ import doSignUp from '../api/doSignUp';
 import { useAuth } from '../Components/AuthContext';
 export default function SignUp() {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    username: '',
+    first: '',
+    last: '',
+    login: '',
     email: '',
     password: ''
   });
@@ -16,7 +16,8 @@ export default function SignUp() {
   const handleSignUp = async () => {
     try {
       // Check if any field is empty
-      if (!formData.firstName || !formData.lastName || !formData.username || !formData.email || !formData.password) {
+      if (!formData.first || !formData.last || !formData.login || !formData.email || !formData.password) {
+       console.log("Sign up.js "+ formData.first +" "+formData.last + " "+formData.login +" "+formData.email+" "+formData.password);
         Alert.alert('All fields are required');
         return;
       }
@@ -24,7 +25,7 @@ export default function SignUp() {
       // Perform signup
       const success = signUp(formData);
   
-      if (success) {
+      if (success != null) {
         // Display success message
         Alert.alert(
           'Sign Up Successful',
@@ -33,9 +34,9 @@ export default function SignUp() {
   
         // Clear form fields
         setFormData({
-          firstName: '',
-          lastName: '',
-          username: '',
+          first: '',
+          last: '',
+          login: '',
           email: '',
           password: ''
         });
@@ -54,21 +55,21 @@ export default function SignUp() {
       <TextInput
         style={styles.input}
         placeholder="First Name*"
-        onChangeText={(text) => setFormData({...formData, firstName: text})}
+        onChangeText={(text) => setFormData({...formData, first: text})}
       />
 
       <Text style={styles.inputTitle}>Last Name</Text>
       <TextInput
         style={styles.input}
         placeholder="Last Name*"
-        onChangeText={(text) => setFormData({...formData, lastName: text})}
+        onChangeText={(text) => setFormData({...formData, last: text})}
       />
 
       <Text style={styles.inputTitle}>Username</Text>
       <TextInput
         style={styles.input}
         placeholder="Username*"
-        onChangeText={(text) => setFormData({...formData, username: text})}
+        onChangeText={(text) => setFormData({...formData, login: text})}
       />
 
       <Text style={styles.inputTitle}>Email Address</Text>
