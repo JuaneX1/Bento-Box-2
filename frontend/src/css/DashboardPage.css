@@ -60,3 +60,56 @@ body {
   padding-top: 80px;
 }
 
+.navigation-btn-blue {
+  background-color: #2196F3;
+  color: white;
+  border: 2px solid transparent;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 10px;
+  font-family: 'Bangers', cursive;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.navigation-btn-red {
+  background-color: #f44336;
+  color: white;
+  border: 2px solid transparent;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 10px;
+  font-family: 'Bangers', cursive;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.navigation-btn-white {
+  background-color: white;
+  color: #111920;
+  border: 2px solid #d3d3d3;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 10px;
+  font-family: 'Bangers', cursive;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.navigation-btn-blue:hover,
+.navigation-btn-red:hover,
+.navigation-btn-white:hover {
+  opacity: 0.8;
+}
+
+.navigation-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
