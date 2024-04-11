@@ -12,9 +12,10 @@ export async function doLogin(formData) {
     baseURL: 'https://bento-box-2-df32a7e90651.herokuapp.com/api'
   });
 
-  if (formData.email !== null || formData.password !== null) {
+  if (formData.login !== null || formData.password !== null) {
     try {
       // Use await to wait for response from API call
+      console.log("do login.js " + formData.login +" "+formData.password);
       const response = await instance.post(`/login`, formData);
       
       // Handle successful login
