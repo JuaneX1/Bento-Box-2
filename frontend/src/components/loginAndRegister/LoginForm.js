@@ -1,8 +1,8 @@
-import { useParams, useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
-import '../../css/LoginForm.css';
-import logo from '../../assets/FinalLogo.png';
+import { useNavigate } from 'react-router-dom';
 import { instance } from '../../App';
+import logo from '../../assets/FinalLogo.png';
+import '../../css/LoginForm.css';
 
 const LoginForm = ({ onClose, onSwitchForm, onShowForgotPassword }) => {
 
@@ -54,10 +54,6 @@ const LoginForm = ({ onClose, onSwitchForm, onShowForgotPassword }) => {
 					{error && <p className="error-message">{error}</p>}
                     <button type="submit" className="login-submit-btn">Login</button>
                 </form>
-                <a href="#" className="signin-username-link" onClick={(e) => {
-                    e.preventDefault();
-                    onSwitchForm('LoginForm2');
-                }}>Sign in With Username</a>
                 <a href="#forgot" className="forgot-password-link" onClick={(e) => {
                     e.preventDefault();
                     onShowForgotPassword();
