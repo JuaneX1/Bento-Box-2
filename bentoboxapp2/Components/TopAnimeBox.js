@@ -1,13 +1,8 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, FlatList } from 'react-native';
 import React, { PureComponent } from 'react';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
 import AnimeListing from './AnimeListing';
-import { Dimensions } from 'react-native';
-import { debounce } from '../functions/function';
-import axios from 'axios';
-
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { fetchTopAnime } from '../api/fetchTopAnime'; // Import the fetchTopAnime function
 
 class TopAnimeBox extends PureComponent {
     constructor(props) {
@@ -18,28 +13,17 @@ class TopAnimeBox extends PureComponent {
     }
 
     componentDidMount() {
-        this.throttledGetTopAnime = debounce(this.getTopAnime, 1000); // Adjust the delay as needed
-        this.throttledGetTopAnime();
+        this.loadTopAnime(); // Call the function to load top anime data
     }
 
-    getTopAnime = async () => {
+    loadTopAnime = async () => {
         try {
-            const response = await axios.get('https://api.jikan.moe/v4/top/anime', {
-                params: {
-                    sfw: true,
-                    filter: 'bypopularity'
-                }
-            });
-            const data = response.data;
-            if (data && data.data) {
-                this.setState({ topAnime: data.data.slice(0, 25) });
-            } else {
-                console.error('Data structure is not as expected:', data);
-            }
+            const topAnimeData = await fetchTopAnime(); // Call the fetchTopAnime function
+            this.setState({ topAnime: topAnimeData }); // Update state with fetched data
         } catch (error) {
-            console.error('Error fetching top anime:', error);
+            console.error('Error loading top anime:', error);
         }
-    }
+    };
 
     render() {
         const { topAnime } = this.state;
@@ -48,7 +32,7 @@ class TopAnimeBox extends PureComponent {
             <View style={styles.container}>
                 <Text style={styles.headerText}>Most Popular</Text>
                 <FlatList
-                    keyExtractor={(item) => item.mal_id}
+                    keyExtractor={(item) => item.mal_id.toString()} // Ensure key is a string
                     horizontal={true}
                     data={topAnime}
                     renderItem={({ item }) => (
@@ -63,22 +47,12 @@ class TopAnimeBox extends PureComponent {
 const styles = StyleSheet.create({
     headerText: {
         color: "#fff",
-        height: windowHeight / 25,
         fontSize: 25,
-        marginLeft: windowWidth / 50,
-        fontWeight: 'bold'
-    },
-    animeText: {
-        fontSize: 12,
-        color: "#fff"
-    },
-    animeImages: {
-        width: 50,
-        height: 100
+        fontWeight: 'bold',
+        marginBottom: 10
     },
     container: {
-        justifyContent: "flex-start",
-        marginTop: windowHeight / 100
+        marginTop: 10
     }
 });
 

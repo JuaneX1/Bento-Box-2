@@ -4,7 +4,7 @@ import React, { PureComponent } from 'react';
 import AnimeListing from './AnimeListing';
 import { debounce } from '../functions/function';
 import { Dimensions } from 'react-native';
-
+import axios from 'axios';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -26,15 +26,14 @@ class UpcomingAnime extends PureComponent {
 
     getUpcomingAnime = async () => {
         try {
-            const response = await fetch(`https://api.jikan.moe/v4/top/anime?sfw&filter=upcoming`);
-            
-            if (!response.ok) {
-                console.log(response);
+            const response = await axios.get('https://api.jikan.moe/v4/top/anime?sfw&filter=upcoming');
+            if (response.status !== 200) {
                 throw new Error('Network response was not ok');
             }
-            const temp = await response.json();
-            if (temp && temp.data) {
-                this.setState({ upcomingAnime: temp.data.slice(0, 25) });
+    
+            const data = response.data;
+            if (data && data.data) {
+                this.setState({ upcomingAnime: data.data.slice(0, 25) });
             } else {
                 console.error('Data structure is not as expected:', data);
             }
