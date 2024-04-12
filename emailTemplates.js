@@ -24,7 +24,7 @@ const register = (user, token) => {
 
 const resetPassword = (user, token) => {
 	const textStr = 'New password for BentoBox';
-	const htmlStr = '<h2>Reset Your Password</h2> <p>You havve requested to reset your password for Bento Box. </p> <p>To reset your password, please click the following link:</p>';
+	const htmlStr = '<img src="https://lh3.googleusercontent.com/vzJUu-PxKTbMqlAiVvclZWXKUNlGn7IRm0yuzrGpeuwMAR-WAlpd6MvdQxXfNZ22NzaZQ9NIiTol-u-fnNPl7U6RgPT1sqyaTDHTdJ5Sg66uZJUvP2fARzwC7YW1yX1-=w1280"><h2>Reset Your Password</h2> <p>You have requested to reset your password for Bento Box. </p> <p>To reset your password, please click the following link:</p>';
 	const tokenURI = encodeURIComponent(token);
 	
 	// Update paths depending on location
