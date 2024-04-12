@@ -54,10 +54,10 @@ const LoginForm = ({ onClose, onSwitchForm, onShowForgotPassword }) => {
 					{error && <p className="error-message">{error}</p>}
                     <button type="submit" className="login-submit-btn">Login</button>
                 </form>
-                <a href="#" className="signin-username-link" onClick={(e) => {
+                {/* <a href="#" className="signin-username-link" onClick={(e) => {
                     e.preventDefault();
                     onSwitchForm('LoginForm2');
-                }}>Sign in With Username</a>
+                }}>Sign in With Username</a> */}
                 <a href="#forgot" className="forgot-password-link" onClick={(e) => {
                     e.preventDefault();
                     onShowForgotPassword();
