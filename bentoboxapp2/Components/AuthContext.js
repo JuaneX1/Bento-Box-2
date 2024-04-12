@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     loadAuthData();
-  }, [authData]);
+  }, []);
 
   const signIn = async (formData) => {
     // Call doLogin with form data
