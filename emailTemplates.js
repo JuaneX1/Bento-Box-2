@@ -8,7 +8,6 @@ const register = (user, token) => {
 	const tokenURI = encodeURIComponent(token);
 	
 	// Update paths depending on location
-	// for test env on heroku: https://bento-box-3-c00801a6c9a4.herokuapp.com/
 	// for production: https://bento-box-2-df32a7e90651.herokuapp.com/
 
 	const verifyLink = serverLink + `verify/${tokenURI}`;
@@ -17,19 +16,18 @@ const register = (user, token) => {
 	
 	return {
 		to: user.email,
-		subject: 'Registration for Bento Box\'d',
-		text: textContent,
+		subject: 'Bento Box! Verify Your Account\'d',
+		text: 'xd',
 		html: htmlContent
 	};
 };
 
 const resetPassword = (user, token) => {
 	const textStr = 'New password for BentoBox';
-	const htmlStr = '<p>Request for forgot Password</p>';
+	const htmlStr = '<h2>Reset Your Password</h2> <p>You havve requested to reset your password for Bento Box. </p> <p>To reset your password, please click the following link:</p>';
 	const tokenURI = encodeURIComponent(token);
 	
 	// Update paths depending on location
-	// for test env on heroku: https://bento-box-3-c00801a6c9a4.herokuapp.com/
 	// for production: https://bento-box-2-df32a7e90651.herokuapp.com/
 
 	const resetLink = serverLink + `/resetPassword/${tokenURI}`;
@@ -38,7 +36,7 @@ const resetPassword = (user, token) => {
 	
 	return {
 		to: user.email,
-		subject: 'Reset password request for Bento Box\'d',
+		subject: 'Bento Box! Reset Password\'d',
 		text: textContent,
 		html: htmlContent
 	};
