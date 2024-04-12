@@ -4,7 +4,7 @@ const serverLink = process.env.FRONTEND_URL;
 
 const register = (user, token) => {
 	const textStr = 'Register for our app';
-	const htmlStr = '<p>Register for our app</p>';
+	const htmlStr = '<img src="https://lh3.googleusercontent.com/vzJUu-PxKTbMqlAiVvclZWXKUNlGn7IRm0yuzrGpeuwMAR-WAlpd6MvdQxXfNZ22NzaZQ9NIiTol-u-fnNPl7U6RgPT1sqyaTDHTdJ5Sg66uZJUvP2fARzwC7YW1yX1-=w1280" height="80"><h2>Ready to Unbox the World of Anime?</h2><p>Welcome to Bento Box! You are receiving this email because you recently created an account with us.</p><p>Please verify your account by clicking the link below:</p>';
 	const tokenURI = encodeURIComponent(token);
 	
 	// Update paths depending on location
