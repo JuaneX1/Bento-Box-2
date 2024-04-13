@@ -27,6 +27,5 @@ function App() {
     </BrowserRouter>
   );
 }
-
 export { instance };
 export default App;
