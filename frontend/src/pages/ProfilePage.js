@@ -3,8 +3,9 @@ import { Container, Form, Button, Image } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/FinalLogo.png';
 import '../css/ProfilePage.css';
+import { instance } from '../App';
 
-const ProfilePage = () => {
+const ProfilePage = ({ onClose }) => {
   const [userData, setUserData] = useState({
     firstName: '',
     lastName: '',
@@ -12,6 +13,7 @@ const ProfilePage = () => {
     email: '',
     password: '',
   });
+  const [error, setError] = useState('');
 
   const navigate = useNavigate();
 
@@ -29,11 +31,15 @@ const ProfilePage = () => {
     // Update user profile here
   };
 
-  const handleDeleteAccount = () => {
-    console.log("Account deletion initiated...");
-    // Deletion logic here
-    navigate('/');
-  };
+  const handleDeleteAccount = async (event) => {
+        event.preventDefault();
+		
+        await instance.delete(`/deleteUser`, { headers: { Authorization: sessionStorage.getItem('token') }}).then( result => {
+			navigate('/');
+		}).catch( error => {
+			setError( error.response.data.error );
+		});
+    };
 
   const handleLogOut = () => {
     console.log("Logging out...");
