@@ -30,7 +30,7 @@ export const Router = () => {
     };
 
     fetchAsyncData();
-  }, [authData]); // Empty dependency array to run once on component mount
+  }, []); // Empty dependency array to run once on component mount
 
   if (initialRoute === null) {
     // Render a loading indicator while fetching AsyncStorage data
