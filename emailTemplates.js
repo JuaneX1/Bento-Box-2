@@ -36,7 +36,7 @@ const resetPassword = (user, token) => {
 	
 	return {
 		to: user.email,
-		subject: 'Bento Box! Reset Password\'d',
+		subject: 'Bento Box! Reset Password',
 		text: textContent,
 		html: htmlContent
 	};

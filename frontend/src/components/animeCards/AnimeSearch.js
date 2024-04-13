@@ -28,8 +28,8 @@ function AnimeSearch({ typeDefault }) {
 
     useEffect(() => {
         const delaySearch = setTimeout(() => {
-            fetchAnime(search); // Trigger the fetchAnime function after the user stops typing for 1 second
-        }, 2000); // Adjust the delay as needed (1000 milliseconds in this example)
+            fetchAnime(search);
+        }, 2000);
 
         return () => clearTimeout(delaySearch); // Clear the timeout on component unmount or when search changes
     }, [search]);
