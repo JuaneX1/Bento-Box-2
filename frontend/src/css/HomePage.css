@@ -173,3 +173,10 @@ body {
     align-items: flex-start;
     padding-top: 100px;
 }
+  
+.image-container img {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 120px;
+  }

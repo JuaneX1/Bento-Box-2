@@ -5,6 +5,8 @@ import ForgotPassword from '../components/loginAndRegister/ForgotPassword';
 import LoginForm from '../components/loginAndRegister/LoginForm';
 import SignUpForm from '../components/loginAndRegister/SignUpForm';
 import '../css/HomePage.css';
+import { Link } from 'react-router-dom';
+import Image1 from '../assets/easteregg.png'
 
 const HomePage = () => {
     const [search, setSearch] = useState();
@@ -48,9 +50,7 @@ const HomePage = () => {
 
     return (
         <>
-            <div className="topbar">
-                <button className="about-us-button">About Us</button>
-            </div>
+            <div className="topbar"></div>
             <div className='container'>
                 <div className='anime-row' ref={animeRowRef}>
                     <div className='row'>
@@ -77,7 +77,13 @@ const HomePage = () => {
                         <ForgotPassword onClose={handleCloseForms} onSwitchForm={() => handleSwitchForm('login')} />
                     )}
                 </div>
+                <div className='image-container'>
+                    <Link to='/about-us'>
+                        <img src={Image1} alt="Anime" />
+                    </Link>
+                </div>
             </div>
+
         </>
     );
 };
