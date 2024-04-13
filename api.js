@@ -66,6 +66,7 @@ exports.setApp = function ( app, client ) {
 			}
 			
 			const token = jwtUtils.createToken( user );
+			console.log('jwtUtils.createToken( user ) : ' + token.token); //added now
 
 			const rpem = emailTemplates.resetPassword( user, token.token );
 			
@@ -89,10 +90,15 @@ exports.setApp = function ( app, client ) {
 	});
 	
 	app.post('/api/resetPassword/:token', async (req, res) => {
+		//console.log('Received token: ' + req.params.token); // used for resetPassword debugging
+
 		const tokenData = jwtUtils.getURItoken(req.params.token);
+
+		//console.log('tokenData : ' + JSON.stringify(tokenData)); used for resetPassword debugging
+
 		const { password } = req.body
 		
-		const user = await users.updateOne({ email: tokenData.email }, { $set: { password: password } } );
+		const user = await users.updateOne({ email: tokenData.user.email }, { $set: { password: password } } );
 		
 		if (!user) {
             return res.status(404).json({ error: 'User not found' });

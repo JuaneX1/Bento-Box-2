@@ -32,9 +32,11 @@ _isExpired = function (token) {
 
 exports.getURItoken = function (URIcomponent) {
 	const token = decodeURIComponent(URIcomponent);
+	//console.log('getURItoken (createJWT): ' + token.token); used for resetPassword debugging
 	if (_isExpired(token)){
 		return { error: 'Token has expired' };
 	}
+	//console.log('jwt.decode (createJWT): ' + jwt.decode(token)); used for resetPassword debugging
 	return jwt.decode(token);
 }
 
