@@ -28,6 +28,7 @@ const SignUpForm = ({ onClose, onSwitchBack }) => {
 		await instance.post(`/register`, formData).then( response => {
 			onClose();
 			navigate(`/`);
+      
 		}).catch( error => {
 			console.log(error);
 			setError( error.response.data );

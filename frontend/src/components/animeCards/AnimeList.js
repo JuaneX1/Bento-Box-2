@@ -6,7 +6,7 @@ const AnimeList = ({ animelist, setAnimeInfo }) => {
     <div className="anime-list">
       {animelist ? (
         animelist.map((anime, index) => (
-          <div className="card" key={index} onClick={() => setAnimeInfo(anime)}>
+          <div className="card" key={index} >
             <img src={anime.images.jpg.large_image_url} alt="animeImage" />
             <div className="anime-info">
               <div className="title">
