@@ -66,6 +66,7 @@ return (
             className="signup-input"
             value={formData.name}
             onChange={handleChange}
+            required
           />
           <label htmlFor="email" className="signup-label">Email (Required):</label>
           <input
