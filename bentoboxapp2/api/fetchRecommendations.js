@@ -20,8 +20,8 @@ export const fetchRecommendations = async ({id}) => {
         if (data && data.data) {
             // Cache the fetched data with current timestamp
             const timestamp = Date.now();
-            await AsyncStorage.setItem('recommendedAnime', JSON.stringify({ data: data.data.slice(0, 1), timestamp }));
-            return fetchRecInfo(data.data.slice(0, 10));
+            await AsyncStorage.setItem('recommendedAnime', JSON.stringify({ data: data.data.slice(0, 10), timestamp }));
+            return data.data.slice(0, 10);
         } else {
             console.error('Data structure is not as expected:', data);
             return [];

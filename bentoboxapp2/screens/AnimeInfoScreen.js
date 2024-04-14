@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-
+import{formatPlot, ratingFormat} from '../functions/function.js';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -61,6 +61,19 @@ const AnimeInfoScreen = ({ route }) => {
         }
     };
 
+    const getScoreTextColor = (score) => {
+        if (score >= 8) {
+            return '#00ff00'; // Green color for high scores
+        } else if (score >= 6) {
+            return '#ff8c00'; // Orange color for medium scores
+        } else if (score > 0){
+            return '#ff0000'; // Red color for low scores
+        }else{
+            return '#FFFFFF'
+        }
+    }
+
+
     if (!anime) {
         return (
             <View style={styles.card}>
@@ -91,8 +104,8 @@ const AnimeInfoScreen = ({ route }) => {
                 </View>
                 <Text style={styles.animeSubTitle}>
                     {anime.type}{' · '}
-                    {anime.type === 'TV' ? `Episodes: ${anime.episodes}` : `${anime.duration} min`}
-                    {' · '}{anime.aired.prop.from.year}{' · '}{anime.rating}
+                    {anime.type === 'TV' ? `Episodes: ${anime.episodes}` : `${anime.duration}`}
+                    {' · '}{anime.aired.prop.from.year}{' · '}{ratingFormat(anime.rating)}
                 </Text>
                 <View style={styles.genreBox}>
                     {anime.genres.map(genre => (
@@ -101,7 +114,29 @@ const AnimeInfoScreen = ({ route }) => {
                         </Text>
                     ))}
                 </View>
-                <Text style={styles.plot}>{anime.synopsis}</Text>
+
+                <Text style={styles.plot}>{"     "}{formatPlot(anime.synopsis)}</Text>
+
+                <View style={{alignContent:'center', width: windowWidth, flexDirection: 'row' }}>
+                    <View style={styles.statsBox}>
+                        <Text style={styles.statsTitle}>Score: </Text>
+                        <Text style={{fontWeight:'600', fontSize: 32, color: getScoreTextColor(anime.score) }}>
+                            {anime.score == 0 || anime.score == null ? 'NaN' : anime.score}</Text>
+                    </View>
+                    <View style={styles.statsBox}>
+                        <Text style={styles.statsTitle}>Rank: </Text>
+                        <Text style={{fontWeight:'600', fontSize: 32, color: "#ffffff" }}>
+                            {anime.rank == 0 || anime.rank == null ? 'NaN' : anime.rank}</Text>
+                    </View>
+                    <View style={styles.statsBox}>
+                        <Text style={styles.statsTitle}>Popularity: </Text>
+                        <Text style={{fontWeight:'600', fontSize: 32, color: "#ffffff" }}>
+                            {anime.popularity == 0 || anime.popularity == null ? 'NaN' : anime.popularity}</Text>
+                    </View>
+                </View>
+                <View style={{alignContent:'center', width: windowWidth, flexDirection: 'row' }}>
+                    <Text style={{ marginTop: 5 }}>Where to Watch</Text>
+                </View>
             </View>
         </ScrollView>
     );
