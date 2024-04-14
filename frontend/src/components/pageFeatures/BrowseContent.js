@@ -11,7 +11,7 @@ function BrowseContent(props) {
                 <form className='search-box' onSubmit={props.handleSearch}>
                     <input
                         type="search"
-                        placeholder="Search for an anime..."
+                        placeholder="Search a show"
                         required
                         value={props.search}
                         onChange={props.handleSearchChange} // Ensure handleSearchChange is passed here

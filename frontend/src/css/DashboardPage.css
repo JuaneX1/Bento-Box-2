@@ -4,7 +4,11 @@
 }
 
 .dashboard {
-  background-color: #2a2f36;
+  background: rgb(253,29,29);
+  background: -moz-linear-gradient(90deg, rgba(253,29,29,1) 21%, rgba(252,176,69,1) 65%, rgba(46,119,174,1) 100%);
+  background: -webkit-linear-gradient(90deg, rgba(253,29,29,1) 21%, rgba(252,176,69,1) 65%, rgba(46,119,174,1) 100%);
+  background: linear-gradient(90deg, rgba(253,29,29,1) 21%, rgba(252,176,69,1) 65%, rgba(46,119,174,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#fd1d1d",endColorstr="#2e77ae",GradientType=1);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -40,7 +44,7 @@
   font-size: 16px;
   cursor: pointer;
   margin: 0 10px;
-  font-family: 'Bangers', cursive;
+  font-family: "Rowdies", sans-serif;
   transition: all 0.3s;
   border-radius: 5px;
   text-decoration: none;
@@ -68,7 +72,7 @@ body {
   font-size: 16px;
   cursor: pointer;
   margin: 10px;
-  font-family: 'Bangers', cursive;
+  font-family: "Rowdies", sans-serif;
   transition: all 0.3s ease;
   border-radius: 5px;
   text-decoration: none;
@@ -82,7 +86,7 @@ body {
   font-size: 16px;
   cursor: pointer;
   margin: 10px;
-  font-family: 'Bangers', cursive;
+  font-family: "Rowdies", sans-serif;
   transition: all 0.3s ease;
   border-radius: 5px;
   text-decoration: none;
@@ -96,7 +100,7 @@ body {
   font-size: 16px;
   cursor: pointer;
   margin: 10px;
-  font-family: 'Bangers', cursive;
+  font-family: "Rowdies", sans-serif;
   transition: all 0.3s ease;
   border-radius: 5px;
   text-decoration: none;

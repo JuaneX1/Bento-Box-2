@@ -50,7 +50,6 @@ const HomePage = () => {
 
     return (
         <>
-            <div className="topbar"></div>
             <div className='container'>
                 <div className='anime-row' ref={animeRowRef}>
                     <div className='row'>

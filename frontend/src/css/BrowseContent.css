@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&display=swap');
 .main-head {
   display: flex;
   flex-direction: column;
@@ -6,7 +7,7 @@
 }
 
 .browse-title {
-  font-family: 'Bangers', cursive;
+  font-family: "Rowdies", sans-serif;
   font-size: 48px;
   color: white;
   margin-bottom: 20px;
@@ -21,12 +22,12 @@
   color: white;
   box-shadow: 0 2px 4px rgba(0,0,0,.5);
   font-size: 20px;
-  font-family: 'Bangers', cursive;
+  font-family: "Rowdies", sans-serif;
 }
 
 .search-box input::placeholder {
   color: #bbb;
-  font-family: 'Bangers', cursive;
+  font-family: "Rowdies", sans-serif;
 }
 
 
