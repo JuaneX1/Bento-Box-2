@@ -1,4 +1,3 @@
-// BrowseContent.js
 import React from 'react';
 import AnimeCard from '../animeCards/AnimeCard';
 import '../../css/BrowseContent.css';
@@ -6,17 +5,6 @@ import '../../css/BrowseContent.css';
 function BrowseContent(props) {
     return (
         <main>
-            <div className="main-head">
-                <h1 className="browse-title">Search</h1>
-                <form className='search-box' onSubmit={props.handleSearch}>
-                    <input
-                        type="search"
-                        placeholder="Search a show"
-                        value={props.search}
-                        onChange={props.handleSearchChange}
-                    />
-                </form>
-            </div>
             <div className="anime-list">
                 {props.animeList?.map(anime => (
                     <AnimeCard

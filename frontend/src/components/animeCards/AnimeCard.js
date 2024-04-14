@@ -12,19 +12,18 @@ function AnimeCard({ anime }) {
     setShowSynopsis(false);
   };
 
-  const truncateSynopsis = (synopsis, maxLength) => {
-    if (synopsis.length <= maxLength) {
+  const truncateSynopsis = (synopsis) => {
+    if (!synopsis || synopsis.length <= 150) {
       return synopsis;
     }
-    return synopsis.substring(0, maxLength) + '...';
+    return synopsis.substring(0, 150) + '...';
   };
+  
 
   return (
     <article className="anime-card" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
     <a
         href={anime.url}
-        target="_blank"
-        rel="norefererr"
       >
         <figure>
           <img src={anime.images.jpg.image_url} alt="AnimeImage" />
@@ -33,7 +32,7 @@ function AnimeCard({ anime }) {
 
       {showSynopsis && (
         <div className="synopsis-overlay">
-          <p>{truncateSynopsis(anime.synopsis, 150)}</p>
+          <p>{truncateSynopsis(anime.synopsis)}</p>
         </div>
       )}
     </a>

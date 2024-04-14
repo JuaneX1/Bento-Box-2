@@ -12,29 +12,3 @@
   color: white;
   margin-bottom: 20px;
 }
-
-.search-box input {
-  width: 100%;
-  padding: 15px;
-  border-radius: 20px;
-  border: none;
-  background-color: #333;
-  color: white;
-  box-shadow: 0 2px 4px rgba(0,0,0,.5);
-  font-size: 20px;
-  font-family: "Rowdies", sans-serif;
-}
-
-.search-box input::placeholder {
-  color: #bbb;
-  font-family: "Rowdies", sans-serif;
-}
-
-
-@media (max-width: 600px) {
-  .search-box input {
-    width: 80%;
-    padding: 10px;
-    font-size: 18px;
-  }
-}
