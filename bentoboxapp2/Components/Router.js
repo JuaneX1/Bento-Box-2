@@ -4,7 +4,9 @@ import HomeStack from '../Navigation/HomeStack';
 import StartStack from '../Navigation/StartStack';
 import { useAuth } from './AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import LoadingScreen from './LoadingScreen';
+import LoadingScreen from '../screens/LoadingScreen';
+
+
 export const Router = () => {
   const { authData } = useAuth();
   const [initialRoute, setInitialRoute] = useState(null);
@@ -12,11 +14,17 @@ export const Router = () => {
   useEffect(() => {
     const fetchAsyncData = async () => {
       try {
+        //await AsyncStorage.removeItem('favorites');
+        const favorites = await AsyncStorage.getItem('favorites');
+
+        
+        global.favorites=favorites;
         //const { authData } = useAuth();
           //await AsyncStorage.removeItem('token');
           // Check if value exists in AsyncStorage, set initialRoute accordingly
           if(authData){
             console.log('good authData');
+            
           }
           else{
             console.log('mid authData');
@@ -30,7 +38,7 @@ export const Router = () => {
     };
 
     fetchAsyncData();
-  }, []); // Empty dependency array to run once on component mount
+  }, [authData]); // Empty dependency array to run once on component mount
 
   if (initialRoute === null) {
     // Render a loading indicator while fetching AsyncStorage data

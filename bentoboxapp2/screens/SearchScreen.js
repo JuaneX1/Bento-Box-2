@@ -6,7 +6,6 @@ import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { debounce} from '../functions/function'; // Import the debounce function
 
-global.s = ''
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 

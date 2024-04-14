@@ -11,25 +11,21 @@ import HomeScreen from '../screens/HomeScreen';
 
 const Stack = createNativeStackNavigator()
 
-export default function SearchStack() {
+export default function FavoriteStack() {
   const navigation = useNavigation()
   return (
       <Stack.Navigator >
         <Stack.Screen 
-        name="Discover" 
-        component = {DiscoverScreen}
+        name="Favorites" 
+        component = {HomeScreen}
         options = {{
 
-          headerShown:true,
+          headerShown:false,
           headerStyle:{
             backgroundColor:'#111920'
           },
           headerTintColor: '#111920',
-          headerRight: () => (
-            <FontAwesome name="search" size={24} color="white" 
-            onPress={() => navigation.navigate('SearchScreen')}
-            />
-          ),
+         
         }}
         />
          <Stack.Screen 
@@ -44,19 +40,7 @@ export default function SearchStack() {
           },
         }}
         />
-         <Stack.Screen 
-        name="SearchScreen"
-        component = {SearchScreen}
-        options = {{
-          headerShown:false,
-          headerStyle:{
-            backgroundColor:'#111920',
-            headerTintColor: '#111920',
-          },
-
-
-        }}
-        />
+         
       </Stack.Navigator>
   
   );

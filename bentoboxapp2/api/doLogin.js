@@ -29,8 +29,13 @@ export async function doLogin(formData) {
         return token;
        console.log('oou oou ouu!'); // Assuming this is the correct route
         
-      } else {
-        console.log('Unexpected response status:', response.status);
+      } else if (response.status === 401){
+        const error = response.data;
+        console.log('Unexpected response status:', error);
+      }
+      else{
+        const error = response.data;
+        console.log('Unexpected response status:', error);
       }
     } catch (error) {
       console.error('Error:', error);

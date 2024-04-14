@@ -7,22 +7,22 @@ export async function doSignUp(formData) {
     baseURL: 'https://bento-box-2-df32a7e90651.herokuapp.com/api' //'https://bento-box-2-df32a7e90651.herokuapp.com/api' 
   });
 
+
+
   try {
     console.log("do sign up.js " + formData.first +" "+formData.last + " "+formData.login +" "+formData.email+" "+formData.password);
     const response = await instance.post(`/register`, formData);
     console.log("skbfaskjdnaskj");
-    const { message, token, newUser } = response.data;
-    if (message === "User registration email sent" && newUser) {
-      
-      //const { message, token, newUser } = response.data;
-     // console.log("skbfaskjdnaskj");
-      //console.log(message);
+    if (response.status === 200) {
+      const { message, token, newUser } = response.data;
+      console.log(message);
       console.log(token);
-      //console.log(newUser);
-       // Assuming the server responds with a token
+      console.log(newUser);
+       
       try{
-        await instance.post(`/verify/${token}`);
+        
         await AsyncStorage.setItem('token',token);
+
         return token;
       }
       catch(error){
@@ -31,9 +31,18 @@ export async function doSignUp(formData) {
       
      // Assuming this is the correct route
       
-    } else {
-      console.error('Unexpected response from server:', response.data);
+    } else if (response.status === 401){
+      const {error} = response.data;
+      console.error('Uh Oh!', error);
       // Signup failed
+    }
+    else if (response.status === 400){
+      const {error} = response.data;
+      console.error('Uh Oh!', error);
+    }
+    else{
+      const {error} = response.data;
+      console.error('Uh Oh!', error);
     }
   } catch (error) {
     console.error('Error:', error);

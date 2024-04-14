@@ -1,14 +1,17 @@
 import React, { PureComponent } from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, View, FlatList, ActivityIndicator } from 'react-native';
 import AnimeListing from './AnimeListing';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { fetchTopAnime } from '../api/fetchTopAnime'; // Import the fetchTopAnime function
+import LoadingScreen from '../screens/LoadingScreen';
+import Loading from '../screens/LoadingScreen';
 
 class TopAnimeBox extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            topAnime: []
+            topAnime: [],
+            loading: true // Add loading state
         };
     }
 
@@ -19,14 +22,21 @@ class TopAnimeBox extends PureComponent {
     loadTopAnime = async () => {
         try {
             const topAnimeData = await fetchTopAnime(); // Call the fetchTopAnime function
-            this.setState({ topAnime: topAnimeData }); // Update state with fetched data
+            this.setState({ topAnime: topAnimeData, loading: false }); // Update state with fetched data and set loading to false
         } catch (error) {
             console.error('Error loading top anime:', error);
+            this.setState({ loading: false }); // Set loading to false even if there's an error
         }
     };
 
     render() {
-        const { topAnime } = this.state;
+        const { topAnime, loading } = this.state;
+
+        if (loading) {
+            return (
+                <Loading/>
+            );
+        }
 
         return (
             <View style={styles.container}>
@@ -53,6 +63,11 @@ const styles = StyleSheet.create({
     },
     container: {
         marginTop: 10
+    },
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 });
 

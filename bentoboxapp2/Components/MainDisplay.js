@@ -3,7 +3,7 @@ import { StyleSheet, View, ActivityIndicator } from 'react-native';
 import TopAnimeBox from '../Components/TopAnimeBox';
 import CurrentSeason from '../Components/CurrentSeason';
 import UpcomingAnime from './UpcomingAnime';
-import LoadingScreen from './LoadingScreen';
+import LoadingScreen from '../screens/LoadingScreen';
 
 class MainDisplay extends PureComponent {
     constructor(props) {
