@@ -40,7 +40,7 @@ return (
       <img src={logo} alt="Logo" className="signup-logo" />
       <div className="signup-content">
         <form onSubmit={handleSubmit}>
-          <label htmlFor="first" className="signup-label">First Name</label>
+          <label htmlFor="first" className="signup-label">First Name:</label>
           <input
             type="text"
             name="first"
@@ -49,7 +49,7 @@ return (
             value={formData.name}
             onChange={handleChange}
           />
-          <label htmlFor="last" className="signup-label">Last Name</label>
+          <label htmlFor="last" className="signup-label">Last Name:</label>
           <input
             type="text"
             name="last"
@@ -58,7 +58,7 @@ return (
             value={formData.name}
             onChange={handleChange}
           />
-          <label htmlFor="login" className="signup-label">Username</label>
+          <label htmlFor="login" className="signup-label">Username:</label>
           <input
             type="text"
             name="login"
@@ -67,7 +67,7 @@ return (
             value={formData.name}
             onChange={handleChange}
           />
-          <label htmlFor="email" className="signup-label">Email</label>
+          <label htmlFor="email" className="signup-label">Email (Required):</label>
           <input
             type="email"
             name="email"
@@ -79,7 +79,7 @@ return (
             pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
             title="Enter a valid email address: example@email.com"
           />
-          <label htmlFor="password" className="signup-label">Password</label>
+          <label htmlFor="password" className="signup-label">Password (Required):</label>
           <input
             type="password"
             name="password"
@@ -91,6 +91,11 @@ return (
             required 
             title="Must contain at least 8 characters, one uppercase letter, one numeric character, and one special character"
           />
+
+          {/* Display error message if there's an error durning call */}
+          {error && (
+            <div>Error: Username/Email already taken! <br></br>Please choose a different one!</div>
+          )}
           <button type="submit" className="signup-submit-btn">
             Sign Up
           </button>
