@@ -12,14 +12,13 @@ function BrowseContent(props) {
                     <input
                         type="search"
                         placeholder="Search a show"
-                        required
                         value={props.search}
-                        onChange={props.handleSearchChange} // Ensure handleSearchChange is passed here
+                        onChange={props.handleSearchChange}
                     />
                 </form>
             </div>
             <div className="anime-list">
-                {props.animeList.map(anime => (
+                {props.animeList?.map(anime => (
                     <AnimeCard
                         anime={anime}
                         key={anime.mal_id}
