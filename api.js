@@ -157,6 +157,14 @@ exports.setApp = function ( app, client ) {
 	app.post('/api/login', async (req, res, next) => {
 		
 		const { login, password } = req.body;
+		
+		await tempusertable.findOne({ $or: [{email: login }, {login: login}], password: password }).then( result => {
+			if (result !== null) {
+				return res.status(402).json({
+					error: "Account has not been verfied. Please check your email to verify your account."
+				});
+			}
+		});
 
 		await users.findOne({ $or: [{email: login }, {login: login}], password: password }).then( result => {
 			if (result !== null) {
