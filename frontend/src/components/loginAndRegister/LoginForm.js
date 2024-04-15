@@ -35,6 +35,7 @@ const LoginForm = ({ onClose, onSwitchForm, onShowForgotPassword }) => {
             <img src={logo} alt="Logo" className="login-logo" />
             <div className="login-content">
                 <form onSubmit={handleSubmit}>
+                <label htmlFor="login" className="signup-label">Username/Email:</label>
                     <input
                         type="text"
                         name="login"
@@ -43,6 +44,7 @@ const LoginForm = ({ onClose, onSwitchForm, onShowForgotPassword }) => {
                         value={formData.email}
                         onChange={handleChange}
                     />
+                <label htmlFor="password" className="signup-label">Password:</label>
                     <input
                         type="password"
                         name="password"

@@ -13,6 +13,7 @@ const HomePage = () => {
     const [animeData, setAnimeData] = useState();
     const [currentForm, setCurrentForm] = useState('');
     const animeRowRef = useRef(null);
+    const [showVerificationBar, setShowVerificationBar] = useState(false);
 
     // gets the animes to display in sidebar, 24 is to make it flush since in 3 by 3 grid
     const getData = async () => {
@@ -42,6 +43,7 @@ const HomePage = () => {
 
     const handleSwitchForm = (formType) => {
         setCurrentForm(formType);
+        setShowVerificationBar(false);
     };
 
     const handleCloseForms = () => {
@@ -50,6 +52,14 @@ const HomePage = () => {
 
     return (
         <>
+            <div className="topbar">
+                <button className="about-us-button">About Us</button>
+            </div>
+            {showVerificationBar && (
+                <div className="verification-bar">
+                    <p>Email Verification Sent: Please Check Email to Verify Account and Be Able To Login!</p>
+                </div>
+            )}
             <div className='container'>
                 <div className='anime-row' ref={animeRowRef}>
                     <div className='row'>
@@ -70,7 +80,7 @@ const HomePage = () => {
                         <LoginForm onClose={handleCloseForms} onSwitchForm={handleSwitchForm} onShowForgotPassword={() => handleSwitchForm('forgot')} />
                     )}
                     {currentForm === 'signup' && (
-                        <SignUpForm onClose={handleCloseForms} onSwitchBack={() => handleSwitchForm('login')} />
+                        <SignUpForm onClose={handleCloseForms} onSwitchBack={() => handleSwitchForm('login')} setShowVerificationBar={setShowVerificationBar} />
                     )}
                     {currentForm === 'forgot' && (
                         <ForgotPassword onClose={handleCloseForms} onSwitchForm={() => handleSwitchForm('login')} />

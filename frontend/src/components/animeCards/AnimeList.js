@@ -7,7 +7,9 @@ const AnimeList = ({ animelist, setAnimeInfo }) => {
     <div className="anime-list">
       {animelist ? (
         animelist.map((anime, index) => (
-          <AnimeCard anime= {anime} key={index} setAnimeInfo={setAnimeInfo} />
+          <div className="card" key={index} >
+            <img src={anime.images.jpg.large_image_url} alt="animeImage" />
+          </div>
         ))
       ) : (
         <p>loading...</p>
