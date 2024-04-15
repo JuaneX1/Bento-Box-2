@@ -56,8 +56,6 @@ exports.setApp = function ( app, client ) {
 
 		const { email } = req.body;
 		
-		console.log(email);
-		
 		try{
 			const user = await users.findOne({ email: email});
 			
@@ -66,7 +64,6 @@ exports.setApp = function ( app, client ) {
 			}
 			
 			const token = jwtUtils.createToken( user );
-			console.log('jwtUtils.createToken( user ) : ' + token.token); //added now
 
 			const rpem = emailTemplates.resetPassword( user, token.token );
 			
@@ -90,11 +87,8 @@ exports.setApp = function ( app, client ) {
 	});
 	
 	app.post('/api/resetPassword/:token', async (req, res) => {
-		//console.log('Received token: ' + req.params.token); // used for resetPassword debugging
 
 		const tokenData = jwtUtils.getURItoken(req.params.token);
-
-		//console.log('tokenData : ' + JSON.stringify(tokenData)); used for resetPassword debugging
 
 		const { password } = req.body
 		
@@ -157,6 +151,14 @@ exports.setApp = function ( app, client ) {
 	app.post('/api/login', async (req, res, next) => {
 		
 		const { login, password } = req.body;
+		
+		await tempusertable.findOne({ $or: [{email: login }, {login: login}], password: password }).then( result => {
+			if (result !== null) {
+				return res.status(402).json({
+					error: "Account has not been verfied. Please check your email to verify your account."
+				});
+			}
+		});
 
 		await users.findOne({ $or: [{email: login }, {login: login}], password: password }).then( result => {
 			if (result !== null) {

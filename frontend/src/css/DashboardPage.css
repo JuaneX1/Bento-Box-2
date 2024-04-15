@@ -4,7 +4,11 @@
 }
 
 .dashboard {
-  background-color: #2a2f36;
+  background: rgb(253,29,29);
+  background: -moz-linear-gradient(90deg, rgba(253,29,29,1) 2%, rgba(252,176,69,1) 31%, rgba(46,119,174,1) 59%);
+  background: -webkit-linear-gradient(90deg, rgba(253,29,29,1) 2%, rgba(252,176,69,1) 31%, rgba(46,119,174,1) 59%);
+  background: linear-gradient(90deg, rgba(253,29,29,1) 2%, rgba(252,176,69,1) 31%, rgba(46,119,174,1) 59%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#fd1d1d",endColorstr="#2e77ae",GradientType=1);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -40,7 +44,7 @@
   font-size: 16px;
   cursor: pointer;
   margin: 0 10px;
-  font-family: 'Bangers', cursive;
+  font-family: "Rowdies", sans-serif;
   transition: all 0.3s;
   border-radius: 5px;
   text-decoration: none;
@@ -68,7 +72,7 @@ body {
   font-size: 16px;
   cursor: pointer;
   margin: 10px;
-  font-family: 'Bangers', cursive;
+  font-family: "Rowdies", sans-serif;
   transition: all 0.3s ease;
   border-radius: 5px;
   text-decoration: none;
@@ -82,7 +86,7 @@ body {
   font-size: 16px;
   cursor: pointer;
   margin: 10px;
-  font-family: 'Bangers', cursive;
+  font-family: "Rowdies", sans-serif;
   transition: all 0.3s ease;
   border-radius: 5px;
   text-decoration: none;
@@ -96,7 +100,7 @@ body {
   font-size: 16px;
   cursor: pointer;
   margin: 10px;
-  font-family: 'Bangers', cursive;
+  font-family: "Rowdies", sans-serif;
   transition: all 0.3s ease;
   border-radius: 5px;
   text-decoration: none;
@@ -113,3 +117,89 @@ body {
   cursor: not-allowed;
 }
 
+.content-wrap input {
+  width: 100%;
+  padding: 15px;
+  border-radius: 20px;
+  border: none;
+  background-color: #333;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,.5);
+  font-size: 20px;
+  font-family: "Rowdies", sans-serif;
+}
+
+.content-wrap h1 {
+  font-family: "Rowdies", sans-serif;
+  font-size: 48px;
+  color: white;
+  margin-bottom: 20px;
+}
+.content-wrap input {
+  width: 100%;
+  padding: 15px;
+  border-radius: 20px;
+  border: none;
+  background-color: #333;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,.5);
+  font-size: 20px;
+  font-family: "Rowdies", sans-serif;
+}
+
+.content-wrap input::placeholder {
+  color: #bbb;
+  font-family: "Rowdies", sans-serif;
+}
+
+@media (max-width: 600px) {
+  .content-wrap input {
+    width: 80%;
+    padding: 10px;
+    font-size: 18px;
+  }
+}
+
+
+.content-wrap input {
+  flex: 1;
+  width: 50%;
+  padding: 15px;
+  border-radius: 20px;
+  border: none;
+  background-color: #333;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .5);
+  font-size: 20px;
+  font-family: "Rowdies", sans-serif;
+}
+
+.content-wrap button {
+  padding: 15px;
+  border: none;
+  border-radius: 20px;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 20px;
+  font-family: "Rowdies", sans-serif;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-left: 15px;
+}
+
+.content-wrap button:hover {
+  background-color: #45a049;
+}
+
+.content-wrap input::placeholder {
+  color: #bbb;
+  font-family: "Rowdies", sans-serif;
+}
+
+@media (max-width: 600px) {
+  .content-wrap input {
+    width: 60%;
+    padding: 10px;
+    font-size: 18px;
+  }
+}
