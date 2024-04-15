@@ -55,7 +55,7 @@ const HomePage = () => {
 
     return (
         <>
-            <div className="topbar">
+            <div className="topbarHomePage topbar">
                 <Link to='/about-us'>
                     <button className="about-us-button">About Us</button>
                 </Link>
