@@ -14,6 +14,7 @@ const HomePage = () => {
     const [currentForm, setCurrentForm] = useState('');
     const animeRowRef = useRef(null);
     const [showVerificationBar, setShowVerificationBar] = useState(false);
+    const [showEasterEggHiddenLink, setshowEasterEggHiddenLink] = useState(true);
 
     // gets the animes to display in sidebar, 24 is to make it flush since in 3 by 3 grid
     const getData = async () => {
@@ -44,16 +45,20 @@ const HomePage = () => {
     const handleSwitchForm = (formType) => {
         setCurrentForm(formType);
         setShowVerificationBar(false);
+        setshowEasterEggHiddenLink(false);
     };
 
     const handleCloseForms = () => {
         setCurrentForm('');
+        setshowEasterEggHiddenLink(true);
     };
 
     return (
         <>
             <div className="topbar">
-                <button className="about-us-button">About Us</button>
+                <Link to='/about-us'>
+                    <button className="about-us-button">About Us</button>
+                </Link>
             </div>
             {showVerificationBar && (
                 <div className="verification-bar">
@@ -86,11 +91,13 @@ const HomePage = () => {
                         <ForgotPassword onClose={handleCloseForms} onSwitchForm={() => handleSwitchForm('login')} />
                     )}
                 </div>
-                <div className='image-container'>
-                    <Link to='/about-us'>
-                        <img src={Image1} alt="Anime" />
-                    </Link>
-                </div>
+                {showEasterEggHiddenLink && (
+                    <div className={`image-container ${showEasterEggHiddenLink && 'hidden-on-small-screen'}`}>
+                        <Link to='/about-us'>
+                            <img src={Image1} alt="Anime" />
+                        </Link>
+                    </div>
+                )}
             </div>
 
         </>

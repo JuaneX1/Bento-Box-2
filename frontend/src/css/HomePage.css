@@ -192,3 +192,10 @@ body {
     padding: 10px;
     text-align: center;
 }
+
+/* Hides the image so no overlapping of buttons occur on smaller screens*/
+@media (max-width: 700px), (max-height: 700px) {
+    .hidden-on-small-screen {
+        display: none;
+    }
+}
