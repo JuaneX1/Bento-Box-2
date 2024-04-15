@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ProfileScreen from '../screens/ProfileScreen'; // Import the ProfileScreen component
 import UpdateProfileScreen from '../screens/UpdateProfile'; // Import the UpdateProfileScreen component
 import ChangePasswordScreen from '../screens/ChangePassword'; // Import the ChangePasswordScreen component
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
 function ProfileStack() {
   return (
