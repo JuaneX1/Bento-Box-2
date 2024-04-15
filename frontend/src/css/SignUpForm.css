@@ -13,6 +13,7 @@
   overflow: auto;
   color: white;
   font-size: small;
+  font-family: Arial;
 }
 
 .signup-logo {
@@ -51,14 +52,14 @@
   border-radius: 20px;
   background-image: linear-gradient(to right, #2196F3, #f44336);
   color: white;
-  width: calc(100% - 24px);
+  width: 156px;
   font-weight: bold;
   cursor: pointer;
   transition: background-image 0.3s;
-  
   text-align: center;
   align-self: center;
   margin-bottom: 10px;
+  margin-top: 15px;
 }
 
 .signup-submit-btn:hover {
@@ -74,7 +75,8 @@
 }
 
 .signup-close-btn {
-  padding: 10px 20px;
+  padding: 12px;
+  width: 156px;
   border: none;
   border-radius: 20px;
   color: white;
@@ -104,8 +106,7 @@
   background-color: #2196F3;
   cursor: pointer;
   font-weight: bold;
-  width: 50%;
-  max-width: 200px;
+  width: 156px;
   transition: background-color 0.3s;
   margin: 0 auto;
 }
@@ -120,4 +121,5 @@
   align-self: flex-start;
   margin-bottom: 0px;
   margin-left: 16px;
+  margin-bottom: 3px;
 }

@@ -15,14 +15,19 @@ const Dashboard = () => {
     };
 
     const toggleSearch = () => {
-        setShowSearch(!showSearch);
-        if (showBrowse) setShowBrowse(false);
+        if (!showSearch) {
+            setShowSearch(true);
+            setShowBrowse(false);
+        }
     };
-
+    
     const toggleBrowse = () => {
-        setShowBrowse(!showBrowse);
-        if (showSearch) setShowSearch(false);
+        if (!showBrowse) {
+            setShowBrowse(true);
+            setShowSearch(false);
+        }
     };
+    
 
     return (
         <div className="dashboard">
@@ -33,7 +38,7 @@ const Dashboard = () => {
             </header>
 
             <div className="navigation-buttons">
-                <button onClick={toggleSearch} className={`navigation-btn navigation-btn-blue ${showSearch ? 'active' : ''}`}>Search</button>
+                <button onClick={toggleSearch} className={`navigation-btn navigation-btn-blue ${showSearch}`}>Search</button>
                 <button onClick={toggleBrowse} className={`navigation-btn navigation-btn-red ${showBrowse ? 'active' : ''}`}>Browse</button>
                 <button className="navigation-btn navigation-btn-white" disabled>Favorites</button>
             </div>

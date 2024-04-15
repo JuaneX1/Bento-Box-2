@@ -7,6 +7,7 @@ import './css/App.css';
 import Dashboard from './pages/DashboardPage';
 import HomePage from './pages/HomePage';
 import ProfilePage from './pages/ProfilePage';
+import AboutUsPage from './pages/AboutUsPage';
 
 const instance = axios.create({
 	baseURL: process.env.REACT_APP_BACKEND_URL + 'api'
@@ -22,6 +23,7 @@ function App() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/verify/:token" element={<Verify />} />
 		      <Route path="/resetPassword/:token" element={<ResetPassword />} />
+          <Route path="about-us" element={<AboutUsPage />} />
         </Routes>
       </div>
     </BrowserRouter>
