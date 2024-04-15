@@ -34,13 +34,17 @@ const ForgotPassword = ({ onClose, onSwitchForm }) => {
             <img src={logo} alt="Logo" className="forgot-password-logo" />
             <div className="forgot-password-content">
                 <form onSubmit={handleSubmit}>
+                    <label htmlFor="email" className="signup-label">Email:</label>
                     <input
-                        type="text"
+                        type="email"
                         name="email"
-                        placeholder="Email"
+                        placeholder="email@emaildomain.com"
                         className="forgot-password-input"
                         value={formData.email}
                         onChange={handleChange}
+                        required
+                        pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                        title="Enter a valid email address: example@email.com"
                     />
 					<div className="error-message"> {error} </div>
                     <button type="submit" className="forgot-password-submit-btn">Submit</button>
