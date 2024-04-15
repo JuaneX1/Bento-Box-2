@@ -25,7 +25,7 @@ const ForgotPassword = ({ onClose, onSwitchForm }) => {
 			navigate(`/`);
 		}).catch( error => {
 			console.log(error);
-			setError( error.response.data );
+			setError( error.response.data.error );
 		});
 	}
 
@@ -42,7 +42,7 @@ const ForgotPassword = ({ onClose, onSwitchForm }) => {
                         value={formData.email}
                         onChange={handleChange}
                     />
-					<div className="error-message"> {error.message} </div>
+					<div className="error-message"> {error} </div>
                     <button type="submit" className="forgot-password-submit-btn">Submit</button>
                 </form>
                 <div className="forgot-password-form-footer">
