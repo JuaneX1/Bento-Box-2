@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList, Alert } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage
-import { useNavigation } from '@react-navigation/native'; // Import useNavigation hook
+import { Modal, View, Text, StyleSheet, TouchableOpacity, FlatList, Alert, TextInput, Button } from 'react-native'; // Add TextInput and Button
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../Components/AuthContext';
 
 const ProfileScreen = () => {
