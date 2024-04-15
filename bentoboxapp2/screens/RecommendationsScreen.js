@@ -57,14 +57,16 @@ const RecommendationsScreen = () => {
     return(
     <SafeAreaView style={styles.containerX}>
     
-    <Carousel
-                      slideStyle={{display:'flex', alignItems:'center'}}
+    <Carousel           
+                        containerCustomStyle={{overflow:'visible'}}
+                        slideStyle={{display:'flex', alignItems:'center'}}
                         data={animeData} // Use searchList from props
                         keyExtractor={(item) => item.mal_id ?  item.mal_id + Math.random() : Math.random()} // Use toString() to ensure key is a string
-                        firstItem={2}
+                        firstItem={1}
                         sliderWidth={windowWidth}
                         itemWidth={windowWidth*0.62}
-                        inactiveSlideOpacity={0.4}
+                        inactiveSlideOpacity={0.75}
+                        inactiveSlideScale={0.77}
                         renderItem={({ item }) => (
                             <AnimeListingV2 anime={item.entry} />
                         )}>
