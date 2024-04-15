@@ -4,7 +4,7 @@ import '../../css/SignUpForm.css';
 import logo from '../../assets/FinalLogo.png';
 import { instance } from '../../App';
 
-const SignUpForm = ({ onClose, onSwitchBack }) => {
+const SignUpForm = ({ onClose, onSwitchBack, setShowVerificationBar }) => {
 
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -27,6 +27,8 @@ const SignUpForm = ({ onClose, onSwitchBack }) => {
 
 		await instance.post(`/register`, formData).then( response => {
 			onClose();
+      // tells user the email was sent
+      setShowVerificationBar(true);
 			navigate(`/`);
       
 		}).catch( error => {
