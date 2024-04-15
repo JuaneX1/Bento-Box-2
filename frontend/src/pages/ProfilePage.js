@@ -55,8 +55,8 @@ const ProfilePage = ({ onClose }) => {
           <Button onClick={handleLogOut} className="log-out-btn">Log Out</Button>
         </div>
       </header>
-      {showModal && <div className="overlay"></div>}
-      <Container className="profile-container">
+      <div className="spacerProfile"></div>
+      <div className="profile-container">
         
         <Form onSubmit={handleSubmit} className="profile-form text-light">
           <h2 className="mb-4">Profile Page</h2>
@@ -85,8 +85,8 @@ const ProfilePage = ({ onClose }) => {
           {/* Update Profile Button */}
           <Button type="submit" className="mt-4">Update Profile</Button>
         </Form>
-      </Container>
-      
+      </div>
+      {showModal && <div className="overlay"></div>}
       {/* Modal for confirming account deletion */}
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header>
@@ -103,6 +103,7 @@ const ProfilePage = ({ onClose }) => {
           <div></div>
         </Modal.Footer>
       </Modal>
+      <div className="spacerProfile"></div>
     </>
   );
 };
