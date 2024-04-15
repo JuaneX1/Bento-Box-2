@@ -57,9 +57,7 @@ const ProfilePage = ({ onClose }) => {
       </header>
       {showModal && <div className="overlay"></div>}
       <Container className="profile-container">
-        <div className="text-center mb-4">
-          <Image src={logo} alt="Logo" className="profile-logo" fluid />
-        </div>
+        
         <Form onSubmit={handleSubmit} className="profile-form text-light">
           <h2 className="mb-4">Profile Page</h2>
           <Form.Group className="mb-3" controlId="formFirstName">
