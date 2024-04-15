@@ -1,143 +1,89 @@
-import React, { useState, useRef } from 'react';
-import { Modal, View, Text, StyleSheet, TouchableOpacity, FlatList, Alert, TextInput, Button } from 'react-native'; // Add TextInput and Button
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, TextInput, Button, Alert, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../Components/AuthContext';
+import axios from 'axios'; // Import axios for API requests
+
+const PRODUCTION = true;
+const app_name = 'bento-box-2-df32a7e90651'; // Replace with your actual app name
 
 const ProfileScreen = () => {
-  const [username, setUsername] = useState('');
-  const [expanded, setExpanded] = useState(false);
-  const [editUsernameModalVisible, setEditUsernameModalVisible] = useState(false);
-  const [editEmailModalVisible, setEditEmailModalVisible] = useState(false);
-  const [newUsername, setNewUsername] = useState('');
-  const [newEmail, setNewEmail] = useState('');
-  const flatListRef = useRef(null);
+  const [editProfileModalVisible, setEditProfileModalVisible] = useState(false);
+  const [changePasswordModalVisible, setChangePasswordModalVisible] = useState(false);
+  const [confirmDeleteModalVisible, setConfirmDeleteModalVisible] = useState(false);
+  const [confirmationText, setConfirmationText] = useState('');
   const { logOut } = useAuth();
-
   const navigation = useNavigation(); // Get navigation object
 
-  const toggleExpand = () => {
-    setExpanded(!expanded);
-    if (expanded && flatListRef.current) {
-      flatListRef.current.scrollToIndex({ index: 0, animated: true });
-    }
+  const handleUpdateProfile = () => {
+    navigation.navigate('UpdateProfile'); // Navigate to UpdateProfileScreen
+  };
+  
+  const handleChangePassword = () => {
+    navigation.navigate('ChangePassword');
   };
 
-  const handleSignOut = async () => {
+  const handleLogout = async () => {
     Alert.alert('Sign Out', 'Are you sure you want to sign out?', [
       { text: 'Cancel', onPress: () => console.log('Cancel Pressed') },
-      { text: 'OK', onPress: signOut },
+      { text: 'OK', onPress: logOut },
     ]);
   };
 
-  const signOut = async () => {
+  const handleDeleteAccount = () => {
+    setConfirmDeleteModalVisible(true);
+  };
+
+  const confirmDeleteAccount = async () => {
     try {
-      await logOut();
-      console.log('User signed out successfully');
+      const response = await axios.delete(buildPath('api/deleteUser'));
+      // Handle successful response here
+      Alert.alert('Account Deleted', 'Your account has been successfully deleted.');
+      logOut(); // Log out the user after successful deletion
     } catch (error) {
-      console.error('Error signing out:', error.message);
+      // Handle error response here
+      Alert.alert('Failed to Delete Account', 'Failed to delete your account. Please try again later.');
+      console.error(error);
     }
   };
 
-  const renderListItem = ({ item }) => {
-    switch (item) {
-      case 'Sign Out':
-        return (
-          <TouchableOpacity style={styles.option} onPress={handleSignOut}>
-            <Text style={styles.optionText}>{item}</Text>
-          </TouchableOpacity>
-        );
-      case 'Edit Username':
-        return (
-          <TouchableOpacity style={styles.option} onPress={() => setEditUsernameModalVisible(true)}>
-            <Text style={styles.optionText}>{item}</Text>
-          </TouchableOpacity>
-        );
-      case 'Edit Email':
-        return (
-          <TouchableOpacity style={styles.option} onPress={() => setEditEmailModalVisible(true)}>
-            <Text style={styles.optionText}>{item}</Text>
-          </TouchableOpacity>
-        );
-      default:
-        return (
-          <TouchableOpacity style={styles.option}>
-            <Text style={styles.optionText}>{item}</Text>
-          </TouchableOpacity>
-        );
+  const buildPath = (route) => {
+    if (PRODUCTION) {
+      return 'https://' + app_name + '.herokuapp.com/' + route;
+    } else {
+      return 'http://localhost:5000/' + route;
     }
-  };
-
-  const saveNewUsername = async () => {
-    try {
-      // Save new username to AsyncStorage
-      await AsyncStorage.setItem('username', newUsername);
-      setUsername(newUsername);
-      setEditUsernameModalVisible(false);
-    } catch (error) {
-      console.error('Error saving username:', error);
-    }
-  };
-
-  const saveNewEmail = () => {
-    // Implement logic to save new email
-    setEditEmailModalVisible(false);
   };
 
   return (
     <View style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.title}>Welcome back, {username || 'Guest'}!</Text>
-        <TouchableOpacity onPress={toggleExpand} style={styles.toggleButton}>
-          <Text style={styles.toggleButtonText}>{expanded ? 'Hide Options' : 'Show Options'}</Text>
+      <Text style={styles.title}>Welcome to your profile!</Text>
+      <View style={styles.buttonContainer}>
+        <Button title="Update Profile" onPress={handleUpdateProfile} />
+        <Button title="Change Password" onPress={handleChangePassword} />
+        <Button title="Logout" onPress={handleLogout} />
+        <TouchableOpacity style={styles.deleteButton} onPress={handleDeleteAccount}>
+          <Text style={styles.deleteButtonText}>Delete Account</Text>
         </TouchableOpacity>
-        {expanded && (
-          <FlatList
-            ref={flatListRef}
-            data={['Edit Username', 'Edit Email', 'Sign Out']}
-            renderItem={renderListItem}
-            keyExtractor={(item, index) => index.toString()}
-            style={styles.optionsList}
-          />
-        )}
       </View>
-      {/* Edit Username Modal */}
+      {/* Confirm Delete Account Modal */}
       <Modal
         animationType="slide"
         transparent={true}
-        visible={editUsernameModalVisible}
-        onRequestClose={() => setEditUsernameModalVisible(false)}
+        visible={confirmDeleteModalVisible}
+        onRequestClose={() => setConfirmDeleteModalVisible(false)}
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Edit Username</Text>
+            <Text style={styles.modalText}>Are you sure you want to delete your account?</Text>
             <TextInput
               style={styles.input}
-              placeholder="New Username"
-              value={newUsername}
-              onChangeText={setNewUsername}
+              placeholder="Type 'DELETE' to confirm"
+              onChangeText={setConfirmationText}
+              value={confirmationText}
             />
-            <Button title="Save" onPress={saveNewUsername} />
-          </View>
-        </View>
-      </Modal>
-      {/* Edit Email Modal */}
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={editEmailModalVisible}
-        onRequestClose={() => setEditEmailModalVisible(false)}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Edit Email</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="New Email"
-              value={newEmail}
-              onChangeText={setNewEmail}
-            />
-            <Button title="Save" onPress={saveNewEmail} />
+            <Button title="Confirm" onPress={confirmDeleteAccount} />
+            <Button title="Cancel" onPress={() => setConfirmDeleteModalVisible(false)} />
           </View>
         </View>
       </Modal>
@@ -152,37 +98,27 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  content: {
-    alignItems: 'center',
-  },
   title: {
-    color: '#fff',
     fontSize: 24,
     fontWeight: 'bold',
+    color: '#fff',
     marginBottom: 20,
   },
-  toggleButton: {
-    padding: 10,
-    backgroundColor: '#3077b2',
-    borderRadius: 5,
+  buttonContainer: {
+    width: '80%',
+    marginBottom: 20,
   },
-  toggleButtonText: {
+  deleteButton: {
+    marginTop: 10,
+    padding: 10,
+    borderRadius: 5,
+    backgroundColor: '#FF0000',
+  },
+  deleteButtonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
-  },
-  optionsList: {
-    marginTop: 20,
-    width: '80%',
-  },
-  option: {
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-  },
-  optionText: {
-    color: '#fff',
-    fontSize: 16,
+    textAlign: 'center',
   },
   modalContainer: {
     flex: 1,
@@ -196,17 +132,19 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: '80%',
   },
-  modalTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  modalText: {
+    fontSize: 18,
     marginBottom: 10,
+    textAlign: 'center',
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
+    width: '100%',
+    height: 40,
+    marginBottom: 20,
+    paddingHorizontal: 10,
     borderRadius: 5,
-    padding: 10,
-    marginBottom: 10,
+    borderColor: '#ccc',
+    borderWidth: 1,
   },
 });
 

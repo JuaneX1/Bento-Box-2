@@ -1,21 +1,23 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, Button, Alert, Pressable, Image } from 'react-native';
-import axios from 'axios'; // Import axios for API requests
+import axios from 'axios';
 
 const PRODUCTION = true;
-const app_name = 'bento-box-2-df32a7e90651'; // Replace with your actual app name
+const app_name = 'bento-box-2-df32a7e90651';
 
-export default function ForgotPassword() {
+export default function ChangePassword() {
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
 
-  const handleForgotPassword = async () => {
+  const handleChangePassword = async () => {
     try {
-      const response = await axios.post(buildPath('api/forgotPassword'), { email });
+      const response = await axios.post(buildPath('api/resetPassword/' + token), { password: newPassword });
       // Handle successful response here
-      Alert.alert('Password Reset Email Sent', 'An email with instructions to reset your password has been sent to your email address.');
+      Alert.alert('Password Changed', 'Your password has been successfully changed.');
     } catch (error) {
       // Handle error response here
-      Alert.alert('Failed to Send Email', 'Failed to send the email for password reset. Please try again later.');
+      Alert.alert('Failed to Change Password', 'Failed to change your password. Please try again later.');
       console.error(error);
     }
   };
@@ -34,19 +36,33 @@ export default function ForgotPassword() {
         style={styles.image}
         source={require('../assets/BB Logo Icon_COLOR.png')}
       />
-      <Text style={styles.title}>Forgot Password</Text>
-      <Text style={styles.subtitle}>Enter your email address below to reset your password:</Text>
+      <Text style={styles.title}>Change Password</Text>
+      <Text style={styles.subtitle}>Enter your email and current password, then your new password:</Text>
       <TextInput
-        placeholder="Enter your email"
+        placeholder="Enter your email*"
         onChangeText={setEmail}
         value={email}
         style={styles.input}
       />
+      <TextInput
+        placeholder="Enter your current password*"
+        onChangeText={setPassword}
+        value={password}
+        style={styles.input}
+        secureTextEntry={true}
+      />
+      <TextInput
+        placeholder="Enter your new password*"
+        onChangeText={setNewPassword}
+        value={newPassword}
+        style={styles.input}
+        secureTextEntry={true}
+      />
       <Pressable
         style={styles.submitButton}
-        onPress={handleForgotPassword}
+        onPress={handleChangePassword}
       >
-        <Text style={[styles.text, {fontWeight: 'bold'}]}>Reset Password</Text>
+        <Text style={[styles.text, {fontWeight: 'bold'}]}>Change Password</Text>
       </Pressable>
     </View>
   );
@@ -57,23 +73,23 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#111920', // Match the background color of your other screens
+    backgroundColor: '#111920',
     paddingHorizontal: 20,
   },
   image: {
-    width: 100, // Adjust the size of the logo as needed
+    width: 100,
     height: 100,
     marginBottom: 20,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#fff', // White text color to match your other screens
+    color: '#fff',
     marginBottom: 10,
   },
   subtitle: {
     fontSize: 16,
-    color: '#fff', // White text color to match your other screens
+    color: '#fff',
     marginBottom: 20,
     textAlign: 'center',
   },
@@ -83,7 +99,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     paddingHorizontal: 10,
     borderRadius: 20, // Set border radius to create bubble-like appearance
-    color: '#fff', // White text color to match your other screens
+    color: '#fff',
     backgroundColor: '#ffffff', // Set background color to white
     borderWidth: 2, // Add border width
     borderColor: '#3077b2', // Set border color
