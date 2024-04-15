@@ -97,7 +97,7 @@ return (
 
           {/* Display error message if there's an error durning call */}
           {error && (
-            <div>Error: Username/Email already taken! <br></br>Please choose a different one!</div>
+            <div className='error-message'>Error: Username/Email already taken! <br></br>Please choose a different one!</div>
           )}
           <button type="submit" className="signup-submit-btn">
             Sign Up

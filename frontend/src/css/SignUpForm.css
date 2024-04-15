@@ -123,3 +123,7 @@
   margin-left: 16px;
   margin-bottom: 3px;
 }
+
+.signup-content .error-message {
+  margin: 0px;
+}
