@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, FlatList,ScrollView, Dimensions } from 'react-native';
+import { View, StyleSheet, FlatList,ScrollView, Dimensions, SafeAreaView } from 'react-native';
 import SwipeableAnimeCard from '../Components/SwipeableAnimeCard';
 import { fetchRecommendations } from '../api/fetchRecommendations';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AnimeListing from '../Components/AnimeListing';
+import AnimeListingV2 from '../Components/AnimeListingV2';
+import Carousel from 'react-native-snap-carousel';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -41,7 +43,7 @@ const RecommendationsScreen = () => {
 
       // Store recommendations in AsyncStorage
       const timestamp = Date.now();
-      await AsyncStorage.setItem('recommendedList', JSON.stringify({ data: recommendations, timestamp }));
+      await AsyncStorage.setItem('recommendedAnime', JSON.stringify({ data: recommendations, timestamp }));
 
       // Set animeData state with the fetched recommendations
       setAnimeData(recommendations);
@@ -53,19 +55,22 @@ const RecommendationsScreen = () => {
   if(animeData){
     console.log(animeData);
     return(
-    <View style={styles.containerX}>
+    <SafeAreaView style={styles.containerX}>
     
-    <FlatList
-                    style={{width:windowWidth}}
+    <Carousel
+                      slideStyle={{display:'flex', alignItems:'center'}}
                         data={animeData} // Use searchList from props
-                        keyExtractor={(item) => item.mal_id + Math.random()} // Use toString() to ensure key is a string
-                        numColumns={2}
+                        keyExtractor={(item) => item.mal_id ?  item.mal_id + Math.random() : Math.random()} // Use toString() to ensure key is a string
+                        firstItem={1}
+                        sliderWidth={windowWidth}
+                        itemWidth={windowWidth*0.62}
+                        inactiveSlideOpacity={0.4}
                         renderItem={({ item }) => (
-                            <AnimeListing anime={item} />
+                            <AnimeListingV2 anime={item.entry} />
                         )}>
-                   </FlatList>
+                   </Carousel>
                  
-    </View>
+    </SafeAreaView>
     );
   }
   else{
