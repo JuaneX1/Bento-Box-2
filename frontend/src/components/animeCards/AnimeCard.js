@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../../css/AnimeCard.css';
 
 function AnimeCard({ anime }) {
@@ -19,23 +20,21 @@ function AnimeCard({ anime }) {
     return synopsis.substring(0, 150) + '...';
   };
   
-
+  
   return (
     <article className="anime-card" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-    <a
-        href={anime.url}
-      >
+      <Link to={`/anime/${anime.mal_id}`} state={{ anime }}>
         <figure>
           <img src={anime.images.jpg.image_url} alt="AnimeImage" />
         </figure>
         <h3>{anime.title}</h3>
 
-      {showSynopsis && (
-        <div className="synopsis-overlay">
-          <p>{truncateSynopsis(anime.synopsis)}</p>
-        </div>
-      )}
-    </a>
+        {showSynopsis && (
+          <div className="synopsis-overlay">
+            <p>{truncateSynopsis(anime.synopsis)}</p>
+          </div>
+        )}
+      </Link>
     </article>
   );
 }
