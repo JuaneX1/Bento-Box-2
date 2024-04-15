@@ -30,13 +30,12 @@ export default function ForgotPassword() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.logoContainer}>
-        <Image
+      <Image
         style={styles.image}
-         source={require('../assets/BB Logo Icon_COLOR.png')}
-        />
-      </View>
-      <Text style={styles.text}>Enter your email address below to reset your password:</Text>
+        source={require('../assets/BB Logo Icon_COLOR.png')}
+      />
+      <Text style={styles.title}>Forgot Password</Text>
+      <Text style={styles.subtitle}>Enter your email address below to reset your password:</Text>
       <TextInput
         placeholder="Enter your email"
         onChangeText={setEmail}
@@ -54,26 +53,29 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#111920', // Match the background color of your other screens
-  },
-  logoContainer: {
-    alignItems: 'center',
-    marginBottom: 30, // Adjust as needed to reduce whitespace
+    paddingHorizontal: 20,
   },
   image: {
     width: 100, // Adjust the size of the logo as needed
     height: 100,
+    marginBottom: 20,
   },
-  text: {
-    fontSize: 16,
+  title: {
+    fontSize: 24,
     fontWeight: 'bold',
     color: '#fff', // White text color to match your other screens
+    marginBottom: 10,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#fff', // White text color to match your other screens
+    marginBottom: 20,
     textAlign: 'center',
-    marginBottom: 20, // Add some margin for better spacing
   },
   input: {
-    width: '80%',
+    width: '100%',
     height: 40,
-    marginVertical: 10,
+    marginBottom: 20,
     paddingHorizontal: 10,
     borderColor: '#fff', // White border color to match your other screens
     borderWidth: 1,

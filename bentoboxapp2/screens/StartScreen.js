@@ -34,9 +34,11 @@ export default function StartScreen() {
 
       {selectedTab === 0 ? <Login /> : <SignUp />}
 
-      <Pressable onPress={handleForgotPassword}>
-        <Text style={styles.forgotPassword}>Forgot Password?</Text>
-      </Pressable>
+      {selectedTab === 0 && ( // Render "Forgot Password?" text only when selectedTab is 0 (Login)
+        <Pressable onPress={handleForgotPassword}>
+          <Text style={styles.forgotPassword}>Forgot Password?</Text>
+        </Pressable>
+      )}
 
       <StatusBar style="auto" />
     </View>
