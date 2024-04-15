@@ -15,6 +15,7 @@ const AnimePage = () => {
         const anime = data.data;
         setAnimeData(data.data);
         setLoading(false);
+        console.log(anime);
       }
       catch (error) {
         console.error('Error fetching anime details:', error);
@@ -32,8 +33,13 @@ const AnimePage = () => {
   return (
     <div>
       {animeData ? (
-        <h1>Anime = {animeData.title}</h1>
-      ) : (
+        <>
+          <h1>Anime = {animeData.title}</h1>
+          <h4>{animeData.synopsis}</h4>
+          <img src={animeData.images.jpg.image_url} alt={animeData.title} />
+        </>
+      ) :
+      (
         <h1>No Data Available</h1>
       )}
     </div>
