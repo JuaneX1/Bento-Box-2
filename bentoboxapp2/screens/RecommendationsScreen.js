@@ -18,7 +18,7 @@ const RecommendationsScreen = () => {
 
   const fetchAnime = async () => {
     try {
-      /*const cachedData = await AsyncStorage.getItem('recommendedList');
+      const cachedData = await AsyncStorage.getItem('recommendedList');
       if (cachedData) {
         const { data, timestamp } = JSON.parse(cachedData);
         // Check if cached data has expired (e.g., cache duration is 1 day)
@@ -26,7 +26,7 @@ const RecommendationsScreen = () => {
           setAnimeData(data); // No need to parse again
           return; // Exit early if cached data is still valid
         }
-      }*/
+      }
 
       const favoritesString = await AsyncStorage.getItem('favorites');
       const favorites = JSON.parse(favoritesString);
@@ -61,7 +61,7 @@ const RecommendationsScreen = () => {
                       slideStyle={{display:'flex', alignItems:'center'}}
                         data={animeData} // Use searchList from props
                         keyExtractor={(item) => item.mal_id ?  item.mal_id + Math.random() : Math.random()} // Use toString() to ensure key is a string
-                        firstItem={1}
+                        firstItem={2}
                         sliderWidth={windowWidth}
                         itemWidth={windowWidth*0.62}
                         inactiveSlideOpacity={0.4}
