@@ -1,4 +1,5 @@
 import React from 'react';
+import AnimeCard from './AnimeCard'
 import '../../css/AnimeList.css';
 
 const AnimeList = ({ animelist, setAnimeInfo }) => {
@@ -11,7 +12,7 @@ const AnimeList = ({ animelist, setAnimeInfo }) => {
           </div>
         ))
       ) : (
-        <p>Anime not found</p>
+        <p>loading...</p>
       )}
     </div>
   );

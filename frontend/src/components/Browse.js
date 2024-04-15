@@ -41,7 +41,7 @@ const Browse = () => {
     return (
         <div className="browse">
             <div className="category-buttons">
-                {categories.map(category => (
+                {categories?.map(category => (
                     <button
                       className="category-btn"
                       key={category.name}
@@ -58,7 +58,7 @@ const Browse = () => {
                     <div>
                         <h2 className="category-title">{selectedCategory.toUpperCase()}</h2>
                         <div className="anime-list">
-                            {animeList.map(anime => (
+                            {animeList?.map(anime => (
                                 <AnimeCard key={anime.mal_id} anime={anime} />
                             ))}
                         </div>

@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&display=swap');
 
 .topbar {
   display: flex;
@@ -33,7 +34,7 @@
   font-size: 16px;
   cursor: pointer;
   margin-left: 10px;
-  font-family: 'Bangers', cursive;
+  font-family: "Rowdies", sans-serif;
   transition: all 0.3s;
   border-radius: 5px;
   text-decoration: none;
@@ -76,7 +77,7 @@
 
 .profile-form .form-group label {
   color: #CCCCCC;
-  font-family: 'Bangers', cursive;
+  font-family: "Rowdies", sans-serif;
   text-align: left;
   display: block;
 }
@@ -87,7 +88,7 @@
   border: 1px solid #555;
   height: 40px;
   font-size: 16px;
-  font-family: 'Bangers', cursive;
+  font-family: "Rowdies", sans-serif;
   width: 100%;
   margin-bottom: 15px;
 }
@@ -103,7 +104,7 @@
   color: white;
   border: 2px solid;
   border-image: linear-gradient(to right, #f44336, #1976D2) 1;
-  font-family: 'Bangers', cursive;
+  font-family: "Rowdies", sans-serif;
   width: 100%;
   padding: 10px 0;
   font-size: 20px;
