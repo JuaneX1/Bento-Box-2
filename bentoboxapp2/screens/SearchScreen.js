@@ -6,7 +6,6 @@ import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { debounce} from '../functions/function'; // Import the debounce function
 
-global.s = ''
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -21,8 +20,8 @@ const SearchScreen = () => {
                 const search = 'https://api.jikan.moe/v4/anime?order_by=popularity&genres_exclude=9,49,12&q=' + searchedItem;
                 console.log(search);
                 const response = await fetch(search);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                if (response.status === 429) {
+                    throw new Error('Too Many Request');
                 }
                 const temp = await response.json();
                 if (temp && temp.data) {

@@ -9,45 +9,45 @@ const windowHeight = Dimensions.get('window').height;
 const LoginSwitch = ({selectedTab, onTabChange}) => {
     
     return(
-            <View style={styles.switchBox}>
-                <TouchableOpacity
-                style={[styles.loginClick,
-                {backgroundColor: selectedTab == 0 ? '#3077b2' : '#111920'
-            }
+        <View style={styles.switchBox}>
+            <TouchableOpacity
+                style={[
+                    styles.loginClick,
+                    {backgroundColor: selectedTab == 0 ? '#3077b2' : '#111920'}
                 ]}
                 onPress={()=>{
                     onTabChange(0);
                 }}
-                >
-                    <Text
+            >
+                <Text
                     style={[
                         styles.loginText,
-                        {backgroundColor: selectedTab == 0 ? '#3077b2' : '#111920',
-                        color: selectedTab == 0 ? '#111920': '#fff',}
+                        {color: selectedTab == 0 ? '#111920': '#fff'}
                     ]}
-                    >Login</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                style={[styles.signUpClick,
-                    
-                    {backgroundColor: selectedTab == 1 ? '#3077b2' : '#111920'
-                }
+                >
+                    Login
+                </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={[
+                    styles.signUpClick,
+                    {backgroundColor: selectedTab == 1 ? '#3077b2' : '#111920'}
                 ]}
                 onPress={()=>{
                     onTabChange(1);
                 }}
-                >
-                    <Text
+            >
+                <Text
                     style={[
                         styles.signUpText,
-                        {backgroundColor: selectedTab == 1 ? '#3077b2': '#111920',
-                        color: selectedTab == 1 ? '#111920': '#fff',
-                    }
+                        {color: selectedTab == 1 ? '#111920': '#fff'}
                     ]}
-                    >Sign Up</Text>
-                </TouchableOpacity>
-            </View>
-    )
+                >
+                    Sign Up
+                </Text>
+            </TouchableOpacity>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
@@ -63,11 +63,11 @@ const styles = StyleSheet.create({
     },
     loginText:{
         fontSize: 15,
-        fontWeight: '700'
+        fontWeight: '700',
     },
     signUpText:{
         fontSize: 15,
-        fontWeight: '700'
+        fontWeight: '700', // Adjusted fontWeight to make "Sign Up" bold
     },
     loginClick: {
         width: "50%",
@@ -85,4 +85,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default LoginSwitch
+export default LoginSwitch;

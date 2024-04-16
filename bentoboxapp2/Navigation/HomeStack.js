@@ -5,6 +5,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import SearchStack from './SearchStack';
 import RecommendationsScreen from '../screens/RecommendationsScreen';
 import ProfileScreen from '../screens/ProfileScreen'; // Import the ProfileScreen component
+import FavoriteStack from './FavoriteStack';
+import ProfileStack from './ProfileStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,16 +24,16 @@ function HomeStack() {
     >
       <Tab.Screen 
         name="Collection"  
-        component={HomeScreen} 
+        component={FavoriteStack} 
         options={{
-          headerShown:true,
+          headerShown:false,
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="home" color={color} size={size} />
           ),
         }}
       />
       <Tab.Screen 
-        name="Discover"  
+        name="Search"  
         component={SearchStack}
         options={{
           headerShown:false,
@@ -57,7 +59,7 @@ function HomeStack() {
       {/* New Tab.Screen for the profile */}
       <Tab.Screen 
         name="Profile"
-        component={ProfileScreen}
+        component={ProfileStack}
         options={{
           headerShown:false,
           tabBarIcon: ({ color, size }) => (

@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Pressable } from 'react-native';
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -18,19 +17,15 @@ export default function Login() {
         await signIn(formData);
     };
 
-    /*const handleChange = (name, value) => {
-        setSignIn({ ...formData, [name]: value });
-    };*/
-
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Login: </Text>
+            <Text style={[styles.text, {fontWeight: 'bold'}]}>Login: </Text>
             <TextInput
                 style={styles.input}
                 placeholder="Email*"
                 onChangeText={(text) => setFormData({ ...formData, login: text })}
             />
-            <Text style={styles.text}>Password: </Text>
+            <Text style={[styles.text, {fontWeight: 'bold'}]}>Password: </Text>
             <TextInput
                 style={styles.input}
                 placeholder="Password*"
@@ -41,9 +36,8 @@ export default function Login() {
                 style={styles.submitButton}
                 onPress={handleClick}
             >
-                <Text style={styles.text}>Login</Text>
+                <Text style={[styles.text, {fontWeight: 'bold'}]}>Login</Text>
             </Pressable>
-            <StatusBar style="auto" />
         </View>
     );
 }
