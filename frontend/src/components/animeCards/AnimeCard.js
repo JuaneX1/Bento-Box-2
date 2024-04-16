@@ -27,7 +27,7 @@ function AnimeCard({ anime }) {
         <figure>
           <img src={anime.images.jpg.image_url} alt="AnimeImage" />
         </figure>
-        <h3>{anime.title}</h3>
+        <h3>{anime.title_english}</h3>
 
         {showSynopsis && (
           <div className="synopsis-overlay">

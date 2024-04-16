@@ -36,8 +36,6 @@ const AnimePage = () => {
         const response = await axios.get(`https://api.jikan.moe/v4/anime/${id}/recommendations`);
         const data = response.data;
         const animeRecommendationsList = data.data.slice(0, 3);
-        console.log("Anime Recommendation List:");
-        console.log(animeRecommendationsList.slice(0, 3));
 
         setRecommendations(animeRecommendationsList);
         setLoading(false);
@@ -69,44 +67,59 @@ const AnimePage = () => {
             <button onClick={handleLogOut} className="log-out-btn">Log Out</button>
       </div>
       {animeData ? (
-        <>
           <div className="anime-info">
-            <img src={animeData.images.jpg.image_url} alt={animeData.title} className="anime-image" />
-            <div className="anime-synopsis-box">
-            <h1>{animeData.title}</h1>
-              <p className="anime-synopsis">{animeData.synopsis}</p>
+            <img src={animeData.images.jpg.image_url} alt={"anime pic"}/>
+            <div class="anime-synopsis-box">
+              <h1>{animeData.title_english}</h1>
+              <div class="synopsis-content">
+                <p class="anime-synopsis">{animeData.synopsis}</p>
+              </div>
             </div>
+
             <div className="score-box">
-              <h4>{animeData.score}</h4>
+              <h2>Overall Rating</h2>
+              <h3>{animeData.score} / 10</h3>
               {animeData.score >= 7.0 ? (
-                <img src={highScoreImage} alt="High Score Image" />
+                <div className="stuff">
+                  <img src={highScoreImage} alt="1" />
+                  <h3>Top Pick!</h3>
+                </div>
               ) : animeData.score >= 4.0 ? (
-                <img src={mediumScoreImage} alt="Medium Score Image" />
+                <img src={mediumScoreImage} alt="2" />
               ) : (
-                <img src={lowScoreImage} alt="Low Score Image" />
+                <img src={lowScoreImage} alt="3" />
               )}
             </div>
           </div>
-        </>
+      
       ) : (
         <h1>No Data Available</h1>
       )}
   
-      {recommendations.length > 0 && (
-        <div className="recommendations-container">
-          <h2>You Might Also Like:</h2>
-          <div className="recommendations-list">
-            {recommendations.map((recommendation) => (
-              <div key={recommendation.mal_id} className="recommendation-item">
-                <Link to={`/anime/${recommendation.entry.mal_id}`}>
-                  <img src={recommendation.entry.images.jpg.image_url} alt={recommendation.entry.title} className="recommendation-image" />
-                  <h4>{recommendation.entry.title}</h4>
-                </Link>
-              </div>
-            ))}
-          </div>
+      <div className="bottom-container">
+        <div className="more-info-box">
+          <h1>More About This Show</h1><br/>
+          <h3>Episode Count: {animeData.episodes}</h3><br/>
+          <h3><a href={animeData.trailer.url}>Watch a Trailer Here!</a></h3><br/>
+          <h3>Rating: {animeData.rating}</h3><br />
+          <h3>{animeData.scored_by} People Have Scored This Show</h3>
         </div>
-      )}
+        {recommendations.length > 0 && (
+          <div className="recommendations-container">
+            <h2>You Might Also Like:</h2>
+            <div className="recommendations-list">
+              {recommendations.map((recommendation) => (
+                <div key={recommendation.entry.mal_id} className="recommendation-item">
+                  <Link to={`/anime/${recommendation.entry.mal_id}`}>
+                    <img src={recommendation.entry.images.jpg.image_url} alt={recommendation.entry.title} className="recommendation-image" />
+                    <h4>{recommendation.entry.title}</h4>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </div>  
+        )}
+      </div>
     </div>
   );
   
