@@ -1,0 +1,67 @@
+.anime-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.anime-info {
+  display: flex;
+  gap: 20px; /* Adjust the gap between image and text */
+  align-items: flex-start; /* Align items at the start of the flex container */
+  padding: 20px; /* Add padding around the container */
+}
+
+
+.anime-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.anime-synopsis-box {
+  background-color: #0b1217;
+  color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  flex: 1;
+  text-align: justify;
+}
+
+.anime-synopsis {
+  margin: 0;
+}
+
+.score-box {
+  background-color: #f1f1f1;
+  padding: 20px;
+  border-radius: 8px;
+  width: 200px;
+  text-align: center;
+}
+
+.score-box img {
+  width: 100px; /* Adjust the width as needed */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.recommendations-container {
+  background-color: #f1f1f1;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.recommendations-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.recommendation-item {
+  flex: 0 0 calc(33.33% - 20px);
+}
+
+.recommendation-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
