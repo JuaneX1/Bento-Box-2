@@ -40,6 +40,7 @@ exports.setApp = function ( app, client ) {
 	const db = client.db("AppNameDB");
 	const users = db.collection("users");
 	const tempusertable = db.collection("unregisteredusers");
+	const faves = db.collection("favorites");
 	
 	const ems = nodemailer.createTransport({
 		service: 'Gmail',
@@ -189,5 +190,50 @@ exports.setApp = function ( app, client ) {
 		}).catch( error => {
 			return res.status(500).json({ error: error });
 		});
+	});
+	
+	app.post('/api/addFavorite', authToken, async (req, res) => {
+	const newFave = req.body;
+
+	try {
+		const existingFavorite = await faves.findOne({ user: new ObjectId(newFave.user) });
+		
+		console.log(existingFavorite);
+
+		if (!existingFavorite) {
+			await faves.insertOne({ user: new ObjectId(newFave.user), favorites: [newFave.mal_id] });
+		} else {
+			await faves.updateOne(
+				{ user: new ObjectId(newFave.user) },
+				{ $push: { favorites: newFave.mal_id } }
+			);
+		}
+		return res.status(200).json({ message: "Success" });
+	} catch (error) {
+			console.error("Error adding favorite:", error);
+			return res.status(500).json({ message: "Error adding favorite" });
+		}
+	});
+	
+	app.post('/api/removeFavorite', authToken, async (req, res) => {
+	const newFave = req.body;
+
+	try {
+		const existingFavorite = await faves.findOne({ user: new ObjectId(newFave.user) });
+		
+		console.log(existingFavorite);
+
+		if (!existingFavorite) {
+			return res.status(401).json({ error: "User does not have a favorites list" });
+		} else if (existingFavorite.favorites.length === 1) {
+			await faves.deleteOne({ user: new ObjectId(newFave.user) });
+		} else {
+			await faves.updateOne({ user: new ObjectId(newFave.user) }, { $pull: { favorites: newFave.mal_id } });
+		}
+		return res.status(200).json({ message: "Success" });
+	} catch (error) {
+			console.error("Error adding favorite:", error);
+			return res.status(500).json({ message: "Error adding favorite" });
+		}
 	});
 }
