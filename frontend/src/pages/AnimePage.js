@@ -1,11 +1,11 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import bigLogo from '../../assets/BB_Logo_Horizontal_COLOR_1.png';
-import highScoreImage from '../../assets/highScoreImg.webp';
-import lowScoreImage from '../../assets/lowScoreImg.png';
-import mediumScoreImage from '../../assets/mediumScoreImg.png';
-import '../../css/AnimePage.css';
+import bigLogo from '../assets/BB_Logo_Horizontal_COLOR_1.png';
+import highScoreImage from '../assets/highScoreImg.webp';
+import lowScoreImage from '../assets/lowScoreImg.png';
+import mediumScoreImage from '../assets/mediumScoreImg.png';
+import '../css/AnimePage.css';
 
 const AnimePage = () => {
   const navigate = useNavigate();
