@@ -23,10 +23,11 @@ export async function doSignUp(formData) {
         
         await AsyncStorage.setItem('token',token);
 
-        return token;
+        return true;
       }
       catch(error){
         console.error('Unexpected Error:', error);
+        return false;
       }
       
      // Assuming this is the correct route
@@ -34,18 +35,22 @@ export async function doSignUp(formData) {
     } else if (response.status === 401){
       const {error} = response.data;
       console.error('Uh Oh!', error);
+      return error;
       // Signup failed
     }
     else if (response.status === 400){
       const {error} = response.data;
       console.error('Uh Oh!', error);
+      return error;
     }
     else{
       const {error} = response.data;
       console.error('Uh Oh!', error);
+      return error;
     }
   } catch (error) {
     console.error('Error:', error);
+    return error;
     // Signup failed due to error
   }
 }

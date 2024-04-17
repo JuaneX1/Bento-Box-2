@@ -58,7 +58,7 @@ function HomeStack() {
       />
       {/* New Tab.Screen for the profile */}
       <Tab.Screen 
-        name="Profile"
+        name="ProfileScreen"
         component={ProfileStack}
         options={{
           headerShown:false,

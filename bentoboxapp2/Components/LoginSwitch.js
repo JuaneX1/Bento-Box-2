@@ -2,12 +2,13 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import React from 'react';
 import { useState } from "react";
 import { Dimensions } from "react-native";
+import { useAuth } from "./AuthContext";
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const LoginSwitch = ({selectedTab, onTabChange}) => {
-    
+
     return(
         <View style={styles.switchBox}>
             <TouchableOpacity
