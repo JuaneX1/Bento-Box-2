@@ -24,10 +24,6 @@
     transition: opacity 0.3s ease;
   }
   
-  .card:hover img {
-    opacity: 0;
-  }
-  
   .card .anime-info {
     position: absolute;
     top: 50%;
@@ -58,4 +54,3 @@
   .card .anime-info h4 {
     margin-bottom: 10px;
   }
-  

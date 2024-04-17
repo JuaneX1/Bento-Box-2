@@ -15,31 +15,35 @@ function AnimeSearch({ typeDefault }) {
     }, [typeDefault]);
 
     const fetchAnime = async (query) => {
-        const temp = await fetch(`https://api.jikan.moe/v4/anime?q=${query}&order_by=title&sort=asc&limit=10&genres_excluded=9,45,12`)
+        const temp = await fetch(`https://api.jikan.moe/v4/anime?q=${query}&sfw&order_by=title&sort=asc&genres_excluded=9,49,12`)
             .then(res => res.json());
         setAnimeList(temp.data);
     };
 
     const fetchTopAnime = async () => {
-        const temp = await fetch(`https://api.jikan.moe/v4/top/anime?filter=bypopularity&limit=20&genres_excluded=9,45,12`)
+        const temp = await fetch(`https://api.jikan.moe/v4/anime?order_by=popularity&genres_exclude=9,49,12&q=`)
             .then(res => res.json());
         setAnimeFound(temp.data);
     };
 
-    useEffect(() => {
-        const delaySearch = setTimeout(() => {
-            fetchAnime(search); // Trigger the fetchAnime function after the user stops typing for 1 second
-        }, 2000); // Adjust the delay as needed (1000 milliseconds in this example)
-
-        return () => clearTimeout(delaySearch); // Clear the timeout on component unmount or when search changes
-    }, [search]);
+    const handleSubmit = (e) => {
+        e.preventDefault(); // Prevent default form submission
+        fetchAnime(search);
+    };
 
     return (
         <div className="content-wrap">
+            <h1>Welcome "First Name"</h1>
+            <form onSubmit={handleSubmit}>
+                <input
+                    type="text"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    placeholder="Search anime..."
+                />
+                <button type="submit">Search</button>
+            </form>
             <BrowseContent
-                handleSearchChange={(e) => setSearch(e.target.value)}
-                search={search}
-                setSearch={setSearch}
                 animeList={search ? animeList : animeFound}
             />
         </div>

@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&display=swap');
 
 * {
     padding: 0;
@@ -7,7 +8,11 @@
 }
 
 body {
-    background-color: #282c34;
+    background: rgb(253,29,29);
+    background: -moz-linear-gradient(90deg, rgba(253,29,29,1) 2%, rgba(252,176,69,1) 31%, rgba(46,119,174,1) 59%);
+    background: -webkit-linear-gradient(90deg, rgba(253,29,29,1) 2%, rgba(252,176,69,1) 31%, rgba(46,119,174,1) 59%);
+    background: linear-gradient(90deg, rgba(253,29,29,1) 2%, rgba(252,176,69,1) 31%, rgba(46,119,174,1) 59%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#fd1d1d",endColorstr="#2e77ae",GradientType=1);
 }
 
 #background-video {
@@ -62,7 +67,7 @@ body {
 
 .card {
     width: 190px;
-    height: 260px;
+    height: 250px;
     padding: 0 0 1rem 0;
     box-shadow: 5px 5px 5px rgba(0,0,0,0.3);
     text-align: center;
@@ -73,7 +78,7 @@ body {
 
 .card img {
     width: 100%;
-    height: 100%;
+    
 }
 
 .logo-container {
@@ -86,6 +91,7 @@ body {
     height: 250px;
     width: auto;
     margin-bottom: 10px;
+    margin-right: 30px;
 }
 
 .logo-and-form-container {
@@ -108,7 +114,7 @@ body {
 .button {
     padding: 15px 30px;
     font-size: 1.5rem;
-    font-family: 'Bangers', cursive;
+    font-family: "Rowdies", sans-serif;
     background-color: #2E77AE;
     border-image: linear-gradient(to right, #2196F3, #f44336) 1;
     border: 10px solid;
@@ -125,7 +131,7 @@ body {
 .about-us-button {
     padding: 10px 20px;
     font-size: 16px;
-    font-family: 'Bangers', cursive;
+    font-family: "Rowdies", sans-serif;
     background-color: #2E77AE;
     color: #fff;
     border: none;
@@ -172,4 +178,25 @@ body {
 .form-active {
     align-items: flex-start;
     padding-top: 100px;
+}
+  
+.image-container img {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 170px;
+  }
+
+.verification-bar {
+    background-color: #046200;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+/* Hides the image so no overlapping of buttons occur on smaller screens*/
+@media (max-width: 700px), (max-height: 700px) {
+    .hidden-on-small-screen {
+        display: none;
+    }
 }
