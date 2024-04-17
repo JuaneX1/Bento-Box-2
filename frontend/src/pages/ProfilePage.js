@@ -1,21 +1,15 @@
 import React, { useState } from 'react';
-import { Container, Form, Button, Image, Modal } from 'react-bootstrap';
+import { Button, Image, Modal } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
+import { instance } from '../App';
 import logo from '../assets/FinalLogo.png';
 import '../css/ProfilePage.css';
-import { instance } from '../App';
 
 const ProfilePage = ({ onClose }) => {
-  const [userData, setUserData] = useState({
-    firstName: '',
-    lastName: '',
-    username: '',
-    email: '',
-    password: '',
-  });
+  const [userData, setUserData] = useState('');
+  
   const [error, setError] = useState('');
   const [showModal, setShowModal] = useState(false);
-
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -41,6 +35,13 @@ const ProfilePage = ({ onClose }) => {
     }
   };
 
+  const getUserInfo = async () => {
+    const token = sessionStorage.getItem('token');
+    console.log(token);
+    // TODO : Make API call to get the user info
+  }
+
+  getUserInfo();
   const handleLogOut = () => {
     console.log("Logging out...");
     navigate('/');
@@ -57,34 +58,8 @@ const ProfilePage = ({ onClose }) => {
       </header>
       <div className="spacerProfile"></div>
       <div className="profile-container">
-        
-        <Form onSubmit={handleSubmit} className="profile-form text-light">
-          <h2 className="mb-4">Profile Page</h2>
-          <Form.Group className="mb-3" controlId="formFirstName">
-            <Form.Label>First Name</Form.Label>
-            <Form.Control type="text" name="firstName" value={userData.firstName} onChange={handleChange} />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formLastName">
-            <Form.Label>Last Name</Form.Label>
-            <Form.Control type="text" name="lastName" value={userData.lastName} onChange={handleChange} />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formUsername">
-            <Form.Label>Account Username</Form.Label>
-            <Form.Control type="text" name="username" value={userData.username} onChange={handleChange} />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formEmail">
-            <Form.Label>Account Email</Form.Label>
-            <Form.Control type="email" name="email" value={userData.email} onChange={handleChange} />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formPassword">
-            <Form.Label>Account Password</Form.Label>
-            <Form.Control type="password" name="password" value={userData.password} onChange={handleChange} />
-          </Form.Group>
-          {/* Delete Account Button */}
-          <Button onClick={() => setShowModal(true)} className="mt-4 delete-account-btn" variant="danger" size="sm">Delete Account</Button>
-          {/* Update Profile Button */}
-          <Button type="submit" className="mt-4">Update Profile</Button>
-        </Form>
+        <h1>My Profile</h1>
+        <p></p>
       </div>
       {showModal && <div className="overlay"></div>}
       {/* Modal for confirming account deletion */}
