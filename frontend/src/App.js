@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import AnimePage from './components/animeCards/AnimePage';
+import AnimePage from './pages/AnimePage'; 
 import ResetPassword from './components/loginAndRegister/ResetPassword';
 import Verify from './components/loginAndRegister/Verify';
 import './css/App.css';

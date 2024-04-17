@@ -75,7 +75,7 @@ const AnimePage = () => {
                 <p class="anime-synopsis">{animeData.synopsis}</p>
               </div>
             </div>
-
+            <button id="favorite-btn" onclick="toggleFavorite()">Favorite</button>
             <div className="score-box">
               <h2>Overall Rating</h2>
               <h3>{animeData.score} / 10</h3>
