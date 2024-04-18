@@ -1,11 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import '../../css/DashboardPage.css';
 import BrowseContent from '../pageFeatures/BrowseContent';
+import { instance } from '../../App';
 
 function AnimeSearch({ typeDefault }) {
     const [animeList, setAnimeList] = useState([]);
     const [search, setSearch] = useState("");
     const [animeFound, setAnimeFound] = useState([]);
+    const [userData, setUserData] = useState('');
+    const [error, setError] = useState('');
+    useEffect(() => {
+		const getUserInfo = async () => {
+			try {
+				const token = sessionStorage.getItem('token');
+				const response = await instance.get(`/info`, { headers: { Authorization: token }});
+				setUserData(response.data);
+			} catch (error) {
+				console.error('Error fetching user info:', error);
+				setError('Failed to fetch user information');
+			}
+		};
+		getUserInfo();
+	}, []);
 
     useEffect(() => {
         // Fetch top anime if typeDefault is "topAnime"
@@ -33,7 +49,7 @@ function AnimeSearch({ typeDefault }) {
 
     return (
         <div className="content-wrap">
-            <h1>Welcome "First Name"</h1>
+            <h1>Welcome {userData.first}</h1>
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
