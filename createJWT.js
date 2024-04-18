@@ -8,6 +8,7 @@ exports.createToken = function ( user ) {
 _createToken = function ( user ) {
     try {
         const expiration = new Date();
+		delete user.password;
         const token = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' });
         var ret = { token };
     }
