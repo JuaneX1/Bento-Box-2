@@ -7,50 +7,42 @@ export async function doSignUp(formData) {
     baseURL: 'https://bento-box-2-df32a7e90651.herokuapp.com/api' //'https://bento-box-2-df32a7e90651.herokuapp.com/api' 
   });
 
-
-
   try {
     console.log("do sign up.js " + formData.first +" "+formData.last + " "+formData.login +" "+formData.email+" "+formData.password);
     const response = await instance.post(`/register`, formData);
-    console.log("skbfaskjdnaskj");
-    if (response.status === 200) {
+
       const { message, token, newUser } = response.data;
       console.log(message);
       console.log(token);
       console.log(newUser);
        
-      try{
-        
-        await AsyncStorage.setItem('token',token);
-
-        return true;
-      }
-      catch(error){
-        console.error('Unexpected Error:', error);
-        return false;
-      }
       
      // Assuming this is the correct route
       
-    } else if (response.status === 401){
-      const {error} = response.data;
-      console.error('Uh Oh!', error);
-      return error;
-      // Signup failed
-    }
-    else if (response.status === 400){
-      const {error} = response.data;
-      console.error('Uh Oh!', error);
-      return error;
-    }
-    else{
-      const {error} = response.data;
-      console.error('Uh Oh!', error);
-      return error;
-    }
+      return {verdict: true, error: ''}
   } catch (error) {
-    console.error('Error:', error);
-    return error;
+    if(error.response){
+      const errorMessage = error.response.data.error;
+      
+      if(error.response.status === 400){
+        const passCom = error.response.data.passComplexity.toString();
+        const passComWithNewLines = passCom.replace(/,/g, "\n");
+        return {verdict: false, error: errorMessage+"\n" + passComWithNewLines};
+      }
+      else if (error.response.status === 401){
+        //const error = response.error;
+        //console.log('Unexpected response status:', error);
+        return {verdict: false, error: errorMessage};
+      }
+      else if (error.response.status === 500){
+        return {verdict: false, error: errorMessage};
+      }
+      else if (error.response.status === 503){
+        return {verdict: false, error: errorMessage};
+      }
+
+    }
+    return {verdict: false, error: error};
     // Signup failed due to error
   }
 }
