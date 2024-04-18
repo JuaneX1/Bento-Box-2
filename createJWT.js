@@ -8,6 +8,7 @@ exports.createToken = function ( user ) {
 _createToken = function ( user ) {
     try {
         const expiration = new Date();
+		delete user.password;
         const token = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' });
         var ret = { token };
     }
@@ -43,8 +44,4 @@ exports.getURItoken = function (URIcomponent) {
 exports.refresh = function (token) {
     var ud = jwt.decode(token);
     return _createToken(ud);
-}
-
-exports.expireToken = function (token) {
-	this.invalidateToken(token);
 }

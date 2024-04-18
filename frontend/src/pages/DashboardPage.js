@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import '../css/DashboardPage.css';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/FinalLogo.png';
-import AnimeSearch from '../components/animeCards/AnimeSearch';
 import Browse from '../components/Browse';
+import AnimeSearch from '../components/animeCards/AnimeSearch';
+import '../css/DashboardPage.css';
 
 const Dashboard = () => {
     const navigate = useNavigate();
@@ -28,7 +28,6 @@ const Dashboard = () => {
         }
     };
     
-
     return (
         <div className="dashboard">
             <header className="topbar">

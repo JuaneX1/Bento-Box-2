@@ -19,8 +19,8 @@ export const fetchTopAnime = async () => {
                 return data;
             }
         }
-
         console.log("api request!");
+      
         // Fetch fresh data from the API
         const response = await axiosWithRateLimit.get('https://api.jikan.moe/v4/top/anime', {
             params: {

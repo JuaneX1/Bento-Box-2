@@ -19,6 +19,7 @@ export const fetchUpcoming = async () => {
                 return data;
             }
         }
+
         // Fetch fresh data from the API with rate limiting
         console.log("api request!");
         const response = await axiosWithRateLimit.get('https://api.jikan.moe/v4/top/anime?sfw&filter=upcoming');

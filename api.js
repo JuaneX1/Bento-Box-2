@@ -17,8 +17,9 @@ const authToken = (req, res, next) => {
 
 	jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (error, decodedToken) => {
 		
+		
 		if (error) {
-			return res.sendStatus(403);
+			return res.status(403).json( error );
 		}
 		req.user = decodedToken.user;
 		next();
@@ -53,7 +54,11 @@ exports.setApp = function ( app, client ) {
 		}
 	});
 	
-	app.post('/api/forgotPassword', async (req, res,next) => {
+	app.get('/api/info', authToken, async (req, res) => {
+		return res.status(200).json( req.user );
+	});
+	
+	app.post('/api/forgotPassword', async (req, res, next) => {
 
 		const { email } = req.body;
 		
@@ -163,9 +168,10 @@ exports.setApp = function ( app, client ) {
 
 		await users.findOne({ $or: [{email: login }, {login: login}], password: password }).then( result => {
 			if (result !== null) {
+				delete result.password;
 				const token = jwtUtils.createToken( result );
 				return res.status(200).json({
-					token: token.token
+					...token
 				});
 			} else {
 				return res.status(401).json({
@@ -174,6 +180,28 @@ exports.setApp = function ( app, client ) {
 			}
 		}).catch ( error => {
 			return res.status(500).json({ error: 'Failed to connect to database' });
+		});
+	});
+	
+	app.patch('/api/updateInfo', authToken, async (req, res) => {
+		const userToken = req.user
+		const user = req.body
+		
+		const updates = {};
+		if (user.first) userToken.first = user.first, updates.first = user.first;
+		if (user.last) userToken.last = user.last, updates.last = user.last;
+		if (user.login) userToken.login = user.login, updates.login = user.login;
+		if (user.email) userToken.email = user.email, updates.email = user.email;
+		
+		users.updateOne({ _id: new ObjectId(userToken._id) }, { $set: updates }).then( result => {
+			if (result.matchedCount !== 0) {	
+				const token = jwtUtils.createToken( userToken );
+				return res.status(200).json({ ...token, message: "success" });
+			} else {
+				return res.status(401).json({ message: "User record not found", result });
+			}
+		}).catch( error => {
+			return res.status(500).json({ error: error });
 		});
 	});
 	
@@ -193,19 +221,20 @@ exports.setApp = function ( app, client ) {
 	});
 	
 	app.post('/api/addFavorite', authToken, async (req, res) => {
-	const newFave = req.body;
 
 	try {
-		const existingFavorite = await faves.findOne({ user: new ObjectId(newFave.user) });
+		const existingFavorite = await faves.findOne({ user: new ObjectId(req.user._id) });
 		
 		console.log(existingFavorite);
+		
+		console.log(new ObjectId(req.user._id));
 
 		if (!existingFavorite) {
-			await faves.insertOne({ user: new ObjectId(newFave.user), favorites: [newFave.mal_id] });
+			await faves.insertOne({ user: new ObjectId(req.user._id), favorites: [req.body.mal_id] });
 		} else {
 			await faves.updateOne(
-				{ user: new ObjectId(newFave.user) },
-				{ $push: { favorites: newFave.mal_id } }
+				{ user: new ObjectId(req.user._id) },
+				{ $push: { favorites: req.body.mal_id } }
 			);
 		}
 		return res.status(200).json({ message: "Success" });
@@ -216,19 +245,20 @@ exports.setApp = function ( app, client ) {
 	});
 	
 	app.post('/api/removeFavorite', authToken, async (req, res) => {
-	const newFave = req.body;
 
 	try {
-		const existingFavorite = await faves.findOne({ user: new ObjectId(newFave.user) });
+		const existingFavorite = await faves.findOne({ user: new ObjectId(req.user._id) });
 		
 		console.log(existingFavorite);
+		
+		console.log(new ObjectId(req.user._id));
 
 		if (!existingFavorite) {
 			return res.status(401).json({ error: "User does not have a favorites list" });
 		} else if (existingFavorite.favorites.length === 1) {
-			await faves.deleteOne({ user: new ObjectId(newFave.user) });
+			await faves.deleteOne({ user: new ObjectId(req.user._id) });
 		} else {
-			await faves.updateOne({ user: new ObjectId(newFave.user) }, { $pull: { favorites: newFave.mal_id } });
+			await faves.updateOne({ user: new ObjectId(req.user._id) }, { $pull: { favorites: req.body.mal_id } });
 		}
 		return res.status(200).json({ message: "Success" });
 	} catch (error) {

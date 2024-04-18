@@ -50,7 +50,6 @@ export default function Login() {
             setErrorMessage(results.error);
         }
     };
-
     return (
         <View style={styles.container}>
             <Text style={[styles.text, {fontWeight: 'bold'}]}>Login: </Text>
@@ -72,7 +71,6 @@ export default function Login() {
             >
                 <Text style={[styles.text, {fontWeight: 'bold'}]}>Login</Text>
             </Pressable>
-
             <Modal
                 animationType="fade"
                 transparent={true}

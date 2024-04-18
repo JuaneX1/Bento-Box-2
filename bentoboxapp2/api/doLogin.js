@@ -40,7 +40,6 @@ export async function doLogin(formData) {
         else if (error.response.status === 500){
           return {token: null, error: errorMessage};
         }
-        
       }
       return {token: null, error: error};
       // Handle network errors or other exceptions

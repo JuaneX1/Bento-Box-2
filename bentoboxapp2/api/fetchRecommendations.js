@@ -3,7 +3,6 @@ import axios from 'axios';
 import { fetchRecInfo } from './fetchRecInfo';
 // Function to fetch top anime with caching and expiration
 export const fetchRecommendations = async ({id}) => {
-    
     try {
         const cachedData = await AsyncStorage.getItem('recommendedAnime');
         if (cachedData) {
@@ -14,7 +13,6 @@ export const fetchRecommendations = async ({id}) => {
             }
         }
         // Fetch fresh data from the API
-        //console.log(`https://api.jikan.moe/v4/anime/${id}/recommendations`);
         const response = await axios.get(`https://api.jikan.moe/v4/anime/${id}/recommendations`);
         const data = response.data;
         if (data && data.data) {
