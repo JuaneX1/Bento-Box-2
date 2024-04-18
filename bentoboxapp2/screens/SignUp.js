@@ -69,7 +69,7 @@ export default function SignUp() {
         });
       } else {
         setErrorModalVisible(true);
-        setErrorMessage(results.error.message);
+        setErrorMessage(results.error);
       }
     } catch (error) {
       console.error(error);
