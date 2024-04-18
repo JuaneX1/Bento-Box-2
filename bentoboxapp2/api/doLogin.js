@@ -12,38 +12,41 @@ export async function doLogin(formData) {
     baseURL: 'https://bento-box-2-df32a7e90651.herokuapp.com/api'
   });
 
-  if (formData.login !== null || formData.password !== null) {
+  if (formData.login && formData.password ) {
     try {
       // Use await to wait for response from API call
       console.log("do login.js " + formData.login +" "+formData.password);
       const response = await instance.post(`/login`, formData);
-      
-      // Handle successful login
-      if (response.status === 200) {
-       
+
         const { token } = response.data;
         
         // Assuming the server responds with a token
         await AsyncStorage.setItem('token', token);
         console.log('woooo!');
-        return token;
-       console.log('oou oou ouu!'); // Assuming this is the correct route
-        
-      } else if (response.status === 401){
-        const error = response.data;
-        console.log('Unexpected response status:', error);
-      }
-      else{
-        const error = response.data;
-        console.log('Unexpected response status:', error);
-      }
+        return {token: token, error: ''};
+
     } catch (error) {
-      console.error('Error:', error);
+      if(error.response){
+        const errorMessage = error.response.data.error;
+        if(error.response.status === 401){
+          
+          return {token: null, error: errorMessage};
+        }
+        else if (error.response.status === 402){
+          
+          //console.log('Unexpected response status:', error);
+          return {token: null, error: errorMessage};
+        }
+        else if (error.response.status === 500){
+          return {token: null, error: errorMessage};
+        }
+      }
+      return {token: null, error: error};
       // Handle network errors or other exceptions
       //setError('Network error or other issue. Please try again.');
     }
   } else {
-    console.log("Invalid input");
+    return {token: null, error: 'Invalid Input. Please make sure all fields are complete.'};
   }
 }
 function buildPath(route)

@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity, Text, View, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Dimensions } from 'react-native';
+import tw from 'twrnc';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -11,12 +12,12 @@ const AnimeListing = ({ anime }) => {
     
     const title = anime.title_english ? anime.title_english : anime.title;
     const truncatedTitle = title.length > 20 ? title.slice(0, 20) + '...' : title;
-    console.log(title);
+    
     return (
         <View style={styles.card} key={anime.mal_id + Math.random()}>
             <TouchableOpacity onPress={() => navigation.navigate('Info', {anime})}>
                 <Image style={styles.animeImages} source={{ uri: anime.images.jpg.image_url }} />
-                <Text style={styles.animeTitleText}>{truncatedTitle}</Text>
+                <Text style={[tw`text-white font-semibold text-center`]}>{truncatedTitle}</Text>
             </TouchableOpacity>
         </View>
     );
