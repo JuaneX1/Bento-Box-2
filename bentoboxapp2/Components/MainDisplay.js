@@ -1,25 +1,24 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, Button, Image, Pressable, FlatList, ActivityIndicator, ScrollView } from 'react-native';
 import React, { PureComponent } from 'react';
+import { StyleSheet, View, ActivityIndicator } from 'react-native';
 import TopAnimeBox from '../Components/TopAnimeBox';
 import CurrentSeason from '../Components/CurrentSeason';
 import UpcomingAnime from './UpcomingAnime';
+import LoadingScreen from '../screens/LoadingScreen';
 
 class MainDisplay extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
             ninetiesAnime: [],
-            loading: false
+            loading: true // Initially set loading to true
         };
     }
 
     componentDidMount() {
-        var startTime = performance.now();
-        var endTime = performance.now();
-        console.log(`Call to fetch anime took ${endTime - startTime} milliseconds`);
+        // Call functions to fetch data
+        this.getGhibliAnime();
+        this.getNineties();
     }
-
 
     getGhibliAnime = async () => {
         try {
@@ -29,17 +28,17 @@ class MainDisplay extends PureComponent {
             }
             const temp = await response.json();
             if (temp && temp.data) {
-                this.setState({ ghibliAnime: temp.data.slice(0, 25) });
+                // Update state with fetched data and set loading to false
+                this.setState({ ghibliAnime: temp.data.slice(0, 25), loading: false });
             } else {
                 console.error('Data structure is not as expected:', data);
             }
         } catch (error) {
             console.error('Error fetching ghibli anime:', error);
         }
-        
     }
 
-    getNineties = async ()=> {
+    getNineties = async () => {
         try {
             const response = await fetch("https://api.jikan.moe/v4/anime?type=tv&start_date=1989-01-01&end_date=1999-12-31&order_by=popularity&sort=asc");
             if (!response.ok) {
@@ -47,7 +46,8 @@ class MainDisplay extends PureComponent {
             }
             const temp = await response.json();
             if (temp && temp.data) {
-                this.setState({ ninetiesAnime: temp.data.slice(0, 25) });
+                // Update state with fetched data and set loading to false
+                this.setState({ ninetiesAnime: temp.data.slice(0, 25), loading: false });
             } else {
                 console.error('Data structure is not as expected:', data);
             }
@@ -55,28 +55,25 @@ class MainDisplay extends PureComponent {
             console.error('Error fetching top anime:', error);
         }
     }
+
     render() {
         const { loading } = this.state;
 
         if (loading) {
+            // Show loading indicator while data is loading
             return (
-                <View style={styles.container}>
-                    <ActivityIndicator size="large" color="#ffffff" />
+                <LoadingScreen/>
+            );
+        } else {
+            // Show content when data is loaded
+            return (
+                <View>
+                    <TopAnimeBox />
+                    <CurrentSeason />
+                    <UpcomingAnime />
                 </View>
             );
         }
-        else{
-            this.setState({loading: false})
-            return (
-                <View >
-                        <TopAnimeBox/>
-                        <CurrentSeason/>
-                        <UpcomingAnime/>
-                </View>
-            );
-            
-        }
-        
     }
 }
 
@@ -86,14 +83,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#000000',
         alignItems: 'center',
         justifyContent: 'center',
-    },
-    box: {
-        backgroundColor: '#111920',
-        height: 125,
-        alignItems: 'center',
-        justifyContent: 'center',
     }
-   
 });
 
 export default MainDisplay;

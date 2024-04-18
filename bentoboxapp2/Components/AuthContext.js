@@ -1,12 +1,29 @@
 // AuthContext.js
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { doLogin } from '../api/doLogin';
 import { doSignUp } from '../api/doSignUp';
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-  const [authData, setAuthData] = useState();
+  const [authData, setAuthData] = useState(null);
+
+  useEffect(() => {
+    const loadAuthData = async () => {
+      try {
+        const token = await AsyncStorage.getItem('token');
+        if (token) {
+          console.log("yippie!yippie!");
+          // If a token exists in AsyncStorage, set the authentication state
+          setAuthData(token );
+        }
+      } catch (error) {
+        console.error('Error loading authentication data:', error);
+      }
+    };
+
+    loadAuthData();
+  }, []);
 
   const signIn = async (formData) => {
     // Call doLogin with form data

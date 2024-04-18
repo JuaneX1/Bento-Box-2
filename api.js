@@ -17,8 +17,9 @@ const authToken = (req, res, next) => {
 
 	jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (error, decodedToken) => {
 		
+		
 		if (error) {
-			return res.sendStatus(403);
+			return res.status(403).json( error );
 		}
 		req.user = decodedToken.user;
 		next();
@@ -40,6 +41,7 @@ exports.setApp = function ( app, client ) {
 	const db = client.db("AppNameDB");
 	const users = db.collection("users");
 	const tempusertable = db.collection("unregisteredusers");
+	const faves = db.collection("favorites");
 	
 	const ems = nodemailer.createTransport({
 		service: 'Gmail',
@@ -52,11 +54,13 @@ exports.setApp = function ( app, client ) {
 		}
 	});
 	
-	app.post('/api/forgotPassword', async (req, res,next) => {
+	app.get('/api/info', authToken, async (req, res) => {
+		return res.status(200).json( req.user );
+	});
+	
+	app.post('/api/forgotPassword', async (req, res, next) => {
 
 		const { email } = req.body;
-		
-		console.log(email);
 		
 		try{
 			const user = await users.findOne({ email: email});
@@ -66,7 +70,6 @@ exports.setApp = function ( app, client ) {
 			}
 			
 			const token = jwtUtils.createToken( user );
-			console.log('jwtUtils.createToken( user ) : ' + token.token); //added now
 
 			const rpem = emailTemplates.resetPassword( user, token.token );
 			
@@ -90,11 +93,8 @@ exports.setApp = function ( app, client ) {
 	});
 	
 	app.post('/api/resetPassword/:token', async (req, res) => {
-		//console.log('Received token: ' + req.params.token); // used for resetPassword debugging
 
 		const tokenData = jwtUtils.getURItoken(req.params.token);
-
-		//console.log('tokenData : ' + JSON.stringify(tokenData)); used for resetPassword debugging
 
 		const { password } = req.body
 		
@@ -157,12 +157,21 @@ exports.setApp = function ( app, client ) {
 	app.post('/api/login', async (req, res, next) => {
 		
 		const { login, password } = req.body;
+		
+		await tempusertable.findOne({ $or: [{email: login }, {login: login}], password: password }).then( result => {
+			if (result !== null) {
+				return res.status(402).json({
+					error: "Account has not been verfied. Please check your email to verify your account."
+				});
+			}
+		});
 
 		await users.findOne({ $or: [{email: login }, {login: login}], password: password }).then( result => {
 			if (result !== null) {
+				delete result.password;
 				const token = jwtUtils.createToken( result );
 				return res.status(200).json({
-					token: token.token
+					...token
 				});
 			} else {
 				return res.status(401).json({
@@ -171,6 +180,28 @@ exports.setApp = function ( app, client ) {
 			}
 		}).catch ( error => {
 			return res.status(500).json({ error: 'Failed to connect to database' });
+		});
+	});
+	
+	app.patch('/api/updateInfo', authToken, async (req, res) => {
+		const userToken = req.user
+		const user = req.body
+		
+		const updates = {};
+		if (user.first) userToken.first = user.first, updates.first = user.first;
+		if (user.last) userToken.last = user.last, updates.last = user.last;
+		if (user.login) userToken.login = user.login, updates.login = user.login;
+		if (user.email) userToken.email = user.email, updates.email = user.email;
+		
+		users.updateOne({ _id: new ObjectId(userToken._id) }, { $set: updates }).then( result => {
+			if (result.matchedCount !== 0) {	
+				const token = jwtUtils.createToken( userToken );
+				return res.status(200).json({ ...token, message: "success" });
+			} else {
+				return res.status(401).json({ message: "User record not found", result });
+			}
+		}).catch( error => {
+			return res.status(500).json({ error: error });
 		});
 	});
 	
@@ -187,5 +218,52 @@ exports.setApp = function ( app, client ) {
 		}).catch( error => {
 			return res.status(500).json({ error: error });
 		});
+	});
+	
+	app.post('/api/addFavorite', authToken, async (req, res) => {
+
+	try {
+		const existingFavorite = await faves.findOne({ user: new ObjectId(req.user._id) });
+		
+		console.log(existingFavorite);
+		
+		console.log(new ObjectId(req.user._id));
+
+		if (!existingFavorite) {
+			await faves.insertOne({ user: new ObjectId(req.user._id), favorites: [req.body.mal_id] });
+		} else {
+			await faves.updateOne(
+				{ user: new ObjectId(req.user._id) },
+				{ $push: { favorites: req.body.mal_id } }
+			);
+		}
+		return res.status(200).json({ message: "Success" });
+	} catch (error) {
+			console.error("Error adding favorite:", error);
+			return res.status(500).json({ message: "Error adding favorite" });
+		}
+	});
+	
+	app.post('/api/removeFavorite', authToken, async (req, res) => {
+
+	try {
+		const existingFavorite = await faves.findOne({ user: new ObjectId(req.user._id) });
+		
+		console.log(existingFavorite);
+		
+		console.log(new ObjectId(req.user._id));
+
+		if (!existingFavorite) {
+			return res.status(401).json({ error: "User does not have a favorites list" });
+		} else if (existingFavorite.favorites.length === 1) {
+			await faves.deleteOne({ user: new ObjectId(req.user._id) });
+		} else {
+			await faves.updateOne({ user: new ObjectId(req.user._id) }, { $pull: { favorites: req.body.mal_id } });
+		}
+		return res.status(200).json({ message: "Success" });
+	} catch (error) {
+			console.error("Error adding favorite:", error);
+			return res.status(500).json({ message: "Error adding favorite" });
+		}
 	});
 }

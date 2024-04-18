@@ -61,7 +61,8 @@ const SwipeableAnimeCard = ({ anime, onSwipeLeft, onSwipeRight }) => {
 
   return (
     <Animated.View style={[getCardStyle(), styles.card]} {...panResponder.panHandlers}>
-      <Image source={{ uri: anime.image_url }} style={styles.image} />
+      <Image source={{ uri: anime.images.jpg.image_url }} style={styles.image} />
+
       <Text style={styles.title}>{anime.title}</Text>
     </Animated.View>
   );
