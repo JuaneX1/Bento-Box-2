@@ -39,7 +39,9 @@ const Dashboard = () => {
             <div className="navigation-buttons">
                 <button onClick={toggleSearch} className={`navigation-btn navigation-btn-blue ${showSearch}`}>Search</button>
                 <button onClick={toggleBrowse} className={`navigation-btn navigation-btn-red ${showBrowse ? 'active' : ''}`}>Browse</button>
-                <button className="navigation-btn navigation-btn-white" disabled>Favorites</button>
+                <Link to="/favorites">
+                    <button className="navigation-btn navigation-btn-white">Favorites</button>
+                </Link>
             </div>
 
             {showSearch && <AnimeSearch typeDefault={"topAnime"} />}
