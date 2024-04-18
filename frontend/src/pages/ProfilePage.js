@@ -33,11 +33,24 @@ const ProfilePage = ({ onClose }) => {
 			[name]: value,
 		}));
 	};
+	
+	const handleChangePassword = async () => {
+		await instance.post(`/forgotPassword`, userData ).then( response => {
+		}).catch( error => {
+			console.log(error);
+			setError( error );
+		});
+	};
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		console.log(userData);
-		// Update user profile here
+		
+		await instance.patch(`/updateInfo`, userData, { headers: { Authorization: sessionStorage.getItem('token') }} ).then( response => {
+			sessionStorage.setItem('token', response.data.token);
+		}).catch( error => {
+			console.log(error);
+			setError( error );
+		});
 	};
 
 	const handleDeleteAccount = async () => {
@@ -53,8 +66,6 @@ const ProfilePage = ({ onClose }) => {
 		const token = sessionStorage.getItem('token');
 		const userInfo = await instance.get(`/info`, { headers: { Authorization: sessionStorage.getItem('token') }});
 	}
-
-	getUserInfo();
 	
 	const handleLogOut = () => {
 		console.log("Logging out...");
@@ -76,24 +87,22 @@ const ProfilePage = ({ onClose }) => {
           <h2 className="mb-4">Profile Page</h2>
           <Form.Group className="mb-3" controlId="formFirstName">
             <Form.Label>First Name</Form.Label>
-            <Form.Control type="text" name="firstName" value={userData.first} onChange={handleChange} />
+            <Form.Control type="text" name="first" value={userData.first} onChange={handleChange} />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formLastName">
             <Form.Label>Last Name</Form.Label>
-            <Form.Control type="text" name="lastName" value={userData.last} onChange={handleChange} />
+            <Form.Control type="text" name="last" value={userData.last} onChange={handleChange} />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formUsername">
             <Form.Label>Account Username</Form.Label>
-            <Form.Control type="text" name="username" value={userData.login} onChange={handleChange} />
+            <Form.Control type="text" name="login" value={userData.login} onChange={handleChange} />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formEmail">
             <Form.Label>Account Email</Form.Label>
             <Form.Control type="email" name="email" value={userData.email} onChange={handleChange} />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formPassword">
-            <Form.Label>Account Password</Form.Label>
-            <Form.Control type="password" name="password" value={userData.password} onChange={handleChange} />
-          </Form.Group>
+		  {/* reset password button */}
+          <Button type="submit" onClick={handleChangePassword} className="mt-4">Change Password</Button>
           {/* Delete Account Button */}
           <Button onClick={() => setShowModal(true)} className="mt-4 delete-account-btn" variant="danger" size="sm">Delete Account</Button>
           {/* Update Profile Button */}

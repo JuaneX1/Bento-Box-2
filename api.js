@@ -171,7 +171,7 @@ exports.setApp = function ( app, client ) {
 				delete result.password;
 				const token = jwtUtils.createToken( result );
 				return res.status(200).json({
-					token: token.token
+					...token
 				});
 			} else {
 				return res.status(401).json({
@@ -180,6 +180,28 @@ exports.setApp = function ( app, client ) {
 			}
 		}).catch ( error => {
 			return res.status(500).json({ error: 'Failed to connect to database' });
+		});
+	});
+	
+	app.patch('/api/updateInfo', authToken, async (req, res) => {
+		const userToken = req.user
+		const user = req.body
+		
+		const updates = {};
+		if (user.first) userToken.first = user.first, updates.first = user.first;
+		if (user.last) userToken.last = user.last, updates.last = user.last;
+		if (user.login) userToken.login = user.login, updates.login = user.login;
+		if (user.email) userToken.email = user.email, updates.email = user.email;
+		
+		users.updateOne({ _id: new ObjectId(userToken._id) }, { $set: updates }).then( result => {
+			if (result.matchedCount !== 0) {	
+				const token = jwtUtils.createToken( userToken );
+				return res.status(200).json({ ...token, message: "success" });
+			} else {
+				return res.status(401).json({ message: "User record not found", result });
+			}
+		}).catch( error => {
+			return res.status(500).json({ error: error });
 		});
 	});
 	
