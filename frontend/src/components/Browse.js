@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import AnimeCard from '../components/animeCards/AnimeCard';
 import '../css/Browse.css';
 

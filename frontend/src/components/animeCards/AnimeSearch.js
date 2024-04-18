@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { instance } from '../../App';
 import '../../css/DashboardPage.css';
 import BrowseContent from '../pageFeatures/BrowseContent';
-import { instance } from '../../App';
 
 function AnimeSearch({ typeDefault }) {
     const [animeList, setAnimeList] = useState([]);
@@ -31,13 +31,30 @@ function AnimeSearch({ typeDefault }) {
     }, [typeDefault]);
 
     const fetchAnime = async (query) => {
-        const temp = await fetch(`https://api.jikan.moe/v4/anime?q=${query}&sfw&order_by=title&sort=asc&genres_excluded=9,49,12`)
-            .then(res => res.json());
-        setAnimeList(temp.data);
+        try {
+            const search = await fetch(`https://api.jikan.moe/v4/anime?q=${query}&sfw&genres_exclude=9,49,12`)
+                .then(res => res.json());
+            
+            if (search.status === 429)
+                throw new Error('Too many requests');
+            
+            if (search && search.data) {
+                const filteredData = search.data.filter(anime => {
+                    return (anime.type === 'TV' || anime.type === 'Movie') && anime.source === 'Manga';
+                });
+                setAnimeList(filteredData);
+            }
+            else {
+                console.error('Data structure not as expected: ', search);
+            }
+        }
+        catch (error) {
+            console.error('Error fetching search anime: ', error);
+        }
     };
 
     const fetchTopAnime = async () => {
-        const temp = await fetch(`https://api.jikan.moe/v4/anime?order_by=popularity&genres_exclude=9,49,12&q=`)
+        const temp = await fetch(`https://api.jikan.moe/v4/anime?order_by=popularity&genres_exclude=9,49,12`)
             .then(res => res.json());
         setAnimeFound(temp.data);
     };
@@ -49,7 +66,7 @@ function AnimeSearch({ typeDefault }) {
 
     return (
         <div className="content-wrap">
-            <h1>Welcome {userData.first}</h1>
+            <h1>Welcome, {userData.first}</h1>
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"

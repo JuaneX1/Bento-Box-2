@@ -1,4 +1,5 @@
 import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import bigLogo from '../assets/BB_Logo_Horizontal_COLOR_1.png';
@@ -6,7 +7,6 @@ import highScoreImage from '../assets/highScoreImg.webp';
 import lowScoreImage from '../assets/lowScoreImg.png';
 import mediumScoreImage from '../assets/mediumScoreImg.png';
 import '../css/AnimePage.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 const AnimePage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -106,7 +106,7 @@ const AnimePage = () => {
       <div className="bottom-container">
         <div className="more-info-box">
           <h1>More About This Show</h1>
-          <h3>Episode Count: {animeData.episodes || 0}</h3>
+          <h3>Episode Count: {animeData.episodes !== null ? animeData.episodes : 0}</h3>
           <br />
           <h3><a href={animeData.trailer.url}>Watch a Trailer Here!</a></h3>
           <br />
