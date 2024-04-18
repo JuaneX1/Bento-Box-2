@@ -25,7 +25,7 @@ const windowHeight = Dimensions.get('window').height;
                 class FavoriteAnime extends PureComponent {
                     render() {
                         const { favorites } = this.props; // Destructure searchList from props
-                        console.log(favorites);
+                      
                         return (
                                     <FlatList
                     style={{width:windowWidth}}
