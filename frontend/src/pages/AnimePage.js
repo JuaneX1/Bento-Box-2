@@ -6,7 +6,7 @@ import highScoreImage from '../assets/highScoreImg.webp';
 import lowScoreImage from '../assets/lowScoreImg.png';
 import mediumScoreImage from '../assets/mediumScoreImg.png';
 import '../css/AnimePage.css';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 const AnimePage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -59,70 +59,85 @@ const AnimePage = () => {
     navigate('/');
   };
 
+  const toggleFavorite = () => {
+    // TODO - add to favorites
+  }
+
   return (
     <div className="anime-container">
       <div className="topbar">
         <Link to="/profile" className="topbar-btn">My Profile</Link>
-        <Link to="/dashboard"><img src={bigLogo} alt="Logo" className="topbar-logo" /></ Link>
-            <button onClick={handleLogOut} className="log-out-btn">Log Out</button>
+        <Link to="/dashboard"><img src={bigLogo} alt="Logo" className="topbar-logo" /></Link>
+        <button onClick={handleLogOut} className="log-out-btn">Log Out</button>
       </div>
       {animeData ? (
-          <div className="anime-info">
-            <img src={animeData.images.jpg.image_url} alt={"anime pic"}/>
-            <div class="anime-synopsis-box">
-              <h1>{animeData.title_english}</h1>
-              <div class="synopsis-content">
-                <p class="anime-synopsis">{animeData.synopsis}</p>
-              </div>
+        <div className="anime-info">
+          <img src={animeData.images.jpg.image_url} alt={"anime pic"} />
+          <div className="anime-synopsis-box">
+            <h1>{animeData.title_english}</h1>
+            <div className="synopsis-content">
+              <p className="anime-synopsis">{animeData.synopsis}</p>
             </div>
-           
-            <div className="score-box">
-              <h2>Overall Rating</h2>
-              <h3>{animeData.score} / 10</h3>
-              {animeData.score >= 7.0 ? (
+          </div>
+          <div className="score-box">
+            <h2>Overall Score</h2>
+            <h3 className="big-score">{animeData.score} / 10</h3>
+              {animeData.score >= 8.0 ? (
                 <div className="stuff">
-                  <img src={highScoreImage} alt="1" />
+                  <img src={highScoreImage} alt="High Score" />
                   <h3>Top Pick!</h3>
                 </div>
               ) : animeData.score >= 4.0 ? (
-                <img src={mediumScoreImage} alt="2" />
+                <div className="stuff">
+                  <img src={mediumScoreImage} alt="Medium Score" />
+                  <h3>Good Pick!</h3>
+                </div>    
               ) : (
-                <img src={lowScoreImage} alt="3" />
+                <div className="stuff">
+                  <img src={lowScoreImage} alt="Low Score" />
+                  <h3>Not Recommended/Unrated</h3>
+                </div>
               )}
-            </div>
           </div>
-      
+        </div>
       ) : (
         <h1>No Data Available</h1>
       )}
-  
       <div className="bottom-container">
-      <button id="favorite-btn" onclick="toggleFavorite()">Favorite</button>
         <div className="more-info-box">
-          <h1>More About This Show</h1><br/>
-          <h3>Episode Count: {animeData.episodes}</h3><br/>
-          <h3><a href={animeData.trailer.url}>Watch a Trailer Here!</a></h3><br/>
-          <h3>Rating: {animeData.rating}</h3><br />
-          <h3>{animeData.scored_by} People Have Scored This Show</h3>
+          <h1>More About This Show</h1>
+          <h3>Episode Count: {animeData.episodes || 0}</h3>
+          <br />
+          <h3><a href={animeData.trailer.url}>Watch a Trailer Here!</a></h3>
+          <br />
+          <h3>Rating: {animeData.rating}</h3>
+          <button id="favorite-button" onClick={toggleFavorite}>Favorite</button>
         </div>
-        {recommendations.length > 0 && (
-          <div className="recommendations-container">
-            <h2>You Might Also Like:</h2>
-            <div className="recommendations-list">
-              {recommendations.map((recommendation) => (
-                <div key={recommendation.entry.mal_id} className="recommendation-item">
-                  <Link to={`/anime/${recommendation.entry.mal_id}`}>
-                    <img src={recommendation.entry.images.jpg.image_url} alt={recommendation.entry.title} className="recommendation-image" />
-                    <h4>{recommendation.entry.title}</h4>
-                  </Link>
-                </div>
-              ))}
-            </div>
-          </div>  
+        <div className="recommendations-container">
+          {recommendations && recommendations.length > 0 && (
+          <h2>You Might Also Like:</h2>
         )}
+        <div className="recommendations-list">
+          {recommendations && recommendations.length > 0 ? (
+            recommendations.map((recommendation) => (
+              <div key={recommendation.entry.mal_id} className="recommendation-item">
+                <Link to={`/anime/${recommendation.entry.mal_id}`}>
+                  <img src={recommendation.entry.images.jpg.image_url} alt={recommendation.entry.title} className="recommendation-image" />
+                  <h4>{recommendation.entry.title}</h4>
+                </Link>
+              </div>
+            ))
+          ) : (
+            <h2>No recommendations available Yet</h2>
+          )}
+        </div>
+      </div>`
+
+
       </div>
     </div>
   );
+  
   
 };
 
