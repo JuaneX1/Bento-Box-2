@@ -42,7 +42,7 @@ export default function Login() {
         const results = await doLogin(formData);
 
         if(results.token != null){
-
+            
             const user = await getUserInfo(results.token);
             await signIn(user.user._id);
 

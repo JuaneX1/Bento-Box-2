@@ -30,6 +30,7 @@ export const AuthProvider = ({ children }) => {
 
   const logOut = async () => {
     setAuthData(undefined);
+    await AsyncStorage.removeItem('token');
   };
 
   return (
