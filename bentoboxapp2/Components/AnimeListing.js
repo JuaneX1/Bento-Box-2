@@ -33,7 +33,8 @@ const styles = StyleSheet.create({
     animeImages: {
         width: 175,
         height:300,
-        alignSelf: 'center'
+        alignSelf: 'center',
+        borderRadius:10,
     },
     card: {
         margin: windowWidth / 47,

@@ -98,6 +98,7 @@ const AnimeInfoScreen = ({ route }) => {
                 end={{ x: 0.5, y: 1 }}
                 position="absolute"
             />
+            
             <View style={styles.container}>
                 <View style={styles.titleBox}>
                     <Text style={styles.animeTitleText}> {anime.title_english ? anime.title_english : anime.title} </Text>
