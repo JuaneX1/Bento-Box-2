@@ -266,4 +266,28 @@ exports.setApp = function ( app, client ) {
 			return res.status(500).json({ message: "Error adding favorite" });
 		}
 	});
+
+	app.get('/api/getFavorite', authToken, async(req,res) => {
+		try{
+			//get userId stuff
+			const userId = req.user._id;
+
+			//find the favorites based on user field in favorites db
+        	const userFavorites = await faves.findOne({ user: new ObjectId(userId) });
+
+			//if no fav return no fav msg
+			if(!userFavorites){
+				return res.status(404).json({ message: "No favorites present" });
+			}
+
+			//used for local testing console.log(userFavorites);
+
+			return res.status(200).json(userFavorites.favorites);
+			
+			//error handling
+		} catch(error){ 
+			console.error("Error reading favorites:", error);
+			return res.status(500).json({ message: "Error reading favorites" });
+		}
+	});
 }
