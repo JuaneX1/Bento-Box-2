@@ -3,12 +3,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/FinalLogo.png';
 import Browse from '../components/Browse';
 import AnimeSearch from '../components/animeCards/AnimeSearch';
+import Favorites from '../components/pageFeatures/Favorites';
 import '../css/DashboardPage.css';
 
 const Dashboard = () => {
     const navigate = useNavigate();
     const [showSearch, setShowSearch] = useState(true);
     const [showBrowse, setShowBrowse] = useState(false);
+    const [showFavorites, setShowFavorites] = useState(false);
 
     const handleLogOut = () => {
         navigate('/');
@@ -18,6 +20,7 @@ const Dashboard = () => {
         if (!showSearch) {
             setShowSearch(true);
             setShowBrowse(false);
+            setShowFavorites(false);
         }
     };
     
@@ -25,6 +28,15 @@ const Dashboard = () => {
         if (!showBrowse) {
             setShowBrowse(true);
             setShowSearch(false);
+            setShowFavorites(false);
+        }
+    };
+    
+    const toggleFavorites = () => {
+        if (!showFavorites) {
+            setShowBrowse(false);
+            setShowSearch(false);
+            setShowFavorites(true);
         }
     };
     
@@ -39,11 +51,12 @@ const Dashboard = () => {
             <div className="navigation-buttons">
                 <button onClick={toggleSearch} className={`navigation-btn navigation-btn-blue ${showSearch}`}>Search</button>
                 <button onClick={toggleBrowse} className={`navigation-btn navigation-btn-red ${showBrowse ? 'active' : ''}`}>Browse</button>
-                <button className="navigation-btn navigation-btn-white" disabled>Favorites</button>
+                <button onClick={toggleFavorites} className={`navigation-btn navigation-btn-white ${showFavorites}`}>Favorites</button>
             </div>
 
             {showSearch && <AnimeSearch typeDefault={"topAnime"} />}
             {showBrowse && <Browse />}
+            {showFavorites && <Favorites />}
         </div>
     );
 };

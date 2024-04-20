@@ -4,10 +4,10 @@
 }
 
 .dashboard {
-  background: rgb(253,29,29);
-  background: -moz-linear-gradient(90deg, rgba(253,29,29,1) 2%, rgba(252,176,69,1) 31%, rgba(46,119,174,1) 59%);
-  background: -webkit-linear-gradient(90deg, rgba(253,29,29,1) 2%, rgba(252,176,69,1) 31%, rgba(46,119,174,1) 59%);
-  background: linear-gradient(90deg, rgba(253,29,29,1) 2%, rgba(252,176,69,1) 31%, rgba(46,119,174,1) 59%);
+  background: rgb(0);
+  background: -moz-linear-gradient(rgba(0,0,100) 2%, rgba(0,0,0,1) 30%);
+  background: -webkit-linear-gradient(rgba(0,0,100) 2%, rgba(0,0,0,1) 30%);
+  background: linear-gradient(rgba(0,0,100) 2%, rgba(0,0,0,1) 30%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#fd1d1d",endColorstr="#2e77ae",GradientType=1);
   min-height: 100vh;
   display: flex;
