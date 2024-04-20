@@ -4,9 +4,7 @@ import AnimeList from "../components/animeCards/AnimeList";
 import ForgotPassword from "../components/loginAndRegister/ForgotPassword";
 import LoginForm from "../components/loginAndRegister/LoginForm";
 import SignUpForm from "../components/loginAndRegister/SignUpForm";
-import "../css/HomePage.css";
 import { Link } from "react-router-dom";
-import Image1 from "../assets/easteregg.png";
 
 const HomePage = () => {
   const [search, setSearch] = useState();
@@ -118,13 +116,6 @@ const HomePage = () => {
             />
           )}
         </div>
-        {/* {showEasterEggHiddenLink && (
-                    <div className={`image-container ${showEasterEggHiddenLink && 'hidden-on-small-screen'}`}>
-                        <Link to='/about-us'>
-                            <img src={Image1} alt="Anime" />
-                        </Link>
-                    </div>
-                )} */}
       </div>
     </>
   );
