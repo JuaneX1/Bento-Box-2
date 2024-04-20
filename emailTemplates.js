@@ -30,7 +30,7 @@ const resetPassword = (user, token) => {
 	// Update paths depending on location
 	// for production: https://bento-box-2-df32a7e90651.herokuapp.com/
 
-	const resetLink = serverLink + `/resetPassword/${tokenURI}`;
+	const resetLink = serverLink + `resetPassword/${tokenURI}`;
     const textContent = `${textStr}\n\n${resetLink}`;
     const htmlContent = `${htmlStr}<br><a href="${resetLink}">Click here to reset password</a>`;
 	
