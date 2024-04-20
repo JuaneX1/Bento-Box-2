@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 const PRODUCTION = true;
 
-export async function getFavorites(token) {
+export async function getFavorites(token, ID) {
   // State for error handling
 
   //'http://localhost:5000/api',
@@ -14,20 +14,17 @@ export async function getFavorites(token) {
 
   if (token != null) {
     try {
-      console.log(token);
+      
       // Use await to wait for response from API call
       const userResponse = await instance.get(`/getFavorite`,  {
+       
         headers: {
           Authorization: `${token}`
-        }
+        },
+        _id:ID,
       });
         
         const  f  = userResponse.data;
-    
-        console.log("Favorites!!!");
-
-        console.log(f[0]);
-        // Assuming the server responds with a token
 
         return {favorite: f, error: ''};
 

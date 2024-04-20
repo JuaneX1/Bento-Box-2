@@ -20,7 +20,7 @@ export default function HomeScreen({ navigation }) {
           u = JSON.parse(u);
           setUser(u);
           let t = await AsyncStorage.getItem(`token`);
-          let favs = getFavorites(t);
+          let favs = getFavorites(t, u._id);
 
           console.log(favs);
           favs = favs.favorite;
