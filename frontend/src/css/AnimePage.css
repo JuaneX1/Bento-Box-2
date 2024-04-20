@@ -1,22 +1,66 @@
+/* Resetting default margin and padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Importing font */
 @import url('https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&display=swap');
 
+/* Main container */
 .anime-container {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  margin: 0 auto;
+  max-width: 1200px; /* Set your desired maximum width */
+  padding: 0 20px; /* Add some padding to avoid content sticking to the edges */
 }
 
+/* Topbar */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #0b1217;
+  padding: 10px 20px;
+}
+
+.topbar-btn, .topbar-logo, .log-out-btn {
+  color: #fff;
+  text-decoration: none;
+  font-family: "Rowdies", sans-serif;
+}
+
+.topbar-logo {
+  max-width: 150px; /* Adjust the size of the logo */
+}
+
+.log-out-btn {
+  background-color: #ff8c00;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.log-out-btn:hover {
+  background-color: #e64a19;
+}
+
+/* Anime Info Section */
 .anime-info {
   display: flex;
-  gap: 20px; 
-  align-items: flex-start;
-  padding: 20px;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .anime-info img {
   border-radius: 20px;
-  height: 300px;
-  width: auto;
+  max-width: 100%; /* Adjust the size of the image */
+  height: auto;
 }
 
 .anime-synopsis-box {
@@ -27,7 +71,6 @@
   flex: 1;
   text-align: justify;
   font-family: "Rowdies", sans-serif;
-  max-height: max-content;
 }
 
 .anime-synopsis {
@@ -35,7 +78,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 7;
+  -webkit-line-clamp: 11;
   -webkit-box-orient: vertical;
 }
 
@@ -44,52 +87,78 @@
   color: #fff;
   padding: 20px;
   border-radius: 8px;
-  width: 250px;
-  text-align: center;
+  display: flex;
+  flex-direction: column; /* Set flex direction to column */
+  justify-content: space-between;
+  align-items: center;
   font-family: "Rowdies", sans-serif;
+}
+
+.score-box .big-score {
+  font-size: 40px;
+  margin: 0;
 }
 
 .score-box img {
-  width: 100px; /* Adjust the width as needed */
-  height: auto; /* Maintain aspect ratio */
+  max-width: 170px;
+  height: auto;
 }
 
+
+/* Bottom Container */
 .bottom-container {
   display: flex;
-  justify-content: flex-end;
-  margin-right: 50px;
-  margin-top: -70px;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
 }
 
+/* More Info Box */
 .more-info-box {
-  background-color: #0b1217; /* Background color of the left box */
-  padding: 20px;
+  background-color: #0b1217;
   color: #fff;
   border-radius: 20px;
   font-family: "Rowdies", sans-serif;
+  flex: 1;
+  padding: 20px;
+  max-width: 600px; /* Set maximum width */
 }
 
+.more-info-box button {
+  background-color: #ff8c00;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.more-info-box button:hover {
+  background-color: #e64a19;
+}
+
+/* Recommendations */
 .recommendations-container {
-  padding: 20px 5px;
-  flex-direction: column;
+  padding: 20px;
   font-family: "Rowdies", sans-serif;
-  position: relative;
-  margin-left: 20px;
+  flex: 1;
+  max-width: 600px; /* Set maximum width */
   background-color: #0b1217;
-  border-radius:20px;
+  border-radius: 20px;
   color: #fff;
 }
 
 .recommendations-list {
-  justify-content: center;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
 }
 
 .recommendation-item {
-  width: calc(33.33% - 20px);
-  transition: all 0.3s ease; 
+  width: calc(33.33% - 10px);
+  transition: transform 0.3s ease; 
 }
 
 .recommendation-item a {
@@ -100,10 +169,11 @@
 .recommendation-item:hover {
   transform: scale(1.08);
 }
+
 .recommendation-image {
   border-radius: 20px;
   width: 100%;
-  height: 300px;
+  max-height: 200px; /* Adjust the size of the image */
 }
 
 .recommendation-item h4 {
