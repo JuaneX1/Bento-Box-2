@@ -5,6 +5,7 @@ import bigLogo from '../assets/BB_Logo_Horizontal_COLOR_1.png';
 import highScoreImage from '../assets/highScoreImg.webp';
 import lowScoreImage from '../assets/lowScoreImg.png';
 import mediumScoreImage from '../assets/mediumScoreImg.png';
+import { instance } from '../App';
 import '../css/AnimePage.css';
 
 const AnimePage = () => {
@@ -58,6 +59,14 @@ const AnimePage = () => {
   const handleLogOut = () => {
     navigate('/');
   };
+  
+	const toggleFavorite = async () => {
+		try {
+			await instance.post(`/setFavorite/`, { mal_id: id }, { headers: { Authorization: sessionStorage.getItem('token') }});
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
   return (
     <div className="anime-container">
@@ -97,7 +106,7 @@ const AnimePage = () => {
       )}
   
       <div className="bottom-container">
-      <button id="favorite-btn" onclick="toggleFavorite()">Favorite</button>
+      <button id="favorite-btn" onClick={toggleFavorite}>Favorite</button>
         <div className="more-info-box">
           <h1>More About This Show</h1><br/>
           <h3>Episode Count: {animeData.episodes}</h3><br/>

@@ -10,7 +10,6 @@ const Verify = () => {
 	useEffect(() => {
 		
 		async function verify() {
-			console.log(ignore);
 			if (!ignore) {
 				try {
 					await instance.post(`/verify/${token}`);

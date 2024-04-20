@@ -24,7 +24,7 @@ const authToken = (req, res, next) => {
 		req.user = decodedToken.user;
 		next();
 	});
-}
+};
 
 function isComplex (str) {
 	return ([
@@ -34,7 +34,7 @@ function isComplex (str) {
 		{bullet: "Must contain a numeric character", valid: /[0-9]/.test(str) },
 		{bullet: "Must contain a special character", valid: /[^A-Za-z0-9]/.test(str) },
 	]).filter(rule => !rule.valid).map(rule => rule.bullet);
-}
+};
 
 exports.setApp = function ( app, client ) {
 	
@@ -220,71 +220,58 @@ exports.setApp = function ( app, client ) {
 		});
 	});
 	
-	app.post('/api/addFavorite', authToken, async (req, res) => {
+	app.post('/api/setFavorite', authToken, async (req, res) => {
+		try {
+			const existingFavorite = await faves.findOne({ user: new ObjectId(req.user._id) });
 
-	try {
-		const existingFavorite = await faves.findOne({ user: new ObjectId(req.user._id) });
-		
-		console.log(existingFavorite);
-		
-		console.log(new ObjectId(req.user._id));
-
-		if (!existingFavorite) {
-			await faves.insertOne({ user: new ObjectId(req.user._id), favorites: [req.body.mal_id] });
-		} else {
-			await faves.updateOne(
-				{ user: new ObjectId(req.user._id) },
-				{ $push: { favorites: req.body.mal_id } }
-			);
-		}
-		return res.status(200).json({ message: "Success" });
-	} catch (error) {
-			console.error("Error adding favorite:", error);
-			return res.status(500).json({ message: "Error adding favorite" });
+			if (!existingFavorite) {
+				await addFavorite({ user: req.user._id }, req.body.mal_id);
+			} else {
+				if (existingFavorite.favorites.includes(req.body.mal_id)) {
+					await removeFavorite(existingFavorite, req.body.mal_id);
+				} else {
+					await addFavorite(existingFavorite, req.body.mal_id);
+				}
+			}
+			return res.status(200).json({ message: "Success" });
+		} catch (error) {
+			return res.status(500).json({ message: "Error toggling favorite" });
 		}
 	});
 	
-	app.post('/api/removeFavorite', authToken, async (req, res) => {
-
-	try {
-		const existingFavorite = await faves.findOne({ user: new ObjectId(req.user._id) });
-		
-		console.log(existingFavorite);
-		
-		console.log(new ObjectId(req.user._id));
-
-		if (!existingFavorite) {
-			return res.status(401).json({ error: "User does not have a favorites list" });
-		} else if (existingFavorite.favorites.length === 1) {
-			await faves.deleteOne({ user: new ObjectId(req.user._id) });
-		} else {
-			await faves.updateOne({ user: new ObjectId(req.user._id) }, { $pull: { favorites: req.body.mal_id } });
-		}
-		return res.status(200).json({ message: "Success" });
-	} catch (error) {
+	const addFavorite = async (existingFavorite, malId) => {
+		try {
+			if (!existingFavorite.favorites) {
+				await faves.insertOne({ user: new ObjectId(existingFavorite.user), favorites: [malId] });
+			} else {
+				await faves.updateOne({ user: new ObjectId(existingFavorite.user) }, { $push: { favorites: malId } });
+			}
+		} catch (error) {
 			console.error("Error adding favorite:", error);
-			return res.status(500).json({ message: "Error adding favorite" });
 		}
-	});
+	};
+
+	const removeFavorite = async (existingFavorite, malId) => {
+		console.log(new ObjectId(existingFavorite.userId));
+		try {
+			if (existingFavorite.favorites.length === 1) {
+				await faves.deleteOne({ user: new ObjectId(existingFavorite.user) });
+			} else {
+				await faves.updateOne({ user: new ObjectId(existingFavorite.user) }, { $pull: { favorites: malId } });
+			}
+		} catch (error) {
+			console.error("Error removing favorite:", error);
+		}
+	};
 
 	app.get('/api/getFavorite', authToken, async(req,res) => {
 		try{
-			//get userId stuff
 			const userId = req.user._id;
-
-			//find the favorites based on user field in favorites db
         	const userFavorites = await faves.findOne({ user: new ObjectId(userId) });
-
-			//if no fav return no fav msg
 			if(!userFavorites){
 				return res.status(404).json({ message: "No favorites present" });
 			}
-
-			//used for local testing console.log(userFavorites);
-
 			return res.status(200).json(userFavorites.favorites);
-			
-			//error handling
 		} catch(error){ 
 			console.error("Error reading favorites:", error);
 			return res.status(500).json({ message: "Error reading favorites" });
