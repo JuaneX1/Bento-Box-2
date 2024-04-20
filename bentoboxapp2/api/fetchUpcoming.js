@@ -6,11 +6,12 @@ import AxiosRateLimit from 'axios-rate-limit';
 const axiosInstance = axios.create();
 
 // Apply rate limiting to the axios instance
-const axiosWithRateLimit = AxiosRateLimit(axiosInstance, { maxRequests: 1, perMilliseconds: 1000 }); // Example: 1 request per 1 seconds
+const axiosWithRateLimit = AxiosRateLimit(axiosInstance, { maxRequests: 1, perMilliseconds: 5000 }); // Example: 1 request per 1 seconds
 
 // Function to fetch top anime with caching and rate limiting
 export const fetchUpcoming = async () => {
     try {
+       
         const cachedData = await AsyncStorage.getItem('upcomingAnime');
         if (cachedData) {
             const { data, timestamp } = JSON.parse(cachedData);

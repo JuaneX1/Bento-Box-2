@@ -12,12 +12,14 @@ const Tab = createBottomTabNavigator();
 
 function HomeStack() {
   return (
+    
     <Tab.Navigator 
       initialRouteName="Collection" 
       screenOptions={{
         tabBarInactiveTintColor:"white",
         tabBarActiveTintColor:"#3077b2",
         tabBarStyle:{ backgroundColor: '#111920',
+       
         borderBlockColor:"#111920" }
       }}
       

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'; // Import useEffect and useS
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FavoriteAnime from '../Components/FavoriteAnime';
 import { useAuth } from '../Components/AuthContext';
-
+import { getFavorites } from '../api/getFavorites';
 // Import statements...
 
 export default function HomeScreen({ navigation }) {
@@ -19,6 +19,16 @@ export default function HomeScreen({ navigation }) {
           let u = await AsyncStorage.getItem(`user_${authData}`);
           u = JSON.parse(u);
           setUser(u);
+          let t = await AsyncStorage.getItem(`token`);
+          let favs = getFavorites(t);
+
+          console.log(favs);
+          favs = favs.favorite;
+
+          if(favs != null){
+            setFavorites(favs);
+          }
+
         } else {
           console.log("No user data found.");
         }
@@ -28,7 +38,7 @@ export default function HomeScreen({ navigation }) {
     };
 
     fetchData();
-  }, []);
+  }, [authData]);
 
   const handleLikedAnime = () => {
     navigation.navigate('LikedAnime');
@@ -45,10 +55,19 @@ export default function HomeScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
-        {user !== null ? ( // Check if user is not null before rendering components
+        {user ? (
+          <>
+            <Text>{user.login}'s Favorites</Text>
+            {favorites === null ? (
+              <Text>Looks like you have no favorites at the moment</Text>
+            ) : (
+              <Text>YAYYYYY!</Text>
+            )}
+          </>
+        ) : (
           <>
             <StatusBar style="auto" />
-            <Text style={styles.title}>Welcome {user.first}</Text>
+            <Text style={styles.title}>Welcome sdhiuda</Text>
             <TouchableOpacity style={styles.button} onPress={handleLikedAnime}>
               <Text style={styles.buttonText}>Liked Anime/Watchlist</Text>
             </TouchableOpacity>
@@ -59,12 +78,11 @@ export default function HomeScreen({ navigation }) {
               <Text style={styles.buttonText}>Custom List</Text>
             </TouchableOpacity>
           </>
-        ) : (
-          <ActivityIndicator size="large" color="#ffffff" /> // Show loading indicator if user is null
         )}
       </View>
     </SafeAreaView>
   );
+  
 }
 
 // Styles...

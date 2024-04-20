@@ -3,7 +3,7 @@ import { StyleSheet, View, ScrollView } from 'react-native';
 import MainDisplay from '../Components/MainDisplay';
 import SearchResults from '../Components/SearchResults';
 import { Dimensions } from 'react-native';
-
+import { LinearGradient } from 'expo-linear-gradient';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -12,6 +12,13 @@ const DiscoverScreen = () => {
     
     return (
         <View style={styles.container}>
+            <LinearGradient
+                colors={['transparent', 'rgba(48, 119, 178, 0.5)', 'rgba(48, 119, 178, 1)']}
+                style={{ width: windowWidth, height: windowHeight*0.60, transform: [{ translateY: windowHeight*0.15 }]}}
+                start={{ x: 0.5, y: 0.5}}
+                end={{ x: 0.5, y: 1 }}
+                position="absolute"
+            />
             <ScrollView>
                 <MainDisplay />
             </ScrollView>

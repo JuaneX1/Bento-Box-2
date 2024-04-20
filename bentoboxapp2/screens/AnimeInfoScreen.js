@@ -1,11 +1,15 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import { Dimensions, TouchableOpacity, ScrollView, StyleSheet, Text, View, Image } from 'react-native';
+import { Dimensions,Button, Linking, TouchableOpacity, ScrollView, StyleSheet, Text, View, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import{formatPlot, ratingFormat} from '../functions/function.js';
+import tw from 'twrnc';
+import { addFavorites } from '../api/addFavorites.js';
+import { getFavorites } from '../api/getFavorites.js';
+
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -18,13 +22,16 @@ const AnimeInfoScreen = ({ route }) => {
     useEffect(() => {
         const fetchFavorites = async () => {
             try {
-                const favoritesString = await AsyncStorage.getItem('favorites');
-                if (favoritesString) {
-                    const favorites = JSON.parse(favoritesString);
-                    setFavorite(favorites.some(item => item.id === anime.mal_id));
+                let t = await AsyncStorage.getItem(`token`);
+                let favs = getFavorites(t);
+                
+                if (favs.favorite != null) {
+                    console.log(favs.favorite);
+                    const favorites = favs.favorite;
+                    setFavorite(favorites.some(item => item.mal_id === anime.mal_id));
                 }
             } catch (error) {
-                console.error('Error fetching favorites from AsyncStorage:', error);
+                console.error('Error adding favorites:', error);
             }
         };
     
@@ -36,13 +43,12 @@ const AnimeInfoScreen = ({ route }) => {
     
         if (!favorite) {
             try {
-                const favoritesString = await AsyncStorage.getItem('favorites');
-                let favorites = [];
-                if (favoritesString) {
-                    favorites = JSON.parse(favoritesString);
+                let t = await AsyncStorage.getItem(`token`);
+                let s = await addFavorites(t, anime.mal_id);
+                console.log(s);
+                if(s.verdict === true){
+                    console.log('ADDED!');
                 }
-                favorites.push(anime);
-                await AsyncStorage.setItem('favorites', JSON.stringify(favorites));
             } catch (error) {
                 console.error('Error adding anime to favorites:', error);
             }
@@ -60,6 +66,14 @@ const AnimeInfoScreen = ({ route }) => {
             }
         }
     };
+
+    const openLink = async (url) => {
+        try {
+          await Linking.openURL(url);
+        } catch (error) {
+          console.error('Error opening link:', error);
+        }
+      };
 
     const getScoreTextColor = (score) => {
         if (score >= 8) {
@@ -115,7 +129,15 @@ const AnimeInfoScreen = ({ route }) => {
                         </Text>
                     ))}
                 </View>
+                <View style={{alignItems:'center', width: windowWidth}}>
 
+            {anime.trailer.url ? 
+            <TouchableOpacity style={tw`bg-red-500 p-2 rounded-lg w-24`} onPress={() => openLink(anime.trailer.url)}>
+                <Text style={tw`text-white font-bold text-center`}>Trailer</Text>
+                </TouchableOpacity>
+                : <Text > No Trailer available</Text>}
+
+            </View>
                 <Text style={styles.plot}>{"     "}{formatPlot(anime.synopsis)}</Text>
 
                 <View style={{alignContent:'center', width: windowWidth, flexDirection: 'row' }}>
@@ -135,15 +157,14 @@ const AnimeInfoScreen = ({ route }) => {
                             {anime.popularity == 0 || anime.popularity == null ? 'NaN' : anime.popularity}</Text>
                     </View>
                 </View>
-                <View style={{alignContent:'center', width: windowWidth, flexDirection: 'row' }}>
-                    <Text style={{ marginTop: 5 }}>Where to Watch</Text>
-                </View>
+               
             </View>
         </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
+    
     animeTitleText: {
         color: "#ffffff",
         zIndex: 2,
@@ -241,7 +262,7 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#2E3033'
+        backgroundColor: '#050301'
     },
 });
 

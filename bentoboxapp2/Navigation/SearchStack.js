@@ -26,7 +26,7 @@ export default function SearchStack() {
           },
           headerTintColor: '#111920',
           headerRight: () => (
-            <FontAwesome name="search" size={24} color="white" 
+            <FontAwesome name="search" size={20} color="white" 
             onPress={() => navigation.navigate('SearchScreen')}
             />
           ),
