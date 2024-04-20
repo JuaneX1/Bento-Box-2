@@ -34,7 +34,6 @@ if (process.env.NODE_ENV === 'production') {
 } 
 
 cron.schedule('* * * * *', async () => {
-	console.log('Running verification clean up');
 	await clearOldVerifications();
 });
 
@@ -48,7 +47,7 @@ async function clearOldVerifications() {
 		dt.setMinutes(dt.getMinutes() - 30);
 
 		const result = await tempusertable.deleteMany({ enteredOn: { $lt: dt } });
-		console.log(`${result.deletedCount} document(s) deleted`);
+		if (result.deletedCount !== 0) console.log(`${result.deletedCount} document(s) deleted`);
 	} catch (error) {
 		console.error('Error deleting old verifications:', error);
 	}

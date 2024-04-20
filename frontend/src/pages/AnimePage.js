@@ -6,6 +6,7 @@ import bigLogo from '../assets/BB_Logo_Horizontal_COLOR_1.png';
 import highScoreImage from '../assets/highScoreImg.webp';
 import lowScoreImage from '../assets/lowScoreImg.png';
 import mediumScoreImage from '../assets/mediumScoreImg.png';
+import { instance } from '../App';
 import '../css/AnimePage.css';
 const AnimePage = () => {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ const AnimePage = () => {
     // Function to fetch anime details
     const fetchAnimeDetails = async () => {
       try {
-        const response = await axios.get(`https://api.jikan.moe/v4/anime/${id}`);
+        const response = await instance.get(`https://api.jikan.moe/v4/anime/${id}`);
         const data = response.data;
         const anime = data.data;
         setAnimeData(anime);
@@ -33,7 +34,7 @@ const AnimePage = () => {
     const fetchAnimeRecommendations = async () => {
       try 
       {
-        const response = await axios.get(`https://api.jikan.moe/v4/anime/${id}/recommendations`);
+        const response = await instance.get(`https://api.jikan.moe/v4/anime/${id}/recommendations`);
         const data = response.data;
         const animeRecommendationsList = data.data.slice(0, 3);
 
@@ -58,6 +59,14 @@ const AnimePage = () => {
   const handleLogOut = () => {
     navigate('/');
   };
+  
+	const toggleFavorite = async () => {
+		try {
+			await instance.post(`/setFavorite/`, { mal_id: id }, { headers: { Authorization: sessionStorage.getItem('token') }});
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
   const toggleFavorite = () => {
     // TODO - add to favorites
@@ -104,6 +113,7 @@ const AnimePage = () => {
         <h1>No Data Available</h1>
       )}
       <div className="bottom-container">
+      <button id="favorite-btn" onClick={toggleFavorite}>Favorite</button>
         <div className="more-info-box">
           <h1>More About This Show</h1>
           <h3>Episode Count: {animeData.episodes !== null ? animeData.episodes : 0}</h3>

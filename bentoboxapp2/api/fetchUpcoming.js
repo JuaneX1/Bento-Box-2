@@ -1,7 +1,14 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import AxiosRateLimit from 'axios-rate-limit';
 
-// Function to fetch top anime with caching and expiration
+// Create an instance of axios
+const axiosInstance = axios.create();
+
+// Apply rate limiting to the axios instance
+const axiosWithRateLimit = AxiosRateLimit(axiosInstance, { maxRequests: 3, perMilliseconds: 1000 }); // Example: 1 request per 1 seconds
+
+// Function to fetch top anime with caching and rate limiting
 export const fetchUpcoming = async () => {
     try {
         const cachedData = await AsyncStorage.getItem('upcomingAnime');
@@ -12,8 +19,10 @@ export const fetchUpcoming = async () => {
                 return data;
             }
         }
-        // Fetch fresh data from the API
-        const response = await axios.get('https://api.jikan.moe/v4/top/anime?sfw&filter=upcoming');
+
+        // Fetch fresh data from the API with rate limiting
+        console.log("api request!");
+        const response = await axiosWithRateLimit.get('https://api.jikan.moe/v4/top/anime?sfw&filter=upcoming');
 
         const data = response.data;
         if (data && data.data) {

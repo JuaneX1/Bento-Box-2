@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
 
   const signIn = async (formData) => {
     // Call doLogin with form data
-    const _authData = await doLogin(formData);
+    const _authData = formData; //await doLogin(formData);
     console.log(_authData);
     setAuthData(_authData);
   };
@@ -35,10 +35,10 @@ export const AuthProvider = ({ children }) => {
 
   const signUp = async (formData) => {
     // Call doSignUp with form data
-    console.log("Auth Context SIGN UP.js "+ formData.first +" "+formData.last + " "+formData.login +" "+formData.email+" "+formData.password);
-    const _authData = await doSignUp(formData);
-    console.log("auth data: "+_authData);
-    setAuthData(_authData);
+   //console.log("Auth Context SIGN UP.js "+ formData.first +" "+formData.last + " "+formData.login +" "+formData.email+" "+formData.password);
+    //const _authData = await doSignUp(formData);
+    //console.log("auth data: "+_authData);
+    //setAuthData(_authData);
   };
 
   const logOut = async () => {

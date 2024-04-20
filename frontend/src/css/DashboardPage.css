@@ -1,14 +1,25 @@
-
 .App {
   text-align: center;
 }
 
 .dashboard {
-  background: rgb(253,29,29);
-  background: -moz-linear-gradient(90deg, rgba(253,29,29,1) 2%, rgba(252,176,69,1) 31%, rgba(46,119,174,1) 59%);
-  background: -webkit-linear-gradient(90deg, rgba(253,29,29,1) 2%, rgba(252,176,69,1) 31%, rgba(46,119,174,1) 59%);
-  background: linear-gradient(90deg, rgba(253,29,29,1) 2%, rgba(252,176,69,1) 31%, rgba(46,119,174,1) 59%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#fd1d1d",endColorstr="#2e77ae",GradientType=1);
+  background: hsla(207, 58%, 44%, 1); /* Fallback for older browsers */
+  background: linear-gradient(
+    to bottom,
+    hsla(207, 58%, 44%, 1) 6%,
+    hsla(0, 0%, 0%, 1) 84%
+  ); /* Standard syntax - Gradient from top (blue) to bottom (black) */
+  background: -moz-linear-gradient(
+    to bottom,
+    hsla(207, 58%, 44%, 1) 6%,
+    hsla(0, 0%, 0%, 1) 84%
+  ); /* For Firefox */
+  background: -webkit-linear-gradient(
+    to bottom,
+    hsla(207, 58%, 44%, 1) 6%,
+    hsla(0, 0%, 0%, 1) 84%
+  ); /* For Safari and old Chrome */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3077B2", endColorstr="#000000", GradientType=0); /* For IE6-9 */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -28,7 +39,7 @@
   background-color: #111920;
   z-index: 2;
   padding: 0 20px;
-  box-shadow: 0 2px 4px rgba(0,0,0,.5);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .topbar-logo {
@@ -36,7 +47,8 @@
   width: auto;
 }
 
-.topbar-btn, .log-out-btn {
+.topbar-btn,
+.log-out-btn {
   background: none;
   color: white;
   border: 2px solid transparent;
@@ -54,7 +66,8 @@
   border: 2px solid white;
 }
 
-.topbar-btn:hover, .log-out-btn:hover {
+.topbar-btn:hover,
+.log-out-btn:hover {
   background-color: white;
   color: #111920;
   border-color: transparent;
@@ -65,7 +78,7 @@ body {
 }
 
 .navigation-btn-blue {
-  background-color: #2196F3;
+  background-color: #2196f3;
   color: white;
   border: 2px solid transparent;
   padding: 10px 20px;
@@ -124,7 +137,7 @@ body {
   border: none;
   background-color: #333;
   color: white;
-  box-shadow: 0 2px 4px rgba(0,0,0,.5);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   font-size: 20px;
   font-family: "Rowdies", sans-serif;
 }
@@ -142,7 +155,7 @@ body {
   border: none;
   background-color: #333;
   color: white;
-  box-shadow: 0 2px 4px rgba(0,0,0,.5);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   font-size: 20px;
   font-family: "Rowdies", sans-serif;
 }
@@ -160,7 +173,6 @@ body {
   }
 }
 
-
 .content-wrap input {
   flex: 1;
   width: 50%;
@@ -169,7 +181,7 @@ body {
   border: none;
   background-color: #333;
   color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, .5);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   font-size: 20px;
   font-family: "Rowdies", sans-serif;
 }
@@ -178,7 +190,7 @@ body {
   padding: 15px;
   border: none;
   border-radius: 20px;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   font-size: 20px;
   font-family: "Rowdies", sans-serif;

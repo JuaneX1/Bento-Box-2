@@ -11,7 +11,7 @@ const AnimeListingV2 = ({ anime }) => {
     
     const title = anime.title;
     const truncatedTitle = title.length > 20 ? title.slice(0, 20) + '...' : title;
-    console.log(title);
+
     return (
         <View style={styles.card} key={anime.mal_id ?  anime.mal_id + Math.random() :  Math.random()}>
             <TouchableOpacity >
