@@ -19,7 +19,7 @@ const AnimePage = () => {
     // Function to fetch anime details
     const fetchAnimeDetails = async () => {
       try {
-        const response = await axios.get(`https://api.jikan.moe/v4/anime/${id}`);
+        const response = await instance.get(`https://api.jikan.moe/v4/anime/${id}`);
         const data = response.data;
         const anime = data.data;
         setAnimeData(anime);
@@ -34,7 +34,7 @@ const AnimePage = () => {
     const fetchAnimeRecommendations = async () => {
       try 
       {
-        const response = await axios.get(`https://api.jikan.moe/v4/anime/${id}/recommendations`);
+        const response = await instance.get(`https://api.jikan.moe/v4/anime/${id}/recommendations`);
         const data = response.data;
         const animeRecommendationsList = data.data.slice(0, 3);
 
