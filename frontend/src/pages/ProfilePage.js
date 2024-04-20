@@ -3,7 +3,7 @@ import { Button, Container, Form, Image, Modal } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { instance } from '../App';
 import logo from '../assets/FinalLogo.png';
-import '../css/ProfilePage.css';
+
 
 const ProfilePage = ({ onClose }) => {
     const [userData, setUserData] = useState('');
@@ -77,16 +77,17 @@ const ProfilePage = ({ onClose }) => {
                 <Image src={logo} alt="Logo" className="topbar-logo" fluid />
               </Link>
               <div className="topbar-buttons">
-                  <Link to="/dashboard" className="topbar-btn">Dashboard</Link>
-                  <Button onClick={handleLogOut} className="log-out-btn">Log Out</Button>
+                  <Link to="/dashboard" className="topbar-btn btn btn-primary">Dashboard</Link>
+                  <Button onClick={handleLogOut} className="log-out-btn btn btn-danger">Log Out</Button>
               </div>
             </header>
-            <div className="spacerProfile"></div>
-            <Container className="profile-container">
-                <div className="profile-content">
-                    <h2 className="mb-4">My Profile</h2>
+            {/* the 89.20 is to ensure gradient doesn't repeat in container*/}
+            <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '89.20vh' }}>
+            <Container className="text-white">
+                <div className="profile-content border-whiteborder border-secondary bg-black p-4 rounded">
+                    <h1 className="mb-4">My Profile</h1>
                     {isEditing ? (
-                        <Form onSubmit={handleSubmit} className="profile-form text-light">
+                        <Form onSubmit={handleSubmit} className="profile-form text-light align-labels-left">
                             <Form.Group className="mb-3" controlId="formFirstName">
                                 <Form.Label>First Name</Form.Label>
                                 <Form.Control type="text" name="first" value={userData.first} onChange={handleChange} />
@@ -100,22 +101,23 @@ const ProfilePage = ({ onClose }) => {
                                 <Form.Control type="text" name="login" value={userData.login} onChange={handleChange} />
                             </Form.Group>
                             {/* Update Profile Button */}
-                            <Button type="submit" className="mt-4 profile-btn">Update Profile</Button>
+                            <Button type="submit" className="mt-4 profile-btn btn btn-success">Update Profile</Button>
                         </Form>
                     ) : (
-                        <div className="profile-info">
-                            <p><strong>First Name:</strong> {userData.first}</p>
-                            <p><strong>Last Name:</strong> {userData.last}</p>
-                            <p><strong>Username:</strong> {userData.login}</p>
-                            <p><strong>Email:</strong> {userData.email}</p>
+                        <div className="profile-info flex justify-items-left">
+                            <p className='d-flex align-items-start'><strong>First Name:</strong> <div className='p-1'> </div><span>{userData.first}</span> </p>
+                            <p className='d-flex align-items-start'><strong>Last Name:</strong> <div className='p-1'></div>{userData.last}</p>
+                            <p className='d-flex align-items-start'><strong>Username:</strong> <div className='p-1'></div>{userData.login}</p>
+                            <p className='d-flex align-items-start'><strong>Email:</strong><div className='p-1'></div> {userData.email}</p>
                             {/* Edit Profile Button */}
-                            <Button onClick={handleToggleEdit} className="edit-profile-btn">Edit Profile</Button>
+                            <Button onClick={handleToggleEdit} className="edit-profile-btn btn btn-primary">Edit Profile</Button>
                         </div>
                     )}
                     {/* Delete Account Button */}
-                    <Button onClick={() => setShowModal(true)} className="mt-4 delete-account-btn" variant="danger">Delete Account</Button>
+                    <Button onClick={() => setShowModal(true)} className="mt-4 delete-account-btn btn btn-danger">Delete Account</Button>
                 </div>
             </Container>
+            </div>
             {showModal && <div className="overlay"></div>}
             {/* Modal for confirming account deletion */}
             <Modal show={showModal} onHide={() => setShowModal(false)} centered>
@@ -129,11 +131,10 @@ const ProfilePage = ({ onClose }) => {
                     <div></div>
                     <Button variant="secondary" onClick={() => setShowModal(false)}>No</Button>
                     <div></div>
-                    <Button variant="danger" onClick={handleDeleteAccount} className="delete-account-final-btn"><strong>Yes</strong></Button>
+                    <Button variant="danger" onClick={handleDeleteAccount} className="delete-account-final-btn btn btn-danger"><strong>Yes</strong></Button>
                     <div></div>
                 </Modal.Footer>
             </Modal>
-            <div className="spacerProfile"></div>
         </>
     );
 };
