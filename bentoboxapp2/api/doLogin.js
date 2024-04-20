@@ -18,11 +18,12 @@ export async function doLogin(formData) {
       
         const response = await instance.post(`/login`, formData);
 
-        const { token } = response.data;
+        const { token } = response.data.token;
 
+        console.log(response.data.token);
         // Assuming the server responds with a token
-        await AsyncStorage.setItem('token', token);
-        return {token: token, error: ''};
+        await AsyncStorage.setItem('token', response.data.token);
+        return {token: response.data.token, error: ''};
 
     } catch (error) {
       if(error.response){
@@ -49,7 +50,7 @@ export async function doLogin(formData) {
         }
       }
       console.log('unkown!');
-      return {token: null, error: "unkown error"};
+      return {token: null, error: error};
       // Handle network errors or other exceptions
       //setError('Network error or other issue. Please try again.');
     }

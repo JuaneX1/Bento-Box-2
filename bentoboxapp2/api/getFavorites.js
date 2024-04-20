@@ -14,23 +14,27 @@ export async function getFavorites(token, ID) {
 
   if (token != null) {
     try {
-      
+
       // Use await to wait for response from API call
       const userResponse = await instance.get(`/getFavorite`,  {
        
         headers: {
-          Authorization: `${token}`
-        },
-        _id:ID,
+          Authorization: await AsyncStorage.getItem('token')
+        }
       });
         
         const  f  = userResponse.data;
 
-        return {favorite: f, error: ''};
+        //console.log(JSON.stringify(f, null, 2));
+
+        return {favorite: f, error: 'dsfs'};
 
     } catch (error) {
       if(error.response){
+        console.log("favs error");
         const errorMessage = error.response.data.error;
+        console.log(error.response.data.message);
+        console.log(error.response.data);
         if(error.response.status === 404){
           
           return {favorite: null, error: errorMessage};
@@ -44,7 +48,7 @@ export async function getFavorites(token, ID) {
       //setError('Network error or other issue. Please try again.');
     }
   } else {
-    return {favorite: null, error: 'Invalid Input. Please make sure all fields are complete.'};
+    return {favorite: null, error: 'token null'};
   }
 }
 

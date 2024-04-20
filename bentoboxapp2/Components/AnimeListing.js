@@ -31,13 +31,13 @@ const styles = StyleSheet.create({
         fontWeight:'700'
     },
     animeImages: {
-        width: 175,
-        height:300,
+        width: 150,
+        height:250,
         alignSelf: 'center',
         borderRadius:10,
     },
     card: {
-        margin: windowWidth / 47,
+        margin: windowWidth / 60,
         alignItems: 'center'
     }
 });

@@ -49,9 +49,11 @@ export default function Login() {
             
         }
         else{
-            const message = results.error
-            setErrorModalVisible(true);
-            setErrorMessage(message);
+            if (results.error) {
+                const message = typeof results.error === 'string' ? results.error : results.error.message;
+                setErrorModalVisible(true);
+                setErrorMessage(message);
+            }
         }
     };
     return (

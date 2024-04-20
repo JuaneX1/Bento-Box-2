@@ -1,14 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity,SafeAreaView,ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, FlatList,TouchableOpacity,SafeAreaView,ActivityIndicator, ScrollView } from 'react-native';
 import React, { useEffect, useState } from 'react'; // Import useEffect and useState
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FavoriteAnime from '../Components/FavoriteAnime';
 import { useAuth } from '../Components/AuthContext';
 import { getFavorites } from '../api/getFavorites';
+import axios from 'axios';
+import AnimeListing from '../Components/AnimeListing';
+import { LinearGradient } from 'expo-linear-gradient';
 // Import statements...
-
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+const instance = axios.create({
+  baseURL: 'https://bento-box-2-df32a7e90651.herokuapp.com/api'
+});
 export default function HomeScreen({ navigation }) {
   const [favorites, setFavorites] = useState(null);
+  const [animeData, setanimeData]= useState([]);
   const [user, setUser] = useState(null);
   const { authData } = useAuth();
 
@@ -20,20 +28,53 @@ export default function HomeScreen({ navigation }) {
           u = JSON.parse(u);
           setUser(u);
           let t = await AsyncStorage.getItem(`token`);
-          let favs = getFavorites(t, u._id);
-
-          console.log(favs);
-          favs = favs.favorite;
-
-          if(favs != null){
-            setFavorites(favs);
+          if(t){
+            console.log(t);
           }
+
+          const favsResponse = await instance.get(`/getFavorite`,  {
+       
+            headers: {
+              Authorization: await AsyncStorage.getItem('token')
+            }
+          });
+            
+            const  f  = favsResponse.data;
+
+            if(f != null){
+              //console.log("dfdsfdsf "+ JSON.stringify(favs.favorite, null, 2));
+              setFavorites(f);
+            }
+
+            //const favoritesArr = f.map(favorite => favorite._id); // Assuming favorites have an _id property
+
+            const animeDetails = await Promise.all(
+              f.map(async favorite => {
+                const response = await instance.get(`https://api.jikan.moe/v4/anime/${favorite}`);
+                return response.data.data;
+              })
+            );
+
+            if(animeDetails != null){
+              setanimeData(animeDetails);
+            }
+            else{
+              console.log("oops!");
+            }
+
+          console.log("oasnos "+ JSON.stringify(f));
+          //let {favorite, error} = getFavorites(t, u._id);
+
+          //favs = favs.favorite;
+         // console.log(JSON.stringify(favorite));
+
+         
 
         } else {
           console.log("No user data found.");
         }
       } catch (error) {
-        console.error('Error fetching data from AsyncStorage:', error);
+        console.error('Error fetching data :', error.response.data);
       }
     };
 
@@ -54,6 +95,14 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
+       <LinearGradient
+                colors={['transparent', 'rgba(48, 119, 178, 0.5)', 'rgba(48, 119, 178, 1)']}
+                style={{ width: windowWidth, height: windowHeight*0.60, transform: [{ translateY: windowHeight*0.20}]}}
+                start={{ x: 0.5, y: 0.5}}
+                end={{ x: 0.5, y: 1 }}
+                position="absolute"
+            />
+      <ScrollView>
       <View style={styles.container}>
         {user ? (
           <>
@@ -61,7 +110,18 @@ export default function HomeScreen({ navigation }) {
             {favorites === null ? (
               <Text>Looks like you have no favorites at the moment</Text>
             ) : (
-              <Text>YAYYYYY!</Text>
+              <FlatList
+                 style={{width:windowWidth}}
+                data={animeData} // Use searchList from props
+                keyExtractor={(item) => item.mal_id.toString()} // Use toString() to ensure key is a string
+                numColumns={2}
+                renderItem={({ item }) => (
+                    <AnimeListing anime={item} />
+                )}>
+              </FlatList>
+             
+            
+              //<Text>YAYYYYY!</Text>
             )}
           </>
         ) : (
@@ -80,6 +140,7 @@ export default function HomeScreen({ navigation }) {
           </>
         )}
       </View>
+      </ScrollView>
     </SafeAreaView>
   );
   

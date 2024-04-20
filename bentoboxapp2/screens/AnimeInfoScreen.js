@@ -36,7 +36,7 @@ class AnimeInfoScreen extends React.PureComponent {
         const { anime: currentAnime } = this.props.route.params;
         const { anime: previousAnime } = prevProps.route.params;
         // Example condition: fetch new recommendations if the 'userId' prop changes
-        if (currentAnime.mal_id !== previousAnime.mal_id) {
+        if (currentAnime && currentAnime.mal_id !== previousAnime.mal_id) {
             this.fetchData();
         }
     }
@@ -84,7 +84,8 @@ class AnimeInfoScreen extends React.PureComponent {
     };
 
     toggleFavorite = async () => {
-        const { anime } = this.props;
+        const { route } = this.props;
+        const { anime } = route.params;
         const { favorite } = this.state;
         this.setState({ favorite: !favorite });
 
@@ -349,7 +350,7 @@ const styles = StyleSheet.create({
     },
     recommendationsContainer: {
         marginTop: 20,
-        marginBottom: 20
+        marginBottom: 10
       },
       recommendationsTitle: {
         fontSize: 18,
