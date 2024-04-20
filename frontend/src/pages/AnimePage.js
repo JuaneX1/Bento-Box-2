@@ -68,10 +68,6 @@ const AnimePage = () => {
 		}
 	};
 
-  const toggleFavorite = () => {
-    // TODO - add to favorites
-  }
-
   return (
     <div className="anime-container">
       <div className="topbar">
