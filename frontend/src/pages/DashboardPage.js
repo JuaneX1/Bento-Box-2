@@ -61,7 +61,7 @@ const Dashboard = () => {
                 </div>
             </div>
         </TopNavbar>
-        <div style={{ background: "linear-gradient(to bottom, #2e77AE, #000000)" }}>
+        <div style={{ background: "linear-gradient(to bottom, #2e77AE, #000000)", minHeight: '100vh' }}>
         <div className="container-fluid p-3">
             <div className="row">
                 <div className="col">
