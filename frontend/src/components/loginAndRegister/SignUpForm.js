@@ -45,7 +45,7 @@ const SignUpForm = ({ onClose, onSwitchBack, setShowVerificationBar }) => {
             <div className="signup-content">
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                  <label htmlFor="first" className="signup-label text-white">First Name:</label>
+                  <label htmlFor="first" className="signup-label text-white">First Name (Required):</label>
                   <input
                     type="text"
                     name="first"
@@ -65,11 +65,10 @@ const SignUpForm = ({ onClose, onSwitchBack, setShowVerificationBar }) => {
                     className="signup-input form-control"
                     value={formData.last}
                     onChange={handleChange}
-                    required
                   />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="login" className="signup-label text-white">Username:</label>
+                  <label htmlFor="login" className="signup-label text-white">Username (Required):</label>
                   <input
                     type="text"
                     name="login"
