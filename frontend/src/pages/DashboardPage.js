@@ -4,7 +4,7 @@ import logo from '../assets/FinalLogo.png';
 import Browse from '../components/Browse';
 import AnimeSearch from '../components/animeCards/AnimeSearch';
 import Favorites from '../components/pageFeatures/Favorites';
-import '../css/DashboardPage.css';
+import styled from 'styled-components';
 
 const Dashboard = () => {
     const navigate = useNavigate();
@@ -39,25 +39,46 @@ const Dashboard = () => {
             setShowFavorites(true);
         }
     };
+
+    const TopNavbar = styled.nav`
+        background-color: #111920;
+    `;
     
     return (
-        <div className="dashboard">
-            <header className="topbar">
-                <Link to="/profile" className="topbar-btn">My Profile</Link>
-                <img src={logo} alt="Logo" className="topbar-logo" />
-                <button onClick={handleLogOut} className="log-out-btn">Log Out</button>
-            </header>
-
-            <div className="navigation-buttons">
-                <button onClick={toggleSearch} className={`navigation-btn navigation-btn-blue ${showSearch}`}>Search</button>
-                <button onClick={toggleBrowse} className={`navigation-btn navigation-btn-red ${showBrowse ? 'active' : ''}`}>Browse</button>
-                <button onClick={toggleFavorites} className={`navigation-btn navigation-btn-white ${showFavorites}`}>Favorites</button>
+        <>
+        <TopNavbar className="navbar navbar-expand-lg navbar-dark d-flex justify-content-between p-2">
+            <div className="container-fluid">                
+                <Link to="/profile" className="navbar-brand">
+                    <strong>My Profile</strong>
+                </Link>
+                <Link to="/dashboard" className="navbar-brand ml-auto">
+                    <img src={logo} alt="Big Logo" className="logo img-fluid mr-3" style={{ minHeight: '50px', maxHeight: '50px' }} />
+                </Link>
+                <div className="ml-auto">
+                    <button onClick={handleLogOut} className="btn btn-danger">
+                        <strong>Log Out</strong>
+                    </button>
+                </div>
             </div>
-
-            {showSearch && <AnimeSearch typeDefault={"topAnime"} />}
-            {showBrowse && <Browse />}
-            {showFavorites && <Favorites />}
+        </TopNavbar>
+        <div style={{ background: "linear-gradient(to bottom, #2e77AE, #000000)" }}>
+        <div className="container-fluid p-3">
+            <div className="row">
+                <div className="col">
+                    <div className="d-flex justify-content-center">
+                        <button onClick={toggleSearch} className={`btn btn-primary btn-lg mx-2 ${showSearch ? 'active' : ''}`}>Search</button>
+                        <button onClick={toggleBrowse} className={`btn btn-danger btn-lg mx-2 ${showBrowse ? 'active' : ''}`}>Browse</button>
+                        <button onClick={toggleFavorites} className={`btn btn-light btn-lg mx-2 ${showFavorites ? 'active' : ''}`}>Favorites</button>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        {showSearch && <AnimeSearch typeDefault={"topAnime"} />}
+        {showBrowse && <Browse />}
+        {showFavorites && <Favorites />}
+        </div>
+        </>
     );
 };
 
