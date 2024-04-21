@@ -13,7 +13,7 @@ const HomePage = () => {
   const [currentForm, setCurrentForm] = useState("");
   const animeRowRef = useRef(null);
   const [showVerificationBar, setShowVerificationBar] = useState(false);
-  const [showEasterEggHiddenLink, setshowEasterEggHiddenLink] = useState(true);
+  const [showResetBar, setShowResetBar] = useState(false);
 
   // gets the animes to display in sidebar, 24 is to make it flush since in 3 by 3 grid
   const getData = async () => {
@@ -44,12 +44,11 @@ const HomePage = () => {
   const handleSwitchForm = (formType) => {
     setCurrentForm(formType);
     setShowVerificationBar(false);
-    setshowEasterEggHiddenLink(false);
+    setShowResetBar(false);
   };
 
   const handleCloseForms = () => {
     setCurrentForm("");
-    setshowEasterEggHiddenLink(true);
   };
 
   const TopNavbar = styled.nav`
@@ -73,6 +72,14 @@ const HomePage = () => {
           <div className="verification-bar bg-success text-white p-2">
             <p className="m-0 text-center">
               Email Verification Sent: Please Check Email to Verify Account and Be
+              Able To Login!
+            </p>
+          </div>
+        )}
+        {showResetBar && (
+          <div className="verification-bar bg-success text-white p-2">
+            <p className="m-0 text-center">
+              Password Reset Email Sent: Please Check Email to Reset Password and Be
               Able To Login!
             </p>
           </div>
@@ -125,6 +132,7 @@ const HomePage = () => {
                   <ForgotPassword
                     onClose={handleCloseForms}
                     onSwitchForm={() => handleSwitchForm("login")}
+                    setShowResetBar={setShowResetBar}
                   />
                 )}
               </div>
