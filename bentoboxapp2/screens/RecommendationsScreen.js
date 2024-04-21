@@ -8,7 +8,7 @@ import AnimeListingV2 from '../Components/AnimeListingV2';
 import Carousel from 'react-native-snap-carousel';
 import axios from 'axios';
 import axiosRateLimit from 'axios-rate-limit';
-
+import { LinearGradient } from 'expo-linear-gradient';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -78,6 +78,13 @@ const RecommendationsScreen = () => {
     console.log(animeData);
     return(
     <SafeAreaView style={styles.containerX}>
+       <LinearGradient
+                colors={['transparent', 'rgba(48, 119, 178, 0.5)', 'rgba(48, 119, 178, 1)']}
+                style={{ width: windowWidth, height: windowHeight*0.60, transform: [{ translateY: windowHeight*0.35}]}}
+                start={{ x: 0.5, y: 0.5}}
+                end={{ x: 0.5, y: 1 }}
+                position="absolute"
+            />
       <TouchableOpacity>
         <AnimeListingV2 anime={animeData.entry} />
       </TouchableOpacity>
