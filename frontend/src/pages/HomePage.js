@@ -30,12 +30,9 @@ const HomePage = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       if (animeRowRef.current) {
-        const maxScroll =
-          animeRowRef.current.scrollHeight - animeRowRef.current.clientHeight;
-        if (animeRowRef.current.scrollTop < maxScroll) {
-          animeRowRef.current.scrollBy(0, 1);
-        } else {
-          animeRowRef.current.scrollTop = 0; // Reset scroll to top when it reaches the bottom
+        animeRowRef.current.scrollTop += 1;
+        if (animeRowRef.current.scrollTop >= animeRowRef.current.scrollHeight - animeRowRef.current.clientHeight) {
+          animeRowRef.current.scrollTop = 0;
         }
       }
     }, 50); // Speed of scroll - lower is faster. Adjust as needed.
@@ -56,66 +53,76 @@ const HomePage = () => {
 
   return (
     <>
-      <div className="topbarHomePage topbar">
-        <Link to="/about-us">
-          <button className="about-us-button">About Us</button>
-        </Link>
-      </div>
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark topbarHomePage">
+        <div className="container-fluid">
+          <Link className="navbar-brand" to="/about-us">
+            About Us
+          </Link>
+        </div>
+      </nav>
+      <div style={{ background: "linear-gradient(to left, #2e77AE, #000000)" }}>
       {showVerificationBar && (
-        <div className="verification-bar">
-          <p>
+        <div className="verification-bar bg-success text-white p-2">
+          <p className="m-0">
             Email Verification Sent: Please Check Email to Verify Account and Be
             Able To Login!
           </p>
         </div>
       )}
-      <div className="container">
-        <div className="anime-row" ref={animeRowRef}>
-          <div className="row">
-            <AnimeList animelist={animeData} />
-          </div>
-        </div>
-        <div className="logo-and-form-container">
-          {currentForm === "" && (
-            <div className="logo-container">
-              <img src={bigLogo} alt="Big Logo" />
-              <div className="buttons">
-                <button
-                  className="button"
-                  onClick={() => handleSwitchForm("login")}
-                >
-                  Login
-                </button>
-                <button
-                  className="button"
-                  onClick={() => handleSwitchForm("signup")}
-                >
-                  Sign Up
-                </button>
+      <div className="container ">
+        <div className="row">
+          <div className="col-md-8">
+            <div className="anime-row overflow-hidden" style={{ minHeight: "92.4vh", maxHeight: "200px", overflowY: "scroll" }} ref={animeRowRef}>
+              <div className="row">
+                <AnimeList animelist={animeData} />
               </div>
             </div>
-          )}
-          {currentForm === "login" && (
-            <LoginForm
-              onClose={handleCloseForms}
-              onSwitchForm={handleSwitchForm}
-              onShowForgotPassword={() => handleSwitchForm("forgot")}
-            />
-          )}
-          {currentForm === "signup" && (
-            <SignUpForm
-              onClose={handleCloseForms}
-              onSwitchBack={() => handleSwitchForm("login")}
-              setShowVerificationBar={setShowVerificationBar}
-            />
-          )}
-          {currentForm === "forgot" && (
-            <ForgotPassword
-              onClose={handleCloseForms}
-              onSwitchForm={() => handleSwitchForm("login")}
-            />
-          )}
+          </div>
+          <div className="col-md-4 d-flex align-items-center justify-content-center">
+            <div className="logo-and-form-container">
+              {currentForm === "" && (
+                <div className="logo-container text-center">
+                  <img src={bigLogo} alt="Big Logo" className="img-fluid mb-4" />
+                  <div className="buttons">
+                    <button
+                      className="btn btn-primary me-2"
+                      onClick={() => handleSwitchForm("login")}
+                    >
+                      Login
+                    </button>
+                    <button
+                      className="btn btn-secondary"
+                      onClick={() => handleSwitchForm("signup")}
+                    >
+                      Sign Up
+                    </button>
+                  </div>
+                </div>
+              )}
+              {currentForm === "login" && (
+                <LoginForm
+                  onClose={handleCloseForms}
+                  onSwitchForm={handleSwitchForm}
+                  onShowForgotPassword={() => handleSwitchForm("forgot")}
+                />
+              )}
+              {currentForm === "signup" && (
+                <SignUpForm
+                  onClose={handleCloseForms}
+                  onSwitchBack={() => handleSwitchForm("login")}
+                  setShowVerificationBar={setShowVerificationBar}
+                />
+              )}
+              {currentForm === "forgot" && (
+                <ForgotPassword
+                  onClose={handleCloseForms}
+                  onSwitchForm={() => handleSwitchForm("login")}
+                />
+              )}
+            </div>
+          </div>
         </div>
+      </div>
       </div>
     </>
   );
