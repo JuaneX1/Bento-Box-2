@@ -15,38 +15,47 @@ export async function doLogin(formData) {
   if (formData.login && formData.password ) {
     try {
       // Use await to wait for response from API call
-      console.log("do login.js " + formData.login +" "+formData.password);
-      const response = await instance.post(`/login`, formData);
+      
+        const response = await instance.post(`/login`, formData);
 
-        const { token } = response.data;
-        
+        const { token } = response.data.token;
+
+        console.log(response.data.token);
         // Assuming the server responds with a token
-        await AsyncStorage.setItem('token', token);
-        console.log('woooo!');
-        return {token: token, error: ''};
+        await AsyncStorage.setItem('token', response.data.token);
+        return {token: response.data.token, error: ''};
 
     } catch (error) {
       if(error.response){
-        const errorMessage = error.response.data.error;
+
+        const errorMessage = error.response.data;
+
         if(error.response.status === 401){
-          
-          return {token: null, error: errorMessage};
+          console.log('401!');
+          return {token: null,  error: "Incorrect Username or Password"};
         }
         else if (error.response.status === 402){
-          
+          console.log('402');
           //console.log('Unexpected response status:', error);
           return {token: null, error: errorMessage};
         }
+        else if (error.response.status === 404){
+          console.log('404!');
+          //console.log('Unexpected response status:', error);
+          return {token: null, error: 'api not found'};
+        }
         else if (error.response.status === 500){
+          console.log('500!');
           return {token: null, error: errorMessage};
         }
       }
+      console.log('unkown!');
       return {token: null, error: error};
       // Handle network errors or other exceptions
       //setError('Network error or other issue. Please try again.');
     }
   } else {
-    return {token: null, error: 'Invalid Input. Please make sure all fields are complete.'};
+    return {token: null, user: null, error: 'Invalid Input. Please make sure all fields are complete.'};
   }
 }
 function buildPath(route)

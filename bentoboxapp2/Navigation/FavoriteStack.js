@@ -16,7 +16,7 @@ export default function FavoriteStack() {
   return (
       <Stack.Navigator >
         <Stack.Screen 
-        name="Favorites" 
+        name="Fav" 
         component = {HomeScreen}
         options = {{
 

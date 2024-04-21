@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { doLogin } from '../api/doLogin';
 import { useAuth } from '../Components/AuthContext';
 import { MaterialIcons } from '@expo/vector-icons';
+import { getUserInfo } from '../api/getUserInfo';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -41,13 +42,18 @@ export default function Login() {
         const results = await doLogin(formData);
 
         if(results.token != null){
-            console.log(results.token);
-            await signIn(results.token);
+            
+            const user = await getUserInfo(results.token);
+            await signIn(user.user._id);
+
+            
         }
         else{
-            //console.log(results.error);
-            setErrorModalVisible(true);
-            setErrorMessage(results.error);
+            if (results.error) {
+                const message = typeof results.error === 'string' ? results.error : results.error.message;
+                setErrorModalVisible(true);
+                setErrorMessage(message);
+            }
         }
     };
     return (

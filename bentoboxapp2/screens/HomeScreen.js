@@ -1,30 +1,86 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity,SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, FlatList,TouchableOpacity,SafeAreaView,ActivityIndicator, ScrollView } from 'react-native';
 import React, { useEffect, useState } from 'react'; // Import useEffect and useState
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FavoriteAnime from '../Components/FavoriteAnime';
-
-
+import { useAuth } from '../Components/AuthContext';
+import { getFavorites } from '../api/getFavorites';
+import axios from 'axios';
+import AnimeListing from '../Components/AnimeListing';
+import { LinearGradient } from 'expo-linear-gradient';
+// Import statements...
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+const instance = axios.create({
+  baseURL: 'https://bento-box-2-df32a7e90651.herokuapp.com/api'
+});
 export default function HomeScreen({ navigation }) {
-  const [favorites, setFavorites] = useState(null); // State to store favorites
+  const [favorites, setFavorites] = useState(null);
+  const [animeData, setanimeData]= useState([]);
+  const [user, setUser] = useState(null);
+  const { authData } = useAuth();
 
-  // Fetch favorites from AsyncStorage when component mounts
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const favoritesData = await AsyncStorage.getItem('favorites');
-        if (favoritesData) {
-          setFavorites(JSON.parse(favoritesData)); // Parse favoritesData to JSON
+        if (authData) {
+          let u = await AsyncStorage.getItem(`user_${authData}`);
+          u = JSON.parse(u);
+          setUser(u);
+          let t = await AsyncStorage.getItem(`token`);
+          if(t){
+            console.log(t);
+          }
+
+          const favsResponse = await instance.get(`/getFavorite`,  {
+       
+            headers: {
+              Authorization: await AsyncStorage.getItem('token')
+            }
+          });
+            
+            const  f  = favsResponse.data;
+
+            if(f != null){
+              //console.log("dfdsfdsf "+ JSON.stringify(favs.favorite, null, 2));
+              setFavorites(f);
+            }
+
+            //const favoritesArr = f.map(favorite => favorite._id); // Assuming favorites have an _id property
+
+            const animeDetails = await Promise.all(
+              f.map(async favorite => {
+                const response = await instance.get(`https://api.jikan.moe/v4/anime/${favorite}`);
+                return response.data.data;
+              })
+            );
+
+            if(animeDetails != null){
+              setanimeData(animeDetails);
+            }
+            else{
+              console.log("oops!");
+            }
+
+          console.log("oasnos "+ JSON.stringify(f));
+          //let {favorite, error} = getFavorites(t, u._id);
+
+          //favs = favs.favorite;
+         // console.log(JSON.stringify(favorite));
+
+         
+
+        } else {
+          console.log("No user data found.");
         }
       } catch (error) {
-        console.error('Error fetching data from AsyncStorage:', error);
+        console.error('Error fetching data :', error.response.data);
       }
     };
 
-    fetchData(); // Call fetchData function
-  }, []); // Empty dependency array to run effect only once when component mounts
+    fetchData();
+  }, [authData]);
 
-  // Handle navigation functions
   const handleLikedAnime = () => {
     navigation.navigate('LikedAnime');
   };
@@ -39,31 +95,58 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-    <View style={styles.container}>
-      {favorites === null ? ( // Render based on the value of favorites
-        <>
-          <StatusBar style="auto" />
-          <Text style={styles.title}>Welcome to Your App</Text>
-          <TouchableOpacity style={styles.button} onPress={handleLikedAnime}>
-            <Text style={styles.buttonText}>Liked Anime/Watchlist</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={handleWatchedAnime}>
-            <Text style={styles.buttonText}>Watched Anime</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={handleCustomList}>
-            <Text style={styles.buttonText}>Custom List</Text>
-          </TouchableOpacity>
-        </>
-      ) : (
-        <>
-          <Text style={styles.title}>My Favorites</Text>
-          <FavoriteAnime favorites={favorites} />
-        </>
-      )}
-    </View>
+       <LinearGradient
+                colors={['transparent', 'rgba(48, 119, 178, 0.5)', 'rgba(48, 119, 178, 1)']}
+                style={{ width: windowWidth, height: windowHeight*0.60, transform: [{ translateY: windowHeight*0.20}]}}
+                start={{ x: 0.5, y: 0.5}}
+                end={{ x: 0.5, y: 1 }}
+                position="absolute"
+            />
+      <ScrollView>
+      <View style={styles.container}>
+        {user ? (
+          <>
+            <Text>{user.login}'s Favorites</Text>
+            {favorites === null ? (
+              <Text>Looks like you have no favorites at the moment</Text>
+            ) : (
+              <FlatList
+                 style={{width:windowWidth}}
+                data={animeData} // Use searchList from props
+                keyExtractor={(item) => item.mal_id.toString()} // Use toString() to ensure key is a string
+                numColumns={2}
+                renderItem={({ item }) => (
+                    <AnimeListing anime={item} />
+                )}>
+              </FlatList>
+             
+            
+              //<Text>YAYYYYY!</Text>
+            )}
+          </>
+        ) : (
+          <>
+            <StatusBar style="auto" />
+            <Text style={styles.title}>Welcome sdhiuda</Text>
+            <TouchableOpacity style={styles.button} onPress={handleLikedAnime}>
+              <Text style={styles.buttonText}>Liked Anime/Watchlist</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={handleWatchedAnime}>
+              <Text style={styles.buttonText}>Watched Anime</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={handleCustomList}>
+              <Text style={styles.buttonText}>Custom List</Text>
+            </TouchableOpacity>
+          </>
+        )}
+      </View>
+      </ScrollView>
     </SafeAreaView>
   );
+  
 }
+
+// Styles...
 
 const styles = StyleSheet.create({
   container: {
