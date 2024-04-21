@@ -58,7 +58,7 @@ const HomePage = () => {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark d-flex justify-content-between p-2">
+      <TopNavbar className="navbar navbar-expand-lg navbar-dark d-flex justify-content-between p-2">
                 <Link to="/" className="navbar-brand">
                     <img src={bigLogo} alt="Big Logo" className="logo img-fluid mr-3" style={{ minHeight: '50px', maxHeight: '50px' }} />
                 </Link>
@@ -67,7 +67,7 @@ const HomePage = () => {
                         <strong>About Us</strong>
                     </Link>
                 </div>
-            </nav>
+            </TopNavbar>
       <div style={{ background: "linear-gradient(to left, #2e77AE, #000000)" }}>
         {showVerificationBar && (
           <div className="verification-bar bg-success text-white p-2">
