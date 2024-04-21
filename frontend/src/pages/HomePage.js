@@ -58,13 +58,16 @@ const HomePage = () => {
 
   return (
     <>
-      <TopNavbar className="navbar navbar-expand-lg navbar-dark topbarHomePage">
-        <div className="container-fluid justify-content-end">
-          <Link className="navbar-brand" to="/about-us">
-            About Us
-          </Link>
-        </div>
-      </TopNavbar>
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark d-flex justify-content-between p-2">
+                <Link to="/" className="navbar-brand">
+                    <img src={bigLogo} alt="Big Logo" className="logo img-fluid mr-3" style={{ minHeight: '50px', maxHeight: '50px' }} />
+                </Link>
+                <div className="navbar-brand ml-auto">
+                    <Link className="nav-link" to="/about-us">
+                        <strong>About Us</strong>
+                    </Link>
+                </div>
+            </nav>
       <div style={{ background: "linear-gradient(to left, #2e77AE, #000000)" }}>
         {showVerificationBar && (
           <div className="verification-bar bg-success text-white p-2">
