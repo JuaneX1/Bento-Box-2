@@ -16,8 +16,9 @@ const HomePage = () => {
   const [showVerificationBar, setShowVerificationBar] = useState(false);
   const [showResetBar, setShowResetBar] = useState(false);
   const [showEmailVerifiedBar, setShowEmailVerifiedBar] = useState(false);
+  const [showPasswordResetBar, setShowPasswordResetBar] = useState(false);
   const location = useLocation();
-  
+
   // gets the animes to display in sidebar, 24 is to make it flush since in 3 by 3 grid
   const getData = async () => {
     const res = await fetch(
@@ -49,6 +50,7 @@ const HomePage = () => {
     setShowVerificationBar(false);
     setShowResetBar(false);
     setShowEmailVerifiedBar(false);
+    setShowPasswordResetBar(false);
   };
 
   const handleCloseForms = () => {
@@ -64,7 +66,7 @@ const HomePage = () => {
     if (params.get('action') === 'verified') {
       setShowEmailVerifiedBar(true);
     } else if (params.get('action') === 'reset') {
-      
+      setShowPasswordResetBar(true);
     }
   }, [location.search]);
 
@@ -101,6 +103,13 @@ const HomePage = () => {
           <div className="verification-bar bg-success text-white p-2">
             <p className="m-0 text-center">
               Email Successfully Verified: Please Login!
+            </p>
+          </div>
+        )}
+        {showPasswordResetBar && (
+          <div className="verification-bar bg-success text-white p-2">
+            <p className="m-0 text-center">
+              Password Successfully Changed: Please Login With New Password!
             </p>
           </div>
         )}

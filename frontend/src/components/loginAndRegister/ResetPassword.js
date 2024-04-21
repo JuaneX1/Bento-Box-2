@@ -27,7 +27,7 @@ const ResetPasswordForm = ({ onClose, onSwitchBack }) => {
 
     try {
       await instance.post(`resetPassword/${token}`, { password: formData.password });
-      navigate('/');
+      navigate('/?action=reset');
     } catch (e) {
       console.error('Error:', e);
     }
