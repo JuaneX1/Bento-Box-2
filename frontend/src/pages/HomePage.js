@@ -6,6 +6,7 @@ import LoginForm from "../components/loginAndRegister/LoginForm";
 import SignUpForm from "../components/loginAndRegister/SignUpForm";
 import { Link } from "react-router-dom";
 import styled from 'styled-components';
+import { useLocation } from "react-router";
 
 const HomePage = () => {
   const [search, setSearch] = useState();
@@ -14,7 +15,9 @@ const HomePage = () => {
   const animeRowRef = useRef(null);
   const [showVerificationBar, setShowVerificationBar] = useState(false);
   const [showResetBar, setShowResetBar] = useState(false);
-
+  const [showEmailVerifiedBar, setShowEmailVerifiedBar] = useState(false);
+  const location = useLocation();
+  
   // gets the animes to display in sidebar, 24 is to make it flush since in 3 by 3 grid
   const getData = async () => {
     const res = await fetch(
@@ -45,6 +48,7 @@ const HomePage = () => {
     setCurrentForm(formType);
     setShowVerificationBar(false);
     setShowResetBar(false);
+    setShowEmailVerifiedBar(false);
   };
 
   const handleCloseForms = () => {
@@ -54,6 +58,15 @@ const HomePage = () => {
   const TopNavbar = styled.nav`
     background-color: #111920; 
   `;
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (params.get('action') === 'verified') {
+      setShowEmailVerifiedBar(true);
+    } else if (params.get('action') === 'reset') {
+      
+    }
+  }, [location.search]);
 
   return (
     <>
@@ -81,6 +94,13 @@ const HomePage = () => {
             <p className="m-0 text-center">
               Password Reset Email Sent: Please Check Email to Reset Password and Be
               Able To Login!
+            </p>
+          </div>
+        )}
+        {showEmailVerifiedBar && (
+          <div className="verification-bar bg-success text-white p-2">
+            <p className="m-0 text-center">
+              Email Successfully Verified: Please Login!
             </p>
           </div>
         )}
