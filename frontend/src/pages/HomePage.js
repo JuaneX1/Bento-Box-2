@@ -71,7 +71,7 @@ const HomePage = () => {
       <div style={{ background: "linear-gradient(to left, #2e77AE, #000000)" }}>
         {showVerificationBar && (
           <div className="verification-bar bg-success text-white p-2">
-            <p className="m-0">
+            <p className="m-0 text-center">
               Email Verification Sent: Please Check Email to Verify Account and Be
               Able To Login!
             </p>
