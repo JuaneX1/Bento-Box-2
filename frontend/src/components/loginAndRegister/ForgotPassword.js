@@ -17,11 +17,11 @@ const ForgotPassword = ({ onClose, onSwitchForm, setShowResetBar }) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        setShowResetBar(true);
+        
         try {
             await instance.post(`/forgotPassword`, formData);
             onClose();
-            
+            setShowResetBar(true);
             navigate('/');
         } catch (error) {
             console.log(error);
