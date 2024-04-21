@@ -46,6 +46,9 @@ const ResetPasswordForm = ({ onClose, onSwitchBack }) => {
               className="reset-password-input form-control mb-3"
               value={formData.password}
               onChange={handleChange}
+			  pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}$"
+			  required
+			  title="Must contain at least 8 characters, one uppercase letter, one numeric character, and one special character"
             />
             <input
               type="password"
@@ -54,6 +57,9 @@ const ResetPasswordForm = ({ onClose, onSwitchBack }) => {
               className="reset-password-input form-control mb-3"
               value={formData.confirmPassword}
               onChange={handleChange}
+			  pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}$"
+			  required
+			  title="Must contain at least 8 characters, one uppercase letter, one numeric character, and one special character"
             />
             <button type="submit" className="reset-password-submit-btn btn btn-primary w-100">Reset password</button>
             {error && <p className="text-white mt-3">{error}</p>}
