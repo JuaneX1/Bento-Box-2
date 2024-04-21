@@ -7,6 +7,7 @@ import tw from 'twrnc';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
+
 const AnimeListing = ({ anime }) => {
     const navigation = useNavigation();
     

@@ -14,6 +14,10 @@ import AnimeListingV2 from '../Components/AnimeListingV2.js';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
+const instance = axios.create({
+    baseURL: 'https://bento-box-2-df32a7e90651.herokuapp.com/api'
+  });
+  
 const axiosInstance = axios.create();
 
 // Apply rate limiting to the axios instance
@@ -44,21 +48,28 @@ class AnimeInfoScreen extends React.PureComponent {
     fetchData = async () => {// Access navigation from props
         const { route } = this.props;
         const { anime } = route.params;
+        
         try {
-            let t = await AsyncStorage.getItem(`token`);
-            let favs = getFavorites(t);
 
-            if (favs.favorite != null) {
-                const favorites = favs.favorite;
-                this.setState({ favorite: favorites.some(item => item.mal_id === anime.mal_id) });
+            const favsResponse = await instance.get(`/getFavorite`,  {
+       
+                headers: {
+                  Authorization: await AsyncStorage.getItem('token')
+                }
+              });
+                
+            const  f  = favsResponse.data;
+
+            const matchingItem = f.find(item => item === anime.mal_id.toString());
+            
+            console.log("sjfnsjdnfdslfndsljf "+matchingItem);
+
+            if(matchingItem){
+                this.setState({ favorite: true});
             }
-        } catch (error) {
-            console.error('Error adding favorites:', error);
-        }
-
-        try {
-            console.log(anime.title);
-            console.log(anime.mal_id);
+            else{
+                this.setState({ favorite: false});
+            }
             const cachedData = await AsyncStorage.getItem(`recommendations_${anime.mal_id}`);
             if (cachedData) {
                 const { data, timestamp } = JSON.parse(cachedData);
@@ -89,7 +100,15 @@ class AnimeInfoScreen extends React.PureComponent {
         const { favorite } = this.state;
         this.setState({ favorite: !favorite });
 
-        if (!favorite) {
+        try{
+            console.log(anime.mal_id);
+            await instance.post(`/setFavorite/`, { mal_id: anime.mal_id.toString() }, { headers: { Authorization: await AsyncStorage.getItem('token') }});
+        }
+       catch(error){
+        console.log(error.response.data);
+       }
+
+       /* if (!favorite) {
             try {
                 let t = await AsyncStorage.getItem(`token`);
                 let s = await addFavorites(t, anime.mal_id);
@@ -112,7 +131,7 @@ class AnimeInfoScreen extends React.PureComponent {
             } catch (error) {
                 console.error('Error removing anime from favorites:', error);
             }
-        }
+        }*/
     };
 
     openLink = async (url) => {

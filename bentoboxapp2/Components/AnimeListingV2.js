@@ -21,7 +21,6 @@ const AnimeListingV2 = ({ anime }) => {
     
     const [info, setInfo] = useState(null);
     const [loading, setLoading] = useState(true);
-    console.log(anime);
     const title = anime.title;
     const truncatedTitle = title.length > 20 ? title.slice(0, 20) + '...' : title;
 
@@ -62,7 +61,6 @@ const AnimeListingV2 = ({ anime }) => {
 
       fetchAnime();
     }, [anime]);
-    const i = info;
     return (
         <View style={styles.card} key={anime.mal_id ?  anime.mal_id + Math.random() :  Math.random()}>
             <TouchableOpacity onPress={() => navigation.navigate('recInfo', { anime: info })}>

@@ -21,10 +21,16 @@ const SearchScreen = () => {
     // Create an instance of axios
     const getSearched = async (searchedItem) => {
         try {
+            const startTime = performance.now();
             if (searchedItem !== '') {
                 const search = 'https://api.jikan.moe/v4/anime?order_by=popularity&genres_exclude=9,49,12&q=' + searchedItem;
                 console.log(search);
+                
                 const response = await fetch(search);
+                const endTime = performance.now();
+                const elapsedTime = endTime - startTime;
+                console.log(`Function' took ${elapsedTime.toFixed(4)} milliseconds to complete.`);
+
                 if (response.status === 429) {
                     throw new Error('Too Many Request');
                 }
@@ -38,6 +44,7 @@ const SearchScreen = () => {
                     console.error('Data structure is not as expected:', temp);
                 }
             }
+            
         } catch (error) {
             console.error('Error fetching search anime:', error);
         }
@@ -63,7 +70,7 @@ const SearchScreen = () => {
               position="absolute"
           />
            <View style={tw`items-center justify-center`}>
-                <View style={[tw`bg-white/50 rounded-lg px-2 py-2 items-flex-start flex-row focus:outline-none focus:ring focus:ring-primary focus:ring-opacity-50`, { width: windowWidth/1.1, margin:10, marginLeft:10 }]}>
+                <View style={[tw`bg-white/50 rounded-lg px-2 py-2  flex-row focus:outline-none focus:ring focus:ring-primary focus:ring-opacity-50`, { width: windowWidth/1.1, margin:10, marginLeft:10 }]}>
                 <MaterialCommunityIcons name="magnify" color={'white'} size={20} />
                     <TextInput
                         style={tw`text-white focus:text-black px-2`}
@@ -98,8 +105,9 @@ const SearchScreen = () => {
                     />
                 
                 </View>
-            </View>
                 <SearchResults searchList={searchList} />
+            </View>
+                
         </SafeAreaView>
     );
 };
@@ -108,8 +116,6 @@ const styles = StyleSheet.create({
     container: {
         flex:1,
         backgroundColor: '#111920',
-        alignItems:'center',
-        
         padding:10
     },
     searchContainer: {
