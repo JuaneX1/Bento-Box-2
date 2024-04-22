@@ -31,6 +31,7 @@ function AnimeCard({ anime }) {
         onMouseLeave={handleMouseLeave}
         onFocus={handleMouseEnter}
         onBlur={handleBlur}
+        tabIndex={0}
       >
      
           <img src={anime.images.jpg.image_url} className="card-img-top" alt="AnimeImage" />
