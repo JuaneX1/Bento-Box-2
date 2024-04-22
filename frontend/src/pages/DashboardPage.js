@@ -4,6 +4,7 @@ import logo from '../assets/FinalLogo.png';
 import Browse from '../components/Browse';
 import AnimeSearch from '../components/animeCards/AnimeSearch';
 import Favorites from '../components/pageFeatures/Favorites';
+import DailyBox from '../components/pageFeatures/DailyBox'; 
 import styled from 'styled-components';
 
 const Dashboard = () => {
@@ -11,6 +12,7 @@ const Dashboard = () => {
     const [showSearch, setShowSearch] = useState(true);
     const [showBrowse, setShowBrowse] = useState(false);
     const [showFavorites, setShowFavorites] = useState(false);
+    const [showDailyBox, setShowDailyBox] = useState(false); 
 
     const handleLogOut = () => {
         navigate('/');
@@ -21,6 +23,7 @@ const Dashboard = () => {
             setShowSearch(true);
             setShowBrowse(false);
             setShowFavorites(false);
+            setShowDailyBox(false); 
         }
     };
     
@@ -29,6 +32,7 @@ const Dashboard = () => {
             setShowBrowse(true);
             setShowSearch(false);
             setShowFavorites(false);
+            setShowDailyBox(false); 
         }
     };
     
@@ -37,7 +41,15 @@ const Dashboard = () => {
             setShowBrowse(false);
             setShowSearch(false);
             setShowFavorites(true);
+            setShowDailyBox(false); 
         }
+    };
+
+    const toggleDailyBox = () => {
+        setShowDailyBox(!showDailyBox); 
+        setShowBrowse(false);
+        setShowSearch(false);
+        setShowFavorites(false);
     };
 
     const TopNavbar = styled.nav`
@@ -69,6 +81,7 @@ const Dashboard = () => {
                         <button onClick={toggleSearch} className={`btn btn-primary btn-lg mx-2 ${showSearch ? 'active' : ''}`}>Search</button>
                         <button onClick={toggleBrowse} className={`btn btn-danger btn-lg mx-2 ${showBrowse ? 'active' : ''}`}>Browse</button>
                         <button onClick={toggleFavorites} className={`btn btn-light btn-lg mx-2 ${showFavorites ? 'active' : ''}`}>Favorites</button>
+                        <button onClick={toggleDailyBox} className={`btn btn-secondary btn-lg mx-2 ${showDailyBox ? 'active' : ''}`}>Daily Box</button> {/* Add button for Daily Box */}
                     </div>
                 </div>
             </div>
@@ -77,6 +90,7 @@ const Dashboard = () => {
         {showSearch && <AnimeSearch typeDefault={"topAnime"} />}
         {showBrowse && <Browse />}
         {showFavorites && <Favorites />}
+        {showDailyBox && <DailyBox />} 
         </div>
         </>
     );
