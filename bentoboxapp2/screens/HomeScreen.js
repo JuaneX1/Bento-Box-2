@@ -8,12 +8,18 @@ import { getFavorites } from '../api/getFavorites';
 import axios from 'axios';
 import AnimeListing from '../Components/AnimeListing';
 import { LinearGradient } from 'expo-linear-gradient';
+import AxiosRateLimit from 'axios-rate-limit';
 // Import statements...
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const instance = axios.create({
   baseURL: 'https://bento-box-2-df32a7e90651.herokuapp.com/api'
 });
+
+const axiosInstance = axios.create();
+
+// Apply rate limiting to the axios instance
+const axiosWithRateLimit = AxiosRateLimit(axiosInstance, { maxRequests: 1, perMilliseconds: 1 }); // Example: 1 request per 1 seconds
 export default function HomeScreen({ navigation }) {
   const [favorites, setFavorites] = useState(null);
   const [animeData, setanimeData]= useState([]);
@@ -32,6 +38,15 @@ export default function HomeScreen({ navigation }) {
             console.log(t);
           }
 
+          const cachedData = await AsyncStorage.getItem(`favorites_${authData}`);
+          if (cachedData) {
+              const { data, timestamp } = JSON.parse(cachedData);
+              // Check if cached data has expired (e.g., cache duration is 1 hour)
+              if (Date.now() - timestamp <60 * 1000) {
+                setFavorites(JSON.parse(data));
+              }
+          }
+
           const favsResponse = await instance.get(`/getFavorite`,  {
        
             headers: {
@@ -43,6 +58,7 @@ export default function HomeScreen({ navigation }) {
 
             if(f != null){
               //console.log("dfdsfdsf "+ JSON.stringify(favs.favorite, null, 2));
+              await AsyncStorage.setItem(`favorites_${authData}`, JSON.stringify(f));
               setFavorites(f);
             }
 
@@ -50,7 +66,16 @@ export default function HomeScreen({ navigation }) {
 
             const animeDetails = await Promise.all(
               f.map(async favorite => {
-                const response = await instance.get(`https://api.jikan.moe/v4/anime/${favorite}`);
+                const cachedaniData = await AsyncStorage.getItem(`favorites_${authData}_${favorite}`);
+                if (cachedaniData) {
+                    const { data, timestamp } = JSON.parse(cachedData);
+                    // Check if cached data has expired (e.g., cache duration is 1 hour)
+                    if (Date.now() - timestamp <  60 * 1000) {
+                      return JSON.parse(data);
+                    }
+                }
+                const response = await axiosWithRateLimit.get(`https://api.jikan.moe/v4/anime/${favorite}`);
+                await AsyncStorage.setItem(`favorites_${authData}_${favorite}`, JSON.stringify(response.data.data));
                 return response.data.data;
               })
             );
@@ -103,7 +128,7 @@ export default function HomeScreen({ navigation }) {
                 position="absolute"
             />
       <ScrollView>
-      <View style={styles.container}>
+      
         {user ? (
           <>
             <Text>{user.login}'s Favorites</Text>
@@ -139,7 +164,7 @@ export default function HomeScreen({ navigation }) {
             </TouchableOpacity>
           </>
         )}
-      </View>
+      
       </ScrollView>
     </SafeAreaView>
   );
