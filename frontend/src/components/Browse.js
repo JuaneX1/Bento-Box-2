@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import AnimeCard from '../components/animeCards/AnimeCard';
-import '../css/Browse.css';
+import React, { useEffect, useState } from 'react';
+import BrowseContent from './pageFeatures/BrowseContent'
 
 const Browse = () => {
     const [selectedCategory, setSelectedCategory] = useState('');
@@ -11,7 +10,7 @@ const Browse = () => {
     const categories = [
         { name: 'top rated', endpoint: 'https://api.jikan.moe/v4/top/anime' },
         { name: 'upcoming', endpoint: 'https://api.jikan.moe/v4/seasons/upcoming' },
-        { name: 'currently airing', endpoint: 'https://api.jikan.moe/v4/seasons/now' },
+        { name: 'airing now', endpoint: 'https://api.jikan.moe/v4/seasons/now' },
     ];
 
     const fetchAnimeByCategory = (endpoint, categoryName) => {
@@ -39,33 +38,37 @@ const Browse = () => {
     }, []);
 
     return (
-        <div className="browse">
-            <div className="category-buttons">
-                {categories.map(category => (
-                    <button
-                      className="category-btn"
-                      key={category.name}
-                      onClick={() => fetchAnimeByCategory(category.endpoint, category.name)}
-                    >
-                        {category.name.toUpperCase()}
-                    </button>
-                ))}
+        
+        <div>
+            <div className="row justify-content-center">
+                    <div className="category-buttons d-flex justify-content-center">
+                        {categories?.map(category => (
+                            <button
+                                className="btn btn-outline-light text-center category-btn m-4"
+                                key={category.name}
+                                onClick={() => fetchAnimeByCategory(category.endpoint, category.name)}
+                            >
+                                {category.name.toUpperCase()}
+                            </button>
+                        ))}
             </div>
-            <div className="category-display">
-                {isLoading && <div>Loading...</div>}
-                {error && <div>Error: {error}</div>}
-                {!isLoading && !error && (
-                    <div>
-                        <h2 className="category-title">{selectedCategory.toUpperCase()}</h2>
-                        <div className="anime-list">
-                            {animeList.map(anime => (
-                                <AnimeCard key={anime.mal_id} anime={anime} />
-                            ))}
-                        </div>
+                    <div className="">
+                        {isLoading && <div className='text-white'>Loading...</div>}
+                        {error && <div>Error: {error}</div>}
+                        {!isLoading && !error && ( 
+                            <div>
+                                <h2 className="category-title text-white text-center p-4"><strong>{selectedCategory.toUpperCase()}</strong></h2>
+                                
+                                <BrowseContent
+                                    animeList={animeList}
+                                />
+                                
+                            </div>
+                        )}
                     </div>
-                )}
+                </div>
             </div>
-        </div>
+        
     );
 };
 

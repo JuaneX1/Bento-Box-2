@@ -2,7 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { instance } from '../../App';
 
-const Verify = () => {
+const Verify = ( ) => {
 	const { token } = useParams();
 	const navigate = useNavigate();
 	let ignore = false;
@@ -10,11 +10,10 @@ const Verify = () => {
 	useEffect(() => {
 		
 		async function verify() {
-			console.log(ignore);
 			if (!ignore) {
 				try {
 					await instance.post(`/verify/${token}`);
-					navigate('/');
+					navigate('/?action=verified');
 				} catch (error) {
 					//do nothing yet
 				}

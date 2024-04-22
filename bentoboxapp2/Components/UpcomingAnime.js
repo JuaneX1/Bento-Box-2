@@ -4,6 +4,10 @@ import React, { PureComponent } from 'react';
 import AnimeListing from './AnimeListing';
 import { debounce } from '../functions/function';
 import { Dimensions } from 'react-native';
+import axios from 'axios';
+import { fetchUpcoming } from '../api/fetchUpcoming';
+import Loading from '../screens/LoadingScreen';
+
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -12,39 +16,33 @@ class UpcomingAnime extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            upcomingAnime: []
+            upcomingAnime: [],
+            loading: true
         };
     }
 
     componentDidMount() {
-        var startTime = performance.now();
-        this.throttledGetUpcomingAnime = debounce(this.getUpcomingAnime, 1000); // Adjust the delay as needed
-        this.throttledGetUpcomingAnime();
-        var endTime = performance.now();
-        console.log(`Call to fetch upComing anime took ${endTime - startTime} milliseconds`);
+        this.loadUpcomingAnime();
     }
 
-    getUpcomingAnime = async () => {
+    loadUpcomingAnime = async () => {
         try {
-            const response = await fetch(`https://api.jikan.moe/v4/top/anime?sfw&filter=upcoming`);
-            
-            if (!response.ok) {
-                console.log(response);
-                throw new Error('Network response was not ok');
-            }
-            const temp = await response.json();
-            if (temp && temp.data) {
-                this.setState({ upcomingAnime: temp.data.slice(0, 25) });
-            } else {
-                console.error('Data structure is not as expected:', data);
-            }
+            const upcomingAnimeData = await fetchUpcoming(); // Call the fetchTopAnime function
+            this.setState({ upcomingAnime: upcomingAnimeData,loading: false }); // Update state with fetched data
         } catch (error) {
-            console.error('Error fetching Upcoming anime:', error);
+            console.error('Error loading top anime:', error);
+            this.setState({ loading: false });
         }
-    }
+    };
 
     render() {
-        const { upcomingAnime } = this.state;
+        const { upcomingAnime, loading } = this.state;
+
+        if (loading) {
+            return (
+                <Loading/>
+            );
+        }
 
         return (
             <View style={styles.container}>
@@ -67,7 +65,7 @@ class UpcomingAnime extends PureComponent {
 const styles = StyleSheet.create({
     headerText: {
         color: "#fff",
-        height: windowHeight / 25,
+        height: windowHeight / 22,
         fontSize: 25,
         marginLeft: windowWidth / 50,
         fontWeight: 'bold'

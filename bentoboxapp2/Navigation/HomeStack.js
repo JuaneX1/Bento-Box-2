@@ -5,34 +5,40 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import SearchStack from './SearchStack';
 import RecommendationsScreen from '../screens/RecommendationsScreen';
 import ProfileScreen from '../screens/ProfileScreen'; // Import the ProfileScreen component
+import FavoriteStack from './FavoriteStack';
+import ProfileStack from './ProfileStack';
+import SearchScreen from '../screens/SearchScreen';
+import BrowseStack from './BrowseStack';
 
 const Tab = createBottomTabNavigator();
 
 function HomeStack() {
   return (
+    
     <Tab.Navigator 
-      initialRouteName="Collection" 
+      initialRouteName="Browse" 
       screenOptions={{
         tabBarInactiveTintColor:"white",
         tabBarActiveTintColor:"#3077b2",
         tabBarStyle:{ backgroundColor: '#111920',
+       
         borderBlockColor:"#111920" }
       }}
       
     >
       <Tab.Screen 
-        name="Collection"  
-        component={HomeScreen} 
+        name="Favorites"  
+        component={FavoriteStack} 
         options={{
-          headerShown:true,
+          headerShown:false,
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home" color={color} size={size} />
+            <MaterialCommunityIcons name="heart" color={color} size={size} />
           ),
         }}
       />
       <Tab.Screen 
-        name="Discover"  
-        component={SearchStack}
+        name="Browse"  
+        component={BrowseStack}
         options={{
           headerShown:false,
           headerTintColor:"#ffffff",
@@ -40,12 +46,22 @@ function HomeStack() {
             backgroundColor:"#111920"
           },
           tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="home" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen 
+        name="Searching"
+        component={SearchStack}
+        options={{
+          headerShown:false,
+          tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="magnify" color={color} size={size} />
           ),
         }}
       />
       <Tab.Screen 
-        name="Recommendations"
+        name="For You"
         component={RecommendationsScreen}
         options={{
           headerShown:false,
@@ -54,10 +70,12 @@ function HomeStack() {
           ),
         }}
       />
+
       {/* New Tab.Screen for the profile */}
       <Tab.Screen 
-        name="Profile"
-        component={ProfileScreen}
+        name="ProfileScreen"
+
+        component={ProfileStack}
         options={{
           headerShown:false,
           tabBarIcon: ({ color, size }) => (

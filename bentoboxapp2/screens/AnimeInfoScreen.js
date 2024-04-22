@@ -1,68 +1,181 @@
-import * as React from 'react';
-import { Dimensions, TouchableOpacity, ScrollView, StyleSheet, Text, View, FlatList, Pressable, Image } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { AntDesign, Ionicons, FontAwesome } from '@expo/vector-icons';
-import { ratingFormat, formatDuration, formatPlot } from '../functions/function';
+import React, { PureComponent } from 'react';
+import { Dimensions, Linking, TouchableOpacity, ScrollView, StyleSheet, Text, View, Image, FlatList } from 'react-native'; // Import withNavigation
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AntDesign, Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-
+import { formatPlot, ratingFormat } from '../functions/function.js';
+import tw from 'twrnc';
+import { addFavorites } from '../api/addFavorites.js';
+import { getFavorites } from '../api/getFavorites.js';
+import axios from 'axios';
+import AxiosRateLimit from 'axios-rate-limit';
+import AnimeListingV2 from '../Components/AnimeListingV2.js';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
+const instance = axios.create({
+    baseURL: 'https://bento-box-2-df32a7e90651.herokuapp.com/api'
+  });
+  
+const axiosInstance = axios.create();
 
-const AnimeInfoScreen = ({ route }) => {
-    const { anime } = route.params;
-    const navigation = useNavigation();
+// Apply rate limiting to the axios instance
+const axiosWithRateLimit = AxiosRateLimit(axiosInstance, { maxRequests: 1, perMilliseconds: 3000 }); // Example: 1 request per 1 seconds
 
-    const [favorite, setFavorite] = React.useState(0);
-
-    const s = Math.round(anime.score / 2);
-    console.log(s);
-    const stars = Array.from({ length: s }, (_, index) => index);
-    // Check if anime object is defined before accessing its properties
-    if (!anime) {
-        return (
-            <View style={styles.card}>
-                <Text>Anime data not available.</Text>
-            </View>
-        );
+class AnimeInfoScreen extends React.PureComponent {
+    constructor(props) {
+        super(props);
+        this.state = {
+            recommendations: [],
+            favorite: false,
+            loading: true
+        };
     }
 
-    // Function to determine text color based on score
-    const getScoreTextColor = (score) => {
+    componentDidMount() {
+        this.fetchData();
+    }
+    componentDidUpdate(prevProps) {
+        const { anime: currentAnime } = this.props.route.params;
+        const { anime: previousAnime } = prevProps.route.params;
+        // Example condition: fetch new recommendations if the 'userId' prop changes
+        if (currentAnime && currentAnime.mal_id !== previousAnime.mal_id) {
+            this.fetchData();
+        }
+    }
+
+    fetchData = async () => {// Access navigation from props
+        const { route } = this.props;
+        const { anime } = route.params;
+        
+        try {
+
+            const favsResponse = await instance.get(`/getFavorite`,  {
+       
+                headers: {
+                  Authorization: await AsyncStorage.getItem('token')
+                }
+              });
+                
+            const  f  = favsResponse.data;
+
+            const matchingItem = f.find(item => item === anime.mal_id.toString());
+            
+            console.log("sjfnsjdnfdslfndsljf "+matchingItem);
+
+            if(matchingItem){
+                this.setState({ favorite: true});
+            }
+            else{
+                this.setState({ favorite: false});
+            }
+            const cachedData = await AsyncStorage.getItem(`recommendations_${anime.mal_id}`);
+            if (cachedData) {
+                const { data, timestamp } = JSON.parse(cachedData);
+                if (Date.now() - timestamp < 24 * 60 * 60 * 1000) {
+                    this.setState({ recommendations: data });
+                }
+            }
+
+            const response = await axiosWithRateLimit.get(`https://api.jikan.moe/v4/anime/${anime.mal_id}/recommendations`);
+            const data = response.data;
+            if (data && data.data) {
+                const timestamp = Date.now();
+                const animeRecommendationsList = data.data.slice(0, 4);
+                await AsyncStorage.setItem(`recommendations_${anime.mal_id}`, JSON.stringify({ data: animeRecommendationsList, timestamp }));
+                this.setState({ recommendations: animeRecommendationsList });
+            }
+
+            this.setState({ loading: false });
+        } catch (error) {
+            console.error('Error fetching anime recommendations:', error);
+            this.setState({ loading: false });
+        }
+    };
+
+    toggleFavorite = async () => {
+        const { route } = this.props;
+        const { anime } = route.params;
+        const { favorite } = this.state;
+        this.setState({ favorite: !favorite });
+
+        try{
+            console.log(anime.mal_id);
+            await instance.post(`/setFavorite/`, { mal_id: anime.mal_id.toString() }, { headers: { Authorization: await AsyncStorage.getItem('token') }});
+        }
+       catch(error){
+        console.log(error.response.data);
+       }
+
+       /* if (!favorite) {
+            try {
+                let t = await AsyncStorage.getItem(`token`);
+                let s = await addFavorites(t, anime.mal_id);
+                console.log(s);
+                if (s.verdict === true) {
+                    console.log('ADDED!');
+                }
+            } catch (error) {
+                console.error('Error adding anime to favorites:', error);
+            }
+        } else {
+            try {
+                let favorites = [];
+                const favoritesString = await AsyncStorage.getItem('favorites');
+                if (favoritesString) {
+                    favorites = JSON.parse(favoritesString);
+                    favorites = favorites.filter(item => item.id !== anime.mal_id);
+                    await AsyncStorage.setItem('favorites', JSON.stringify(favorites));
+                }
+            } catch (error) {
+                console.error('Error removing anime from favorites:', error);
+            }
+        }*/
+    };
+
+    openLink = async (url) => {
+        try {
+            await Linking.openURL(url);
+        } catch (error) {
+            console.error('Error opening link:', error);
+        }
+    };
+
+    getScoreTextColor = (score) => {
         if (score >= 8) {
             return '#00ff00'; // Green color for high scores
         } else if (score >= 6) {
             return '#ff8c00'; // Orange color for medium scores
-        } else if (score > 0){
+        } else if (score > 0) {
             return '#ff0000'; // Red color for low scores
-        }else{
-            return '#FFFFFF'
+        } else {
+            return '#FFFFFF';
         }
-    }
+    };
 
-    return (
-            <ScrollView>
+    render() {
+        const { route, navigation } = this.props;
+        const { anime } = route.params;
+       
+        const { recommendations, favorite, loading } = this.state;
 
-                <TouchableOpacity
-                    onPress={() =>
-                        navigation.goBack()}
-                    style={styles.searchButton}>
+        if (!anime) {
+            return (
+                <View style={styles.card}>
+                    <Text>Anime data not available.</Text>
+                </View>
+            );
+        }
+
+        return (
+            <ScrollView style={{ height: windowHeight }}>
+                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.searchButton}>
                     <Ionicons name="arrow-back" size={24} color="white" />
                 </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.likeButton}>
-                    <AntDesign
-                        name="heart"
-                        size={24}
-                        color={favorite ? "red" : "white"}
-                        onPress={() => setFavorite(favorite ? 0 : 1)}
-                    />
+                <TouchableOpacity style={styles.likeButton} onPress={this.toggleFavorite}>
+                    <AntDesign name="heart" size={24} color={favorite ? "red" : "white"} />
                 </TouchableOpacity>
-
-
-
                 <Image style={styles.imageBackground} source={{ uri: anime.images.jpg.large_image_url }} />
                 <LinearGradient
                     colors={['transparent', 'rgba(17,25,32,0.8)', 'rgba(17,25,32,1)']}
@@ -72,55 +185,89 @@ const AnimeInfoScreen = ({ route }) => {
                     position="absolute"
                 />
 
-
-                <View
-                    style={styles.container}
-                >
-
+                <View style={styles.container}>
                     <View style={styles.titleBox}>
                         <Text style={styles.animeTitleText}> {anime.title_english ? anime.title_english : anime.title} </Text>
                     </View>
-
-                    <Text
-                        style={styles.animeSubTitle}
-                    >{anime.type}{' · '}
-                        {anime.type == 'TV' ? `Episodes: ${anime.episodes}` : `${formatDuration(anime.duration)} min`}
-                        {' · '}{anime.aired.prop.from.year}{' · '}
-                        {ratingFormat(anime.rating)}</Text>
-
+                    <Text style={styles.animeSubTitle}>
+                        {anime.type}{' · '}
+                        {anime.type === 'TV' ? `Episodes: ${anime.episodes}` : `${anime.duration}`}
+                        {' · '}{anime.aired.prop.from.year}{' · '}{ratingFormat(anime.rating)}
+                    </Text>
                     <View style={styles.genreBox}>
-                        {anime.genres.map((genre, index) => (
-                            <Text key={genre.mal_id}
-                                style={styles.genre}
-                            >
-                                {genre.name}{}
+                        {anime.genres.map(genre => (
+                            <Text key={genre.mal_id} style={styles.genre}>
+                                {genre.name}
                             </Text>
                         ))}
                     </View>
+                    <View style={{ alignItems: 'center', width: windowWidth }}>
 
+                        {anime.trailer.url ?
+                            <TouchableOpacity style={tw`bg-red-500 p-2 rounded-lg w-24`} onPress={() => this.openLink(anime.trailer.url)}>
+                                <Text style={tw`text-white font-bold text-center`}>Trailer</Text>
+                            </TouchableOpacity>
+                            : <Text > No Trailer available</Text>}
+
+                    </View>
                     <Text style={styles.plot}>{"     "}{formatPlot(anime.synopsis)}</Text>
 
-                    <Text style={{ marginTop: 5 }}>Where to Watch</Text>
-                    <View style={{alignContent:'center', width: windowWidth, flexDirection: 'row' }}>
-                        <Text style={styles.scoreTitle}>Score: </Text>
-                        <View style={styles.scoreBox}>
-                            <Text style={{fontWeight:'600', fontSize: 32, color: getScoreTextColor(anime.score) }}>
-                                {anime.score == 0 ? 'NaN' : anime.score}</Text>
+                    <View style={{ alignContent: 'center', width: windowWidth, position: 'relative', flexDirection: 'row' }}>
+                        <View style={styles.statsBox}>
+                            <Text style={styles.statsTitle}>Score: </Text>
+                            <Text style={{ fontWeight: '600', fontSize: 32, color: this.getScoreTextColor(anime.score) }}>
+                                {anime.score == 0 || anime.score == null ? 'NaN' : anime.score}</Text>
                         </View>
-
-                        {stars.map((item, index) => (
-                            <AntDesign name="star" size={24} color="gold" key={index} />
-                        ))}
+                        <View style={styles.statsBox}>
+                            <Text style={styles.statsTitle}>Rank: </Text>
+                            <Text style={{ fontWeight: '600', fontSize: 32, color: "#ffffff" }}>
+                                {anime.rank == 0 || anime.rank == null ? 'NaN' : anime.rank}</Text>
+                        </View>
+                        <View style={styles.statsBox}>
+                            <Text style={styles.statsTitle}>Popularity: </Text>
+                            <Text style={{ fontWeight: '600', fontSize: 32, color: "#ffffff" }}>
+                                {anime.popularity == 0 || anime.popularity == null ? 'NaN' : anime.popularity}</Text>
+                        </View>
                     </View>
-
-                    <Text style={{ color: "#fff" }}>User Reviews</Text>
+                    {loading ? (
+                        <Text>Loading...</Text>
+                    ) : recommendations.length > 0 ? (
+                        <View style={styles.recommendationsContainer}>
+                            <Text style={styles.recommendationsTitle}>You Might Also Like:</Text>
+                            <FlatList
+                                horizontal={true}
+                                style={styles.recommendationsList}
+                                data={recommendations}
+                                renderItem={({ item }) => (
+                                    <AnimeListingV2 anime={item.entry}/>
+                                   /* <TouchableOpacity
+                                        key={item.entry.mal_id}
+                                        //onPress={() => navigation.navigate('AnimeDetails', { id: recommendation.entry.mal_id })}
+                                        style={styles.recommendationItem}
+                                    >
+                                        <Image
+                                            source={{ uri: item.entry.images.jpg.image_url }}
+                                            style={styles.recommendationImage}
+                                        />
+                                        <Text style={styles.recommendationTitle}>{item.entry.title}</Text>
+                                    </TouchableOpacity>*/
+                                )}
+                            />
+                        </View>
+                    ) : (
+                        <View style={styles.recommendationsContainer}>
+                            <Text style={styles.recommendationsTitle}>No recommendations at the Moment:</Text>
+                        </View>
+                    )
+                    }
                 </View>
             </ScrollView>
-       
-    );
-};
+        );
+    }
+}
 
 const styles = StyleSheet.create({
+    
     animeTitleText: {
         color: "#ffffff",
         zIndex: 2,
@@ -177,8 +324,7 @@ const styles = StyleSheet.create({
     },
     container: {
         backgroundColor: 'rgba(17,25,32, 1)',
-        
-        position: 'fixed'
+        position: 'relative'
     },
     searchButton: {
         backgroundColor: 'rgba(0,0,0,0.5)',
@@ -186,7 +332,7 @@ const styles = StyleSheet.create({
         height: 30,
         borderRadius: 15,
         marginLeft: 20,
-        marginTop: 20,
+        marginTop: windowHeight / 19,
         position: 'absolute',
         justifyContent: 'center',
         zIndex: 2
@@ -197,25 +343,55 @@ const styles = StyleSheet.create({
         width: 35,
         height: 35,
         marginRight: 20,
-        marginTop: 25,
+        marginTop: windowHeight / 19,
         position: 'absolute',
         zIndex: 2
 
     },
-    scoreTitle:{
-        alignSelf:'flex-start',
-        
+    statsTitle: {
+        alignSelf: 'center',
+        color: "#ffffff",
+        fontWeight: '600',
+        fontSize: 20
+
     },
-    scoreBox: {
-        width: windowWidth/3.5,
-        height: windowHeight/5.5,
-        borderRadius:15,
-        alignSelf:'flex-end',
-        marginLeft:windowWidth-175,
+    statsBox: {
+        width: windowWidth / 3.5,
+        height: windowHeight / 5.5,
+        borderRadius: 15,
+        alignSelf: 'flex-end',
+        marginLeft: windowWidth / 30,
+        marginTop: 15,
+        marginBottom: 15,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#2E3033'
-    }
+        backgroundColor: '#050301'
+    },
+    recommendationsContainer: {
+        marginTop: 20,
+        marginBottom: 10
+      },
+      recommendationsTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 10,
+      },
+      recommendationsList: {
+        flexDirection: 'row',
+        marginBottom: 20,
+      }, recommendationItem: {
+        marginRight: 10,
+        alignItems: 'center',
+      },
+      recommendationImage: {
+        width: 120,
+        height: 180,
+        borderRadius: 8,
+      },
+      recommendationTitle: {
+        marginTop: 5,
+        textAlign: 'center',
+      },
 });
 
 export default AnimeInfoScreen;

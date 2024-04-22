@@ -12,33 +12,50 @@ export async function doLogin(formData) {
     baseURL: 'https://bento-box-2-df32a7e90651.herokuapp.com/api'
   });
 
-  if (formData.login !== null || formData.password !== null) {
+  if (formData.login && formData.password ) {
     try {
       // Use await to wait for response from API call
-      console.log("do login.js " + formData.login +" "+formData.password);
-      const response = await instance.post(`/login`, formData);
       
-      // Handle successful login
-      if (response.status === 200) {
-       
-        const { token } = response.data;
-        
+        const response = await instance.post(`/login`, formData);
+
+        const { token } = response.data.token;
+
+        console.log(response.data.token);
         // Assuming the server responds with a token
-        await AsyncStorage.setItem('token', token);
-        console.log('woooo!');
-        return token;
-       console.log('oou oou ouu!'); // Assuming this is the correct route
-        
-      } else {
-        console.log('Unexpected response status:', response.status);
-      }
+        await AsyncStorage.setItem('token', response.data.token);
+        return {token: response.data.token, error: ''};
+
     } catch (error) {
-      console.error('Error:', error);
+      if(error.response){
+
+        const errorMessage = error.response.data;
+
+        if(error.response.status === 401){
+          console.log('401!');
+          return {token: null,  error: "Incorrect Username or Password"};
+        }
+        else if (error.response.status === 402){
+          console.log('402');
+          //console.log('Unexpected response status:', error);
+          return {token: null, error: errorMessage};
+        }
+        else if (error.response.status === 404){
+          console.log('404!');
+          //console.log('Unexpected response status:', error);
+          return {token: null, error: 'api not found'};
+        }
+        else if (error.response.status === 500){
+          console.log('500!');
+          return {token: null, error: errorMessage};
+        }
+      }
+      console.log('unkown!');
+      return {token: null, error: error};
       // Handle network errors or other exceptions
       //setError('Network error or other issue. Please try again.');
     }
   } else {
-    console.log("Invalid input");
+    return {token: null, user: null, error: 'Invalid Input. Please make sure all fields are complete.'};
   }
 }
 function buildPath(route)

@@ -1,25 +1,23 @@
 import React from 'react';
-import '../../css/AnimeList.css';
 
-const AnimeList = ({ animelist, setAnimeInfo }) => {
+const AnimeList = ({ animelist }) => {
   return (
-    <div className="anime-list">
+    <div className="row row-cols-1 row-cols-md-3 anime-list">
       {animelist ? (
         animelist.map((anime, index) => (
-          <div className="card" key={index} >
-            <img src={anime.images.jpg.large_image_url} alt="animeImage" />
-            <div className="anime-info">
-              <div className="title">
-                <h4>{anime.title}</h4>
-              </div>
-              <div className="synopsis">
-                <p>{anime.synopsis.length > 150 ? anime.synopsis.substring(0, 150) + "..." : anime.synopsis}</p>
-              </div>
+          <div className="col mb-3" key={index}>
+            <div className="card h-100 overflow-hidden border border-dark">
+              <img
+                src={anime.images.jpg.large_image_url}
+                className="card-img-top w-100 h-100"
+                style={{ objectFit: 'cover' }} // Ensure the image covers the entire container and cuts out white space if image is smaller
+                alt="animeImage"
+              />
             </div>
           </div>
         ))
       ) : (
-        <p>Anime not found</p>
+        <p>Loading...</p>
       )}
     </div>
   );

@@ -1,55 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, ScrollView } from 'react-native';
+import { StyleSheet, View, ScrollView, SafeAreaView } from 'react-native';
 import MainDisplay from '../Components/MainDisplay';
 import SearchResults from '../Components/SearchResults';
 import { Dimensions } from 'react-native';
-
+import { LinearGradient } from 'expo-linear-gradient';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const SearchScreen = () => {
-    const [searchedItem, setSearchedItem] = useState('');
-    const [searchList, setSearchList] = useState([]);
-
-    const handleInputFromSearch = (data) => {
-        setSearchedItem(data);
-    };
-
-    const getSearched = async (searchedItem) => {
-        try {
-            if(searchedItem !== ''){
-                const search = 'https://api.jikan.moe/v4/anime?sfw&order_by=popularity&sort=desc&q='+searchedItem;
-                console.log(search);
-                const response = await fetch(search);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const temp = await response.json();
-                if (temp && temp.data) {
-                    setSearchList(temp.data.slice(0, 25));
-                } else {
-                    console.error('Data structure is not as expected:', data);
-                }
-            }
-            
-        } catch (error) {
-            console.error('Error fetching search anime:', error);
-        }
-    };
-
-    useEffect(() => {
-        getSearched(searchedItem);
-    }, [searchedItem]);
-
-    console.log('Searched item:', searchedItem);
-    console.log(searchList.length);
-
+const DiscoverScreen = () => {
+    
     return (
         <View style={styles.container}>
+            <SafeAreaView>
+            <LinearGradient
+                colors={['transparent', 'rgba(48, 119, 178, 0.5)', 'rgba(48, 119, 178, 1)']}
+                style={{ width: windowWidth, height: windowHeight*0.60, transform: [{ translateY: windowHeight*0.35}]}}
+                start={{ x: 0.5, y: 0.5}}
+                end={{ x: 0.5, y: 1 }}
+                position="absolute"
+            />
             <ScrollView>
                 <MainDisplay />
             </ScrollView>
+            </SafeAreaView>
         </View>
     );
 };
@@ -69,4 +43,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default SearchScreen;
+export default DiscoverScreen;
