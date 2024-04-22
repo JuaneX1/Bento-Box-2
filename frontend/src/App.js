@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import AnimePage from './pages/AnimePage'; 
 import ResetPassword from './components/loginAndRegister/ResetPassword';
 import Verify from './components/loginAndRegister/Verify';
-import './css/App.css';
 import AboutUsPage from './pages/AboutUsPage';
 import Dashboard from './pages/DashboardPage';
 import HomePage from './pages/HomePage';

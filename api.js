@@ -230,8 +230,10 @@ app.post('/api/login', async (req, res, next) => {
 			} else {
 				if (existingFavorite.favorites.includes(req.body.mal_id)) {
 					await removeFavorite(existingFavorite, req.body.mal_id);
+					return res.status(200).json({ message: "Removing Favorite" });
 				} else {
 					await addFavorite(existingFavorite, req.body.mal_id);
+					return res.status(200).json({ message: "Adding Favorite" });
 				}
 			}
 			return res.status(200).json({ message: "Success" });
