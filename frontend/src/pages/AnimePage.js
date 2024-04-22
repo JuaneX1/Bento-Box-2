@@ -1,12 +1,11 @@
-import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { instance } from '../App';
 import bigLogo from '../assets/BB_Logo_Horizontal_COLOR_1.png';
 import highScoreImage from '../assets/highScoreImg.webp';
 import lowScoreImage from '../assets/lowScoreImg.png';
 import mediumScoreImage from '../assets/mediumScoreImg.png';
-import { instance } from '../App';
 import '../css/AnimePage.css';
 const AnimePage = () => {
   const navigate = useNavigate();
@@ -67,10 +66,6 @@ const AnimePage = () => {
 			console.log(error);
 		}
 	};
-
-  const toggleFavorite = () => {
-    // TODO - add to favorites
-  }
 
   return (
     <div className="anime-container">
