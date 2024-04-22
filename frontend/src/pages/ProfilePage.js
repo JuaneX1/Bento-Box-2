@@ -104,7 +104,7 @@ const ProfilePage = ({ onClose }) => {
                 )}
                 <div className='p-5 d-flex justify-content-center align-items-center'>
                 <Container className="text-white" style={{ maxWidth: '500px' }}>
-                    <div className="profile-content border-white border-secondary bg-black p-4 rounded">
+                    <div className="profile-content border-white border-secondary p-4 rounded" style={{backgroundColor: "#111920"}}>
                         <h1 className="mb-4">My Profile</h1>
                         {isEditing ? (
                             <Form onSubmit={handleSubmit} className="profile-form text-light align-labels-left">
