@@ -129,7 +129,7 @@ const HomePage = () => {
                     <img src={bigLogo} alt="Big Logo" className="img-fluid mb-4" style={{ maxWidth: "100%", height: "auto", width: "500px" }} /> {/* Adjusted the width of the logo */}
                     <div className="buttons">
                       <button
-                        className="btn btn-primary me-2 btn-lg" 
+                        className="btn me-2 btn-lg text-white" style={{backgroundColor: "#111920"}} 
                         onClick={() => handleSwitchForm("login")}
                       >
                         Login
