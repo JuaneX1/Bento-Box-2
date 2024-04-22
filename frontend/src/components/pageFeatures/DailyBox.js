@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { instance } from '../../App';
 import { BsHeart, BsHeartFill } from 'react-icons/bs';
+import { Container } from 'react-bootstrap';
 
 const DailyBox = () => {
   const [recommendedAnime, setRecommendedAnime] = useState(null);
@@ -90,6 +91,9 @@ const DailyBox = () => {
     };
   }, [favorites]);
 
+  const navigateToAnimePage = () => {
+    window.location.href = `/anime/${recommendedAnime.mal_id}`;
+  };
  
 
   return (
@@ -97,29 +101,34 @@ const DailyBox = () => {
       {loading ? (
         <h1>Loading...</h1>
       ) : (
-        <div className="anime-info" key={recommendedAnime.mal_id}>
-          <img src={recommendedAnime.images.jpg.image_url} alt={"anime pic"} />
-          <div className="anime-synopsis-box">
-            <h1>{recommendedAnime.title}</h1>
+        <div>
+            <h2 className='text-white text-center p-4'><strong>Your Daily Bento Box</strong></h2>
+        <div className="container text-white p-4 " style={{ border: '2px solid #ffffff', backgroundColor: '#111920', maxWidth: '800px' }}>
+    <div className="row justify-content-center">
+        <div className="col-md-8 p-4 text-center">
+        <h2 className="mb-4">{recommendedAnime.title}</h2>
+        <img src={recommendedAnime.images.jpg.image_url} alt={"anime pic"} className="img-fluid mb-4" />
+        <div className="anime-synopsis-box">
             <div className="synopsis-content">
-              <p className="anime-synopsis">Insert synopsis here</p>
+            <p className="anime-synopsis"></p>
             </div>
-          </div>
-
-          <div className="score-box">
-            <h2>Overall Rating</h2>
-            <h3>Insert score here / 10</h3>
-            {/* Update images based on score */}
-          </div>
-          <button onClick={() => toggleFavorite(recommendedAnime.mal_id)}>
-            {showHeart ? (
-              <BsHeart className="p-1" style={{ fontSize: '25px' }} />
-            ) : (
-              <BsHeartFill className="p-1" style={{ color: 'red', fontSize: '25px' }} />
-            )}
-            <p className='mb-0 ml-2'>{buttonText}</p>
-          </button>
         </div>
+        <button className="btn btn-primary mt-4" onClick={navigateToAnimePage}>
+                  More Details
+        </button>
+        <button className="btn btn-primary mt-4" onClick={() => toggleFavorite(recommendedAnime.mal_id)}>
+            {showHeart ? (
+            <BsHeart className="p-1" style={{ fontSize: '25px' }} />
+            ) : (
+            <BsHeartFill className="p-1" style={{ color: 'red', fontSize: '25px' }} />
+            )}
+            <span className='ml-2'>{buttonText}</span>
+        </button>
+        </div>
+    </div>
+    </div>
+    <Container className='p-5'></Container>
+</div>
       )}
     </div>
   );
