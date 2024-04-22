@@ -65,7 +65,7 @@ class UpcomingAnime extends PureComponent {
 const styles = StyleSheet.create({
     headerText: {
         color: "#fff",
-        height: windowHeight / 25,
+        height: windowHeight / 22,
         fontSize: 25,
         marginLeft: windowWidth / 50,
         fontWeight: 'bold'

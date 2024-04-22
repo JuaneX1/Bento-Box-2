@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&display=swap');
+.main-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.browse-title {
+  font-family: "Rowdies", sans-serif;
+  font-size: 48px;
+  color: white;
+  margin-bottom: 20px;
+}

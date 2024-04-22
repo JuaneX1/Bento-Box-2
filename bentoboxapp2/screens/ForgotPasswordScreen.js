@@ -46,7 +46,7 @@ export default function ForgotPassword() {
         style={styles.submitButton}
         onPress={handleForgotPassword}
       >
-        <Text style={[styles.text, {fontWeight: 'bold'}]}>Reset Password</Text>
+        <Text style={[styles.text, {fontWeight: 'bold', color: '#000'}]}>Reset Password</Text>
       </Pressable>
     </View>
   );
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     paddingHorizontal: 10,
     borderRadius: 20, // Set border radius to create bubble-like appearance
-    color: '#fff', // White text color to match your other screens
+    color: '#000', // Black text color
     backgroundColor: '#ffffff', // Set background color to white
     borderWidth: 2, // Add border width
     borderColor: '#3077b2', // Set border color
@@ -98,6 +98,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#3077b2',
   },
   text: {
-    color: 'white'
+    color: '#000' // Black text color
   }
 });
