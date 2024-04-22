@@ -118,25 +118,25 @@ const AnimePage = () => {
         <div className="container">
           <div className="row justify-content-center">
           <div className="col-md-6 d-flex align-items-center justify-content-center">
-  <div className="anime-details-box mb-4">
-    {animeData ? (
-      <div className="anime-info d-flex justify-content-center">
-        <img src={animeData.images.jpg.image_url} alt="anime pic" className="img-fluid" />
-      </div>
-    ) : (
-      <p>No Data Available</p>
-    )}
-    <button id='favorite-button' onClick={toggleFavorite} className="d-flex align-items-center m-5 ml-2 text-center btn btn-secondary">
-      {showHeart ? (
-        <BsHeart className="p-1" style={{ fontSize: '25px' }} />
-        
-      ) : (
-        <BsHeartFill className="p-1" style={{ color: 'red', fontSize: '25px' }} />
-      )}
-      <p className='mb-0 ml-2'>{buttonText}</p>
-    </button>
-  </div>
-</div>
+            <div className="anime-details-box mb-4">
+              {animeData ? (
+                <div className="anime-info d-flex justify-content-center">
+                  <img src={animeData.images.jpg.image_url} alt="anime pic" className="img-fluid" />
+                </div>
+              ) : (
+                <p>No Data Available</p>
+              )}
+              <button id='favorite-button' onClick={toggleFavorite} className="d-flex align-items-center m-5 ml-2 text-center btn btn-secondary">
+                {showHeart ? (
+                  <BsHeart className="p-1" style={{ fontSize: '25px' }} />
+                  
+                ) : (
+                  <BsHeartFill className="p-1" style={{ color: 'red', fontSize: '25px' }} />
+                )}
+                <p className='mb-0 ml-2'>{buttonText}</p>
+              </button>
+            </div>
+          </div>
 
             <div className="col-md-6">
               <div className="anime-synopsis-box border p-4 mb-4" style={{ backgroundColor: "#111920" }}>
