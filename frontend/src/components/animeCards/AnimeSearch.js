@@ -87,7 +87,7 @@ function AnimeSearch({ typeDefault }) {
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                         placeholder="Search anime..."
-                        className="form-control rounded text-white mr-2" 
+                        className="form-control rounded text-black mr-2" 
                         style={{ flex: '1' }} 
                     />
                     <CustomPrimaryButton className='btn text-white' style={{backgroundColor: '#111920', marginLeft: '5px'}} type="submit" onClick={handleSubmit} >Search</CustomPrimaryButton> 
