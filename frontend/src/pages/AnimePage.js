@@ -128,9 +128,10 @@ const AnimePage = () => {
     )}
     <button id='favorite-button' onClick={toggleFavorite} className="d-flex align-items-center m-5 ml-2 text-center btn btn-secondary">
       {showHeart ? (
-        <BsHeartFill className="p-1" style={{ color: 'red', fontSize: '25px' }} />
-      ) : (
         <BsHeart className="p-1" style={{ fontSize: '25px' }} />
+        
+      ) : (
+        <BsHeartFill className="p-1" style={{ color: 'red', fontSize: '25px' }} />
       )}
       <p className='mb-0 ml-2'>{buttonText}</p>
     </button>
