@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { instance } from '../../App';
-import BrowseContent from '../pageFeatures/BrowseContent'
-import styled from 'styled-components';
+import '../../css/DashboardPage.css';
+import BrowseContent from '../pageFeatures/BrowseContent';
 
 function AnimeSearch({ typeDefault }) {
     const [animeList, setAnimeList] = useState([]);
@@ -9,20 +9,19 @@ function AnimeSearch({ typeDefault }) {
     const [animeFound, setAnimeFound] = useState([]);
     const [userData, setUserData] = useState('');
     const [error, setError] = useState('');
-    
     useEffect(() => {
-        const getUserInfo = async () => {
-            try {
-                const token = sessionStorage.getItem('token');
-                const response = await instance.get(`/info`, { headers: { Authorization: token }});
-                setUserData(response.data);
-            } catch (error) {
-                console.error('Error fetching user info:', error);
-                setError('Failed to fetch user information');
-            }
-        };
-        getUserInfo();
-    }, []);
+		const getUserInfo = async () => {
+			try {
+				const token = sessionStorage.getItem('token');
+				const response = await instance.get(`/info`, { headers: { Authorization: token }});
+				setUserData(response.data);
+			} catch (error) {
+				console.error('Error fetching user info:', error);
+				setError('Failed to fetch user information');
+			}
+		};
+		getUserInfo();
+	}, []);
 
     useEffect(() => {
         // Fetch top anime if typeDefault is "topAnime"
@@ -65,34 +64,18 @@ function AnimeSearch({ typeDefault }) {
         fetchAnime(search);
     };
 
-    const CustomPrimaryButton = styled.button`
-        background-color: #111920;
-        border: none;
-        transition: all 0.3s ease;
-
-        &:hover,
-        &:focus {
-        border: 2px solid white;
-        transform: scale(1.05);
-        }
-  `;
-
     return (
-        <div className="">
-            <h1 className='text-white text-center p-2'>Welcome, {userData.first}</h1>
-            <div className="search-bar-wrapper d-flex justify-content-center align-items-center" style={{ width: '100%' }}>
-                <form className='text-center p-4 d-flex align-items-center text-white' style={{ maxWidth: '500px', width: '100%' }}>
-                    <input
-                        type="text"
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                        placeholder="Search anime..."
-                        className="form-control rounded text-black mr-2" 
-                        style={{ flex: '1' }} 
-                    />
-                    <CustomPrimaryButton className='btn text-white' style={{backgroundColor: '#111920', marginLeft: '5px'}} type="submit" onClick={handleSubmit} >Search</CustomPrimaryButton> 
-                </form>
-            </div>
+        <div className="content-wrap">
+            <h1>Welcome, {userData.first}</h1>
+            <form onSubmit={handleSubmit}>
+                <input
+                    type="text"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    placeholder="Search anime..."
+                />
+                <button type="submit">Search</button>
+            </form>
             <BrowseContent
                 animeList={search ? animeList : animeFound}
             />

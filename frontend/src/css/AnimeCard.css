@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&display=swap');
+.anime-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 40px;
+}
+
+.anime-card {
+  flex: 0 0 calc(20% - 40px);
+  box-shadow: 0 2px 4px rgba(0,0,0,.5);
+  margin: 10px;
+  overflow: hidden;
+  border-radius: 5px;
+  transition: transform 0.3s ease;
+  position: relative;
+}
+
+.synopsis-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease;
+  opacity: 0; /* Initially hidden */
+}
+
+.anime-card:hover .synopsis-overlay {
+  opacity: 1; /* Show on hover */
+}
+
+
+.anime-card:hover {
+  transform: scale(1.05);
+}
+
+.anime-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.anime-card h3 {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  margin: 0;
+  padding: 10px;
+  font-size: 14px;
+  font-family: "Rowdies", sans-serif;
+  /*font-family:'Bangers', cursive;*/
+  text-decoration: none;
+  text-align: center;
+}
+
+@media (max-width: 1200px) {
+  .anime-card {
+    flex: 0 0 calc(25% - 40px);
+  }
+}
+
+@media (max-width: 900px) {
+  .anime-card {
+    flex: 0 0 calc(33.333% - 40px);
+  }
+}
+
+@media (max-width: 600px) {
+  .anime-card {
+    flex: 0 0 calc(50% - 40px);
+  }
+}
