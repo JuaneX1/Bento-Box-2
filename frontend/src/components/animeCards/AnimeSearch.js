@@ -78,7 +78,7 @@ function AnimeSearch({ typeDefault }) {
   `;
 
     return (
-        <div className="content-wrap">
+        <div className="">
             <h1 className='text-white text-center p-2'>Welcome, {userData.first}</h1>
             <div className="search-bar-wrapper d-flex justify-content-center align-items-center" style={{ width: '100%' }}>
                 <form className='text-center p-4 d-flex align-items-center text-white' style={{ maxWidth: '500px', width: '100%' }}>
