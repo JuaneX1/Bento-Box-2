@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { instance } from '../../App';
-import BrowseContent from '../pageFeatures/BrowseContent';
+import BrowseContent from '../pageFeatures/BrowseContent'
+import styled from 'styled-components';
 
 function AnimeSearch({ typeDefault }) {
     const [animeList, setAnimeList] = useState([]);
@@ -64,6 +65,18 @@ function AnimeSearch({ typeDefault }) {
         fetchAnime(search);
     };
 
+    const CustomPrimaryButton = styled.button`
+        background-color: #111920;
+        border: none;
+        transition: all 0.3s ease;
+
+        &:hover,
+        &:focus {
+        border: 2px solid white;
+        transform: scale(1.05);
+        }
+  `;
+
     return (
         <div className="content-wrap">
             <h1 className='text-white text-center p-2'>Welcome, {userData.first}</h1>
@@ -77,7 +90,7 @@ function AnimeSearch({ typeDefault }) {
                         className="form-control rounded text-white mr-2" 
                         style={{ flex: '1' }} 
                     />
-                    <button className='btn text-white' style={{backgroundColor: '#111920', marginLeft: '5px'}} type="submit" onClick={handleSubmit} >Search</button> 
+                    <CustomPrimaryButton className='btn text-white' style={{backgroundColor: '#111920', marginLeft: '5px'}} type="submit" onClick={handleSubmit} >Search</CustomPrimaryButton> 
                 </form>
             </div>
             <BrowseContent
