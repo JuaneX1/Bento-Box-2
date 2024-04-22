@@ -17,6 +17,7 @@ const HomePage = () => {
   const [showResetBar, setShowResetBar] = useState(false);
   const [showEmailVerifiedBar, setShowEmailVerifiedBar] = useState(false);
   const [showPasswordResetBar, setShowPasswordResetBar] = useState(false);
+  const [showDeleteAccountBar, setShowDeleteAccountBar] = useState(false);
   const location = useLocation();
 
   // gets the animes to display in sidebar, 24 is to make it flush since in 3 by 3 grid
@@ -51,6 +52,7 @@ const HomePage = () => {
     setShowResetBar(false);
     setShowEmailVerifiedBar(false);
     setShowPasswordResetBar(false);
+    setShowDeleteAccountBar(false);
   };
 
   const handleCloseForms = () => {
@@ -67,6 +69,8 @@ const HomePage = () => {
       setShowEmailVerifiedBar(true);
     } else if (params.get('action') === 'reset') {
       setShowPasswordResetBar(true);
+    } else if (params.get('action') === 'delete') {
+      setShowDeleteAccountBar(true);
     }
   }, [location.search]);
 
@@ -110,6 +114,13 @@ const HomePage = () => {
           <div className="verification-bar bg-success text-white p-2">
             <p className="m-0 text-center">
               Password Successfully Changed: Please Login With New Password!
+            </p>
+          </div>
+        )}
+        {showDeleteAccountBar && (
+          <div className="verification-bar bg-success text-white p-2">
+            <p className="m-0 text-center">
+              Account Delete Successfully: Please Create An Account to Get Back in!
             </p>
           </div>
         )}
