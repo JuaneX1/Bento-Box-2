@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import logo from '../../assets/FinalLogo.png';
 import { instance } from '../../App';
 
-const ForgotPassword = ({ onClose, onSwitchForm, setShowResetBar }) => {
+const ForgotPassword = ({ onClose, onSwitchForm }) => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         email: ''
@@ -21,8 +21,7 @@ const ForgotPassword = ({ onClose, onSwitchForm, setShowResetBar }) => {
         try {
             await instance.post(`/forgotPassword`, formData);
             onClose();
-            setShowResetBar(true);
-            navigate('/');
+            navigate('/?action=forgot');
         } catch (error) {
             console.log(error);
             setError(error.response.data.error);

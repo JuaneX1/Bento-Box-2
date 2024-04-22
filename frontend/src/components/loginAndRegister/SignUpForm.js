@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import logo from '../../assets/FinalLogo.png';
 import { instance } from '../../App';
 
-const SignUpForm = ({ onClose, onSwitchBack, setShowVerificationBar }) => {
+const SignUpForm = ({ onClose, onSwitchBack }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     first: '',
@@ -26,8 +26,7 @@ const SignUpForm = ({ onClose, onSwitchBack, setShowVerificationBar }) => {
     try {
       await instance.post(`/register`, formData);
       onClose();
-      setShowVerificationBar(true);
-      navigate(`/`);
+      navigate(`/?action=signup`);
     } catch (error) {
       console.log(error);
       setError(error.response.data);

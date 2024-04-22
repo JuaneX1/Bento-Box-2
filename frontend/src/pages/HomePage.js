@@ -48,6 +48,13 @@ const HomePage = () => {
 
   const handleSwitchForm = (formType) => {
     setCurrentForm(formType);
+  };
+
+  useEffect(() => {
+    handleResetBars();
+  }, [currentForm]);
+
+  const handleResetBars = () => {
     setShowVerificationBar(false);
     setShowResetBar(false);
     setShowEmailVerifiedBar(false);
@@ -63,6 +70,18 @@ const HomePage = () => {
     background-color: #111920; 
   `;
 
+  const CustomPrimaryButton = styled.button`
+    background-color: #111920;
+    border: none;
+    transition: all 0.3s ease;
+
+    &:hover,
+    &:focus {
+      border: 2px solid white;
+      transform: scale(1.05);
+    }
+  `;
+
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     if (params.get('action') === 'verified') {
@@ -71,21 +90,26 @@ const HomePage = () => {
       setShowPasswordResetBar(true);
     } else if (params.get('action') === 'delete') {
       setShowDeleteAccountBar(true);
+    } else if (params.get('action') === 'signup') {
+      setShowVerificationBar(true);
+    } else if (params.get('action') === 'forgot') {
+      setShowResetBar(true);
     }
+
   }, [location.search]);
 
   return (
     <>
       <TopNavbar className="navbar navbar-expand-lg navbar-dark d-flex justify-content-between p-2">
-                <Link to="/" className="navbar-brand">
-                    <img src={bigLogo} alt="Big Logo" className="logo img-fluid mr-3" style={{ minHeight: '50px', maxHeight: '50px' }} />
-                </Link>
-                <div className="navbar-brand ml-auto">
-                    <Link className="nav-link" to="/about-us">
-                        <strong>About Us</strong>
-                    </Link>
-                </div>
-            </TopNavbar>
+        <Link to="/" className="navbar-brand">
+          <img src={bigLogo} alt="Big Logo" className="logo img-fluid mr-3" style={{ minHeight: '50px', maxHeight: '50px' }} />
+        </Link>
+        <div className="navbar-brand ml-auto">
+          <Link className="nav-link" to="/about-us">
+            <strong>About Us</strong>
+          </Link>
+        </div>
+      </TopNavbar>
       <div style={{ background: "linear-gradient(to left, #2e77AE, #000000)" }}>
         {showVerificationBar && (
           <div className="verification-bar bg-success text-white p-2">
@@ -137,14 +161,14 @@ const HomePage = () => {
               <div className="logo-and-form-container">
                 {currentForm === "" && (
                   <div className="logo-container text-center">
-                    <img src={bigLogo} alt="Big Logo" className="img-fluid mb-4" style={{ maxWidth: "100%", height: "auto", width: "500px" }} /> {/* Adjusted the width of the logo */}
+                    <img src={bigLogo} alt="Big Logo" className="img-fluid mb-4" style={{ maxWidth: "100%", height: "auto", width: "500px" }} />
                     <div className="buttons">
-                      <button
+                      <CustomPrimaryButton
                         className="btn me-2 btn-lg text-white" style={{backgroundColor: "#111920"}} 
                         onClick={() => handleSwitchForm("login")}
                       >
                         Login
-                      </button>
+                      </CustomPrimaryButton>
                       <button
                         className="btn btn-secondary btn-lg" 
                         onClick={() => handleSwitchForm("signup")}
@@ -165,14 +189,12 @@ const HomePage = () => {
                   <SignUpForm
                     onClose={handleCloseForms}
                     onSwitchBack={() => handleSwitchForm("login")}
-                    setShowVerificationBar={setShowVerificationBar}
                   />
                 )}
                 {currentForm === "forgot" && (
                   <ForgotPassword
                     onClose={handleCloseForms}
                     onSwitchForm={() => handleSwitchForm("login")}
-                    setShowResetBar={setShowResetBar}
                   />
                 )}
               </div>
