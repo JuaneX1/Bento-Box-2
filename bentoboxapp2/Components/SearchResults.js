@@ -11,7 +11,7 @@ class SearchResults extends PureComponent {
 
         return (
             <FlatList
-            style={{marginLeft: windowWidth/8,width:windowWidth}}
+            style={{marginLeft: windowWidth/5,width:windowWidth}}
                 data={searchList} // Use searchList from props
                 keyExtractor={(item) => item.mal_id.toString()} // Use toString() to ensure key is a string
                 numColumns={2}

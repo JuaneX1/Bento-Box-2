@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, Button, Alert, Pressable, Image } from 'react-native';
+import { View, Text, Dimensions,StyleSheet, TextInput, Button, Alert, Pressable, Image } from 'react-native';
 import axios from 'axios'; // Import axios for API requests
-
+import { LinearGradient } from 'expo-linear-gradient';
 const PRODUCTION = true;
 const app_name = 'bento-box-2-df32a7e90651'; // Replace with your actual app name
 
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 export default function ForgotPassword() {
   const [email, setEmail] = useState('');
 
@@ -30,10 +32,14 @@ export default function ForgotPassword() {
 
   return (
     <View style={styles.container}>
-      <Image
-        style={styles.image}
-        source={require('../assets/BB Logo Icon_COLOR.png')}
-      />
+      <LinearGradient
+              colors={['transparent', 'rgba(48, 119, 178, 0.5)', 'rgba(48, 119, 178, 1)']}
+              style={{ width: windowWidth, height: windowHeight*0.55, transform: [{ translateY: windowHeight*0.30}]}}
+              start={{ x: 0.5, y: 0}}
+              end={{ x: 0.5, y: 1 }}
+              position="absolute"
+          />
+     
       <Text style={styles.title}>Forgot Password</Text>
       <Text style={styles.subtitle}>Enter your email address below to reset your password:</Text>
       <TextInput
@@ -61,8 +67,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   image: {
-    width: 100, // Adjust the size of the logo as needed
-    height: 100,
+    width: 164, // Adjust the size of the logo as needed
+    height: 176,
     marginBottom: 20,
   },
   title: {

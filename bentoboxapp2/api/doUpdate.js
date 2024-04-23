@@ -23,6 +23,8 @@ export async function updateProfile(profileData) {
         const response = await instance.patch('/updateInfo', profileData);
 
         if (response.status === 200) {
+            console.log(response.data.token);
+            await AsyncStorage.setItem('token', response.data.token);
             // Profile updated successfully
             return { success: true, error: '' };
         } else {

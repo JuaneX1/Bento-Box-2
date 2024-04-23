@@ -10,7 +10,6 @@ import { getFavorites } from '../api/getFavorites.js';
 import axios from 'axios';
 import AxiosRateLimit from 'axios-rate-limit';
 import AnimeListingV2 from '../Components/AnimeListingV2.js';
-
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -61,8 +60,6 @@ class AnimeInfoScreen extends React.PureComponent {
             const  f  = favsResponse.data;
 
             const matchingItem = f.find(item => item === anime.mal_id.toString());
-            
-            console.log("sjfnsjdnfdslfndsljf "+matchingItem);
 
             if(matchingItem){
                 this.setState({ favorite: true});
@@ -157,10 +154,11 @@ class AnimeInfoScreen extends React.PureComponent {
     render() {
         const { route, navigation } = this.props;
         const { anime } = route.params;
-       
+        
         const { recommendations, favorite, loading } = this.state;
 
         if (!anime) {
+            console.log(anime);
             return (
                 <View style={styles.card}>
                     <Text>Anime data not available.</Text>
@@ -173,9 +171,6 @@ class AnimeInfoScreen extends React.PureComponent {
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.searchButton}>
                     <Ionicons name="arrow-back" size={24} color="white" />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.likeButton} onPress={this.toggleFavorite}>
-                    <AntDesign name="heart" size={24} color={favorite ? "red" : "white"} />
-                </TouchableOpacity>
                 <Image style={styles.imageBackground} source={{ uri: anime.images.jpg.large_image_url }} />
                 <LinearGradient
                     colors={['transparent', 'rgba(17,25,32,0.8)', 'rgba(17,25,32,1)']}
@@ -186,6 +181,13 @@ class AnimeInfoScreen extends React.PureComponent {
                 />
 
                 <View style={styles.container}>
+                <LinearGradient
+              colors={['transparent', 'rgba(48, 119, 178, 0.5)', 'rgba(48, 119, 178, 1)']}
+              style={{ width: windowWidth, height: windowHeight, transform: [{ translateY: windowHeight*0.15}]}}
+              start={{ x: 0.5, y: 0.5}}
+              end={{ x: 0.5, y: 1 }}
+              position="absolute"
+          />
                     <View style={styles.titleBox}>
                         <Text style={styles.animeTitleText}> {anime.title_english ? anime.title_english : anime.title} </Text>
                     </View>
@@ -201,39 +203,46 @@ class AnimeInfoScreen extends React.PureComponent {
                             </Text>
                         ))}
                     </View>
-                    <View style={{ alignItems: 'center', width: windowWidth }}>
+                    <View style={{ alignItems: 'center', flexDirection: 'row', marginTop: 20,justifyContent:'center',width: windowWidth }}>
 
                         {anime.trailer.url ?
                             <TouchableOpacity style={tw`bg-red-500 p-2 rounded-lg w-24`} onPress={() => this.openLink(anime.trailer.url)}>
                                 <Text style={tw`text-white font-bold text-center`}>Trailer</Text>
                             </TouchableOpacity>
-                            : <Text > No Trailer available</Text>}
+                            : 
+                            <View style={tw`bg-white p-2 rounded-lg w-24`}>
+                                <Text style={tw`text-black font-bold text-center`}>Trailer NaN</Text>
+                            </View>
+                            }
+                        {
+                            favorite ? <TouchableOpacity style={[tw`bg-gray-500 p-2 rounded-lg w-32 h-9`,{flexDirection:'row',marginLeft:10, justifyContent:'center'}]} onPress={this.toggleFavorite}>
+                                            <AntDesign name="heart" size={18} color={favorite ? "red" : "white"} />
+                                            <Text style={[tw`text-white font-bold text-center`,{marginLeft:5}]}>Unfavorite</Text>
+                                       </TouchableOpacity>
+                                       :
+                                       <TouchableOpacity style={[tw`bg-gray-500 p-2 rounded-lg w-32 h-8`,{flexDirection:'row', marginLeft:10, justifyContent:'center'}]} onPress={this.toggleFavorite}>
+                                            <AntDesign name="heart" size={18} color={favorite ? "grey" : "white"} />
+                                            <Text style={[tw`text-white font-bold text-center`,{marginLeft:5}]}>Favorite</Text>
+                                       </TouchableOpacity>
+                        }
+
 
                     </View>
                     <Text style={styles.plot}>{"     "}{formatPlot(anime.synopsis)}</Text>
 
-                    <View style={{ alignContent: 'center', width: windowWidth, position: 'relative', flexDirection: 'row' }}>
+                    <View style={{ alignContent: 'center', width: windowWidth, position: 'relative',  }}>
                         <View style={styles.statsBox}>
-                            <Text style={styles.statsTitle}>Score: </Text>
+                            <Text style={styles.statsTitle}>Overall Score: </Text>
                             <Text style={{ fontWeight: '600', fontSize: 32, color: this.getScoreTextColor(anime.score) }}>
                                 {anime.score == 0 || anime.score == null ? 'NaN' : anime.score}</Text>
                         </View>
-                        <View style={styles.statsBox}>
-                            <Text style={styles.statsTitle}>Rank: </Text>
-                            <Text style={{ fontWeight: '600', fontSize: 32, color: "#ffffff" }}>
-                                {anime.rank == 0 || anime.rank == null ? 'NaN' : anime.rank}</Text>
-                        </View>
-                        <View style={styles.statsBox}>
-                            <Text style={styles.statsTitle}>Popularity: </Text>
-                            <Text style={{ fontWeight: '600', fontSize: 32, color: "#ffffff" }}>
-                                {anime.popularity == 0 || anime.popularity == null ? 'NaN' : anime.popularity}</Text>
-                        </View>
+                        
                     </View>
                     {loading ? (
                         <Text>Loading...</Text>
                     ) : recommendations.length > 0 ? (
                         <View style={styles.recommendationsContainer}>
-                            <Text style={styles.recommendationsTitle}>You Might Also Like:</Text>
+                            <Text style={[tw`text-white font-bold text-lg`,{marginLeft:5}]}>You Might Also Like:</Text>
                             <FlatList
                                 horizontal={true}
                                 style={styles.recommendationsList}
@@ -278,6 +287,7 @@ const styles = StyleSheet.create({
         padding: 5
     },
     plot: {
+        marginTop:20,
         fontSize: 15,
         padding: 10,
         fontWeight: 'bold',
@@ -356,16 +366,17 @@ const styles = StyleSheet.create({
 
     },
     statsBox: {
-        width: windowWidth / 3.5,
+        width: windowWidth / 1.5,
         height: windowHeight / 5.5,
         borderRadius: 15,
-        alignSelf: 'flex-end',
-        marginLeft: windowWidth / 30,
+        alignSelf: 'center',
         marginTop: 15,
         marginBottom: 15,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#050301'
+        backgroundColor: '#050301',
+        borderColor:"gray",
+        borderWidth:3
     },
     recommendationsContainer: {
         marginTop: 20,

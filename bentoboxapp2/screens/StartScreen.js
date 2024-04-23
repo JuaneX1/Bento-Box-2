@@ -25,7 +25,7 @@ export default function StartScreen() {
     <View style={styles.container}>
       <Image 
         style={styles.image}
-        source={require('../assets/BB Logo Icon_COLOR.png')}
+        source={require('../assets/LOGO/Logo w Red Tagline/BB Logo Vertical_COLOR 1.png')}
       />
       <LoginSwitch
         selectedTab={selectedTab} 
@@ -53,8 +53,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   image: {
-    width: 100,
-    height: 105,
+    width: 165,
+    height: 188,
     transform: [{ scale: 0.80 }],
     marginTop: windowHeight / 15,
   },

@@ -11,32 +11,34 @@ import { deleteAccount } from '../api/deleteAccount'; // Import the deleteAccoun
 const ProfileScreen = () => {
   const [editProfileModalVisible, setEditProfileModalVisible] = useState(false);
   const [changePasswordModalVisible, setChangePasswordModalVisible] = useState(false);
-  const [user, setUser] = useState(null); // State to store user info
+  const [userI, setUser] = useState(null); // State to store user info
   const [deleteModalVisible, setDeleteModalVisible] = useState(false); // State to manage visibility of delete account modal
   const { logOut } = useAuth();
   const navigation = useNavigation(); // Get navigation object
 
   useEffect(() => {
     // Fetch user info when component mounts
-    const fetchUserInfo = async () => {
+    const fetchUserInfo = async (userI) => {
       try {
         const token = await AsyncStorage.getItem('token');
         const { user, error } = await getUserInfo(token);
+
         if (user) {
           setUser(user); // Set user state with fetched user data
         } else {
           // Handle error, maybe log out the user or display an error message
-          console.error('Error fetching user info:', error);
+          console.error('Error fetching user info:', error.response.data);
         }
       } catch (error) {
-        console.error('Error fetching user info:', error);
+        console.error('Error fetching user info:', error.response.data);
       }
     };
-    fetchUserInfo();
-  }, []);
+    fetchUserInfo(userI);
+  }, [userI]);
 
   const handleUpdateProfile = () => {
     navigation.navigate('UpdateProfile');
+    
   };
 
   const handleChangePassword = () => {
@@ -47,7 +49,7 @@ const ProfileScreen = () => {
     try {
       await logOut();
       // Navigate to the login screen after logging out
-      navigation.navigate('Login');
+      //navigation.navigate('Login');
     } catch (error) {
       console.error('Error logging out:', error);
     }
@@ -58,7 +60,8 @@ const ProfileScreen = () => {
       const { success, error } = await deleteAccount();
       if (success) {
         // Account deleted successfully
-        navigation.navigate('Login');
+        await logOut();
+        //navigation.navigate('Login');
       } else {
         // Error deleting account
         console.error('Error deleting account:', error);
@@ -74,8 +77,8 @@ const ProfileScreen = () => {
   return (
     <View style={styles.container}>
       <Image style={styles.logo} source={require('../assets/BB Logo Icon_COLOR.png')} />
-      {user && (
-        <Text style={styles.title}>Welcome {user.login} to your profile!</Text> 
+      {userI && (
+        <Text style={styles.title}>Welcome {userI.login} to your profile!</Text> 
       )}
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={handleUpdateProfile}>
@@ -183,3 +186,5 @@ const styles = StyleSheet.create({
 });
 
 export default ProfileScreen;
+
+

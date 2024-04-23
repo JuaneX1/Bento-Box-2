@@ -14,7 +14,14 @@ export const AuthProvider = ({ children }) => {
       const userKeys = keys.filter(key => key.startsWith('user_'));
       const userData = await AsyncStorage.multiGet(userKeys);
       const users = userData.map(([key, value]) => JSON.parse(value));
-      setAuthData(users[0]._id); 
+
+      if(users == null || users[0] == null){
+        setAuthData(null);
+      }
+      else{
+        setAuthData(users[0]._id); 
+      }
+      
     };
 
     loadAuthData();
@@ -30,6 +37,11 @@ export const AuthProvider = ({ children }) => {
 
   const logOut = async () => {
     setAuthData(undefined);
+    const keys = await AsyncStorage.getAllKeys();
+    const userKeys = keys.filter(key => key.startsWith('user_'));
+    const userData = await AsyncStorage.multiGet(userKeys);
+    const users = userData.map(([key, value]) => JSON.parse(value));
+    await AsyncStorage.removeItem(`user_${users[0]._id}`);
     await AsyncStorage.removeItem('token');
   };
 
