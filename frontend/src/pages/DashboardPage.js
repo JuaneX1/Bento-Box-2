@@ -66,6 +66,20 @@ const Dashboard = () => {
         transform: scale(1.05);
         }
 `;
+
+    const CustomPrimaryButton = styled.button`
+        background-color: #111920;
+        border: none;
+        transition: all 0.3s ease;
+
+        &:hover,
+        &:focus {
+        background-color: #111920;
+
+        border: 2px solid white;
+        transform: scale(1.05);
+        }
+    `;
     
     return (
         <>
@@ -91,7 +105,7 @@ const Dashboard = () => {
             <div className="row">
                 <div className="col">
                     <div className="d-flex justify-content-center">
-                        <button onClick={toggleSearch} className={`btn btn-primary btn-lg mx-2 ${showSearch ? 'active' : ''}`}>Search</button>
+                        <CustomPrimaryButton onClick={toggleSearch} style={{backgroundColor: "#111920"}} className={`text-white btn rounded-lg mx-2 ${showSearch ? 'active' : 'active'}`}>Search</CustomPrimaryButton>
                         <button onClick={toggleBrowse} className={`btn btn-danger btn-lg mx-2 ${showBrowse ? 'active' : ''}`}>Browse</button>
                         <button onClick={toggleFavorites} className={`btn btn-light btn-lg mx-2 ${showFavorites ? 'active' : ''}`}>Favorites</button>
                         <button onClick={toggleDailyBox} className={`btn btn-secondary btn-lg mx-2 ${showDailyBox ? 'active' : ''}`}>For You!</button> {/* Add button for Daily Box */}

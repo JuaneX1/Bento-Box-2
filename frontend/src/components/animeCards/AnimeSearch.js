@@ -74,7 +74,6 @@ function AnimeSearch({ typeDefault }) {
         &:hover,
         &:focus {
         border: 2px solid white;
-        transform: scale(1.05);
         }
   `;
 
