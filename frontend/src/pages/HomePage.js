@@ -82,6 +82,17 @@ const HomePage = () => {
     }
   `;
 
+  const CustomLink = styled.div`
+    border: none;
+    transition: all 0.3s ease;
+
+    &:hover,
+    &:focus {
+      border: 2px solid white;
+      transform: scale(1.05);
+    }
+  `;
+
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     if (params.get('action') === 'verified') {
@@ -105,9 +116,9 @@ const HomePage = () => {
           <img src={bigLogo} alt="Big Logo" className="logo img-fluid mr-3" style={{ minHeight: '50px', maxHeight: '50px' }} />
         </Link>
         <div className="navbar-brand ml-auto">
-          <Link className="nav-link" to="/about-us">
-            <strong>About Us</strong>
-          </Link>
+          <CustomLink className="nav-link p-2" >
+            <Link className="text-white text-decoration-none" to="/about-us"><strong>About Us</strong></Link>
+          </CustomLink>
         </div>
       </TopNavbar>
       <div style={{ background: "linear-gradient(to left, #2e77AE, #000000)" }}>
@@ -144,7 +155,7 @@ const HomePage = () => {
         {showDeleteAccountBar && (
           <div className="verification-bar bg-success text-white p-2">
             <p className="m-0 text-center">
-              Account Delete Successfully: Please Create An Account to Get Back in!
+              Account Deleted Successfully: Please Create An Account to Get Back in!
             </p>
           </div>
         )}
@@ -164,13 +175,13 @@ const HomePage = () => {
                     <img src={bigLogo} alt="Big Logo" className="img-fluid mb-4" style={{ maxWidth: "100%", height: "auto", width: "500px" }} />
                     <div className="buttons">
                       <CustomPrimaryButton
-                        className="btn me-2 btn-lg text-white" style={{backgroundColor: "#111920"}} 
+                        className="btn btn-secondary btn-lg btn-common" 
                         onClick={() => handleSwitchForm("login")}
                       >
                         Login
                       </CustomPrimaryButton>
                       <button
-                        className="btn btn-secondary btn-lg" 
+                        className="btn btn-secondary btn-lg btn-common" 
                         onClick={() => handleSwitchForm("signup")}
                       >
                         Sign Up

@@ -81,7 +81,7 @@ const Dashboard = () => {
                         <button onClick={toggleSearch} className={`btn btn-primary btn-lg mx-2 ${showSearch ? 'active' : ''}`}>Search</button>
                         <button onClick={toggleBrowse} className={`btn btn-danger btn-lg mx-2 ${showBrowse ? 'active' : ''}`}>Browse</button>
                         <button onClick={toggleFavorites} className={`btn btn-light btn-lg mx-2 ${showFavorites ? 'active' : ''}`}>Favorites</button>
-                        <button onClick={toggleDailyBox} className={`btn btn-secondary btn-lg mx-2 ${showDailyBox ? 'active' : ''}`}>Daily Box</button> {/* Add button for Daily Box */}
+                        <button onClick={toggleDailyBox} className={`btn btn-secondary btn-lg mx-2 ${showDailyBox ? 'active' : ''}`}>For You!</button> {/* Add button for Daily Box */}
                     </div>
                 </div>
             </div>

@@ -18,6 +18,7 @@ const AnimePage = () => {
   const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showHeart, setShowHeart] = useState(true);
+  const [buttonText, setButtonText] = useState('Favorite');
 
   const toggleFavorite = async () => {
     try {
@@ -33,30 +34,23 @@ const AnimePage = () => {
         setShowHeart(false);
       }
 
-      console.log(message);
-      console.log(buttonText)
-
     } catch (error) {
       console.log(error);
     }
   };
 
-   // toggles favorite function twice to get initial value
-  // twice so we do not accidentally change it
-  const getInitialFavoriteText = async () => {
-    await toggleFavorite();
-    await toggleFavorite();
-  };
-
-  const [buttonText, setButtonText] = useState('');
-
   useEffect(() => {
     const fetchAnimeDetails = async () => {
       try {
         const response = await instance.get(`https://api.jikan.moe/v4/anime/${id}`);
+		const favoritesArr = await instance.get(`/getFavorite`, { headers: { Authorization: sessionStorage.getItem('token') } });
         const data = response.data;
         const anime = data.data;
         setAnimeData(anime);
+		if (favoritesArr.data.includes(anime.mal_id.toString())) {
+			setButtonText('Unfavorite');
+			setShowHeart(false);
+		}
         setLoading(false);
       } catch (error) {
         console.error('Error fetching anime details:', error);
@@ -80,7 +74,6 @@ const AnimePage = () => {
 
     fetchAnimeDetails();
     fetchAnimeRecommendations();
-    getInitialFavoriteText();
   }, [id]);
 
   if (loading) {
