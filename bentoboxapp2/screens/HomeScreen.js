@@ -9,6 +9,8 @@ import axios from 'axios';
 import AnimeListing from '../Components/AnimeListing';
 import { LinearGradient } from 'expo-linear-gradient';
 import AxiosRateLimit from 'axios-rate-limit';
+import { MaterialIcons } from '@expo/vector-icons'; // Add this import statement
+
 // Import statements...
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -120,33 +122,33 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-       <LinearGradient
-                colors={['transparent', 'rgba(48, 119, 178, 0.5)', 'rgba(48, 119, 178, 1)']}
-                style={{ width: windowWidth, height: windowHeight*0.60, transform: [{ translateY: windowHeight*0.20}]}}
-                start={{ x: 0.5, y: 0.5}}
-                end={{ x: 0.5, y: 1 }}
-                position="absolute"
-            />
-      <ScrollView>
-      
+      <LinearGradient
+        colors={['transparent', 'rgba(48, 119, 178, 0.5)', 'rgba(48, 119, 178, 1)']}
+        style={{ width: windowWidth, height: windowHeight * 0.60, transform: [{ translateY: windowHeight * 0.20 }] }}
+        start={{ x: 0.5, y: 0.5 }}
+        end={{ x: 0.5, y: 1 }}
+        position="absolute"
+      />
+      <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
         {user ? (
           <>
-            <Text>{user.login}'s Favorites</Text>
+            <Text style={[styles.userFavorites, { textAlign: 'center' }]}>{user ? `${user.login}'s Favorites` : "User's Favorites"}</Text>
             {favorites === null ? (
-              <Text>Looks like you have no favorites at the moment</Text>
+              <View style={styles.noFavoritesContainer}>
+                <Text style={styles.noFavoritesText}>Looks like you have no favorites at the moment</Text>
+                <Text style={styles.noFavoritesText}>No worries, keep exploring!</Text>
+                <MaterialIcons name="sentiment-neutral" size={48} color="#fff" style={styles.smileyIcon} />
+              </View>
             ) : (
               <FlatList
-                 style={{width:windowWidth}}
-                data={animeData} // Use searchList from props
-                keyExtractor={(item) => item.mal_id.toString()} // Use toString() to ensure key is a string
+                style={{ width: windowWidth }}
+                data={animeData}
+                keyExtractor={(item) => item.mal_id.toString()}
                 numColumns={2}
                 renderItem={({ item }) => (
-                    <AnimeListing anime={item} />
-                )}>
-              </FlatList>
-             
-            
-              //<Text>YAYYYYY!</Text>
+                  <AnimeListing anime={item} />
+                )}
+              />
             )}
           </>
         ) : (
@@ -164,38 +166,52 @@ export default function HomeScreen({ navigation }) {
             </TouchableOpacity>
           </>
         )}
-      
       </ScrollView>
     </SafeAreaView>
   );
-  
-}
-
-// Styles...
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#111920',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#fff',
-    marginBottom: 20,
-  },
-  button: {
-    backgroundColor: '#3077b2',
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-    borderRadius: 25,
-    marginVertical: 10,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-});
+        }
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#111920',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    title: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      color: '#fff',
+      marginBottom: 20,
+    },
+    button: {
+      backgroundColor: '#3077b2',
+      paddingVertical: 15,
+      paddingHorizontal: 30,
+      borderRadius: 25,
+      marginVertical: 10,
+    },
+    buttonText: {
+      color: '#fff',
+      fontSize: 16,
+      fontWeight: 'bold',
+    },
+    userFavorites: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      color: '#fff',
+      marginBottom: 20,
+    },
+    noFavoritesContainer: {
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    noFavoritesText: {
+      color: '#fff',
+      fontSize: 16,
+      textAlign: 'center',
+    },
+    smileyIcon: {
+      marginTop: 20,
+    },
+  });
+ 

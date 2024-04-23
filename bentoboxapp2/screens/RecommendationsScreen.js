@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, FlatList,ScrollView, Dimensions, SafeAreaView, TouchableOpacity } from 'react-native';
-import SwipeableAnimeCard from '../Components/SwipeableAnimeCard';
-import { fetchRecommendations } from '../api/fetchRecommendations';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import AnimeListing from '../Components/AnimeListing';
+import { View, StyleSheet, ScrollView, Dimensions, SafeAreaView, Text } from 'react-native';
 import AnimeListingV2 from '../Components/AnimeListingV2';
-import Carousel from 'react-native-snap-carousel';
 import axios from 'axios';
-import axiosRateLimit from 'axios-rate-limit';
 import { LinearGradient } from 'expo-linear-gradient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Carousel from 'react-native-snap-carousel'; // Import the Carousel component
+import { MaterialIcons } from '@expo/vector-icons'; // Add this import statement
+
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -16,9 +14,8 @@ const instance = axios.create({
   baseURL: 'https://bento-box-2-df32a7e90651.herokuapp.com/api'
 });
 
-
 const RecommendationsScreen = () => {
-  const [animeData, setAnimeData] = useState(null); // Initialize as null
+  const [animeData, setAnimeData] = useState(null);
 
   useEffect(() => {
     fetchAnime();
@@ -26,7 +23,7 @@ const RecommendationsScreen = () => {
 
   const fetchAnime = async () => {
     try {
-      const cachedData = await AsyncStorage.getItem('recommendedItem');
+      const cachedData = await AsyncStorage.getItem('recommendedAnime');
       if (cachedData) {
         const { data, timestamp } = JSON.parse(cachedData);
         // Check if cached data has expired (e.g., cache duration is 1 day)
@@ -36,90 +33,120 @@ const RecommendationsScreen = () => {
         }
       }
 
-      const favsResponse = await instance.get(`/getFavorite`,  {
-       
-        headers: {
-          Authorization: await AsyncStorage.getItem('token')
-        }
-      });
-        
-      const  f  = favsResponse.data;
+      const favoritesString = await AsyncStorage.getItem('favorites');
+      const favorites = JSON.parse(favoritesString);
 
-      if (!f || f.length === 0) {
-        setAnimeData(null);
+      if (!favorites || favorites.length === 0) {
         throw new Error('No favorites found.');
       }
-      else{
-      const randomIndex = Math.floor(Math.random() * f.length);
-      const randomItem = f[randomIndex];
+
+      const randomIndex = Math.floor(Math.random() * favorites.length);
+      const randomItem = favorites[randomIndex];
 
       // Fetch recommendations based on the random item's mal_id
       const recommendations = await fetchRecommendations({ id: randomItem.mal_id });
-      
-      console.log('Raw response:', recommendations);
 
-      const r = recommendations;//JSON.parse(recommendations);
-      const randomRecIndex = Math.floor(Math.random() * r.length);
-      const randomRecItem = r[randomRecIndex];
       // Store recommendations in AsyncStorage
       const timestamp = Date.now();
-
-      await AsyncStorage.setItem('recommendedItem', JSON.stringify({ data: randomRecItem, timestamp }));
+      await AsyncStorage.setItem('recommendedAnime', JSON.stringify({ data: recommendations, timestamp }));
 
       // Set animeData state with the fetched recommendations
-      setAnimeData(randomRecItem);
-      }
+      setAnimeData(recommendations);
     } catch (error) {
       console.error('Error fetching anime:', error);
     }
   };
 
-  if(animeData){
-    console.log(animeData);
-    return(
-    <SafeAreaView style={styles.containerX}>
-       <LinearGradient
-                colors={['transparent', 'rgba(48, 119, 178, 0.5)', 'rgba(48, 119, 178, 1)']}
-                style={{ width: windowWidth, height: windowHeight*0.60, transform: [{ translateY: windowHeight*0.35}]}}
-                start={{ x: 0.5, y: 0.5}}
-                end={{ x: 0.5, y: 1 }}
-                position="absolute"
-            />
-      <TouchableOpacity>
-        <AnimeListingV2 anime={animeData.entry} />
-      </TouchableOpacity>
-                 
+  const fetchRecommendations = async (params) => {
+    try {
+      const response = await instance.get('/recommendations', { params });
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching recommendations:', error);
+      return [];
+    }
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <LinearGradient
+        colors={['transparent', 'rgba(48, 119, 178, 0.5)', 'rgba(48, 119, 178, 1)']}
+        style={{ width: windowWidth, height: windowHeight * 0.60, transform: [{ translateY: windowHeight * 0.36 }] }}
+        start={{ x: 0.5, y: 0.5 }}
+        end={{ x: 0.5, y: 1 }}
+        position="absolute"
+      />
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        {animeData ? (
+          <>
+            <Text style={styles.headerText}>Daily Pick</Text>
+            <Text style={styles.infoText}>Here’s our pick for today. Come back tomorrow to see what else we have for you!</Text>
+            <View style={styles.animeContainer}>
+              <Carousel
+                containerCustomStyle={{ overflow: 'visible' }}
+                slideStyle={{ display: 'flex', alignItems: 'center' }}
+                data={animeData} // Use animeData directly
+                keyExtractor={(item) => item.mal_id ? item.mal_id + Math.random() : Math.random()} // Use toString() to ensure key is a string
+                firstItem={1}
+                sliderWidth={windowWidth}
+                itemWidth={windowWidth * 0.62}
+                inactiveSlideOpacity={0.75}
+                inactiveSlideScale={0.77}
+                renderItem={({ item }) => (
+                  <AnimeListingV2 anime={item.entry} />
+                )}
+              />
+            </View>
+          </>
+        ) : (
+          <View style={styles.animeContainer}>
+            <MaterialIcons name="sentiment-neutral" size={72} color="#fff" style={styles.sadIcon} />
+            <Text style={styles.headerText}>Daily Pick</Text>
+            <Text style={styles.noFavoritesText}>Oops no favorites found.</Text>
+            <Text style={styles.noFavoritesText}>Continue exploring and add some favorites</Text>
+            <Text style={styles.noFavoritesText}>so we can recommend you a daily pick !</Text>
+          </View>
+        )}
+      </ScrollView>
     </SafeAreaView>
-    );
-  }
-  else{
-    return (
-      <View style={styles.container}>
-        <ScrollView>
-          
-          {animeData && (
-            <SwipeableAnimeCard
-              key={animeData.mal_id}
-              anime={animeData}
-            />
-          )}
-        </ScrollView>
-      </View>
-    );
-  }
-  
-};
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#111920',
   },
-  containerX: {
-    flex: 1,
-    width:windowWidth,
-    height:windowHeight,
-    backgroundColor: '#111920',
+  scrollContent: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headerText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 20,
+  },
+  infoText: {
+    fontSize: 16,
+    color: '#fff',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  animeContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 20,
+  },
+  noFavoritesText: {
+    color: '#fff',
+    fontSize: 16,
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+  sadIcon: {
+    marginBottom: 20,
   },
 });
 
