@@ -72,7 +72,7 @@ const RecommendationPage = () => {
           for (let anime of animeRecommendationsList) {
             const malId = anime.entry.mal_id;
 
-            if (!favorites.find(favorite => favorite.mal_id === malId)) {
+            if (!favorites.includes(malId.toString())) {
               setRecommendedAnime(anime.entry);
               setLoading(false);
               return;
