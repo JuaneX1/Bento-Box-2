@@ -208,7 +208,30 @@ exports.setApp = function ( app, client ) {
 			return res.status(500).json({ error: error });
 		});
 	});
+
+	app.delete('/api/deleteUser', authToken, async (req, res) => {
+        const user = req.user;
+   
+        users.deleteOne({ _id: new ObjectId(user._id) })
+            .then(result => {
+                if (result.deletedCount !== 0) {
+                    faves.deleteOne({ user: new ObjectId(user._id) })
+                        .then(favoritesResult => {
+                            return res.status(200).json({ message: "User was successfully deleted and favorites cleared" });
+                        })
+                        .catch(error => {
+                            return res.status(500).json({ error: error });
+                        });
+                } else {
+                    return res.status(404).json({ message: "User record not found" });
+                }
+            })
+            .catch(error => {
+                return res.status(500).json({ error: error });
+            });
+    });
 	
+	/*
 	app.delete('/api/deleteUser', authToken, async (req, res) => {
 		
 		const user = req.user;
@@ -223,6 +246,7 @@ exports.setApp = function ( app, client ) {
 			return res.status(500).json({ error: error });
 		});
 	});
+	*/
 	
 	app.post('/api/setFavorite', authToken, async (req, res) => {
 		try {
