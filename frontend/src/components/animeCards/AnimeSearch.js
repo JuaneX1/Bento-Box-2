@@ -55,7 +55,7 @@ function AnimeSearch({ typeDefault }) {
     };
 
     const fetchTopAnime = async () => {
-        const temp = await fetch(`https://api.jikan.moe/v4/anime`)
+        const temp = await fetch(`https://api.jikan.moe/v4/anime?limit=24`)
             .then(res => res.json());
         setAnimeFound(temp.data);
     };
@@ -74,7 +74,6 @@ function AnimeSearch({ typeDefault }) {
         &:hover,
         &:focus {
         border: 2px solid white;
-        transform: scale(1.05);
         }
   `;
 

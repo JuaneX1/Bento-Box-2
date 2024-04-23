@@ -43,10 +43,12 @@ const AnimePage = () => {
     const fetchAnimeDetails = async () => {
       try {
         const response = await instance.get(`https://api.jikan.moe/v4/anime/${id}`);
-		const favoritesArr = await instance.get(`/getFavorite`, { headers: { Authorization: sessionStorage.getItem('token') } });
         const data = response.data;
         const anime = data.data;
         setAnimeData(anime);
+		const favoritesArr = await instance.get(`/getFavorite`, { headers: { Authorization: sessionStorage.getItem('token') } });
+        
+       
 		if (favoritesArr.data.includes(anime.mal_id.toString())) {
 			setButtonText('Unfavorite');
 			setShowHeart(false);
