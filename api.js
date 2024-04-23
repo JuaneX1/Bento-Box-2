@@ -227,19 +227,21 @@ exports.setApp = function ( app, client ) {
 	app.post('/api/setFavorite', authToken, async (req, res) => {
 		try {
 			const existingFavorite = await faves.findOne({ user: new ObjectId(req.user._id) });
+			
+			const mal_id = String(req.body.mal_id);
 
 			if (!existingFavorite) {
-				await addFavorite({ user: req.user._id }, req.body.mal_id);
+				await addFavorite({ user: req.user._id }, mal_id);
 			} else {
-				if (existingFavorite.favorites.includes(req.body.mal_id)) {
-					await removeFavorite(existingFavorite, req.body.mal_id);
+				if (existingFavorite.favorites.includes(mal_id)) {
+					const data = await removeFavorite(existingFavorite, mal_id);
 					return res.status(200).json({ message: "Removing Favorite" });
 				} else {
-					await addFavorite(existingFavorite, req.body.mal_id);
+					await addFavorite(existingFavorite, mal_id);
 					return res.status(200).json({ message: "Adding Favorite" });
 				}
 			}
-			return res.status(200).json({ message: "Success" });
+			return res.status(200).json({ message: "Adding Favorite" });
 		} catch (error) {
 			return res.status(500).json({ message: "Error toggling favorite" });
 		}
