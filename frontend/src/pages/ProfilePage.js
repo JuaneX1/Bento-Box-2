@@ -160,15 +160,15 @@ const ProfilePage = ({ onClose }) => {
             </div>
             {showModal && <div className="overlay"></div>}
             {/* Modal for confirming account deletion */}
-            <Modal show={showModal} onHide={() => setShowModal(false)} centered>
-                <Modal.Header>
+            <Modal show={showModal} onHide={() => setShowModal(false)} centered >
+                <Modal.Header className="text-white" style={{backgroundColor: "#111920"}}>
                     <Modal.Title><strong>Confirm Account Deletion:</strong></Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body className="text-white" style={{backgroundColor: "#111920"}}>
+                    <div className='p-1'></div>
                     <p>Are you sure you want to delete your account?</p>
                 </Modal.Body>
-                <Modal.Footer>
-                    <div></div>
+                <Modal.Footer className="text-white d-flex justify-content-start" style={{backgroundColor: "#111920"}}>
                     <Button variant="secondary" onClick={() => setShowModal(false)}>No</Button>
                     <div></div>
                     <Button variant="danger" onClick={handleDeleteAccount} className="delete-account-final-btn btn btn-danger"><strong>Yes</strong></Button>
