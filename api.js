@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const { ObjectId } = require('mongodb');
 const nodemailer = require('nodemailer');
+const bcrypt = require('bcrypt');
 const emailTemplates = require('./emailTemplates');
 const jwt = require("jsonwebtoken");
 const jwtUtils = require('./createJWT');
@@ -95,8 +96,8 @@ exports.setApp = function ( app, client ) {
 	app.post('/api/resetPassword/:token', async (req, res) => {
 
 		const tokenData = jwtUtils.getURItoken(req.params.token);
-
-		const { password } = req.body
+		
+		const password = await bcrypt.hash(req.body.password, 10);
 		
 		const user = await users.updateOne({ email: tokenData.user.email }, { $set: { password: password } } );
 		
@@ -124,6 +125,8 @@ exports.setApp = function ( app, client ) {
 			} else if (passComplexity.length != 0) {
 				return res.status(400).json({ error: "Password does not meet complexity requirements", passComplexity });
 			}
+			
+			newUser.password = await bcrypt.hash(newUser.password, 10);
 
 			await tempusertable.insertOne(newUser);
 
@@ -155,32 +158,33 @@ exports.setApp = function ( app, client ) {
 	});
 
 	app.post('/api/login', async (req, res, next) => {
-		
 		const { login, password } = req.body;
-		
-		await tempusertable.findOne({ $or: [{email: login }, {login: login}], password: password }).then( result => {
-			if (result !== null) {
-				return res.status(402).json({
-					error: "Account has not been verfied. Please check your email to verify your account."
-				});
-			}
-		});
 
-		await users.findOne({ $or: [{email: login }, {login: login}], password: password }).then( result => {
-			if (result !== null) {
-				delete result.password;
-				const token = jwtUtils.createToken( result );
-				return res.status(200).json({
-					...token
-				});
-			} else {
-				return res.status(401).json({
-					error: "Username/email or password is incorrect"
-				});
+		try {
+			const checkUser = await tempusertable.findOne({ $or: [{ email: login }, { login: login }] });
+
+			if (checkUser) {
+				return res.status(402).json({ error: 'Account has not been verified. Please check your email to verify your account.' });
 			}
-		}).catch ( error => {
-			return res.status(500).json({ error: 'Failed to connect to database' });
-		});
+
+			const user = await users.findOne({ $or: [{ email: login }, { login: login }] });
+			
+			const passwordMatch = await bcrypt.compare(password, user.password);
+
+			if (!passwordMatch) {
+				return res.status(401).json({ error: 'Username/email or password is incorrect' });
+			}
+			
+			delete user.password;
+			const token = jwtUtils.createToken( user );
+			
+			console.log(token);
+
+			return res.status(200).json({ ...token,message: 'Login successful' });
+
+		} catch (error) {
+			res.status(500).json({ error: 'Internal server error' });
+		}
 	});
 	
 	app.patch('/api/updateInfo', authToken, async (req, res) => {
