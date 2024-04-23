@@ -82,6 +82,17 @@ const HomePage = () => {
     }
   `;
 
+  const CustomLink = styled.div`
+    border: none;
+    transition: all 0.3s ease;
+
+    &:hover,
+    &:focus {
+      border: 2px solid white;
+      transform: scale(1.05);
+    }
+  `;
+
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     if (params.get('action') === 'verified') {
@@ -105,9 +116,9 @@ const HomePage = () => {
           <img src={bigLogo} alt="Big Logo" className="logo img-fluid mr-3" style={{ minHeight: '50px', maxHeight: '50px' }} />
         </Link>
         <div className="navbar-brand ml-auto">
-          <Link className="nav-link" to="/about-us">
-            <strong>About Us</strong>
-          </Link>
+          <CustomLink className="nav-link p-2" >
+            <Link className="text-white text-decoration-none" to="/about-us"><strong>About Us</strong></Link>
+          </CustomLink>
         </div>
       </TopNavbar>
       <div style={{ background: "linear-gradient(to left, #2e77AE, #000000)" }}>

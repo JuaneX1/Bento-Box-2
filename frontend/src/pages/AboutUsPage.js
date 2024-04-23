@@ -25,6 +25,17 @@ const AboutUsPage = () => {
     background-color: #111920; 
   `;
 
+  const CustomLink = styled.div`
+    border: none;
+    transition: all 0.3s ease;
+
+    &:hover,
+    &:focus {
+      border: 2px solid white;
+      transform: scale(1.05);
+    }
+  `;
+
     return (
         <>
             <TopNavbar className="navbar navbar-expand-lg navbar-dark d-flex justify-content-between p-2">
@@ -32,9 +43,9 @@ const AboutUsPage = () => {
                     <img src={BigLogo} alt="Big Logo" className="logo img-fluid mr-3" style={{ minHeight: '50px', maxHeight: '50px' }} />
                 </Link>
                 <div className="navbar-brand ml-auto">
-                    <Link className="nav-link" to="/">
-                        <strong>Back To Home</strong>
-                    </Link>
+                <CustomLink className="nav-link p-2" >
+                    <Link className="text-white text-decoration-none" to="/"><strong>Back To Home</strong></Link>
+                </CustomLink>
                 </div>
             </TopNavbar>
             <div style={{ background: "linear-gradient(to bottom, #2e77AE, #000000)", minHeight: "89.75vh" }}>
