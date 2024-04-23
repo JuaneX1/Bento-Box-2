@@ -98,7 +98,7 @@ const RecommendationPage = () => {
   return (
     <div>
       {loading ? (
-        <h1>Loading...</h1>
+        <h1 className='text-white text-center p-4'>No Favorites to Pull Reccomendations!</h1>
       ) : (
         <div>
           <Container className='p-5'>
