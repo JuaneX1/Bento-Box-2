@@ -106,7 +106,7 @@ const Dashboard = () => {
                 <div className="col">
                     <div className="d-flex justify-content-center">
                         <CustomPrimaryButton onClick={toggleSearch} style={{backgroundColor: "#111920"}} className={`text-white btn rounded-lg mx-2 ${showSearch ? 'active' : 'active'}`}>Search</CustomPrimaryButton>
-                        <button onClick={toggleBrowse} className={`btn btn-danger btn-lg mx-2 ${showBrowse ? 'active' : ''}`}>Browse</button>
+                        <button onClick={toggleBrowse} className={`text-black btn btn-danger btn-lg mx-2 text-black ${showBrowse ? 'active' : ''}`}>Browse</button>
                         <button onClick={toggleFavorites} className={`btn btn-light btn-lg mx-2 ${showFavorites ? 'active' : ''}`}>Favorites</button>
                         <button onClick={toggleDailyBox} className={`btn btn-secondary btn-lg mx-2 ${showDailyBox ? 'active' : ''}`}>For You!</button> {/* Add button for Daily Box */}
                     </div>
