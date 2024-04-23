@@ -86,7 +86,7 @@ class AnimeInfoScreen extends React.PureComponent {
 
             this.setState({ loading: false });
         } catch (error) {
-            console.error('Error fetching anime recommendations:', error);
+            console.error('Error fetching anime recommendations:', error.response.data);
             this.setState({ loading: false });
         }
     };

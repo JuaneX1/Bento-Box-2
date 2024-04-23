@@ -7,43 +7,47 @@ import { getUserInfo } from '../api/getUserInfo'; // Import your getUserInfo fun
 import DeleteAccountModal from '../Components/DeleteAccountModal'; // Import the DeleteAccountModal component
 import { deleteAccount } from '../api/deleteAccount'; // Import the deleteAccount function
 
-
 const ProfileScreen = () => {
   const [editProfileModalVisible, setEditProfileModalVisible] = useState(false);
   const [changePasswordModalVisible, setChangePasswordModalVisible] = useState(false);
   const [userI, setUser] = useState(null); // State to store user info
   const [deleteModalVisible, setDeleteModalVisible] = useState(false); // State to manage visibility of delete account modal
   const { logOut } = useAuth();
+  const { userInfo, setUserInfo } = useAuth();
   const navigation = useNavigation(); // Get navigation object
 
   useEffect(() => {
     // Fetch user info when component mounts
     const fetchUserInfo = async () => {
       try {
-        const token = await AsyncStorage.getItem('token');
-        const { user, error } = await getUserInfo(token);
-
-        if (user) {
-          setUser(user); // Set user state with fetched user data
-        } else {
-          // Handle error, maybe log out the user or display an error message
-          console.error('Error fetching user info:', error.response.data);
+        if(userInfo ===null){
+          const token = await AsyncStorage.getItem('token');
+          const { user, error } = await getUserInfo(token);
+  
+          if (user) {
+            setUserInfo(user); // Set user state with fetched user data
+          } else {
+            // Handle error, maybe log out the user or display an error message
+            console.error('Error fetching user info:', error.response);
+          }
         }
+        else{
+          console.log("csjfsjnfa "+userInfo.login);
+          setUserInfo(userInfo);
+        }
+       
       } catch (error) {
-        console.error('Error fetching user info:', error.response.data);
+        console.error('Error fetching user info:', error.response);
       }
     };
-    fetchUserInfo(userI);
-  }, [userI]);
+    fetchUserInfo();
+  }, [userInfo]);
 
   const handleUpdateProfile = () => {
     navigation.navigate('UpdateProfile');
     
   };
 
-  const handleChangePassword = () => {
-    navigation.navigate('ChangePassword');
-  };
 
   const handleLogout = async () => {
     try {
@@ -77,15 +81,12 @@ const ProfileScreen = () => {
   return (
     <View style={styles.container}>
       <Image style={styles.logo} source={require('../assets/BB Logo Icon_COLOR.png')} />
-      {userI && (
-        <Text style={styles.title}>Welcome {userI.login} to your profile!</Text> 
+      {userInfo && (
+        <Text style={styles.title}>Welcome {userInfo.login} to your profile!</Text> 
       )}
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={handleUpdateProfile}>
           <Text style={styles.buttonText}>Update Profile</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={handleChangePassword}>
-          <Text style={styles.buttonText}>Change Password</Text>
         </TouchableOpacity>
         <TouchableOpacity style={[styles.button, styles.logoutButton]} onPress={handleLogout}>
           <Text style={styles.buttonText}>Logout</Text>
@@ -109,19 +110,6 @@ const ProfileScreen = () => {
         </View>
       </Modal>
       {/* Change Password Modal */}
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={changePasswordModalVisible}
-        onRequestClose={() => setChangePasswordModalVisible(false)}
-      >
-        {/* Implement Change Password Modal UI */}
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            {/* Add UI elements for changing password */}
-          </View>
-        </View>
-      </Modal>
       {/* Delete Account Modal */}
       <DeleteAccountModal
         isVisible={deleteModalVisible}

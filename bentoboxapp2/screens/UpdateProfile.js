@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, Image, Pressable } from 'react-native';
 import { updateProfile } from '../api/doUpdate'; // Import the updateProfile function
-
+import { useAuth } from '../Components/AuthContext';
 const UpdateProfile = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -9,7 +9,7 @@ const UpdateProfile = () => {
   const [email, setEmail] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-
+  const { userInfo, setUserInfo } = useAuth();
   const handleUpdateProfile = async () => {
     // Check if any required field is empty
     if (!firstName || !lastName || !username || !email) {
@@ -33,6 +33,7 @@ const UpdateProfile = () => {
     if (response.success) {
       setSuccessMessage('Profile updated successfully. Please relog in to see changes.');
       setErrorMessage('');
+      setUserInfo(profileData);
       setTimeout(() => setSuccessMessage(''), 3000); // Clear success message after 3 seconds
     } else {
       setErrorMessage(response.error);
@@ -139,5 +140,4 @@ const styles = StyleSheet.create({
     color: 'red',
   },
 });
-
 export default UpdateProfile;

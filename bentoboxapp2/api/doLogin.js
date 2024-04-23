@@ -18,11 +18,13 @@ export async function doLogin(formData) {
       
         const response = await instance.post(`/login`, formData);
 
-        const { token } = response.data.token;
+       
 
         console.log(response.data.token);
         // Assuming the server responds with a token
         await AsyncStorage.setItem('token', response.data.token);
+
+
         return {token: response.data.token, error: ''};
 
     } catch (error) {

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, ScrollView, Dimensions, SafeAreaView, Text } from 'react-native';
+import { View, FlatList,StyleSheet, ScrollView, Dimensions, SafeAreaView, Text } from 'react-native';
 import AnimeListingV2 from '../Components/AnimeListingV2';
 import axios from 'axios';
 import { LinearGradient } from 'expo-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Carousel from 'react-native-snap-carousel'; // Import the Carousel component
 import { MaterialIcons } from '@expo/vector-icons'; // Add this import statement
+import { fetchRecommendations } from '../api/fetchRecommendations';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -23,7 +24,7 @@ const RecommendationsScreen = () => {
 
   const fetchAnime = async () => {
     try {
-      const cachedData = await AsyncStorage.getItem('recommendedAnime');
+     const cachedData = await AsyncStorage.getItem('recommendedAnime');
       if (cachedData) {
         const { data, timestamp } = JSON.parse(cachedData);
         // Check if cached data has expired (e.g., cache duration is 1 day)
@@ -33,19 +34,39 @@ const RecommendationsScreen = () => {
         }
       }
 
-      const favoritesString = await AsyncStorage.getItem('favorites');
-      const favorites = JSON.parse(favoritesString);
+      //const favoritesString = await AsyncStorage.getItem('favorites');
+      //const favorites = JSON.parse(favoritesString);
 
-      if (!favorites || favorites.length === 0) {
+      /*if (!favorites || favorites.length === 0) {
         throw new Error('No favorites found.');
-      }
+      }*/
+      const favsResponse = await instance.get(`/getFavorite`,  {
+       
+        headers: {
+          Authorization: await AsyncStorage.getItem('token')
+        }
+      });
+        
+        const  f  = favsResponse.data;
 
-      const randomIndex = Math.floor(Math.random() * favorites.length);
-      const randomItem = favorites[randomIndex];
+        const favs = [...f];
+        if(favs != null){
+          console.log(...f);
+          //console.log("dfdsfdsf "+ JSON.stringify(f, null, 2));
+          //await AsyncStorage.setItem(`favorites_`, JSON.stringify(f));
+          //setFavorites(f);
+        }
+        else{
+          console.log(f);
+        }
 
+      const randomIndex = Math.floor(Math.random() * favs.length);
+      console.log(randomIndex);
+      const randomItem = favs[randomIndex];
+      console.log(randomItem);
       // Fetch recommendations based on the random item's mal_id
-      const recommendations = await fetchRecommendations({ id: randomItem.mal_id });
-
+      const recommendations = await fetchRecommendations({ id: randomItem });
+      console.log(recommendations);
       // Store recommendations in AsyncStorage
       const timestamp = Date.now();
       await AsyncStorage.setItem('recommendedAnime', JSON.stringify({ data: recommendations, timestamp }));
@@ -54,16 +75,6 @@ const RecommendationsScreen = () => {
       setAnimeData(recommendations);
     } catch (error) {
       console.error('Error fetching anime:', error);
-    }
-  };
-
-  const fetchRecommendations = async (params) => {
-    try {
-      const response = await instance.get('/recommendations', { params });
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching recommendations:', error);
-      return [];
     }
   };
 
@@ -76,26 +87,14 @@ const RecommendationsScreen = () => {
         end={{ x: 0.5, y: 1 }}
         position="absolute"
       />
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <View contentContainerStyle={styles.scrollContent}>
         {animeData ? (
           <>
             <Text style={styles.headerText}>Daily Pick</Text>
             <Text style={styles.infoText}>Here’s our pick for today. Come back tomorrow to see what else we have for you!</Text>
             <View style={styles.animeContainer}>
-              <Carousel
-                containerCustomStyle={{ overflow: 'visible' }}
-                slideStyle={{ display: 'flex', alignItems: 'center' }}
-                data={animeData} // Use animeData directly
-                keyExtractor={(item) => item.mal_id ? item.mal_id + Math.random() : Math.random()} // Use toString() to ensure key is a string
-                firstItem={1}
-                sliderWidth={windowWidth}
-                itemWidth={windowWidth * 0.62}
-                inactiveSlideOpacity={0.75}
-                inactiveSlideScale={0.77}
-                renderItem={({ item }) => (
-                  <AnimeListingV2 anime={item.entry} />
-                )}
-              />
+                  <AnimeListingV2 anime={animeData.entry} />
+                
             </View>
           </>
         ) : (
@@ -107,7 +106,7 @@ const RecommendationsScreen = () => {
             <Text style={styles.noFavoritesText}>so we can recommend you a daily pick !</Text>
           </View>
         )}
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 }

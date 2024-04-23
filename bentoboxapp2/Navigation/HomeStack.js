@@ -9,6 +9,7 @@ import FavoriteStack from './FavoriteStack';
 import ProfileStack from './ProfileStack';
 import SearchScreen from '../screens/SearchScreen';
 import BrowseStack from './BrowseStack';
+import RecommendationStack from './RecommendationStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -62,7 +63,7 @@ function HomeStack() {
       />
       <Tab.Screen 
         name="For You"
-        component={RecommendationsScreen}
+        component={RecommendationStack}
         options={{
           headerShown:false,
           tabBarIcon: ({ color, size }) => (

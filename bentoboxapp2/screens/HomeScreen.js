@@ -21,30 +21,32 @@ const instance = axios.create({
 const axiosInstance = axios.create();
 
 // Apply rate limiting to the axios instance
-const axiosWithRateLimit = AxiosRateLimit(axiosInstance, { maxRequests: 1, perMilliseconds: 1 }); // Example: 1 request per 1 seconds
+const axiosWithRateLimit = AxiosRateLimit(axiosInstance, { maxRequests: 1, perMilliseconds: 1000 }); // Example: 1 request per 1 seconds
 export default function HomeScreen({ navigation }) {
   const [favorites, setFavorites] = useState(null);
   const [animeData, setanimeData]= useState([]);
   const [user, setUser] = useState(null);
   const { authData } = useAuth();
-
+  const { userInfo, setUserInfo } = useAuth();
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (authData) {
-          let u = await AsyncStorage.getItem(`user_${authData}`);
-          u = JSON.parse(u);
-          setUser(u);
-          let t = await AsyncStorage.getItem(`token`);
-          if(t){
-            console.log(t);
-          }
 
+        if (authData) {
+          let u = await instance.get(`/info`,  {
+       
+            headers: {
+              Authorization: await AsyncStorage.getItem('token')
+            }
+          });//await AsyncStorage.getItem(`user_`);
+          //u = JSON.parse(u);
+          setUserInfo(u.data);
+          let t = await AsyncStorage.getItem(`token`);
           const cachedData = await AsyncStorage.getItem(`favorites_${authData}`);
           if (cachedData) {
               const { data, timestamp } = JSON.parse(cachedData);
               // Check if cached data has expired (e.g., cache duration is 1 hour)
-              if (Date.now() - timestamp <60 * 1000) {
+              if (Date.now() - timestamp < 2 * 1000) {
                 setFavorites(JSON.parse(data));
               }
           }
@@ -72,7 +74,7 @@ export default function HomeScreen({ navigation }) {
                 if (cachedaniData) {
                     const { data, timestamp } = JSON.parse(cachedData);
                     // Check if cached data has expired (e.g., cache duration is 1 hour)
-                    if (Date.now() - timestamp <  60 * 1000) {
+                    if (Date.now() - timestamp < 2 * 1000) {
                       return JSON.parse(data);
                     }
                 }
@@ -101,7 +103,7 @@ export default function HomeScreen({ navigation }) {
           console.log("No user data found.");
         }
       } catch (error) {
-        console.error('Error fetching data :', error.response.data);
+        console.error('Error fetching data :', error);
       }
     };
 
@@ -129,10 +131,9 @@ export default function HomeScreen({ navigation }) {
         end={{ x: 0.5, y: 1 }}
         position="absolute"
       />
-      <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
-        {user ? (
+        {userInfo ? (
           <>
-            <Text style={[styles.userFavorites, { textAlign: 'center' }]}>{user ? `${user.login}'s Favorites` : "User's Favorites"}</Text>
+            <Text style={[styles.userFavorites, { textAlign: 'center' }]}>{userInfo ? `${userInfo.login}'s Favorites` : "User's Favorites"}</Text>
             {favorites === null ? (
               <View style={styles.noFavoritesContainer}>
                 <Text style={styles.noFavoritesText}>Looks like you have no favorites at the moment</Text>
@@ -166,7 +167,6 @@ export default function HomeScreen({ navigation }) {
             </TouchableOpacity>
           </>
         )}
-      </ScrollView>
     </SafeAreaView>
   );
         }
