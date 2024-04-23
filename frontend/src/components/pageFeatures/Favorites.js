@@ -38,7 +38,7 @@ const Favorites = () => {
   return (
     <div>
       {loading ? (
-        <h1>Loading...</h1>
+        <h1 className='text-center text-white p-4'>No Anime Favorited Yet!</h1>
       ) : (
         <div>
         <h2 className='text-white text-center p-3'><strong>Your Favorites</strong></h2>

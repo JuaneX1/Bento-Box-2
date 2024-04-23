@@ -77,13 +77,26 @@ const ProfilePage = ({ onClose }) => {
         background-color: #111920; 
     `;
 
+    const CustomLink = styled.div`
+        border: none;
+        transition: all 0.3s ease;
+
+        &:hover,
+        &:focus {
+        border: 2px solid white;
+        transform: scale(1.05);
+        }
+  `;
+
     return (
         <>
             <TopNavbar className="navbar navbar-expand-lg navbar-dark d-flex justify-content-between p-2">
                 <div className="container-fluid">                
-                    <Link to="/dashboard" className="navbar-brand">
+                <CustomLink className='p-2 ml-2 navbar-brand'>   
+                <Link to="/dashboard" className="text-white text-decoration-none">
                         <strong>Back to Anime</strong>
                     </Link>
+                    </CustomLink>
                     <Link to="/dashboard" className="navbar-brand ml-auto">
                         <img src={logo} alt="Big Logo" className="logo img-fluid mr-3" style={{ minHeight: '50px', maxHeight: '50px' }} />
                     </Link>
@@ -147,15 +160,15 @@ const ProfilePage = ({ onClose }) => {
             </div>
             {showModal && <div className="overlay"></div>}
             {/* Modal for confirming account deletion */}
-            <Modal show={showModal} onHide={() => setShowModal(false)} centered>
-                <Modal.Header>
+            <Modal show={showModal} onHide={() => setShowModal(false)} centered >
+                <Modal.Header className="text-white" style={{backgroundColor: "#111920"}}>
                     <Modal.Title><strong>Confirm Account Deletion:</strong></Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body className="text-white" style={{backgroundColor: "#111920"}}>
+                    <div className='p-1'></div>
                     <p>Are you sure you want to delete your account?</p>
                 </Modal.Body>
-                <Modal.Footer>
-                    <div></div>
+                <Modal.Footer className="text-white d-flex justify-content-start" style={{backgroundColor: "#111920"}}>
                     <Button variant="secondary" onClick={() => setShowModal(false)}>No</Button>
                     <div></div>
                     <Button variant="danger" onClick={handleDeleteAccount} className="delete-account-final-btn btn btn-danger"><strong>Yes</strong></Button>
