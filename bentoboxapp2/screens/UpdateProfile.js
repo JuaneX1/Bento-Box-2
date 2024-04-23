@@ -12,7 +12,7 @@ const UpdateProfile = () => {
   const { userInfo, setUserInfo } = useAuth();
   const handleUpdateProfile = async () => {
     // Check if any required field is empty
-    if (!firstName || !lastName || !username || !email) {
+    if (!firstName || !lastName || !username) {
       setErrorMessage('Please fill in all required fields.');
       setSuccessMessage('');
       return;
@@ -23,7 +23,7 @@ const UpdateProfile = () => {
       first: firstName,
       last: lastName,
       login: username,
-      email: email
+      email: userInfo.email
     };
 
     // Call the updateProfile function
@@ -51,27 +51,21 @@ const UpdateProfile = () => {
       <Text style={styles.title}>Update Profile</Text>
       <TextInput
         style={[styles.input, styles.blackText]}
-        placeholder="First Name*"
+        placeholder={userInfo.first}
         onChangeText={setFirstName}
         value={firstName}
       />
       <TextInput
         style={[styles.input, styles.blackText]}
-        placeholder="Last Name*"
+        placeholder={userInfo.last}
         onChangeText={setLastName}
         value={lastName}
       />
       <TextInput
         style={[styles.input, styles.blackText]}
-        placeholder="Username*"
+        placeholder={userInfo.login}
         onChangeText={setUsername}
         value={username}
-      />
-      <TextInput
-        style={[styles.input, styles.blackText]}
-        placeholder="Email*"
-        onChangeText={setEmail}
-        value={email}
       />
       <Pressable
         style={styles.submitButton}

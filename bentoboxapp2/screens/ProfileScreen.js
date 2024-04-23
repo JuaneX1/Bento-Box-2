@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, Image } from 'react-native';
+import { View, Text, Dimensions,StyleSheet, TouchableOpacity, Modal, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../Components/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getUserInfo } from '../api/getUserInfo'; // Import your getUserInfo function
 import DeleteAccountModal from '../Components/DeleteAccountModal'; // Import the DeleteAccountModal component
 import { deleteAccount } from '../api/deleteAccount'; // Import the deleteAccount function
-
+import { LinearGradient } from 'expo-linear-gradient';
+import tw from 'twrnc';
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 const ProfileScreen = () => {
   const [editProfileModalVisible, setEditProfileModalVisible] = useState(false);
   const [changePasswordModalVisible, setChangePasswordModalVisible] = useState(false);
@@ -80,18 +83,32 @@ const ProfileScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Image style={styles.logo} source={require('../assets/BB Logo Icon_COLOR.png')} />
+     <LinearGradient
+                colors={['transparent', 'rgba(17,25,32,0.8)', 'rgba(17,25,32,1)']}
+                style={{ width: windowWidth, height: windowHeight, transform: [{ translateY: windowHeight*0.10}]}}
+                start={{ x: 0.5, y: 0}}
+                end={{ x: 0.5, y: 1 }}
+                position="absolute"
+            />
       {userInfo && (
-        <Text style={styles.title}>Welcome {userInfo.login} to your profile!</Text> 
+        <Text style={styles.title}>My Profile</Text> 
       )}
+      <View style ={{borderRadius:5,height:windowHeight/2.25,width: windowWidth/1.5, backgroundColor:"#111920"}}>
+     
+        <Text style = {[tw`text-base font-bold text-white` ,{padding: 5}]}>First Name: {`\n${userInfo.first}`}</Text>
+        <Text style = {[tw`text-base font-bold text-white`,{padding: 5}]}>Last Name:  {`\n${userInfo.last}`}</Text>
+        <Text style = {[tw`text-base font-bold text-white`,{padding: 5}]}>Username: {`\n${userInfo.login}`}</Text>
+        <Text style = {[tw`text-base font-bold text-white`,{padding: 5}]}>Email: {`\n${userInfo.email}`}</Text>
+      </View >
+      <TouchableOpacity style={styles.button} onPress={handleUpdateProfile}>
+          <Text style={styles.buttonText}>Edit Profile</Text>
+        </TouchableOpacity>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={handleUpdateProfile}>
-          <Text style={styles.buttonText}>Update Profile</Text>
-        </TouchableOpacity>
+        
         <TouchableOpacity style={[styles.button, styles.logoutButton]} onPress={handleLogout}>
-          <Text style={styles.buttonText}>Logout</Text>
+          <Text style={styles.textLogOut}>Logout</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, styles.deleteButton]} onPress={() => setDeleteModalVisible(true)}>
+        <TouchableOpacity style={[ styles.deleteButton]} onPress={() => setDeleteModalVisible(true)}>
           <Text style={styles.buttonText}>Delete Account</Text>
         </TouchableOpacity>
       </View>
@@ -123,9 +140,18 @@ const ProfileScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#111920',
+    backgroundColor: '#3077b2',
     justifyContent: 'center',
     alignItems: 'center',
+    
+  },
+  linearGradient: {
+    flex: 1,
+    paddingLeft: 15,
+    paddingRight: 15,
+    borderRadius: 5,
+    width: '100%', // Ensure it fills the width
+    height: '100%', // Ensure it fills the height
   },
   logo: {
     width: 100,
@@ -139,26 +165,44 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   buttonContainer: {
-    width: '80%',
+    flexDirection:'row'
   },
   button: {
+    marginTop: 20,
     marginBottom: 20,
     paddingVertical: 15,
-    borderRadius: 25,
+    borderRadius: 15,
+    width:"30%",
+    height:50,
     backgroundColor: '#3077b2',
     alignItems: 'center',
   },
   logoutButton: {
-    backgroundColor: '#FF0000',
+    backgroundColor: '#e6e7e1',
+    marginRight:10
   },
   deleteButton: {
-    backgroundColor: '#FF0000',
+    backgroundColor: '#800000',
+    marginLeft:10,
+    marginTop: 20,
+    marginBottom: 20,
+    paddingVertical: 15,
+    borderRadius: 15,
+    width:"40%",
+    height:50,
+    alignItems: 'center',
   },
   buttonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
   },
+  textLogOut:{
+    color:"#111920",
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
