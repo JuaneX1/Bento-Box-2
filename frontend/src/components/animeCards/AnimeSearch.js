@@ -33,7 +33,7 @@ function AnimeSearch({ typeDefault }) {
 
     const fetchAnime = async (query) => {
         try {
-            const search = await fetch(`https://api.jikan.moe/v4/anime?q=${query}&sfw&genres_exclude=9,49,12`)
+            const search = await fetch(`https://api.jikan.moe/v4/anime?q=${query}&sfw=true&genres_exclude=9,49,12`)
                 .then(res => res.json());
             
             if (search.status === 429)
