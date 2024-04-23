@@ -55,11 +55,12 @@ function AnimeSearch({ typeDefault }) {
     };
 
     const fetchTopAnime = async () => {
-        const temp = await fetch(`https://api.jikan.moe/v4/anime?order_by=popularity&genres_exclude=9,49,12`)
+        const temp = await fetch(`https://api.jikan.moe/v4/anime`)
             .then(res => res.json());
         setAnimeFound(temp.data);
     };
-
+    
+    
     const handleSubmit = (e) => {
         e.preventDefault(); // Prevent default form submission
         fetchAnime(search);

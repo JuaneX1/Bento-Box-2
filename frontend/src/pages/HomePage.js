@@ -144,7 +144,7 @@ const HomePage = () => {
         {showDeleteAccountBar && (
           <div className="verification-bar bg-success text-white p-2">
             <p className="m-0 text-center">
-              Account Delete Successfully: Please Create An Account to Get Back in!
+              Account Deleted Successfully: Please Create An Account to Get Back in!
             </p>
           </div>
         )}
@@ -164,13 +164,13 @@ const HomePage = () => {
                     <img src={bigLogo} alt="Big Logo" className="img-fluid mb-4" style={{ maxWidth: "100%", height: "auto", width: "500px" }} />
                     <div className="buttons">
                       <CustomPrimaryButton
-                        className="btn me-2 btn-lg text-white" style={{backgroundColor: "#111920"}} 
+                        className="btn btn-secondary btn-lg btn-common" 
                         onClick={() => handleSwitchForm("login")}
                       >
                         Login
                       </CustomPrimaryButton>
                       <button
-                        className="btn btn-secondary btn-lg" 
+                        className="btn btn-secondary btn-lg btn-common" 
                         onClick={() => handleSwitchForm("signup")}
                       >
                         Sign Up

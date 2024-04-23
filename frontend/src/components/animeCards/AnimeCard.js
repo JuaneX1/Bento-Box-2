@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import '../Stylesheet.css';
 
 function AnimeCard({ anime }) {
   const [showSynopsis, setShowSynopsis] = useState(false);

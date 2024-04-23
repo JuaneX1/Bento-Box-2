@@ -46,6 +46,8 @@ const AnimePage = () => {
   const getInitialFavoriteText = async () => {
     await toggleFavorite();
     await toggleFavorite();
+
+    //TODO
   };
 
   const [buttonText, setButtonText] = useState('');
