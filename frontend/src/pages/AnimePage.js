@@ -1,15 +1,13 @@
-import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState } from 'react';
+import { BsHeart, BsHeartFill } from 'react-icons/bs';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import styled from 'styled-components';
+import { instance } from '../App';
 import bigLogo from '../assets/BB_Logo_Horizontal_COLOR_1.png';
 import highScoreImage from '../assets/highScoreImg.webp';
 import lowScoreImage from '../assets/lowScoreImg.png';
 import mediumScoreImage from '../assets/mediumScoreImg.png';
-import { instance } from '../App';
-import styled from 'styled-components';
-import { BsHeart, BsHeartFill } from 'react-icons/bs';
-import { Container } from 'react-bootstrap';
 
 const AnimePage = () => {
   const navigate = useNavigate();
@@ -152,7 +150,7 @@ const AnimePage = () => {
                 <h2 className='p-3 m-2'>More About This Show:</h2>
                 <p className='m-2 p-3 fs-5'>Episode Count: {animeData && animeData.episodes !== null ? animeData.episodes : 0}</p>
                 <p className='m-2 p-3 fs-5'>Rating: {animeData && animeData.rating}</p>
-                <button className='m-3 text-center fs-5 btn btn-danger'href={animeData && animeData.trailer && animeData.trailer.url}>Watch a Trailer Here!</button>
+                <button className='m-3 text-center fs-5 btn btn-danger' onClick={() => animeData && animeData.trailer && window.open(animeData.trailer.url)}>Watch a Trailer Here!</button>
               </div>
             </div>
             <div className="col-md-6">
