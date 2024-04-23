@@ -9,44 +9,47 @@ export const AuthProvider = ({ children }) => {
   const [authData, setAuthData] = useState(null);
 
   useEffect(() => {
-      const loadAuthData = async () => {
-      const keys = await AsyncStorage.getAllKeys();
-      const userKeys = keys.filter(key => key.startsWith('user_'));
-      const userData = await AsyncStorage.multiGet(userKeys);
-      const users = userData.map(([key, value]) => JSON.parse(value));
-
-      if(users == null || users[0] == null){
-        setAuthData(null);
+    const loadAuthData = async () => {
+      try {
+        const user = await AsyncStorage.getItem('user_');
+        if (user) {
+          console.log("yippie!yippie!");
+          // If a token exists in AsyncStorage, set the authentication state
+          setAuthData(user );
+        }
+      } catch (error) {
+        console.error('Error loading authentication data:', error);
       }
-      else{
-        setAuthData(users[0]._id); 
-      }
-      
     };
 
     loadAuthData();
   }, []);
 
-  const signIn = async (userInfo) => {
+  const signIn = async (formData) => {
     // Call doLogin with form data
-    //const _authData = token;
-    const _user = userInfo; //await doLogin(formData);
-    setAuthData(_user);
-    //setUser(_user);
+    const _authData = formData; //await doLogin(formData);
+    await AsyncStorage.setItem('user_', formData);
+    console.log(_authData);
+    setAuthData(_authData);
+  };
+
+
+  const signUp = async (formData) => {
+    // Call doSignUp with form data
+   //console.log("Auth Context SIGN UP.js "+ formData.first +" "+formData.last + " "+formData.login +" "+formData.email+" "+formData.password);
+    //const _authData = await doSignUp(formData);
+    //console.log("auth data: "+_authData);
+    //setAuthData(_authData);
   };
 
   const logOut = async () => {
     setAuthData(undefined);
-    const keys = await AsyncStorage.getAllKeys();
-    const userKeys = keys.filter(key => key.startsWith('user_'));
-    const userData = await AsyncStorage.multiGet(userKeys);
-    const users = userData.map(([key, value]) => JSON.parse(value));
-    await AsyncStorage.removeItem(`user_${users[0]._id}`);
-    await AsyncStorage.removeItem('token');
+    // Clear any stored authentication data
+    await AsyncStorage.removeItem('user_');
   };
 
   return (
-    <AuthContext.Provider value={{ authData, signIn,logOut }}>
+    <AuthContext.Provider value={{ authData, signIn, signUp, logOut }}>
       {children}
     </AuthContext.Provider>
   );

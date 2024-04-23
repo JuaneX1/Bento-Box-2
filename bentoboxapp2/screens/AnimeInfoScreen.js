@@ -167,110 +167,107 @@ class AnimeInfoScreen extends React.PureComponent {
         }
 
         return (
-            <ScrollView style={{ height: windowHeight }}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.searchButton}>
-                    <Ionicons name="arrow-back" size={24} color="white" />
-                </TouchableOpacity>
-                <Image style={styles.imageBackground} source={{ uri: anime.images.jpg.large_image_url }} />
-                <LinearGradient
-                    colors={['transparent', 'rgba(17,25,32,0.8)', 'rgba(17,25,32,1)']}
-                    style={{ width: windowWidth, height: windowHeight * 0.55 }}
-                    start={{ x: 0.5, y: 0 }}
-                    end={{ x: 0.5, y: 1 }}
-                    position="absolute"
-                />
+            <View style={{ flex: 1 }}>
+               
+                    <ScrollView style={{ height: windowHeight }}>
+                        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.searchButton}>
+                            <Ionicons name="arrow-back" size={24} color="white" />
+                        </TouchableOpacity>
+                        <Image style={styles.imageBackground} source={{ uri: anime.images.jpg.large_image_url }} />
+                        <LinearGradient
+                            colors={['transparent', 'rgba(17,25,32,0.8)', 'rgba(17,25,32,1)']}
+                            style={{ width: windowWidth, height: windowHeight * 0.55 }}
+                            start={{ x: 0.5, y: 0 }}
+                            end={{ x: 0.5, y: 1 }}
+                            position="absolute"
+                        />
 
-                <View style={styles.container}>
-                <LinearGradient
-              colors={['transparent', 'rgba(48, 119, 178, 0.5)', 'rgba(48, 119, 178, 1)']}
-              style={{ width: windowWidth, height: windowHeight, transform: [{ translateY: windowHeight*0.15}]}}
-              start={{ x: 0.5, y: 0.5}}
-              end={{ x: 0.5, y: 1 }}
-              position="absolute"
-          />
-                    <View style={styles.titleBox}>
-                        <Text style={styles.animeTitleText}> {anime.title_english ? anime.title_english : anime.title} </Text>
-                    </View>
-                    <Text style={styles.animeSubTitle}>
-                        {anime.type}{' · '}
-                        {anime.type === 'TV' ? `Episodes: ${anime.episodes}` : `${anime.duration}`}
-                        {' · '}{anime.aired.prop.from.year}{' · '}{ratingFormat(anime.rating)}
-                    </Text>
-                    <View style={styles.genreBox}>
-                        {anime.genres.map(genre => (
-                            <Text key={genre.mal_id} style={styles.genre}>
-                                {genre.name}
-                            </Text>
-                        ))}
-                    </View>
-                    <View style={{ alignItems: 'center', flexDirection: 'row', marginTop: 20,justifyContent:'center',width: windowWidth }}>
-
-                        {anime.trailer.url ?
-                            <TouchableOpacity style={tw`bg-red-500 p-2 rounded-lg w-24`} onPress={() => this.openLink(anime.trailer.url)}>
-                                <Text style={tw`text-white font-bold text-center`}>Trailer</Text>
-                            </TouchableOpacity>
-                            : 
-                            <View style={tw`bg-white p-2 rounded-lg w-24`}>
-                                <Text style={tw`text-black font-bold text-center`}>Trailer NaN</Text>
-                            </View>
-                            }
-                        {
-                            favorite ? <TouchableOpacity style={[tw`bg-gray-500 p-2 rounded-lg w-32 h-9`,{flexDirection:'row',marginLeft:10, justifyContent:'center'}]} onPress={this.toggleFavorite}>
-                                            <AntDesign name="heart" size={18} color={favorite ? "red" : "white"} />
-                                            <Text style={[tw`text-white font-bold text-center`,{marginLeft:5}]}>Unfavorite</Text>
-                                       </TouchableOpacity>
-                                       :
-                                       <TouchableOpacity style={[tw`bg-gray-500 p-2 rounded-lg w-32 h-8`,{flexDirection:'row', marginLeft:10, justifyContent:'center'}]} onPress={this.toggleFavorite}>
-                                            <AntDesign name="heart" size={18} color={favorite ? "grey" : "white"} />
-                                            <Text style={[tw`text-white font-bold text-center`,{marginLeft:5}]}>Favorite</Text>
-                                       </TouchableOpacity>
-                        }
-
-
-                    </View>
-                    <Text style={styles.plot}>{"     "}{formatPlot(anime.synopsis)}</Text>
-
-                    <View style={{ alignContent: 'center', width: windowWidth, position: 'relative',  }}>
-                        <View style={styles.statsBox}>
-                            <Text style={styles.statsTitle}>Overall Score: </Text>
-                            <Text style={{ fontWeight: '600', fontSize: 32, color: this.getScoreTextColor(anime.score) }}>
-                                {anime.score == 0 || anime.score == null ? 'NaN' : anime.score}</Text>
-                        </View>
+                        <View style={styles.container}>
                         
-                    </View>
-                    {loading ? (
-                        <Text>Loading...</Text>
-                    ) : recommendations.length > 0 ? (
-                        <View style={styles.recommendationsContainer}>
-                            <Text style={[tw`text-white font-bold text-lg`,{marginLeft:5}]}>You Might Also Like:</Text>
-                            <FlatList
-                                horizontal={true}
-                                style={styles.recommendationsList}
-                                data={recommendations}
-                                renderItem={({ item }) => (
-                                    <AnimeListingV2 anime={item.entry}/>
-                                   /* <TouchableOpacity
-                                        key={item.entry.mal_id}
-                                        //onPress={() => navigation.navigate('AnimeDetails', { id: recommendation.entry.mal_id })}
-                                        style={styles.recommendationItem}
-                                    >
-                                        <Image
-                                            source={{ uri: item.entry.images.jpg.image_url }}
-                                            style={styles.recommendationImage}
-                                        />
-                                        <Text style={styles.recommendationTitle}>{item.entry.title}</Text>
-                                    </TouchableOpacity>*/
-                                )}
-                            />
+                            <View style={styles.titleBox}>
+                                <Text style={styles.animeTitleText}> {anime.title_english ? anime.title_english : anime.title} </Text>
+                            </View>
+                            <Text style={styles.animeSubTitle}>
+                                {anime.type}{' · '}
+                                {anime.type === 'TV' ? `Episodes: ${anime.episodes}` : `${anime.duration}`}
+                                {' · '}{anime.aired.prop.from.year}{' · '}{ratingFormat(anime.rating)}
+                            </Text>
+                            <View style={styles.genreBox}>
+                                {anime.genres.map(genre => (
+                                    <Text key={genre.mal_id} style={styles.genre}>
+                                        {genre.name}
+                                    </Text>
+                                ))}
+                            </View>
+                            <View style={{ alignItems: 'center', flexDirection: 'row', marginTop: 20,justifyContent:'center',width: windowWidth }}>
+
+                                {anime.trailer.url ?
+                                    <TouchableOpacity style={tw`bg-red-500 p-2 rounded-lg w-24`} onPress={() => this.openLink(anime.trailer.url)}>
+                                        <Text style={tw`text-white font-bold text-center`}>Trailer</Text>
+                                    </TouchableOpacity>
+                                    : 
+                                    <View style={tw`bg-white p-2 rounded-lg w-24`}>
+                                        <Text style={tw`text-black font-bold text-center`}>Trailer NaN</Text>
+                                    </View>
+                                    }
+                                {
+                                    favorite ? <TouchableOpacity style={[tw`bg-gray-500 p-2 rounded-lg w-32 h-9`,{flexDirection:'row',marginLeft:10, justifyContent:'center'}]} onPress={this.toggleFavorite}>
+                                                    <AntDesign name="heart" size={18} color={favorite ? "red" : "white"} />
+                                                    <Text style={[tw`text-white font-bold text-center`,{marginLeft:5}]}>Unfavorite</Text>
+                                            </TouchableOpacity>
+                                            :
+                                            <TouchableOpacity style={[tw`bg-gray-500 p-2 rounded-lg w-32 h-8`,{flexDirection:'row', marginLeft:10, justifyContent:'center'}]} onPress={this.toggleFavorite}>
+                                                    <AntDesign name="heart" size={18} color={favorite ? "grey" : "white"} />
+                                                    <Text style={[tw`text-white font-bold text-center`,{marginLeft:5}]}>Favorite</Text>
+                                            </TouchableOpacity>
+                                }
+
+
+                            </View>
+                            <Text style={styles.plot}>{"     "}{formatPlot(anime.synopsis)}</Text>
+
+                            <View style={{ alignContent: 'center', width: windowWidth, position: 'relative',  }}>
+                                <View style={styles.statsBox}>
+                                    <Text style={styles.statsTitle}>Overall Score: </Text>
+                                    <Text style={{ fontWeight: '600', fontSize: 32, color: this.getScoreTextColor(anime.score) }}>
+                                        {anime.score == 0 || anime.score == null ? 'NaN' : anime.score}</Text>
+                                </View>
+                                
+                            </View>
+                            {loading ? (
+                                <Text>Loading...</Text>
+                            ) : recommendations.length > 0 ? (
+                                <View style={styles.recommendationsContainer}>
+                                    <Text style={[tw`text-white font-bold text-lg`,{marginLeft:5}]}>You Might Also Like:</Text>
+                                    <FlatList
+                                        horizontal={true}
+                                        style={styles.recommendationsList}
+                                        data={recommendations}
+                                        renderItem={({ item }) => (
+                                            <AnimeListingV2 anime={item.entry}/>
+                                        /* <TouchableOpacity
+                                                key={item.entry.mal_id}
+                                                //onPress={() => navigation.navigate('AnimeDetails', { id: recommendation.entry.mal_id })}
+                                                style={styles.recommendationItem}
+                                            >
+                                                <Image
+                                                    source={{ uri: item.entry.images.jpg.image_url }}
+                                                    style={styles.recommendationImage}
+                                                />
+                                                <Text style={styles.recommendationTitle}>{item.entry.title}</Text>
+                                            </TouchableOpacity>*/
+                                        )}
+                                    />
+                                </View>
+                            ) : (
+                                <View style={styles.recommendationsContainer}>
+                                    <Text style={styles.recommendationsTitle}>No recommendations at the Moment:</Text>
+                                </View>
+                            )
+                            }
                         </View>
-                    ) : (
-                        <View style={styles.recommendationsContainer}>
-                            <Text style={styles.recommendationsTitle}>No recommendations at the Moment:</Text>
-                        </View>
-                    )
-                    }
+                    </ScrollView>
                 </View>
-            </ScrollView>
         );
     }
 }

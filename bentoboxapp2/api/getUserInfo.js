@@ -26,7 +26,8 @@ export async function getUserInfo(token) {
         
         // Assuming the server responds with a token
         //await AsyncStorage.setItem('token', token);
-        await AsyncStorage.setItem(`user_${user._id}`, JSON.stringify(user));
+        await AsyncStorage.setItem(`userinfo_${user._id}`, JSON.stringify(user._id));
+        
         return {user: user, error: ''};
 
     } catch (error) {

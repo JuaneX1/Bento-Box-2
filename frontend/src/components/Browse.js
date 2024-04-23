@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import BrowseContent from './pageFeatures/BrowseContent'
+import styled from 'styled-components';
 
 const Browse = () => {
     const [selectedCategory, setSelectedCategory] = useState('');
@@ -8,9 +9,9 @@ const Browse = () => {
     const [error, setError] = useState('');
 
     const categories = [
-        { name: 'top rated', endpoint: 'https://api.jikan.moe/v4/top/anime' },
-        { name: 'upcoming', endpoint: 'https://api.jikan.moe/v4/seasons/upcoming' },
-        { name: 'airing now', endpoint: 'https://api.jikan.moe/v4/seasons/now' },
+        { name: 'top rated', endpoint: 'https://api.jikan.moe/v4/top/anime?limit=24' },
+        { name: 'upcoming', endpoint: 'https://api.jikan.moe/v4/seasons/upcoming?limit=24' },
+        { name: 'airing now', endpoint: 'https://api.jikan.moe/v4/seasons/now?limit=24' },
     ];
 
     const fetchAnimeByCategory = (endpoint, categoryName) => {
@@ -37,19 +38,33 @@ const Browse = () => {
         }
     }, []);
 
+    const CustomPrimaryButton = styled.button`
+        background-color: #111920;
+        border: none;
+        transition: all 0.3s ease;
+
+        &:hover,
+        &:focus {
+        background-color: #111920;
+        color: white;
+        border: 2px solid white;
+        transform: scale(1.05);
+        }
+    `;
+
     return (
         
         <div>
             <div className="row justify-content-center">
                     <div className="category-buttons d-flex justify-content-center">
                         {categories?.map(category => (
-                            <button
+                            <CustomPrimaryButton
                                 className="btn btn-outline-light text-center category-btn m-4"
                                 key={category.name}
                                 onClick={() => fetchAnimeByCategory(category.endpoint, category.name)}
                             >
                                 {category.name.toUpperCase()}
-                            </button>
+                            </CustomPrimaryButton>
                         ))}
             </div>
                     <div className="">

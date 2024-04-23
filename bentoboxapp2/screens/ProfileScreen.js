@@ -18,7 +18,7 @@ const ProfileScreen = () => {
 
   useEffect(() => {
     // Fetch user info when component mounts
-    const fetchUserInfo = async (userI) => {
+    const fetchUserInfo = async () => {
       try {
         const token = await AsyncStorage.getItem('token');
         const { user, error } = await getUserInfo(token);

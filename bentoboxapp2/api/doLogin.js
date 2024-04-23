@@ -50,6 +50,7 @@ export async function doLogin(formData) {
         }
       }
       console.log('unkown!');
+      console.log(error.message);
       return {token: null, error: error};
       // Handle network errors or other exceptions
       //setError('Network error or other issue. Please try again.');
