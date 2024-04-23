@@ -173,19 +173,20 @@ const HomePage = () => {
                 {currentForm === "" && (
                   <div className="logo-container text-center">
                     <img src={bigLogo} alt="Big Logo" className="img-fluid mb-4" style={{ maxWidth: "100%", height: "auto", width: "500px" }} />
-                    <div className="buttons">
+                    <div className="buttons p-4 d-flex justify-content-center">
                       <CustomPrimaryButton
                         className="btn btn-secondary btn-lg btn-common" 
                         onClick={() => handleSwitchForm("login")}
                       >
                         Login
                       </CustomPrimaryButton>
-                      <button
+                      <div className="p-2"></div>
+                      <CustomPrimaryButton
                         className="btn btn-secondary btn-lg btn-common" 
                         onClick={() => handleSwitchForm("signup")}
                       >
                         Sign Up
-                      </button>
+                      </CustomPrimaryButton>
                     </div>
                   </div>
                 )}
