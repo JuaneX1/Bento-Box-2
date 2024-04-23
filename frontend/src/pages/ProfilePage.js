@@ -77,13 +77,26 @@ const ProfilePage = ({ onClose }) => {
         background-color: #111920; 
     `;
 
+    const CustomLink = styled.div`
+        border: none;
+        transition: all 0.3s ease;
+
+        &:hover,
+        &:focus {
+        border: 2px solid white;
+        transform: scale(1.05);
+        }
+  `;
+
     return (
         <>
             <TopNavbar className="navbar navbar-expand-lg navbar-dark d-flex justify-content-between p-2">
                 <div className="container-fluid">                
-                    <Link to="/dashboard" className="navbar-brand">
+                <CustomLink className='p-2 ml-2 navbar-brand'>   
+                <Link to="/dashboard" className="text-white text-decoration-none">
                         <strong>Back to Anime</strong>
                     </Link>
+                    </CustomLink>
                     <Link to="/dashboard" className="navbar-brand ml-auto">
                         <img src={logo} alt="Big Logo" className="logo img-fluid mr-3" style={{ minHeight: '50px', maxHeight: '50px' }} />
                     </Link>
