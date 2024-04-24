@@ -23,12 +23,13 @@ const ProfileScreen = () => {
     // Fetch user info when component mounts
     const fetchUserInfo = async () => {
       try {
-        console.log(userInfo);
-        if(userInfo == null){
+        
+        if(userInfo != null){
           const token = await AsyncStorage.getItem('token');
           const { user, error } = await getUserInfo(token);
-  
+          
           if (user) {
+           
             setUserInfo(user); // Set user state with fetched user data
           } else {
             // Handle error, maybe log out the user or display an error message
@@ -36,7 +37,6 @@ const ProfileScreen = () => {
           }
         }
         else{
-          console.log("csjfsjnfa "+userInfo.login);
           setUserInfo(userInfo);
         }
        

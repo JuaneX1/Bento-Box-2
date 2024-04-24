@@ -48,7 +48,7 @@ export async function doLogin(formData) {
         }
         else if (error.response.status === 500){
           console.log('500!');
-          return {token: null, error: errorMessage};
+          return {token: null, error: "Internal Server Error"};
         }
       }
       console.log('unkown!');

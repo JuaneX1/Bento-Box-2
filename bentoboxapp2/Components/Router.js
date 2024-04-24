@@ -7,7 +7,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoadingScreen from '../screens/LoadingScreen';
 
 export const Router = () => {
-  const { authData } = useAuth();
+  const { authData, userInfo } = useAuth();
+  
   const [initialRoute, setInitialRoute] = useState(null);
   const [loading, setLoading] = useState(true);
 

@@ -27,100 +27,77 @@ export default function HomeScreen({ navigation }) {
   const [animeData, setanimeData]= useState([]);
   const [user, setUser] = useState(null);
   const { authData } = useAuth();
-  const { userInfo, setUserInfo } = useAuth();
+  const { userInfo, setUserInfo, favorite, setFavorite } = useAuth();
   useEffect(() => {
+    let isActive = true;
+  
     const fetchData = async () => {
       try {
-
-        if (authData) {
-          let u = await instance.get(`/info`,  {
-       
-            headers: {
-              Authorization: await AsyncStorage.getItem('token')
-            }
-          });//await AsyncStorage.getItem(`user_`);
-          //u = JSON.parse(u);
-          setUserInfo(u.data);
-          let t = await AsyncStorage.getItem(`token`);
-          const cachedData = await AsyncStorage.getItem(`favorites_${authData}`);
-          if (cachedData) {
-              const { data, timestamp } = JSON.parse(cachedData);
-              // Check if cached data has expired (e.g., cache duration is 1 hour)
-              if (Date.now() - timestamp < 2 * 1000) {
-                setFavorites(JSON.parse(data));
-              }
-          }
-
-          const favsResponse = await instance.get(`/getFavorite`,  {
-       
-            headers: {
-              Authorization: await AsyncStorage.getItem('token')
-            }
+        const token = await AsyncStorage.getItem('token');
+        if (!token) {
+          console.log("No token found.");
+          return;
+        }
+  
+        if (!userInfo) {
+          const { data } = await instance.get('/info', {
+            headers: { Authorization: token }
           });
-            
-            const  f  = favsResponse.data;
-
-            if(f != null){
-              //console.log("dfdsfdsf "+ JSON.stringify(favs.favorite, null, 2));
-              await AsyncStorage.setItem(`favorites_${authData}`, JSON.stringify(f));
-              setFavorites(f);
-            }
-
-            //const favoritesArr = f.map(favorite => favorite._id); // Assuming favorites have an _id property
-
-            const animeDetails = await Promise.all(
-              f.map(async favorite => {
-                const cachedaniData = await AsyncStorage.getItem(`favorites_${authData}_${favorite}`);
-                if (cachedaniData) {
-                    const { data, timestamp } = JSON.parse(cachedData);
-                    // Check if cached data has expired (e.g., cache duration is 1 hour)
-                    if (Date.now() - timestamp < 2 * 1000) {
-                      return JSON.parse(data);
-                    }
-                }
-                const response = await axiosWithRateLimit.get(`https://api.jikan.moe/v4/anime/${favorite}`);
-                await AsyncStorage.setItem(`favorites_${authData}_${favorite}`, JSON.stringify(response.data.data));
-                return response.data.data;
-              })
-            );
-
-            if(animeDetails != null){
-              setanimeData(animeDetails);
-            }
-            else{
-              console.log("oops!");
-            }
-
-          console.log("oasnos "+ JSON.stringify(f));
-          //let {favorite, error} = getFavorites(t, u._id);
-
-          //favs = favs.favorite;
-         // console.log(JSON.stringify(favorite));
-
-         
-
-        } else {
-          console.log("No user data found.");
+          if (isActive) setUserInfo(data);
+        }
+  
+        const { data: favoritesData } = await instance.get('/getFavorite', {
+          headers: { Authorization: token }
+        });
+        if (isActive) {
+          setFavorite(favoritesData);
+          fetchAnimeDetails(favoritesData, token);
         }
       } catch (error) {
-        console.error('Error fetching data :', error);
+        if(error.response.status === 404){
+          setFavorite([]);
+        }
+        console.error('Error fetching data:', error);
       }
     };
+  
+    const fetchAnimeDetails = async (favorites, token) => {
+      
+        const details = await Promise.all(favorites.map(async favorite => {
+        try {
+          const cachedaniData = await AsyncStorage.getItem(`favorites_${authData}_${favorite}`);
 
+          if (cachedaniData) {
+
+              const { data, timestamp } = JSON.parse(cachedaniData);
+
+              // Check if cached data has expired (e.g., cache duration is 1 hour)
+
+              if (Date.now() - timestamp < 3 * 1000) {
+
+                return JSON.parse(data);
+
+              }
+
+          }
+          const response = await axiosWithRateLimit.get(`https://api.jikan.moe/v4/anime/${favorite}`);
+
+          await AsyncStorage.setItem(`favorites_${authData}_${favorite}`, JSON.stringify(response.data.data));
+
+          return response.data.data;
+        } catch (error) {
+          console.error('Error fetching anime details:', error);
+          return null;
+        }
+      }));
+      if (isActive) setanimeData(details.filter(detail => detail !== null));
+    };
+  
     fetchData();
-  }, [authData]);
-
-  const handleLikedAnime = () => {
-    navigation.navigate('LikedAnime');
-  };
-
-  const handleWatchedAnime = () => {
-    navigation.navigate('WatchedAnime');
-  };
-
-  const handleCustomList = () => {
-    navigation.navigate('CustomList');
-  };
+  
+    // Cleanup function to prevent setting state on unmounted component
+   
+  }, [userInfo, favorite]); // Consider what really needs to trigger a re-fetch
 
   return (
     <SafeAreaView style={styles.container}>
@@ -156,15 +133,7 @@ export default function HomeScreen({ navigation }) {
           <>
             <StatusBar style="auto" />
             <Text style={styles.title}>Welcome sdhiuda</Text>
-            <TouchableOpacity style={styles.button} onPress={handleLikedAnime}>
-              <Text style={styles.buttonText}>Liked Anime/Watchlist</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={handleWatchedAnime}>
-              <Text style={styles.buttonText}>Watched Anime</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={handleCustomList}>
-              <Text style={styles.buttonText}>Custom List</Text>
-            </TouchableOpacity>
+            
           </>
         )}
     </SafeAreaView>

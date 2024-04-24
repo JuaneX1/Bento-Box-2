@@ -9,6 +9,8 @@ export const AuthProvider = ({ children }) => {
   const [authData, setAuthData] = useState(null);
   const [favorite, setFavorite] = useState([]);
   const [userInfo, setUserInfo] = useState(null);
+
+  
   useEffect(() => {
     const loadAuthData = async () => {
       try {

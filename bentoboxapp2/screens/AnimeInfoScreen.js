@@ -86,7 +86,28 @@ class AnimeInfoScreen extends React.PureComponent {
 
             this.setState({ loading: false });
         } catch (error) {
-            console.error('Error fetching anime recommendations:', error.response.data);
+            if(error.response.data && error.response.data.message=== "No favorites present"){
+               console.log("No favorites added");
+               const cachedData = await AsyncStorage.getItem(`recommendations_${anime.mal_id}`);
+            if (cachedData) {
+                const { data, timestamp } = JSON.parse(cachedData);
+                if (Date.now() - timestamp < 24 * 60 * 60 * 1000) {
+                    this.setState({ recommendations: data });
+                }
+            }
+
+            const response = await axiosWithRateLimit.get(`https://api.jikan.moe/v4/anime/${anime.mal_id}/recommendations`);
+            const data = response.data;
+            if (data && data.data) {
+                const timestamp = Date.now();
+                const animeRecommendationsList = data.data.slice(0, 4);
+                await AsyncStorage.setItem(`recommendations_${anime.mal_id}`, JSON.stringify({ data: animeRecommendationsList, timestamp }));
+                this.setState({ recommendations: animeRecommendationsList });
+            }
+
+            this.setState({ loading: false });
+            }
+            
             this.setState({ loading: false });
         }
     };

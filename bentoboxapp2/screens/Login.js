@@ -52,8 +52,9 @@ export default function Login() {
         else{
             if (results.error) {
                 const message = typeof results.error === 'string' ? results.error : results.error.message;
+                console.log(message);
                 setErrorMessage(message);
-                setTimeout(() => setErrorMessage(''), 9000);
+                setTimeout(() => setErrorMessage(''), 6000);
             }
         }
     };

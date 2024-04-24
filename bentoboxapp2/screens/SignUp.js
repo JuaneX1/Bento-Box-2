@@ -47,6 +47,7 @@ export default function SignUp() {
         console.log("Sign up.js "+ formData.first +" "+formData.last + " "+formData.login +" "+formData.email+" "+formData.password);
         setErrorModalVisible(true);
         setErrorMessage('All fields are required');
+        setTimeout(() => setErrorMessage(''), 9000);
         return;
       }
   
@@ -87,9 +88,11 @@ export default function SignUp() {
         <Text style={styles.errorText}>{errorMessage}</Text>
       ): (null)}
       {successMessage && (
-        <Text style={styles.successText}>{successMessage}</Text>
+        <View>
+          <Text style={styles.successText}>{successMessage}</Text>
+        </View>
       )}
-      
+      <View>
         <Text style={styles.inputTitle}>First Name</Text>
        
         <TextInput
@@ -133,7 +136,7 @@ export default function SignUp() {
         >
           <Text style={styles.text}>Sign Up</Text>
         </Pressable>
-
+        </View>
     </View>
   );
 }

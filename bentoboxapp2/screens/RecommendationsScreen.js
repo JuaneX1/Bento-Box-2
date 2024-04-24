@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Carousel from 'react-native-snap-carousel'; // Import the Carousel component
 import { MaterialIcons } from '@expo/vector-icons'; // Add this import statement
 import { fetchRecommendations } from '../api/fetchRecommendations';
+import { useAuth } from '../Components/AuthContext';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -17,14 +18,16 @@ const instance = axios.create({
 
 const RecommendationsScreen = () => {
   const [animeData, setAnimeData] = useState(null);
+  const {userInfo, setUserInfo, authData, favorite, setFavorite} = useAuth();
 
   useEffect(() => {
     fetchAnime();
-  }, []);
+  }, [favorite]);
 
   const fetchAnime = async () => {
     try {
-     const cachedData = await AsyncStorage.getItem('recommendedAnime');
+      
+     const cachedData = await AsyncStorage.getItem(`recommendedAnime_${authData}`);
       if (cachedData) {
         const { data, timestamp } = JSON.parse(cachedData);
         // Check if cached data has expired (e.g., cache duration is 1 day)
@@ -56,7 +59,7 @@ const RecommendationsScreen = () => {
         else{
           console.log(f);
         }
-
+        setFavorite(favs);
       const randomIndex = Math.floor(Math.random() * favs.length);
       console.log(randomIndex);
       const randomItem = favs[randomIndex];
@@ -66,12 +69,18 @@ const RecommendationsScreen = () => {
       console.log(recommendations);
       // Store recommendations in AsyncStorage
       const timestamp = Date.now();
-      await AsyncStorage.setItem('recommendedAnime', JSON.stringify({ data: recommendations, timestamp }));
+      await AsyncStorage.setItem(`recommendedAnime_${authData}`, JSON.stringify({ data: recommendations, timestamp }));
 
       // Set animeData state with the fetched recommendations
       setAnimeData(recommendations);
     } catch (error) {
-      console.error('Error fetching anime:', error);
+      if(error.status == 404){
+        console.log("no favorites");
+        console.error('Error fetching anime:', error.message);
+        setFavorite([]);
+        setAnimeData(null);
+      }
+      
     }
   };
 
