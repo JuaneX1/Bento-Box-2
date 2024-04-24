@@ -110,7 +110,8 @@ const SearchScreen = () => {
                 <MaterialCommunityIcons name="magnify" color={'white'} size={20} />
                 <TextInput
                  style={[tw`text-white focus:text-black px-2`, { backgroundColor: '#ffffff' }]} // Add backgroundColor directly to style
-                 placeholder="Search Here....*"
+                 placeholder="Search Here...."
+                 placeholderTextColor="#fff"
                   onSubmitEditing={(event) => setSearchedItem(event.nativeEvent.text)}
 />
 

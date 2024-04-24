@@ -21,15 +21,13 @@ const ProfileScreen = () => {
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        if (userInfo) {
           const token = await AsyncStorage.getItem('token');
           const { user, error } = await getUserInfo(token);
           if (user) {
             setUserInfo(user);
           } else {
-            console.error('Error fetching user info:', error.response);
+            console.error('Error fetching user infox:', error);
           }
-        }
       } catch (error) {
         console.error('Error fetching user info:', error.response);
       }
