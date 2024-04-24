@@ -125,31 +125,6 @@ class AnimeInfoScreen extends React.PureComponent {
        catch(error){
         console.log(error.response.data);
        }
-
-       /* if (!favorite) {
-            try {
-                let t = await AsyncStorage.getItem(`token`);
-                let s = await addFavorites(t, anime.mal_id);
-                console.log(s);
-                if (s.verdict === true) {
-                    console.log('ADDED!');
-                }
-            } catch (error) {
-                console.error('Error adding anime to favorites:', error);
-            }
-        } else {
-            try {
-                let favorites = [];
-                const favoritesString = await AsyncStorage.getItem('favorites');
-                if (favoritesString) {
-                    favorites = JSON.parse(favoritesString);
-                    favorites = favorites.filter(item => item.id !== anime.mal_id);
-                    await AsyncStorage.setItem('favorites', JSON.stringify(favorites));
-                }
-            } catch (error) {
-                console.error('Error removing anime from favorites:', error);
-            }
-        }*/
     };
 
     openLink = async (url) => {

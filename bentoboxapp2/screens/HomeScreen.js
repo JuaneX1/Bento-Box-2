@@ -50,7 +50,9 @@ export default function HomeScreen({ navigation }) {
           headers: { Authorization: token }
         });
         if (isActive) {
+          console.log(favoritesData[0]);
           setFavorite(favoritesData);
+          console.log(favorite);
           fetchAnimeDetails(favoritesData, token);
         }
       } catch (error) {
@@ -61,43 +63,54 @@ export default function HomeScreen({ navigation }) {
       }
     };
   
-    const fetchAnimeDetails = async (favorites, token) => {
-      
-        const details = await Promise.all(favorites.map(async favorite => {
-        try {
-          const cachedaniData = await AsyncStorage.getItem(`favorites_${authData}_${favorite}`);
-
-          if (cachedaniData) {
-
-              const { data, timestamp } = JSON.parse(cachedaniData);
-
-              // Check if cached data has expired (e.g., cache duration is 1 hour)
-
-              if (Date.now() - timestamp < 3 * 1000) {
-
-                return JSON.parse(data);
-
-              }
-
-          }
-          const response = await axiosWithRateLimit.get(`https://api.jikan.moe/v4/anime/${favorite}`);
-
-          await AsyncStorage.setItem(`favorites_${authData}_${favorite}`, JSON.stringify(response.data.data));
-
-          return response.data.data;
-        } catch (error) {
-          console.error('Error fetching anime details:', error);
-          return null;
-        }
-      }));
-      if (isActive) setanimeData(details.filter(detail => detail !== null));
-    };
-  
     fetchData();
   
     // Cleanup function to prevent setting state on unmounted component
-   
+    return () => {
+      isActive = false; // Prevents state update on an unmounted component
+    };
   }, [userInfo, favorite]); // Consider what really needs to trigger a re-fetch
+
+  const fetchAnimeDetails = async (favorites, token) => {
+      
+    const details = await Promise.all(favorites.map(async favorite => {
+    try {
+      const cachedaniData = await AsyncStorage.getItem(`favorites_${authData}_${favorite}`);
+
+      if (cachedaniData) {
+        
+          console.log("cache!");
+          try{
+            console.log(cachedaniData);
+            const { data, timestamp } = JSON.parse(cachedaniData);
+            
+            console.log('sdfsfs');
+            if (Date.now() - timestamp < 60 * 1000) {
+
+              return data;
+  
+            }
+          }catch (e) {
+            console.error("Failed to parse JSON:", e);
+            return null;  // or return a default value or error indication as appropriate
+          }
+
+      }
+      const response = await axiosWithRateLimit.get(`https://api.jikan.moe/v4/anime/${favorite}`);
+
+      const timestamp = Date.now();
+
+
+      await AsyncStorage.setItem(`favorites_${authData}_${favorite}`, JSON.stringify({ data: response.data.data, timestamp }));
+
+      return response.data.data;
+    } catch (error) {
+      console.error('Error fetching anime details:', error);
+      return null;
+    }
+  }));
+   setanimeData(details.filter(detail => detail !== null));
+};
 
   return (
     <SafeAreaView style={styles.container}>
@@ -111,7 +124,7 @@ export default function HomeScreen({ navigation }) {
         {userInfo ? (
           <>
             <Text style={[styles.userFavorites, { textAlign: 'center' }]}>{userInfo ? `${userInfo.login}'s Favorites` : "User's Favorites"}</Text>
-            {favorites === null ? (
+            {favorite === null ? (
               <View style={styles.noFavoritesContainer}>
                 <Text style={styles.noFavoritesText}>Looks like you have no favorites at the moment</Text>
                 <Text style={styles.noFavoritesText}>No worries, keep exploring!</Text>
