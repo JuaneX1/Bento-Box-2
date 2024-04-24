@@ -80,7 +80,7 @@ class MainDisplay extends PureComponent {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#000000',
+        zIndex:1,
         alignItems: 'center',
         justifyContent: 'center',
     }

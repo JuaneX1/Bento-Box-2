@@ -1,22 +1,27 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, Button, Alert, Pressable, Image } from 'react-native';
+import { View, Text, Dimensions,StyleSheet, TextInput, Button, Alert, Pressable, Image } from 'react-native';
 import axios from 'axios'; // Import axios for API requests
-
+import { LinearGradient } from 'expo-linear-gradient';
 const PRODUCTION = true;
 const app_name = 'bento-box-2-df32a7e90651'; // Replace with your actual app name
 
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 export default function ForgotPassword() {
   const [email, setEmail] = useState('');
-
+  const [errorMessage, setErrorMessage]= useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const handleForgotPassword = async () => {
     try {
       const response = await axios.post(buildPath('api/forgotPassword'), { email });
       // Handle successful response here
-      Alert.alert('Password Reset Email Sent', 'An email with instructions to reset your password has been sent to your email address.');
+      setSuccessMessage('Password Reset Email Sent', 'An email with instructions to reset your password has been sent to your email address.');
+      setTimeout(() => setSuccessMessage(''), 9000);
     } catch (error) {
       // Handle error response here
-      Alert.alert('Failed to Send Email', 'Failed to send the email for password reset. Please try again later.');
-      console.error(error);
+      setErrorMessage('Failed to Send Email', 'Failed to send the email for password reset. Please try again later.');
+      setTimeout(() => setErrorMessage(''), 9000);
+      //console.error(error);
     }
   };
 
@@ -30,12 +35,22 @@ export default function ForgotPassword() {
 
   return (
     <View style={styles.container}>
-      <Image
-        style={styles.image}
-        source={require('../assets/BB Logo Icon_COLOR.png')}
-      />
+      <LinearGradient
+              colors={['transparent', 'rgba(48, 119, 178, 0.5)', 'rgba(48, 119, 178, 1)']}
+              style={{ width: windowWidth, height: windowHeight*0.55, transform: [{ translateY: windowHeight*0.30}]}}
+              start={{ x: 0.5, y: 0}}
+              end={{ x: 0.5, y: 1 }}
+              position="absolute"
+          />
+     
       <Text style={styles.title}>Forgot Password</Text>
       <Text style={styles.subtitle}>Enter your email address below to reset your password:</Text>
+      {errorMessage ? (
+                      <Text style={styles.errorText}>{errorMessage}</Text>
+                             ): (null)}
+      {successMessage ? (
+            <Text style={styles.successText}>{successMessage}</Text>
+            ): (null)}
       <TextInput
         placeholder="Enter your email"
         onChangeText={setEmail}
@@ -46,7 +61,7 @@ export default function ForgotPassword() {
         style={styles.submitButton}
         onPress={handleForgotPassword}
       >
-        <Text style={[styles.text, {fontWeight: 'bold'}]}>Reset Password</Text>
+        <Text style={[styles.text, {fontWeight: 'bold', color: '#000'}]}>Reset Password</Text>
       </Pressable>
     </View>
   );
@@ -61,8 +76,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   image: {
-    width: 100, // Adjust the size of the logo as needed
-    height: 100,
+    width: 164, // Adjust the size of the logo as needed
+    height: 176,
     marginBottom: 20,
   },
   title: {
@@ -83,10 +98,18 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     paddingHorizontal: 10,
     borderRadius: 20, // Set border radius to create bubble-like appearance
-    color: '#fff', // White text color to match your other screens
+    color: '#000', // Black text color
     backgroundColor: '#ffffff', // Set background color to white
     borderWidth: 2, // Add border width
     borderColor: '#3077b2', // Set border color
+  },
+  errorText:{
+    color:'red',
+    fontWeight:'700'
+  },
+  successText:{
+    color:'green',
+    fontWeight:'700'
   },
   submitButton: {
     alignItems: 'center',
@@ -98,6 +121,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#3077b2',
   },
   text: {
-    color: 'white'
+    color: '#000' // Black text color
   }
 });

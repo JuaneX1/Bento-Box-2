@@ -7,15 +7,18 @@ const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
   const [authData, setAuthData] = useState(null);
+  const [favorite, setFavorite] = useState([]);
+  const [userInfo, setUserInfo] = useState(null);
 
+  
   useEffect(() => {
     const loadAuthData = async () => {
       try {
-        const token = await AsyncStorage.getItem('token');
-        if (token) {
+        const user = await AsyncStorage.getItem('user_');
+        if (user) {
           console.log("yippie!yippie!");
           // If a token exists in AsyncStorage, set the authentication state
-          setAuthData(token );
+          setAuthData(user );
         }
       } catch (error) {
         console.error('Error loading authentication data:', error);
@@ -28,27 +31,25 @@ export const AuthProvider = ({ children }) => {
   const signIn = async (formData) => {
     // Call doLogin with form data
     const _authData = formData; //await doLogin(formData);
+    await AsyncStorage.setItem('user_', formData);
     console.log(_authData);
     setAuthData(_authData);
   };
 
-
-  const signUp = async (formData) => {
-    // Call doSignUp with form data
-   //console.log("Auth Context SIGN UP.js "+ formData.first +" "+formData.last + " "+formData.login +" "+formData.email+" "+formData.password);
-    //const _authData = await doSignUp(formData);
-    //console.log("auth data: "+_authData);
-    //setAuthData(_authData);
-  };
-
   const logOut = async () => {
     setAuthData(undefined);
+    setUserInfo(undefined);
     // Clear any stored authentication data
+    await AsyncStorage.removeItem('user_');
     await AsyncStorage.removeItem('token');
   };
 
+  const getInfo= async()=>{
+
+  };
+
   return (
-    <AuthContext.Provider value={{ authData, signIn, signUp, logOut }}>
+    <AuthContext.Provider value={{ authData, userInfo, setUserInfo, favorite, setFavorite, signIn, logOut }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, Pressable, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Image, Pressable, Dimensions, ScrollView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useNavigation } from '@react-navigation/native';
 import Login from './Login';
@@ -25,13 +25,12 @@ export default function StartScreen() {
     <View style={styles.container}>
       <Image 
         style={styles.image}
-        source={require('../assets/BB Logo Icon_COLOR.png')}
+        source={require('../assets/LOGO/Logo w Red Tagline/BB Logo Horizontal_COLOR 1.png')}
       />
       <LoginSwitch
         selectedTab={selectedTab} 
         onTabChange={handleTabChange}
       />
-
       {selectedTab === 0 ? <Login /> : <SignUp />}
 
       {selectedTab === 0 && ( // Render "Forgot Password?" text only when selectedTab is 0 (Login)
@@ -41,6 +40,7 @@ export default function StartScreen() {
       )}
 
       <StatusBar style="auto" />
+     
     </View>
   );
 }
@@ -53,8 +53,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   image: {
-    width: 100,
-    height: 105,
+    width: 220,
+    height: 78,
     transform: [{ scale: 0.80 }],
     marginTop: windowHeight / 15,
   },
