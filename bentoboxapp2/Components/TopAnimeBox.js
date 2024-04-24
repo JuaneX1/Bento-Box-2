@@ -1,11 +1,12 @@
 import React, { PureComponent } from 'react';
-import { StyleSheet, Text, View, FlatList, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, Dimensions,FlatList, ActivityIndicator } from 'react-native';
 import AnimeListing from './AnimeListing';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { fetchTopAnime } from '../api/fetchTopAnime'; // Import the fetchTopAnime function
 import LoadingScreen from '../screens/LoadingScreen';
 import Loading from '../screens/LoadingScreen';
-
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 class TopAnimeBox extends PureComponent {
     constructor(props) {
         super(props);
@@ -58,8 +59,9 @@ const styles = StyleSheet.create({
     headerText: {
         color: "#fff",
         fontSize: 25,
+        marginLeft: windowWidth / 50,
         fontWeight: 'bold',
-        marginBottom: 10
+        
     },
     container: {
         marginTop: 10

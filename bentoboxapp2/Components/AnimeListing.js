@@ -7,6 +7,7 @@ import tw from 'twrnc';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
+
 const AnimeListing = ({ anime }) => {
     const navigation = useNavigation();
     
@@ -15,7 +16,7 @@ const AnimeListing = ({ anime }) => {
     
     return (
         <View style={styles.card} key={anime.mal_id + Math.random()}>
-            <TouchableOpacity onPress={() => navigation.navigate('Info', {anime})}>
+            <TouchableOpacity onPress={() => navigation.navigate('Info', { anime: anime })}>
                 <Image style={styles.animeImages} source={{ uri: anime.images.jpg.image_url }} />
                 <Text style={[tw`text-white font-semibold text-center`]}>{truncatedTitle}</Text>
             </TouchableOpacity>
@@ -31,12 +32,13 @@ const styles = StyleSheet.create({
         fontWeight:'700'
     },
     animeImages: {
-        width: 175,
-        height:300,
-        alignSelf: 'center'
+        width: 150,
+        height:250,
+        alignSelf: 'center',
+        borderRadius:10,
     },
     card: {
-        margin: windowWidth / 47,
+        margin: windowWidth / 60,
         alignItems: 'center'
     }
 });
