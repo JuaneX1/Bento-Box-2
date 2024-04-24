@@ -21,7 +21,7 @@ const instance = axios.create({
 const axiosInstance = axios.create();
 
 // Apply rate limiting to the axios instance
-const axiosWithRateLimit = AxiosRateLimit(axiosInstance, { maxRequests: 1, perMilliseconds: 1000 }); // Example: 1 request per 1 seconds
+const axiosWithRateLimit = AxiosRateLimit(axiosInstance, { maxRequests: 3, perMilliseconds: 1000 }); // Example: 1 request per 1 seconds
 export default function HomeScreen({ navigation }) {
   const [favorites, setFavorites] = useState(null);
   const [animeData, setanimeData]= useState([]);
@@ -58,6 +58,7 @@ export default function HomeScreen({ navigation }) {
       } catch (error) {
         if(error.response.status === 404){
           setFavorite([]);
+          setanimeData(null);
         }
         console.error('Error fetching data:', error);
       }
@@ -72,45 +73,37 @@ export default function HomeScreen({ navigation }) {
   }, [userInfo, favorite]); // Consider what really needs to trigger a re-fetch
 
   const fetchAnimeDetails = async (favorites, token) => {
-      
-    const details = await Promise.all(favorites.map(async favorite => {
-    try {
-      const cachedaniData = await AsyncStorage.getItem(`favorites_${authData}_${favorite}`);
+    const details = [];
+    for (const favorite of favorites) {
+        try {
+            const cacheKey = `favorites_${authData}_${favorite}`;
+            const cachedData = await AsyncStorage.getItem(cacheKey);
 
-      if (cachedaniData) {
-        
-          console.log("cache!");
-          try{
-            console.log(cachedaniData);
-            const { data, timestamp } = JSON.parse(cachedaniData);
-            
-            console.log('sdfsfs');
-            if (Date.now() - timestamp < 60 * 1000) {
-
-              return data;
-  
+            if (cachedData) {
+                const { data, timestamp } = JSON.parse(cachedData);
+                if (Date.now() - timestamp < 60 * 1000) { // Cached data is valid for 60 seconds
+                    details.push(data);
+                    continue; // Skip the API call if cached data is still valid
+                }
             }
-          }catch (e) {
-            console.error("Failed to parse JSON:", e);
-            return null;  // or return a default value or error indication as appropriate
-          }
 
-      }
-      const response = await axiosWithRateLimit.get(`https://api.jikan.moe/v4/anime/${favorite}`);
+            const response = await axios.get(`https://api.jikan.moe/v4/anime/${favorite}`);
+            const newData = response.data.data;
+            const newTimestamp = Date.now();
 
-      const timestamp = Date.now();
+            await AsyncStorage.setItem(cacheKey, JSON.stringify({ data: newData, timestamp: newTimestamp }));
+            details.push(newData);
+        } catch (error) {
+            console.error('Error fetching anime details for:', favorite, error);
+            details.push(null); // Handle the error by pushing null or some error indicator
+        }
 
-
-      await AsyncStorage.setItem(`favorites_${authData}_${favorite}`, JSON.stringify({ data: response.data.data, timestamp }));
-
-      return response.data.data;
-    } catch (error) {
-      console.error('Error fetching anime details:', error);
-      return null;
+        // Wait for 333 milliseconds before making the next request
+        await new Promise(resolve => setTimeout(resolve, 335));
     }
-  }));
-   setanimeData(details.filter(detail => detail !== null));
+    setanimeData(details.filter(detail => detail !== null)); // Filter out any null entries from the details array
 };
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -124,7 +117,7 @@ export default function HomeScreen({ navigation }) {
         {userInfo ? (
           <>
             <Text style={[styles.userFavorites, { textAlign: 'center' }]}>{userInfo ? `${userInfo.login}'s Favorites` : "User's Favorites"}</Text>
-            {favorite === null ? (
+            {favorite.length === 0 ? (
               <View style={styles.noFavoritesContainer}>
                 <Text style={styles.noFavoritesText}>Looks like you have no favorites at the moment</Text>
                 <Text style={styles.noFavoritesText}>No worries, keep exploring!</Text>
