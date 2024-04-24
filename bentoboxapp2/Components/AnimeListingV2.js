@@ -15,7 +15,7 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const AnimeListingV2 = ({ anime }) => {
-
+    console.log("animeListingv2");
     
     const navigation = useNavigation();
     

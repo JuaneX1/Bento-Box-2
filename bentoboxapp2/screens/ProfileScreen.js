@@ -24,7 +24,7 @@ const ProfileScreen = () => {
     const fetchUserInfo = async () => {
       try {
         
-        if(userInfo != null){
+        
           const token = await AsyncStorage.getItem('token');
           const { user, error } = await getUserInfo(token);
           
@@ -33,15 +33,11 @@ const ProfileScreen = () => {
             setUserInfo(user); // Set user state with fetched user data
           } else {
             // Handle error, maybe log out the user or display an error message
-            console.error('Error fetching user info:', error.response);
+            console.error('Error fetching user info x:', error);
           }
-        }
-        else{
-          setUserInfo(userInfo);
-        }
        
       } catch (error) {
-        console.error('Error fetching user info:', error.response);
+        console.error('Error fetching user info:', error);
       }
     };
     fetchUserInfo();

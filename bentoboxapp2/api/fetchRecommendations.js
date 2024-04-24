@@ -3,15 +3,16 @@ import axios from 'axios';
 import { fetchRecInfo } from './fetchRecInfo';
 // Function to fetch top anime with caching and expiration
 export const fetchRecommendations = async ({id}) => {
-    try {
-        /*const cachedData = await AsyncStorage.getItem('recommendedAnime');
+    console.log("fetch Recommendations");
+        try {
+        const cachedData = await AsyncStorage.getItem('recommendedAnime');
         if (cachedData) {
             const { data, timestamp } = JSON.parse(cachedData);
             // Check if cached data has expired (e.g., cache duration is 1 hour)
             if (Date.now() - timestamp < 24 * 60 * 60 * 1000) {
                 return data;
             }
-        }*/
+        }
         // Fetch fresh data from the API
         console.log(id);
         const response = await axios.get(`https://api.jikan.moe/v4/anime/${id}/recommendations`);
@@ -19,10 +20,8 @@ export const fetchRecommendations = async ({id}) => {
         console.log('response');
         const data = response.data;
         if (data && data.data) {
-            console.log('data');
             const arr = data.data;
             //const arr2=JSON.parse(arr);
-            console.log(arr);
             const randomIndex = Math.floor(Math.random() * arr.length);
             console.log(randomIndex);
             const randomItem = arr[randomIndex];

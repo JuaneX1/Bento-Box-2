@@ -21,6 +21,7 @@ const RecommendationsScreen = () => {
   const {userInfo, setUserInfo, authData, favorite, setFavorite} = useAuth();
 
   useEffect(() => {
+
     fetchAnime();
   }, [favorite]);
 
@@ -94,7 +95,7 @@ const RecommendationsScreen = () => {
         position="absolute"
       />
       <View contentContainerStyle={styles.scrollContent}>
-        {animeData ? (
+        {animeData && animeData.length !== 0 ? (
           <>
             <Text style={styles.headerText}>Daily Pick</Text>
             <Text style={styles.infoText}>Here’s our pick for today. Come back tomorrow to see what else we have for you!</Text>
