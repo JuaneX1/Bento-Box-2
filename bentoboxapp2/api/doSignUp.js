@@ -25,9 +25,9 @@ export async function doSignUp(formData) {
       
       if(error.response.status === 400){
         const passCom = error.response.data.passComplexity.toString();
-        const passComWithNewLines = passCom.replace(/,/g, "\n");
-        console.log(passComWithNewLines);
-        return {verdict: false, error: errorMessage+"\n" + passComWithNewLines};
+        //const passComWithNewLines = passCom.replace(/,/g, "\n");
+        //console.log(passComWithNewLines);
+        return {verdict: false, error:  passCom};
       }
       else if (error.response.status === 401){
         //const error = response.error;

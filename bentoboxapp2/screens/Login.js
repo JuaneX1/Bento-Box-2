@@ -12,6 +12,7 @@ const windowHeight = Dimensions.get('window').height;
 export default function Login() {
     const navigation = useNavigation();
     const { signIn } = useAuth();
+    const { userInfo, setUserInfo} = useAuth();
 
     const [errorModalVisible, setErrorModalVisible] = useState(false); // State for error modal
     const [errorMessage, setErrorMessage] = useState(''); // State for error message
@@ -46,18 +47,21 @@ export default function Login() {
             const user = await getUserInfo(results.token);
             await signIn(user.user._id);
 
-            
+            setUserInfo(user);
         }
         else{
             if (results.error) {
                 const message = typeof results.error === 'string' ? results.error : results.error.message;
-                setErrorModalVisible(true);
                 setErrorMessage(message);
+                setTimeout(() => setErrorMessage(''), 9000);
             }
         }
     };
     return (
         <View style={styles.container}>
+             {errorMessage ? (
+                                 <Text style={styles.errorText}>{errorMessage}</Text>
+                             ): (null)}
             <Text style={[styles.text, {fontWeight: 'bold'}]}>Login: </Text>
             <TextInput
                 style={styles.input}
@@ -109,7 +113,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     input: {
-        height: 40,
+        height: 35,
         margin: 12,
         borderWidth: 2,
         width: 200,
@@ -147,6 +151,11 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5
+      },
+      errorText:{
+        padding:5,
+        color:'red',
+        fontWeight:'700'
       },
       modalText: {
         marginBottom: 15,

@@ -23,7 +23,8 @@ const ProfileScreen = () => {
     // Fetch user info when component mounts
     const fetchUserInfo = async () => {
       try {
-        if(userInfo ===null){
+        console.log(userInfo);
+        if(userInfo == null){
           const token = await AsyncStorage.getItem('token');
           const { user, error } = await getUserInfo(token);
   
@@ -95,10 +96,18 @@ const ProfileScreen = () => {
       )}
       <View style ={{borderRadius:5,height:windowHeight/2.25,width: windowWidth/1.5, backgroundColor:"#111920"}}>
      
-        <Text style = {[tw`text-base font-bold text-white` ,{padding: 5}]}>First Name: {`\n${userInfo.first}`}</Text>
-        <Text style = {[tw`text-base font-bold text-white`,{padding: 5}]}>Last Name:  {`\n${userInfo.last}`}</Text>
-        <Text style = {[tw`text-base font-bold text-white`,{padding: 5}]}>Username: {`\n${userInfo.login}`}</Text>
-        <Text style = {[tw`text-base font-bold text-white`,{padding: 5}]}>Email: {`\n${userInfo.email}`}</Text>
+      <Text style={[tw`text-base font-bold text-white`, {padding: 5}]}>
+        First Name: {`\n${userInfo?.first ?? 'Not Available'}`}
+      </Text>
+      <Text style={[tw`text-base font-bold text-white`, {padding: 5}]}>
+        Last Name: {`\n${userInfo?.last ?? 'Not Available'}`}
+      </Text>
+      <Text style={[tw`text-base font-bold text-white`, {padding: 5}]}>
+        Username: {`\n${userInfo?.login ?? 'Not Available'}`}
+      </Text>
+      <Text style={[tw`text-base font-bold text-white`, {padding: 5}]}>
+        Email: {`\n${userInfo?.email ?? 'Not Available'}`}
+      </Text>
       </View >
       <TouchableOpacity style={styles.button} onPress={handleUpdateProfile}>
           <Text style={styles.buttonText}>Edit Profile</Text>
@@ -162,7 +171,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: '#fff',
-    marginBottom: 20,
+    marginBottom: 20
   },
   buttonContainer: {
     flexDirection:'row'

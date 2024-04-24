@@ -9,16 +9,19 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 export default function ForgotPassword() {
   const [email, setEmail] = useState('');
-
+  const [errorMessage, setErrorMessage]= useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const handleForgotPassword = async () => {
     try {
       const response = await axios.post(buildPath('api/forgotPassword'), { email });
       // Handle successful response here
-      Alert.alert('Password Reset Email Sent', 'An email with instructions to reset your password has been sent to your email address.');
+      setSuccessMessage('Password Reset Email Sent', 'An email with instructions to reset your password has been sent to your email address.');
+      setTimeout(() => setSuccessMessage(''), 9000);
     } catch (error) {
       // Handle error response here
-      Alert.alert('Failed to Send Email', 'Failed to send the email for password reset. Please try again later.');
-      console.error(error);
+      setErrorMessage('Failed to Send Email', 'Failed to send the email for password reset. Please try again later.');
+      setTimeout(() => setErrorMessage(''), 9000);
+      //console.error(error);
     }
   };
 
@@ -42,6 +45,12 @@ export default function ForgotPassword() {
      
       <Text style={styles.title}>Forgot Password</Text>
       <Text style={styles.subtitle}>Enter your email address below to reset your password:</Text>
+      {errorMessage ? (
+                      <Text style={styles.errorText}>{errorMessage}</Text>
+                             ): (null)}
+      {successMessage ? (
+            <Text style={styles.successText}>{successMessage}</Text>
+            ): (null)}
       <TextInput
         placeholder="Enter your email"
         onChangeText={setEmail}
@@ -93,6 +102,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff', // Set background color to white
     borderWidth: 2, // Add border width
     borderColor: '#3077b2', // Set border color
+  },
+  errorText:{
+    color:'red',
+    fontWeight:'700'
+  },
+  successText:{
+    color:'green',
+    fontWeight:'700'
   },
   submitButton: {
     alignItems: 'center',

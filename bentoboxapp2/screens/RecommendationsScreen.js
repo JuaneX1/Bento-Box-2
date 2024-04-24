@@ -52,9 +52,6 @@ const RecommendationsScreen = () => {
         const favs = [...f];
         if(favs != null){
           console.log(...f);
-          //console.log("dfdsfdsf "+ JSON.stringify(f, null, 2));
-          //await AsyncStorage.setItem(`favorites_`, JSON.stringify(f));
-          //setFavorites(f);
         }
         else{
           console.log(f);
@@ -122,16 +119,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerText: {
-    fontSize: 24,
+    fontSize: 32,
     fontWeight: 'bold',
     color: '#fff',
     marginBottom: 20,
+    marginTop: 20,
+    marginLeft:10
   },
   infoText: {
-    fontSize: 16,
+    fontSize: 20,
     color: '#fff',
+    fontWeight:'600',
     textAlign: 'center',
     marginBottom: 20,
+    marginTop: 20
   },
   animeContainer: {
     alignItems: 'center',

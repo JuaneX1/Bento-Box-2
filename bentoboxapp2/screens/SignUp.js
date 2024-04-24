@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TextInput, Pressable, Modal, Dimensions, Animated } from 'react-native';
+import { StyleSheet, ScrollView,Text, View, TextInput, Pressable, Modal, Dimensions, Animated } from 'react-native';
 import {doSignUp} from '../api/doSignUp';
 import { useAuth } from '../Components/AuthContext';
 import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -19,7 +20,8 @@ export default function SignUp() {
   });
 
   const [successModalVisible, setSuccessModalVisible] = useState(false); // State for success modal
-  const [errorModalVisible, setErrorModalVisible] = useState(false); // State for error modal
+  const [successMessage, setSuccessMessage] = useState(false); // State for success modal
+  const [errorModalVisible, setErrorModalVisible] = useState(false); //  // State for error modal
   const [errorMessage, setErrorMessage] = useState(''); // State for error message
 
   const fadeInDuration = 250; // Duration for fade in animation
@@ -56,8 +58,8 @@ export default function SignUp() {
       if (results.verdict) {
         // Display success message
         // Display success modal
-        setSuccessModalVisible(results.verdict);
-        
+        setSuccessMessage('Success! Please check your email for the confirmation link');
+        setTimeout(() => setSuccessMessage(''), 9000);
         console.log("true! "+successModalVisible);
         // Clear form fields
         setFormData({
@@ -70,6 +72,7 @@ export default function SignUp() {
       } else {
         setErrorModalVisible(true);
         setErrorMessage(results.error);
+        setTimeout(() => setErrorMessage(''), 9000);
       }
     } catch (error) {
       console.error(error);
@@ -79,94 +82,57 @@ export default function SignUp() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.inputTitle}>First Name</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="First Name*"
-        onChangeText={(text) => setFormData({...formData, first: text})}
-      />
-
-      <Text style={styles.inputTitle}>Last Name</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Last Name*"
-        onChangeText={(text) => setFormData({...formData, last: text})}
-      />
-
-      <Text style={styles.inputTitle}>Username</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Username*"
-        onChangeText={(text) => setFormData({...formData, login: text})}
-      />
-
-      <Text style={styles.inputTitle}>Email Address</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Email Address*"
-        onChangeText={(text) => setFormData({...formData, email: text})}
-      />
-
-      <Text style={styles.inputTitle}>Password</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Password*"
-        secureTextEntry={true}
-        onChangeText={(text) => setFormData({...formData, password: text})}
-      />
-
-      <Pressable
-        style={styles.submitButton}
-        onPress={handleSignUp}
-      >
-        <Text style={styles.text}>Sign Up</Text>
-      </Pressable>
-
-      {/* Success Modal */}
+      <View style={styles.container}>
+         {errorMessage ? (
+        <Text style={styles.errorText}>{errorMessage}</Text>
+      ): (null)}
+      {successMessage && (
+        <Text style={styles.successText}>{successMessage}</Text>
+      )}
       
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={successModalVisible}
-        onRequestClose={() => setSuccessModalVisible(false)}
-      >
-        <View style={{backgroundColor:'rgba(0,0,0,0.5)', flex:1,display:'flex',height:windowHeight, width: windowWidth }}>
-        <View style={styles.modalView}>
-        <AntDesign name="checkcircle" size={48} color="green" />
-          <Text style={styles.modalText}>Sign Up Successful!</Text>
-          <Text style={styles.modalText}>Please check your email for the confirmation link. After confirming your email, you can proceed to sign in.</Text>
-          <Pressable
-            style={styles.modalButton}
-            onPress={() => setSuccessModalVisible(false)}
-          >
-            <Text style={styles.modalButtonText}>Close</Text>
-          </Pressable>
-        </View>
-        </View >
-      </Modal>
+        <Text style={styles.inputTitle}>First Name</Text>
+       
+        <TextInput
+          style={styles.input}
+          placeholder="First Name*"
+          onChangeText={(text) => setFormData({...formData, first: text})}
+        />
 
-      {/* Error Modal */}
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={errorModalVisible}
-        onRequestClose={() => setErrorModalVisible(false)}
-      >
-        <View  style={{backgroundColor:'rgba(0,0,0,0.5)', flex:1,display:'flex',height:windowWidth, width:windowWidth }}>
-          <View style={styles.modalView}>
-              <MaterialIcons name="error" size={48} color="red" />
-              <Text style={styles.modalText}>Registration Failed</Text>
-              <Text style={styles.modalText}>{errorMessage}</Text>
-              <Pressable
-                style={styles.modalButton}
-                onPress={() => setErrorModalVisible(false)}
-              >
-              <Text style={styles.modalButtonText}>Close</Text>
-              </Pressable>
-          </View>
-        </View >
-      </Modal>
+        <Text style={styles.inputTitle}>Last Name</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Last Name*"
+          onChangeText={(text) => setFormData({...formData, last: text})}
+        />
+
+        <Text style={styles.inputTitle}>Username</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Username*"
+          onChangeText={(text) => setFormData({...formData, login: text})}
+        />
+
+        <Text style={styles.inputTitle}>Email Address</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Email Address*"
+          onChangeText={(text) => setFormData({...formData, email: text})}
+        />
+
+        <Text style={styles.inputTitle}>Password</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Password*"
+          secureTextEntry={true}
+          onChangeText={(text) => setFormData({...formData, password: text})}
+        />
+
+        <Pressable
+          style={styles.submitButton}
+          onPress={handleSignUp}
+        >
+          <Text style={styles.text}>Sign Up</Text>
+        </Pressable>
 
     </View>
   );
@@ -186,7 +152,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   input: {
-    height: 40,
+    height: 35,
     marginVertical: 8,
     borderWidth: 2,
     width: 300,
@@ -231,6 +197,14 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: "center"
+  },
+  errorText:{
+    color:'red',
+    fontWeight:'700'
+  },
+  successText:{
+    color:'green',
+    fontWeight:'700'
   },
   modalButton: {
     backgroundColor: "#3077b2",
