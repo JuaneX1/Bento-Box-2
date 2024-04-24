@@ -42,6 +42,10 @@ export default function ForgotPassword() {
               end={{ x: 0.5, y: 1 }}
               position="absolute"
           />
+      <Image 
+        style={styles.image}
+        source={require('../assets/LOGO/Logo w Red Tagline/BB Logo Vertical_COLOR 1.png')}
+      />
      
       <Text style={styles.title}>Forgot Password</Text>
       <Text style={styles.subtitle}>Enter your email address below to reset your password:</Text>
@@ -61,7 +65,7 @@ export default function ForgotPassword() {
         style={styles.submitButton}
         onPress={handleForgotPassword}
       >
-        <Text style={[styles.text, {fontWeight: 'bold', color: '#000'}]}>Reset Password</Text>
+        <Text style={[styles.text, {fontWeight: 'bold', color: '#fff'}]}>Reset Password</Text>
       </Pressable>
     </View>
   );
@@ -76,9 +80,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   image: {
-    width: 164, // Adjust the size of the logo as needed
-    height: 176,
-    marginBottom: 20,
+    width: 200, // Adjust the size of the logo as needed
+    height: 206,
+    marginBottom: 40,
   },
   title: {
     fontSize: 24,

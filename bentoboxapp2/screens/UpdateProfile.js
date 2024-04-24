@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, Image, Pressable } from 'react-native';
 import { updateProfile } from '../api/doUpdate'; // Import the updateProfile function
 import { useAuth } from '../Components/AuthContext';
+import { LinearGradient } from 'expo-linear-gradient';
+
 const UpdateProfile = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -43,48 +45,59 @@ const UpdateProfile = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Image
-        style={styles.logo}
-        source={require('../assets/BB Logo Icon_COLOR.png')}
-      />
-      <Text style={styles.title}>Update Profile</Text>
-      <TextInput
-        style={[styles.input, styles.blackText]}
-        placeholder={userInfo.first}
-        onChangeText={setFirstName}
-        value={firstName}
-      />
-      <TextInput
-        style={[styles.input, styles.blackText]}
-        placeholder={userInfo.last}
-        onChangeText={setLastName}
-        value={lastName}
-      />
-      <TextInput
-        style={[styles.input, styles.blackText]}
-        placeholder={userInfo.login}
-        onChangeText={setUsername}
-        value={username}
-      />
-      <Pressable
-        style={styles.submitButton}
-        onPress={handleUpdateProfile}
-      >
-        <Text style={[styles.text, {fontWeight: 'bold'}]}>Update Profile</Text>
-      </Pressable>
-      {successMessage ? <Text style={[styles.message, styles.success]}>{successMessage}</Text> : null}
-      {errorMessage ? <Text style={[styles.message, styles.error]}>{errorMessage}</Text> : null}
-    </View>
+    <LinearGradient
+      colors={['#111920', '#111920', '#3077b2']}
+      style={styles.container}
+      start={[0, 0]}
+      end={[1, 1]}
+    >
+      <View style={styles.content}>
+        <Image
+          style={styles.logo}
+          source={require('../assets/BB Logo Icon_COLOR.png')}
+        />
+        <Text style={styles.title}>Update Profile</Text>
+        <TextInput
+          style={[styles.input, styles.blackText]}
+          placeholder={userInfo.first}
+          onChangeText={setFirstName}
+          value={firstName}
+        />
+        <TextInput
+          style={[styles.input, styles.blackText]}
+          placeholder={userInfo.last}
+          onChangeText={setLastName}
+          value={lastName}
+        />
+        <TextInput
+          style={[styles.input, styles.blackText]}
+          placeholder={userInfo.login}
+          onChangeText={setUsername}
+          value={username}
+        />
+        <Pressable
+          style={styles.submitButton}
+          onPress={handleUpdateProfile}
+        >
+          <Text style={[styles.text, {fontWeight: 'bold'}]}>Update Profile</Text>
+        </Pressable>
+        {successMessage ? <Text style={[styles.message, styles.success]}>{successMessage}</Text> : null}
+        {errorMessage ? <Text style={[styles.message, styles.error]}>{errorMessage}</Text> : null}
+      </View>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#111920',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  content: {
+    width: '80%',
+    alignItems: 'center',
+    paddingBottom: 20, // Adjust the padding to move the content down
   },
   logo: {
     width: 80,
@@ -98,7 +111,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   input: {
-    width: '80%',
+    width: '100%',
     height: 40,
     marginBottom: 20,
     paddingHorizontal: 10,
@@ -134,4 +147,5 @@ const styles = StyleSheet.create({
     color: 'red',
   },
 });
+
 export default UpdateProfile;

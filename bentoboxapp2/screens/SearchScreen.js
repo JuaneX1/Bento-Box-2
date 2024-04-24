@@ -109,13 +109,12 @@ const SearchScreen = () => {
            <View style={tw`items-center justify-center`}>
                 <View style={[tw`bg-black/50 rounded-lg px-2 py-2  flex-row focus:outline-none focus:ring focus:ring-primary focus:ring-opacity-50`, { width: windowWidth/1.1, margin:10, marginLeft:10 }]}>
                 <MaterialCommunityIcons name="magnify" color={'white'} size={20} />
-                    <TextInput
-                        style={tw`text-white focus:text-black w-56 px-2`}
-                        placeholder="Search Here...."
-                        placeholderTextColor="#fff" 
-                        onSubmitEditing={(event) => setSearchedItem(event.nativeEvent.text)}
-                    />
-                
+                <TextInput
+                 style={[tw`text-white focus:text-black px-2`, { backgroundColor: '#ffffff' }]} // Add backgroundColor directly to style
+                 placeholder="Search Here...."
+                 placeholderTextColor="#fff"
+                  onSubmitEditing={(event) => setSearchedItem(event.nativeEvent.text)}
+/>
                 </View>
             </View>
             <View style={{padding: 20, flex:'wrap', alignContent:'center', justifyContent:'center'}}>
@@ -177,7 +176,7 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 15,
         color:"#ffffff",
-        backgroundColor:"#000000",
+        backgroundColor:"#ffffff",
         borderColor:'#3077b2'
       },
     searchButton: {
