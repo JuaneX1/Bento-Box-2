@@ -15,7 +15,7 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const AnimeListingV2 = ({ anime }) => {
-    console.log("animeListingv2");
+   
     
     const navigation = useNavigation();
     
@@ -23,7 +23,7 @@ const AnimeListingV2 = ({ anime }) => {
     const [loading, setLoading] = useState(true);
     const title = anime.title;
     const truncatedTitle = title.length > 20 ? title.slice(0, 20) + '...' : title;
-
+   
     useEffect(() => {
     const fetchAnime = async () => {
         try 

@@ -5,14 +5,14 @@ import { fetchRecInfo } from './fetchRecInfo';
 export const fetchRecommendations = async ({id}) => {
     console.log("fetch Recommendations");
         try {
-        const cachedData = await AsyncStorage.getItem('recommendedAnime');
+        /*const cachedData = await AsyncStorage.getItem('recommendedAnime');
         if (cachedData) {
             const { data, timestamp } = JSON.parse(cachedData);
             // Check if cached data has expired (e.g., cache duration is 1 hour)
             if (Date.now() - timestamp < 24 * 60 * 60 * 1000) {
                 return data;
             }
-        }
+        }*/
         // Fetch fresh data from the API
         console.log(id);
         const response = await axios.get(`https://api.jikan.moe/v4/anime/${id}/recommendations`);
@@ -32,11 +32,11 @@ export const fetchRecommendations = async ({id}) => {
             return randomItem;//data.data.slice(0, 10);
         } else {
             console.error('Data structure is not as expected:', data);
-            return [];
+            return null;
         }
     } catch (error) {
         //console.log("fr");
         console.error('Error fetching FR anime:', error);
-        return [];
+        return null;
     }
 };

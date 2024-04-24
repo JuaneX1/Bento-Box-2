@@ -23,14 +23,22 @@ const RecommendationsScreen = () => {
   useEffect(() => {
 
     fetchAnime();
+
+    
   }, [favorite]);
 
   const fetchAnime = async () => {
     try {
       
+      if(favorite.length===0){
+        setAnimeData(null);
+        return;
+      }
      const cachedData = await AsyncStorage.getItem(`recommendedAnime_${authData}`);
       if (cachedData) {
+        console.log("cache");
         const { data, timestamp } = JSON.parse(cachedData);
+        console.log(data);
         // Check if cached data has expired (e.g., cache duration is 1 day)
         if (Date.now() - timestamp < 24 * 60 * 60 * 1000) {
           setAnimeData(data); // No need to parse again
@@ -62,9 +70,9 @@ const RecommendationsScreen = () => {
         }
         setFavorite(favs);
       const randomIndex = Math.floor(Math.random() * favs.length);
-      console.log(randomIndex);
+      console.log("index = "+randomIndex);
       const randomItem = favs[randomIndex];
-      console.log(randomItem);
+      console.log("rand ani = "+randomItem);
       // Fetch recommendations based on the random item's mal_id
       const recommendations = await fetchRecommendations({ id: randomItem });
       console.log(recommendations);
@@ -75,13 +83,15 @@ const RecommendationsScreen = () => {
       // Set animeData state with the fetched recommendations
       setAnimeData(recommendations);
     } catch (error) {
-      if(error.status == 404){
+      if(error.response && error.response.status !== 404){
         console.log("no favorites");
-        console.error('Error fetching anime:', error.message);
-        setFavorite([]);
-        setAnimeData(null);
+        console.error('Error fetching anime:', error);
+        
+        
+      }else{
+        console.log("no favorites");
       }
-      
+      setAnimeData(null);
     }
   };
 

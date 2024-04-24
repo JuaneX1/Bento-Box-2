@@ -39,7 +39,7 @@ export async function doLogin(formData) {
         else if (error.response.status === 402){
           console.log('402');
           //console.log('Unexpected response status:', error);
-          return {token: null, error: errorMessage};
+          return {token: null, error:"Account not verified"};
         }
         else if (error.response.status === 404){
           console.log('404!');

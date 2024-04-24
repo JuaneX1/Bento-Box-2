@@ -38,29 +38,43 @@ export default function HomeScreen({ navigation }) {
           console.log("No token found.");
           return;
         }
-  
-        if (!userInfo) {
+        
+        /*const cachedData = await AsyncStorage.getItem(`favorites_${authData}_${favorite}`);
+        if (cachedData) {
+          console.log("cache favorites");
+          const { data, timestamp } = JSON.parse(cachedData);
+          // Check if cached data has expired (e.g., cache duration is 1 day)
+          if (Date.now() - timestamp < 30 * 1000) {
+            setAnimeData(data); // No need to parse again
+            return; // Exit early if cached data is still valid
+          }
+        }*/
+        
           const { data } = await instance.get('/info', {
             headers: { Authorization: token }
           });
           if (isActive) setUserInfo(data);
-        }
+        
   
         const { data: favoritesData } = await instance.get('/getFavorite', {
           headers: { Authorization: token }
         });
-        if (isActive) {
-          console.log(favoritesData[0]);
-          setFavorite(favoritesData);
-          console.log(favorite);
-          fetchAnimeDetails(favoritesData, token);
+        
+          const isEqual = await areArraysEqualUnorderedAsync(favorite, favoritesData);
+          if (isEqual === false) {
+            setFavorite(favoritesData);
+            console.log(favoritesData);
+            console.log("fav+ "+favorite);
+            fetchAnimeDetails(favoritesData, token);
+            
+          
         }
       } catch (error) {
-        if(error.response.status === 404){
-          setFavorite([]);
-          setanimeData(null);
+        if(error.response && error.response.status !== 404){
+          console.error('Error fetching data:', error);
         }
-        console.error('Error fetching data:', error);
+        setFavorite([]);
+        setanimeData(null);
       }
     };
   
@@ -72,6 +86,15 @@ export default function HomeScreen({ navigation }) {
     };
   }, [userInfo, favorite]); // Consider what really needs to trigger a re-fetch
 
+  async function areArraysEqualUnorderedAsync(array1, array2) {
+    // Simulating fetch or asynchronous preparation of arrays
+   
+    if (array1.length !== array2.length) {
+        return false;
+    }
+    return true;
+  };
+
   const fetchAnimeDetails = async (favorites, token) => {
     const details = [];
     for (const favorite of favorites) {
@@ -81,7 +104,7 @@ export default function HomeScreen({ navigation }) {
 
             if (cachedData) {
                 const { data, timestamp } = JSON.parse(cachedData);
-                if (Date.now() - timestamp < 60 * 1000) { // Cached data is valid for 60 seconds
+                if (Date.now() - timestamp < 30 * 1000) { // Cached data is valid for 60 seconds
                     details.push(data);
                     continue; // Skip the API call if cached data is still valid
                 }

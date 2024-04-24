@@ -106,9 +106,10 @@ class AnimeInfoScreen extends React.PureComponent {
                 this.setState({ recommendations: animeRecommendationsList });
             }
 
-            this.setState({ loading: false });
+            }else{
+                console.error(error);
             }
-            console.error(error);
+           
             this.setState({ loading: false });
         }
     };
@@ -124,7 +125,10 @@ class AnimeInfoScreen extends React.PureComponent {
             await instance.post(`/setFavorite/`, { mal_id: anime.mal_id.toString() }, { headers: { Authorization: await AsyncStorage.getItem('token') }});
         }
        catch(error){
-        console.log(error.response.data);
+        if(error.response && error.response.status !== 404){
+            console.log(error.response.data);
+        }
+       
        }
     };
 
