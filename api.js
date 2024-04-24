@@ -168,6 +168,10 @@ exports.setApp = function ( app, client ) {
 			}
 
 			const user = await users.findOne({ $or: [{ email: login }, { login: login }] });
+
+			if (!user) {
+				return res.status(401).json({ error: 'Username/email or password is incorrect' });
+			}
 			
 			const passwordMatch = await bcrypt.compare(password, user.password);
 
