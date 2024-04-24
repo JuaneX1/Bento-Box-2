@@ -45,6 +45,7 @@ class AnimeInfoScreen extends React.PureComponent {
     }
 
     fetchData = async () => {// Access navigation from props
+        console.log("animeInfoscreen");
         const { route } = this.props;
         const { anime } = route.params;
         
@@ -86,7 +87,7 @@ class AnimeInfoScreen extends React.PureComponent {
 
             this.setState({ loading: false });
         } catch (error) {
-            if(error.response.data && error.response.data.message=== "No favorites present"){
+            if(error.response && error.response.status === 404){
                console.log("No favorites added");
                const cachedData = await AsyncStorage.getItem(`recommendations_${anime.mal_id}`);
             if (cachedData) {
@@ -105,9 +106,10 @@ class AnimeInfoScreen extends React.PureComponent {
                 this.setState({ recommendations: animeRecommendationsList });
             }
 
-            this.setState({ loading: false });
+            }else{
+                console.error(error);
             }
-            
+           
             this.setState({ loading: false });
         }
     };
@@ -123,7 +125,10 @@ class AnimeInfoScreen extends React.PureComponent {
             await instance.post(`/setFavorite/`, { mal_id: anime.mal_id.toString() }, { headers: { Authorization: await AsyncStorage.getItem('token') }});
         }
        catch(error){
-        console.log(error.response.data);
+        if(error.response && error.response.status !== 404){
+            console.log(error.response.data);
+        }
+       
        }
     };
 

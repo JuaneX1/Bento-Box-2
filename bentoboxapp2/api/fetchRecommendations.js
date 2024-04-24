@@ -3,7 +3,8 @@ import axios from 'axios';
 import { fetchRecInfo } from './fetchRecInfo';
 // Function to fetch top anime with caching and expiration
 export const fetchRecommendations = async ({id}) => {
-    try {
+    console.log("fetch Recommendations");
+        try {
         /*const cachedData = await AsyncStorage.getItem('recommendedAnime');
         if (cachedData) {
             const { data, timestamp } = JSON.parse(cachedData);
@@ -19,10 +20,8 @@ export const fetchRecommendations = async ({id}) => {
         console.log('response');
         const data = response.data;
         if (data && data.data) {
-            console.log('data');
             const arr = data.data;
             //const arr2=JSON.parse(arr);
-            console.log(arr);
             const randomIndex = Math.floor(Math.random() * arr.length);
             console.log(randomIndex);
             const randomItem = arr[randomIndex];
@@ -33,11 +32,11 @@ export const fetchRecommendations = async ({id}) => {
             return randomItem;//data.data.slice(0, 10);
         } else {
             console.error('Data structure is not as expected:', data);
-            return [];
+            return null;
         }
     } catch (error) {
         //console.log("fr");
         console.error('Error fetching FR anime:', error);
-        return [];
+        return null;
     }
 };

@@ -15,8 +15,6 @@ export const Router = () => {
   useEffect(() => {
     const fetchAsyncData = async () => {
       try {
-        const favorites = await AsyncStorage.getItem('favorites');
-        global.favorites = favorites;
         
         if(authData){
           console.log("router yes! "+authData);

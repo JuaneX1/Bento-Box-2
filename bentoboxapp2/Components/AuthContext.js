@@ -41,6 +41,7 @@ export const AuthProvider = ({ children }) => {
     setUserInfo(undefined);
     // Clear any stored authentication data
     await AsyncStorage.removeItem('user_');
+    await AsyncStorage.removeItem('token');
   };
 
   const getInfo= async()=>{
