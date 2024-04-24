@@ -59,7 +59,7 @@ const SearchScreen = () => {
     }, [searchedItem]);
 
     console.log('Searched item:', searchedItem);
-    console.log(searchList.length);
+    
 
     if(searchedItem === ''){
         return( 
@@ -72,11 +72,12 @@ const SearchScreen = () => {
               position="absolute"
           />
            <View style={tw`items-center justify-center`}>
-                <View style={[tw`bg-white/50 rounded-lg px-2 py-2  flex-row focus:outline-none focus:ring focus:ring-primary focus:ring-opacity-50`, { width: windowWidth/1.1, margin:10, marginLeft:10 }]}>
+                <View style={[tw`bg-black/50 rounded-lg px-2 py-2  flex-row focus:outline-none focus:ring focus:ring-primary focus:ring-opacity-50`, { width: windowWidth/1.1, margin:10, marginLeft:10 }]}>
                 <MaterialCommunityIcons name="magnify" color={'white'} size={20} />
                     <TextInput
                         style={tw`text-white focus:text-black w-56 px-2`}
-                        placeholder="Search Here....*"
+                        placeholder="Search Here...."
+                        placeholderTextColor="#fff" 
                         onSubmitEditing={(event) => setSearchedItem(event.nativeEvent.text)}
                     />
                 
@@ -95,7 +96,7 @@ const SearchScreen = () => {
         )
        
     }
-    if(searchList === null || searchList.length === 0){
+    if( searchList.length === 0){
         return(
             <SafeAreaView style={styles.container}>
             <LinearGradient
@@ -106,11 +107,12 @@ const SearchScreen = () => {
               position="absolute"
           />
            <View style={tw`items-center justify-center`}>
-                <View style={[tw`bg-white/50 rounded-lg px-2 py-2  flex-row focus:outline-none focus:ring focus:ring-primary focus:ring-opacity-50`, { width: windowWidth/1.1, margin:10, marginLeft:10 }]}>
+                <View style={[tw`bg-black/50 rounded-lg px-2 py-2  flex-row focus:outline-none focus:ring focus:ring-primary focus:ring-opacity-50`, { width: windowWidth/1.1, margin:10, marginLeft:10 }]}>
                 <MaterialCommunityIcons name="magnify" color={'white'} size={20} />
                     <TextInput
                         style={tw`text-white focus:text-black w-56 px-2`}
-                        placeholder="Search Here....*"
+                        placeholder="Search Here...."
+                        placeholderTextColor="#fff" 
                         onSubmitEditing={(event) => setSearchedItem(event.nativeEvent.text)}
                     />
                 
@@ -136,11 +138,12 @@ const SearchScreen = () => {
                 position="absolute"
             />
              <View style={tw`items-center justify-center`}>
-                <View style={[tw`bg-white/50 rounded-lg px-2 py-2 items-flex-start flex-row focus:outline-none focus:ring focus:ring-primary focus:ring-opacity-50`, { width: windowWidth/1.1, margin:10, marginLeft:10 }]}>
+                <View style={[tw`bg-black/50 rounded-lg px-2 py-2 flex-row focus:outline-none focus:ring focus:ring-primary focus:ring-opacity-50`, { width: windowWidth/1.1, margin:10, marginLeft:10 }]}>
                 <MaterialCommunityIcons name="magnify" color={'white'} size={20} />
                     <TextInput
-                        style={tw`text-white focus:text-black px-2`}
-                        placeholder="Search Here....*"
+                        style={tw`text-white focus:text-white px-2`}
+                        placeholder="Search Here...."
+                        placeholderTextColor="#fff" 
                         onSubmitEditing={(event) => setSearchedItem(event.nativeEvent.text)}
                        
                     />
