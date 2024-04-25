@@ -16,7 +16,7 @@ const AnimeListing = ({ anime }) => {
     
     return (
         <View style={styles.card} key={anime.mal_id + Math.random()}>
-            <TouchableOpacity onPress={() => navigation.navigate('Info', { anime: anime })}>
+            <TouchableOpacity onPress={() => {console.log("Touched!"), navigation.navigate('Info', { anime: anime })}}>
                 <Image style={styles.animeImages} source={{ uri: anime.images.jpg.image_url }} />
                 <Text style={[tw`text-white font-semibold text-center`]}>{truncatedTitle}</Text>
             </TouchableOpacity>

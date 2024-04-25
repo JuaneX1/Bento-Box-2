@@ -5,17 +5,16 @@ import { useAuth } from '../Components/AuthContext';
 // Function to fetch top anime with caching and expiration
 
 export const fetchRecommendations = async ({id, uD}) => {
-    
-    console.log("fetch Recommendations");
+
         try {
-       const cachedData = await AsyncStorage.getItem(`recommendedAnimeItem_${uD}`);
+       /*const cachedData = await AsyncStorage.getItem(`recommendedAnimeItem_${uD}`);
         if (cachedData) {
             const { data, timestamp } = JSON.parse(cachedData);
             // Check if cached data has expired (e.g., cache duration is 1 hour)
             if (Date.now() - timestamp < 24 * 60 * 60 * 1000) {
                 return data;
             }
-        }
+        }*/
         // Fetch fresh data from the API
         console.log(id);
 

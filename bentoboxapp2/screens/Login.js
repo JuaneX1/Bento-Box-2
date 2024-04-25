@@ -40,11 +40,13 @@ export default function Login() {
 
     const handleClick = async () => {
         //await signIn(formData);
+        console.log("user form "+formData.login+" "+formData.password);
         const results = await doLogin(formData);
 
         if(results.token != null){
             
             const user = await getUserInfo(results.token);
+            console.log("user id:"+user.user._id);
             await signIn(user.user._id);
 
             setUserInfo(user);

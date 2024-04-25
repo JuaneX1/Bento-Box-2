@@ -17,7 +17,7 @@ export async function getUserInfo(token) {
       // Use await to wait for response from API call
       const userResponse = await instance.get(`/info`,  {
         headers: {
-          Authorization: `${token}`
+          Authorization: await AsyncStorage.getItem('token')
         }
       });
         

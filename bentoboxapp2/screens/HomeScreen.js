@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Dimensions, FlatList,TouchableOpacity,SafeAreaView,ActivityIndicator, ScrollView, Button } from 'react-native';
-import React, { useEffect, useState } from 'react'; // Import useEffect and useState
+import React, { useEffect, useCallback,useState } from 'react'; // Import useEffect and useState
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FavoriteAnime from '../Components/FavoriteAnime';
 import { useAuth } from '../Components/AuthContext';
@@ -25,126 +25,65 @@ const axiosInstance = axios.create();
 const axiosWithRateLimit = AxiosRateLimit(axiosInstance, { maxRequests: 3, perMilliseconds: 1000 }); // Example: 1 request per 1 seconds
 export default function HomeScreen({ navigation }) {
   const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-  const [animeData, setanimeData]= useState([]);
-  const { authData } = useAuth();
-  const { userInfo, setUserInfo, favorite, setFavorite } = useAuth();
+  const { userInfo, setUserInfo,favorite, setFavorite } = useAuth();
+  const [animeData, setAnimeData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [refresh, setRefresh] = useState(false);
-  useEffect(() => {
-    let isActive = true;
 
-     const areArraysEqualUnorderedAsync = async (array1, array2) =>{
-      // Simulating fetch or asynchronous preparation of arrays
-      console.log('checking if same: '+array1+' '+array2);
-      if (array1.length !== array2.length) {
-        console.log('false');
-          return false;
+  const fetchData = useCallback(async () => {
+    let isActive = true;  // Flag to indicate the component is mounted
+    setIsLoading(true);
+  
+    const token = await AsyncStorage.getItem('token');
+    if (!token) {
+      console.error("No token found.");
+      if (isActive) setIsLoading(false);
+      return;
+    }
+  
+    try {
+      const { data } = await instance.get('/info', {
+        headers: { Authorization: token }
+      });
+      if (isActive) {
+        setUserInfo(data);
+        const { data: favoritesData } = await instance.get('/getFavorite', { headers: { Authorization: await AsyncStorage.getItem('token') } });
+        setFavorite(favoritesData);
+        const details = await Promise.all(favoritesData.map(async (fav) => {
+          const response = await axios.get(`https://api.jikan.moe/v4/anime/${fav}`);
+          return response.data.data;
+        }));
+        setAnimeData(details);
       }
-      console.log('true');
-      return true;
-    };
-    const fetchAnimeDetails = async (favorites, token) => {
-      console.log('Fetching details for favorites:', favorites);
-      const details = [];
-      for (const fav of favorites) {
-          try {
-              /*const cacheKey = `favorites_${authData}_${fav}`;
-              const cachedData = await AsyncStorage.getItem(cacheKey);
-  
-              if (cachedData) {
-                  const { data, timestamp } = JSON.parse(cachedData);
-                  if (Date.now() - timestamp < 30 * 1000) { // Cached data is valid for 60 seconds
-                      details.push(data);
-                      continue; // Skip the API call if cached data is still valid
-                  }
-              }*/
-            
-              const response = await axios.get(`https://api.jikan.moe/v4/anime/${fav}`);
-              const newData = response.data.data;
-              const newTimestamp = Date.now();
-  
-              //await AsyncStorage.setItem(cacheKey, JSON.stringify({ data: newData, timestamp: newTimestamp }));
-              details.push(newData);
-          } catch (error) {
-              console.error('Error fetching anime details for:', favorite, error);
-              details.push(null); // Handle the error by pushing null or some error indicator
-          }
-  
-          // Wait for 333 milliseconds before making the next request
-          await new Promise(resolve => setTimeout(resolve, 335));
+    } catch (error) {
+      if(error.response && error.response.status !== 404){
+        console.error('Error fetching anime:', error);
+      } else {
+        console.log("no favorites");
       }
-      setanimeData(details.filter(detail => detail !== null)); // Filter out any null entries from the details array
-  };
-
-    const fetchData = async () => {
-      try {
-        console.log('Fetching favorites:');
-        console.log(favorite);
-        setIsLoading(true);
-        const token = await AsyncStorage.getItem('token');
-        if (!token) {
-          console.log("No token found.");
-          return;
-        }
-        
-       /* const cachedData = await AsyncStorage.getItem(`favorites_${authData}_${favorite}`);
-        if (cachedData) {
-          console.log("cache favorites");
-          const { data, timestamp } = JSON.parse(cachedData);
-          // Check if cached data has expired (e.g., cache duration is 1 day)
-          if (Date.now() - timestamp < 30 * 1000) {
-            setAnimeData(data); // No need to parse again
-            return; // Exit early if cached data is still valid
-          }
-        }*/
-        
-          const { data } = await instance.get('/info', {
-            headers: { Authorization: token }
-          });
-          if (isActive) setUserInfo(data);
-        
-  
-        const { data: favoritesData } = await instance.get('/getFavorite', {
-          headers: { Authorization: token }
-        });
-        
-         console.log("favoriteData: "+ favoritesData);
-          if (areArraysEqualUnorderedAsync(favorite, favoritesData)===false) {
-            console.log("verdict is false!");
-            setFavorite(favoritesData);
-            console.log("favoriteData added: "+ favoritesData);
-            console.log("fav+ "+favorite);
-            fetchAnimeDetails(favorite, token);
-            
-          
-        }else{
-          console.log("verdict is true!");
-          console.log("favoriteData added: "+ favoritesData);
-          setFavorite(favoritesData);
-          fetchAnimeDetails(favoritesData, token);
-        }
-      } catch (error) {
-        if(error.response && error.response.status !== 404){
-          console.error('Error fetching data:', error);
-        }
-        
-        setanimeData(null);
-      }finally {
-        setIsLoading(false); // End loading
+      if (isActive) {
+        setFavorite([]);
+        setAnimeData(null);
       }
-    };
+    }
+    if (isActive) setIsLoading(false);
   
-    fetchData();
-  
-    // Cleanup function to prevent setting state on unmounted component
+    // Cleanup function
     return () => {
-      isActive = false; // Prevents state update on an unmounted component
+      isActive = false;
     };
-  }, [refresh]); // Consider what really needs to trigger a re-fetch
+  }, [setUserInfo, setFavorite]);  // Dependencies
+  
+  
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   const handleRefresh = () => {
-    setRefresh(prev => !prev); // Toggle the state to re-run the effect
-};
+    fetchData(); // Directly invoke fetching data
+  };
+   // Toggle the state to re-run the effect
 
   return (
     <SafeAreaView style={styles.container}>
@@ -173,10 +112,8 @@ export default function HomeScreen({ navigation }) {
                 data={animeData}
                 keyExtractor={(item) => item.mal_id.toString()}
                 numColumns={2}
-                renderItem={({ item }) => (
-                  <TouchableOpacity>
+                renderItem={({ item }) => (      
                   <AnimeListing anime={item} />
-                  </TouchableOpacity>
                 )}
               />
             )}

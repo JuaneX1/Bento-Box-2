@@ -20,72 +20,56 @@ const RecommendationsScreen = () => {
   const {userInfo, setUserInfo, authData, favorite, setFavorite} = useAuth();
 
   useEffect(() => {
+    let isMounted = true; // flag to track component mount status
+
+    const fetchAnime = async () => {
+        if (!isMounted) return; // Check if component is still mounted
+
+        try {
+          const token = await AsyncStorage.getItem('token');
+          
+          const { data: favoritesData } = await instance.get('/getFavorite', { headers: { Authorization: await AsyncStorage.getItem('token') } });
+            if (isMounted) setFavorite(favoritesData);
+
+            if (favorite.length === 0) {
+
+                setAnimeData(null);
+                return;
+            }
+            //await AsyncStorage.removeItem(`recommendedAnimeItem_${authData}`);
+            const cachedData = await AsyncStorage.getItem(`recommendedAnimeItem_${authData}`);
+
+            if (cachedData) {
+                const { data, timestamp } = JSON.parse(cachedData);
+                if (data && Date.now() - timestamp < 24 * 60 * 60 * 1000) {
+                    if (isMounted) setAnimeData(data); // Use cached data if valid
+                    return;
+                }
+            }
+
+
+            const randomIndex = Math.floor(Math.random() * favoritesData.length);
+            const randomItem = favoritesData[randomIndex];
+            const recommendations = await fetchRecommendations({ id: randomItem, uD: authData });
+
+            if (isMounted) setAnimeData(recommendations);
+        } catch (error) {
+            if (error.response && error.response.status !== 404) {
+                console.error('Error fetching anime:', error.response);
+            } else {
+                console.error('No favorites available to fetch recommendations.', error);
+                if (isMounted) setAnimeData(null);
+            }
+        }
+    };
 
     fetchAnime();
 
-    
-  }, [favorite]);
+    return () => {
+        isMounted = false; // Set flag to false when the component unmounts
+    };
+}, [authData, setFavorite]); // Dependencies include authData and favorite which trigger re-fetching
 
-  const fetchAnime = useCallback(async () => {
-    try {
-      
-     const cachedData = await AsyncStorage.getItem(`recommendedAnimeItem_${authData}`);
-      if (cachedData ) {
-        console.log("cache");
-        const { data, timestamp } = JSON.parse(cachedData);
-        {data !=null}{
-          console.log("data is: ");
-        // Check if cached data has expired (e.g., cache duration is 1 day)
-        if (Date.now() - timestamp < 24 * 60 * 60* 1000) {
-          setAnimeData(data); // No need to parse again
-          console.log(favorite);
-          return; // Exit early if cached data is still valid
-        }
-        }
-        
-      }
-
-      const favsResponse = await instance.get(`/getFavorite`,  {
-       
-        headers: {
-          Authorization: await AsyncStorage.getItem('token')
-        }
-      });
-        
-        const  f  = favsResponse.data;
-
-        console.log(f);
-        setFavorite(f);
-      const randomIndex = Math.floor(Math.random() * f.length);
-      console.log("index = "+randomIndex);
-      const randomItem = f[randomIndex];
-      console.log("rand ani = "+randomItem);
-      // Fetch recommendations based on the random item's mal_id
-      
-      const recommendations = await fetchRecommendations({ id: randomItem, uD:authData });
-
-      console.log(recommendations);
-      // Store recommendations in AsyncStorage
-      const timestamp = Date.now();
-      await AsyncStorage.setItem(`recommendedAnime_${authData}`, JSON.stringify({ data: recommendations, timestamp }));
-
-      // Set animeData state with the fetched recommendations
-      setAnimeData(recommendations);
-      return;
-    } catch (error) {
-      if(error.response && error.response.status !== 404){
-        console.log("no favoritesbbb");
-        console.error('Error fetching anime:', error);
-        
-        
-      }else{
-        console.log("no favorites");
-        console.error('Error fetching anime:', error);
-        setAnimeData(null);
-      }
-     
-    }
-  });
 
   return (
     <SafeAreaView style={styles.container}>

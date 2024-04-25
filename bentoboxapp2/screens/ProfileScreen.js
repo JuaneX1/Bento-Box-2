@@ -25,24 +25,36 @@ const ProfileScreen = () => {
 
   const fetchUserInfo = useCallback(async () => {
     try {
-        const token = await AsyncStorage.getItem('token');
-        const { user, error } = await getUserInfo(token);
-        
-        if (user) {
-          setUserInfo(user);
-        } else {
-          // Handle error, maybe log out the user or display an error message
-          console.error('Error fetching user info x:', error);
-        }
-    } catch (error) {
-       if(error.response && error.response.status === 403){
+      const token = await AsyncStorage.getItem('token');
+      if (!token) {
+        console.error("No authentication token found");
         await logOut();
-       }
-       else{
-        console.log('Error Message', error);
-       }
+        return;
+      }
+      const { user, error } = await getUserInfo(token);
+  
+      if (user) {
+        setUserInfo(user);
+      } else {
+
+        await logOut();
+        console.error('Error fetching user infoiu:', error);
+      }
+    } catch (error) {
+      if (error.response) {
+        // Check if the error is because of forbidden access
+        if (error.response.status === 403) {
+          console.error('Access forbidden. Logging out.', error);
+          await logOut();
+        } else {
+          console.error('An error occurred:', error);
+        }
+      } else {
+        console.error('Error fetching user information:', error);
+      }
     }
-  });
+  }, [setUserInfo, logOut]);
+  
 
   const handleUpdateProfile = () => {
     navigation.navigate('UpdateProfile');

@@ -38,8 +38,9 @@ class AnimeInfoScreen extends React.PureComponent {
     componentDidUpdate(prevProps) {
         const { anime: currentAnime } = this.props.route.params;
         const { anime: previousAnime } = prevProps.route.params;
+        const { favorite } = this.state;
         // Example condition: fetch new recommendations if the 'userId' prop changes
-        if (currentAnime && currentAnime.mal_id !== previousAnime.mal_id) {
+        if (currentAnime && currentAnime.mal_id !== previousAnime.mal_id || favorite === !favorite) {
             this.fetchData();
         }
     }

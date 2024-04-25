@@ -1,8 +1,8 @@
 // AuthContext.js
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';  // Import axios
 import { doLogin } from '../api/doLogin';
-import { doSignUp } from '../api/doSignUp';
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
@@ -10,15 +10,37 @@ export const AuthProvider = ({ children }) => {
   const [favorite, setFavorite] = useState([]);
   const [userInfo, setUserInfo] = useState(null);
 
-  
+  // Create the Axios instance with the base URL to your API
+  const axiosInstance = axios.create({
+    baseURL: 'https://bento-box-2-df32a7e90651.herokuapp.com/api'
+  });
+
+  // Configure global response interceptor
+  useEffect(() => {
+    const responseInterceptor = axiosInstance.interceptors.response.use(
+      response => response,
+      async (error) => {
+        if (error.response && error.response.status === 403) {
+          console.error('403 Forbidden error detected. Logging out...');
+          await logOut();  // Automatically log out on 403 error
+        }
+        return Promise.reject(error);
+      }
+    );
+
+    // Cleanup the interceptor when component unmounts
+    return () => {
+      axiosInstance.interceptors.response.eject(responseInterceptor);
+    };
+  }, []);
+
   useEffect(() => {
     const loadAuthData = async () => {
       try {
         const user = await AsyncStorage.getItem('user_');
         if (user) {
-          console.log("yippie!yippie!");
-          // If a token exists in AsyncStorage, set the authentication state
-          setAuthData(user );
+          console.log("Loaded user data!");
+          setAuthData(user);
         }
       } catch (error) {
         console.error('Error loading authentication data:', error);
@@ -29,23 +51,21 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const signIn = async (formData) => {
-    // Call doLogin with form data
-    const _authData = formData; //await doLogin(formData);
-    await AsyncStorage.setItem('user_', formData);
+    console.log("form data "+formData);
+    const _authData = formData
+    console.log(_authData);
+    await AsyncStorage.setItem('user_', JSON.stringify(_authData));
     console.log(_authData);
     setAuthData(_authData);
   };
 
   const logOut = async () => {
-    setAuthData(undefined);
+    console.log("Logging out...");
+    setAuthData(null);
     setFavorite([]);
-    // Clear any stored authentication data
+    setUserInfo(null);
     await AsyncStorage.removeItem('user_');
     await AsyncStorage.removeItem('token');
-  };
-
-  const getInfo= async()=>{
-
   };
 
   return (
@@ -54,7 +74,5 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-
-
 
 export const useAuth = () => useContext(AuthContext);

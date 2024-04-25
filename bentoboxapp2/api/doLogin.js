@@ -12,7 +12,7 @@ export async function doLogin(formData) {
     baseURL: 'https://bento-box-2-df32a7e90651.herokuapp.com/api'
   });
 
-  if (formData.login && formData.password ) {
+  if (formData.login !='' && formData.password1!='' ) {
     try {
       // Use await to wait for response from API call
       
@@ -58,7 +58,7 @@ export async function doLogin(formData) {
       //setError('Network error or other issue. Please try again.');
     }
   } else {
-    return {token: null, user: null, error: 'Invalid Input. Please make sure all fields are complete.'};
+    return {token: null, error: 'Invalid Input. Please make sure all fields are complete.'};
   }
 }
 function buildPath(route)
