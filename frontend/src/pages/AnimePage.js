@@ -162,7 +162,7 @@ const AnimePage = () => {
                 <h2 className='p-3 m-2'>More About This Show:</h2>
                 <p className='m-2 p-3 fs-5'>Episode Count: {animeData && animeData.episodes !== null ? animeData.episodes : 0}</p>
                 <p className='m-2 p-3 fs-5'>Rating: {animeData && animeData.rating}</p>
-                {animeData.trailer.url && (
+                {animeData.trailer && animeData.trailer.url && (
                     <a href={animeData.trailer.url} target="_blank" rel="noopener noreferrer" className='m-3 text-center fs-5 btn btn-danger'>
                     Watch a Trailer Here!
                   </a>
