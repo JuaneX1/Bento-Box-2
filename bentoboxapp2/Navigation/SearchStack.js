@@ -14,26 +14,12 @@ const Stack = createNativeStackNavigator()
 export default function SearchStack() {
   const navigation = useNavigation()
   return (
-      <Stack.Navigator >
-        <Stack.Screen 
-        name="Discover" 
-        component = {DiscoverScreen}
-        options = {{
-
-          headerShown:true,
-          headerStyle:{
-            backgroundColor:'#111920'
-          },
-          headerTintColor: '#111920',
-          headerRight: () => (
-            <FontAwesome name="search" size={24} color="white" 
-            onPress={() => navigation.navigate('SearchScreen')}
-            />
-          ),
-        }}
-        />
+      <Stack.Navigator
+      initialRouteName="SearchScreen" 
+      >
+        
          <Stack.Screen 
-        name="Info"
+        name="recInfo"
         component = {AnimeInfoScreen}
         
         options = {{
@@ -54,7 +40,21 @@ export default function SearchStack() {
             headerTintColor: '#111920',
           },
 
+        
+        }}
 
+        
+        />
+         <Stack.Screen 
+        name="Info"
+        component = {AnimeInfoScreen}
+        
+        options = {{
+          headerShown:false,
+          headerStyle:{
+            backgroundColor:'#111920',
+            headerTintColor: '#111920',
+          },
         }}
         />
       </Stack.Navigator>

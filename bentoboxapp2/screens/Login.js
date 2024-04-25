@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View, TextInput, Pressable, Modal, Animated, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView,Pressable, Modal, Animated, Dimensions } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { doLogin } from '../api/doLogin';
 import { useAuth } from '../Components/AuthContext';
 import { MaterialIcons } from '@expo/vector-icons';
+import { getUserInfo } from '../api/getUserInfo';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -11,6 +12,7 @@ const windowHeight = Dimensions.get('window').height;
 export default function Login() {
     const navigation = useNavigation();
     const { signIn } = useAuth();
+    const { userInfo, setUserInfo} = useAuth();
 
     const [errorModalVisible, setErrorModalVisible] = useState(false); // State for error modal
     const [errorMessage, setErrorMessage] = useState(''); // State for error message
@@ -41,17 +43,27 @@ export default function Login() {
         const results = await doLogin(formData);
 
         if(results.token != null){
-            console.log(results.token);
-            await signIn(results.token);
+            
+            const user = await getUserInfo(results.token);
+            await signIn(user.user._id);
+
+            setUserInfo(user);
         }
         else{
-            //console.log(results.error);
-            setErrorModalVisible(true);
-            setErrorMessage(results.error);
+            if (results.error) {
+                const message = typeof results.error === 'string' ? results.error : results.error.message;
+                console.log(message);
+                setErrorMessage(message);
+                setTimeout(() => setErrorMessage(''), 6000);
+            }
         }
     };
     return (
-        <View style={styles.container}>
+        
+        <KeyboardAvoidingView style={styles.container}>
+             {errorMessage ? (
+                                 <Text style={styles.errorText}>{errorMessage}</Text>
+                             ): (null)}
             <Text style={[styles.text, {fontWeight: 'bold'}]}>Login: </Text>
             <TextInput
                 style={styles.input}
@@ -91,7 +103,7 @@ export default function Login() {
             </View>
             </View >
         </Modal>
-        </View>
+        </KeyboardAvoidingView>
     );
 }
 
@@ -141,6 +153,11 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5
+      },
+      errorText:{
+        padding:5,
+        color:'red',
+        fontWeight:'700'
       },
       modalText: {
         marginBottom: 15,

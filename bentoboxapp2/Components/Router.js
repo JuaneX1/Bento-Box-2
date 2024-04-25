@@ -6,39 +6,35 @@ import { useAuth } from './AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoadingScreen from '../screens/LoadingScreen';
 
-
 export const Router = () => {
-  const { authData } = useAuth();
+  const { authData, userInfo } = useAuth();
+  
   const [initialRoute, setInitialRoute] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchAsyncData = async () => {
       try {
-        //await AsyncStorage.removeItem('favorites');
-        const favorites = await AsyncStorage.getItem('favorites');
-
         
-        global.favorites=favorites;
-        //const { authData } = useAuth();
-          //await AsyncStorage.removeItem('token');
-          // Check if value exists in AsyncStorage, set initialRoute accordingly
-          if(authData){
-            console.log('good authData');
-            
-          }
-          else{
-            console.log('mid authData');
-          }
-          setInitialRoute(authData ? 'HomeStack' : 'StartStack');
+        if(authData){
+          console.log("router yes! "+authData);
+        }
+        else{
+          console.log("router boooo! "+authData);
+        }
+        // Determine initial route based on authentication state
+        setInitialRoute(authData ? 'HomeStack' : 'StartStack');
       } catch (error) {
         console.error('Error fetching data from AsyncStorage:', error);
         // If error occurs, set initialRoute to the default
         setInitialRoute('StartStack');
+      }finally {
+        setLoading(false); // Set loading to false once data fetching is done
       }
     };
 
     fetchAsyncData();
-  }, [authData]); // Empty dependency array to run once on component mount
+  }, [authData]); // Re-run effect when authData changes
 
   if (initialRoute === null) {
     // Render a loading indicator while fetching AsyncStorage data
