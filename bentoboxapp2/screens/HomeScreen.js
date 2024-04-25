@@ -78,7 +78,7 @@ export default function HomeScreen({ navigation }) {
 
   useEffect(() => {
     fetchData();
-  }, [fetchData]);
+  }, [handleRefresh]);
 
   const handleRefresh = () => {
     fetchData(); // Directly invoke fetching data
