@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, FlatList,StyleSheet, ScrollView, Dimensions, SafeAreaView, Text } from 'react-native';
+import { View, FlatList,StyleSheet, TouchableOpacity,ScrollView, Dimensions, SafeAreaView, Text } from 'react-native';
 import AnimeListingV2 from '../Components/AnimeListingV2';
 import axios from 'axios';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MaterialIcons } from '@expo/vector-icons'; // Add this import statement
 import { fetchRecommendations } from '../api/fetchRecommendations';
 import { useAuth } from '../Components/AuthContext';
-
+import { FontAwesome } from '@expo/vector-icons';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -19,58 +19,60 @@ const RecommendationsScreen = () => {
   const [animeData, setAnimeData] = useState(null);
   const {userInfo, setUserInfo, authData, favorite, setFavorite} = useAuth();
 
-  useEffect(() => {
-    let isMounted = true; // flag to track component mount status
+  const fetchAnime = useCallback(async () => {
+    const token = await AsyncStorage.getItem('token');
+    if (!token) {
+      console.error("No token found.");
+      return;
+    }
 
-    const fetchAnime = async () => {
-        if (!isMounted) return; // Check if component is still mounted
+    try {
+      const { data: favoritesData } = await instance.get('/getFavorite', { headers: { Authorization: token } });
+      setFavorite(favoritesData);
 
-        try {
-          const token = await AsyncStorage.getItem('token');
-          
-          const { data: favoritesData } = await instance.get('/getFavorite', { headers: { Authorization: await AsyncStorage.getItem('token') } });
-            if (isMounted) setFavorite(favoritesData);
+      if (favoritesData.length === 0) {
+        console.log('null');
+        setAnimeData(null);
+        return;
+      }
 
-            if (favorite.length === 0) {
-
-                setAnimeData(null);
-                return;
-            }
-            //await AsyncStorage.removeItem(`recommendedAnimeItem_${authData}`);
-            const cachedData = await AsyncStorage.getItem(`recommendedAnimeItem_${authData}`);
-
-            if (cachedData) {
-                const { data, timestamp } = JSON.parse(cachedData);
-                if (data && Date.now() - timestamp < 24 * 60 * 60 * 1000) {
-                    if (isMounted) setAnimeData(data); // Use cached data if valid
-                    return;
-                }
-            }
-
-
-            const randomIndex = Math.floor(Math.random() * favoritesData.length);
-            const randomItem = favoritesData[randomIndex];
-            const recommendations = await fetchRecommendations({ id: randomItem, uD: authData });
-
-            if (isMounted) setAnimeData(recommendations);
-        } catch (error) {
-            if (error.response && error.response.status !== 404) {
-                console.error('Error fetching anime:', error.response);
-            } else {
-                console.error('No favorites available to fetch recommendations.', error);
-                if (isMounted) setAnimeData(null);
-            }
+      const cachedData = await AsyncStorage.getItem(`recommendedAnimeItem_${authData}`);
+      if (cachedData) {
+        const { data, timestamp } = JSON.parse(cachedData);
+        if (data && Date.now() - timestamp < 24 * 60 * 60 * 1000) {
+          setAnimeData(data);
+          return;
         }
-    };
+      }
 
-    fetchAnime();
+      const randomIndex = Math.floor(Math.random() * favoritesData.length);
+      const randomItem = favoritesData[randomIndex];
+      const recommendations = await fetchRecommendations({ id: randomItem, uD: authData });
+
+      setAnimeData(recommendations);
+    } catch (error) {
+      if(error.response && error.response.status !== 404){
+        console.log('Error fetching anime:', error);
+      } else {
+        console.log("no favorites");
+          setFavorite([]);
+          setAnimeData(null);
+      }
+      
+    }
+  }, [authData, setFavorite]);
+
+  useEffect(() => {
+    let isMounted = true;
+    fetchAnime().then(() => {
+      if (!isMounted) return;
+      // Additional state updates or effects if needed
+    });
 
     return () => {
-        isMounted = false; // Set flag to false when the component unmounts
+      isMounted = false; // Cleanup: set isMounted to false when component unmounts
     };
-}, [authData, setFavorite]); // Dependencies include authData and favorite which trigger re-fetching
-
-
+  }, [fetchAnime]);
   return (
     <SafeAreaView style={styles.container}>
       <LinearGradient
@@ -84,6 +86,9 @@ const RecommendationsScreen = () => {
         {animeData ? (
           <>
             <Text style={styles.headerText}>For You!</Text>
+            <TouchableOpacity style={{borderRadius:10,alignSelf:'center',alignContent:'center', backgroundColor:"#3077b2",marginBottom:10,width:80,height:30}}onPress={fetchAnime}>
+            <FontAwesome name="refresh" size={24} style ={{marginTop:3,alignSelf:'center'}}color="white" />
+              </TouchableOpacity>
             <Text style={styles.infoText}>Here’s our pick for today. Come back tomorrow to see what else we have for you!</Text>
             <View style={styles.animeContainer}>
                   <AnimeListingV2 anime={animeData.entry} />
@@ -93,6 +98,9 @@ const RecommendationsScreen = () => {
         ) : (
           <View>
           <Text style={styles.headerText}>For You!</Text>
+          <TouchableOpacity style={{borderRadius:10,alignSelf:'center',alignContent:'center', backgroundColor:"#3077b2",marginBottom:10,width:80,height:30}}onPress={fetchAnime}>
+            <FontAwesome name="refresh" size={24} style ={{marginTop:3,alignSelf:'center'}}color="white" />
+              </TouchableOpacity>
             <View style={styles.animeContainer}>
               <MaterialIcons name="sentiment-neutral" size={72} color="#fff" style={styles.sadIcon} />
               <Text style={styles.headerText}>Daily Pick</Text>
@@ -136,7 +144,7 @@ const styles = StyleSheet.create({
   animeContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop:30,
+    marginTop:10,
     alignSelf:'center',
   },
   noFavoritesText: {
