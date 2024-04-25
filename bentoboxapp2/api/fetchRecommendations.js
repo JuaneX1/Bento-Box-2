@@ -31,10 +31,9 @@ export const fetchRecommendations = async ({id, uD}) => {
             console.log(randomItem);
             // Cache the fetched data with current timestamp
             const r = await axios.get(`https://api.jikan.moe/v4/anime/${randomItem}`);
-            console.log(r);
             const timestamp = Date.now();
-            await AsyncStorage.setItem(`recommendedAnimeItem_${uD}`, JSON.stringify({ data: r.data.data, timestamp }));
-            return r.data.data;//data.data.slice(0, 10);
+            await AsyncStorage.setItem(`recommendedAnimeItem_${uD}`, JSON.stringify({ data: randomItem, timestamp }));
+            return randomItem;//data.data.slice(0, 10);
         } else {
             console.error('Data structure is not as expected:', data);
             return null;
