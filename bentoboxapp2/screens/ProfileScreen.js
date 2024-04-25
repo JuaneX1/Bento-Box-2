@@ -77,19 +77,19 @@ const ProfileScreen = () => {
       <View style={styles.infoContainer}>
         <View style={styles.infoRow}>
           <Text style={styles.infoLabel}>First Name:</Text>
-          <Text style={styles.infoValue}>{userInfo?.first ?? 'Not Available'}</Text>
+          <Text style={styles.infoValue}>{userInfo.first ? userInfo.first:'Not Available'}</Text>
         </View>
         <View style={styles.infoRow}>
           <Text style={styles.infoLabel}>Last Name:</Text>
-          <Text style={styles.infoValue}>{userInfo?.last ?? 'Not Available'}</Text>
+          <Text style={styles.infoValue}>{userInfo.last ? userInfo.last:'Not Available'}</Text>
         </View>
         <View style={styles.infoRow}>
           <Text style={styles.infoLabel}>Username:</Text>
-          <Text style={styles.infoValue}>{userInfo?.login ?? 'Not Available'}</Text>
+          <Text style={styles.infoValue}>{userInfo.login ? userInfo.login:'Not Available'}</Text>
         </View>
         <View style={styles.infoRow}>
           <Text style={styles.infoLabel}>Email:</Text>
-          <Text style={styles.infoValue}>{userInfo?.email ?? 'Not Available'}</Text>
+          <Text style={styles.infoValue}>{userInfo.email ? userInfo.email : 'Not Available'}</Text>
         </View>
       </View>
       <TouchableOpacity style={[styles.button, styles.editButton]} onPress={handleUpdateProfile}>

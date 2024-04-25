@@ -38,7 +38,6 @@ export const AuthProvider = ({ children }) => {
 
   const logOut = async () => {
     setAuthData(undefined);
-    setUserInfo(undefined);
     setFavorite([]);
     // Clear any stored authentication data
     await AsyncStorage.removeItem('user_');

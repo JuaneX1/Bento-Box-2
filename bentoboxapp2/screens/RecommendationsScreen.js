@@ -4,7 +4,6 @@ import AnimeListingV2 from '../Components/AnimeListingV2';
 import axios from 'axios';
 import { LinearGradient } from 'expo-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Carousel from 'react-native-snap-carousel'; // Import the Carousel component
 import { MaterialIcons } from '@expo/vector-icons'; // Add this import statement
 import { fetchRecommendations } from '../api/fetchRecommendations';
 import { useAuth } from '../Components/AuthContext';

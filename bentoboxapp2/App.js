@@ -7,7 +7,9 @@ import { AuthProvider } from './Components/AuthContext'; // Import the AuthProvi
 import StartScreen from "./screens/StartScreen";
 import HomeStack from './Navigation/HomeStack';
 import { Router } from './Components/Router';
+import { enableScreens } from 'react-native-screens';
 
+enableScreens();
 const Stack = createNativeStackNavigator();
 
 export default function App() {
