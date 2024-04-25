@@ -62,7 +62,7 @@ function HomeStack() {
         }}
       />
       <Tab.Screen 
-        name="For You"
+        name="For You!"
         component={RecommendationStack}
         options={{
           headerShown:false,

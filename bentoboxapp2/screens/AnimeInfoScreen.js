@@ -123,6 +123,19 @@ class AnimeInfoScreen extends React.PureComponent {
         try{
             console.log(anime.mal_id);
             await instance.post(`/setFavorite/`, { mal_id: anime.mal_id.toString() }, { headers: { Authorization: await AsyncStorage.getItem('token') }});
+
+            const response = await instance.get('/getFavorite', { headers: { Authorization: token } });
+            const favoritesData = [...response.data];
+
+            
+
+                console.log("favorite before : "+favorite);
+                console.log(favoritesData);
+                const integers = favoritesData.map(num => parseInt(num, 10));
+                console.log(integers);
+                setFavorite(integers);
+                console.log(integers);
+            
         }
        catch(error){
         if(error.response && error.response.status !== 404){

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, FlatList,StyleSheet, ScrollView, Dimensions, SafeAreaView, Text } from 'react-native';
 import AnimeListingV2 from '../Components/AnimeListingV2';
 import axios from 'axios';
@@ -26,7 +26,7 @@ const RecommendationsScreen = () => {
     
   }, [favorite]);
 
-  const fetchAnime = async () => {
+  const fetchAnime = useCallback(async () => {
     try {
       
      const cachedData = await AsyncStorage.getItem(`recommendedAnimeItem_${authData}`);
@@ -44,20 +44,6 @@ const RecommendationsScreen = () => {
         }
         
       }
-
-      //const favoritesString = await AsyncStorage.getItem('favorites');
-      //const favorites = JSON.parse(favoritesString);
-
-      /*if (!favorites || favorites.length === 0) {
-        throw new Error('No favorites found.');
-      }*/
-      /*await delay(400);
-      const top = await axiosWithRateLimit.get('https://api.jikan.moe/v4/top/anime', {
-        params: {
-            sfw: true,
-            filter: 'bypopularity'
-        }
-    });*/
 
       const favsResponse = await instance.get(`/getFavorite`,  {
        
@@ -99,7 +85,7 @@ const RecommendationsScreen = () => {
       }
      
     }
-  };
+  });
 
   return (
     <SafeAreaView style={styles.container}>
@@ -113,7 +99,7 @@ const RecommendationsScreen = () => {
       <View contentContainerStyle={styles.scrollContent}>
         {animeData ? (
           <>
-            <Text style={styles.headerText}>Daily Pick</Text>
+            <Text style={styles.headerText}>For You!</Text>
             <Text style={styles.infoText}>Here’s our pick for today. Come back tomorrow to see what else we have for you!</Text>
             <View style={styles.animeContainer}>
                   <AnimeListingV2 anime={animeData.entry} />
@@ -122,7 +108,7 @@ const RecommendationsScreen = () => {
           </>
         ) : (
           <View>
-          <Text style={styles.headerText}>Daily Pick</Text>
+          <Text style={styles.headerText}>For You!</Text>
             <View style={styles.animeContainer}>
               <MaterialIcons name="sentiment-neutral" size={72} color="#fff" style={styles.sadIcon} />
               <Text style={styles.headerText}>Daily Pick</Text>
@@ -153,7 +139,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     marginBottom: 20,
     marginTop: 20,
-    marginLeft:10
+    marginLeft:15
   },
   infoText: {
     fontSize: 20,

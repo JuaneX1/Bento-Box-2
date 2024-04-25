@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback,useEffect } from 'react';
 import { View, Text, Dimensions, StyleSheet, TouchableOpacity, Modal, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../Components/AuthContext';
@@ -15,27 +15,34 @@ const windowHeight = Dimensions.get('window').height;
 
 const ProfileScreen = () => {
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
-  const { logOut, userInfo, setUserInfo } = useAuth();
+  const { logOut, userInfo = {}, setUserInfo } = useAuth();
   const navigation = useNavigation();
 
   useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-          const token = await AsyncStorage.getItem('token');
-          const { user, error } = await getUserInfo(token);
-          
-          if (user) {
-            setUserInfo(user);
-          } else {
-            // Handle error, maybe log out the user or display an error message
-            console.error('Error fetching user info x:', error);
-          }
-      } catch (error) {
-        console.error('Error fetching user info:', error);
-      }
-    };
+
     fetchUserInfo();
   }, [userInfo, setUserInfo]);
+
+  const fetchUserInfo = useCallback(async () => {
+    try {
+        const token = await AsyncStorage.getItem('token');
+        const { user, error } = await getUserInfo(token);
+        
+        if (user) {
+          setUserInfo(user);
+        } else {
+          // Handle error, maybe log out the user or display an error message
+          console.error('Error fetching user info x:', error);
+        }
+    } catch (error) {
+       if(error.response && error.response.status === 403){
+        await logOut();
+       }
+       else{
+        console.log('Error Message', error);
+       }
+    }
+  });
 
   const handleUpdateProfile = () => {
     navigation.navigate('UpdateProfile');
@@ -75,24 +82,27 @@ const ProfileScreen = () => {
       />
       
       <View style={styles.infoContainer}>
-        <View style={styles.infoRow}>
-          <Text style={styles.infoLabel}>First Name:</Text>
-          <Text style={styles.infoValue}>{userInfo.first ? userInfo.first:'Not Available'}</Text>
-        </View>
-        <View style={styles.infoRow}>
-          <Text style={styles.infoLabel}>Last Name:</Text>
-          <Text style={styles.infoValue}>{userInfo.last ? userInfo.last:'Not Available'}</Text>
-        </View>
-        <View style={styles.infoRow}>
-          <Text style={styles.infoLabel}>Username:</Text>
-          <Text style={styles.infoValue}>{userInfo.login ? userInfo.login:'Not Available'}</Text>
-        </View>
-        <View style={styles.infoRow}>
-          <Text style={styles.infoLabel}>Email:</Text>
-          <Text style={styles.infoValue}>{userInfo.email ? userInfo.email : 'Not Available'}</Text>
-        </View>
+      {userInfo && (
+    <>
+      <View style={styles.infoRow}>
+        <Text style={styles.infoLabel}>First Name:</Text>
+        <Text style={styles.infoValue}>{userInfo.first ? userInfo.first : 'Not Available'}</Text>
       </View>
-      <TouchableOpacity style={[styles.button, styles.editButton]} onPress={handleUpdateProfile}>
+      <View style={styles.infoRow}>
+        <Text style={styles.infoLabel}>Last Name:</Text>
+        <Text style={styles.infoValue}>{userInfo.last ? userInfo.last : 'Not Available'}</Text>
+      </View>
+      <View style={styles.infoRow}>
+        <Text style={styles.infoLabel}>Username:</Text>
+        <Text style={styles.infoValue}>{userInfo.login ? userInfo.login : 'Not Available'}</Text>
+      </View>
+      <View style={styles.infoRow}>
+        <Text style={styles.infoLabel}>Email:</Text>
+        <Text style={styles.infoValue}>{userInfo.email ? userInfo.email : 'Not Available'}</Text>
+      </View>
+    </>
+  )}
+  <TouchableOpacity style={[styles.button, styles.editButton]} onPress={handleUpdateProfile}>
         <Text style={styles.buttonText}>Edit Profile</Text>
       </TouchableOpacity>
       <TouchableOpacity style={[styles.button, styles.logoutButton]} onPress={handleLogout}>
@@ -106,6 +116,7 @@ const ProfileScreen = () => {
         onClose={() => setDeleteModalVisible(false)}
         onDelete={handleDeleteAccount}
       />
+  </View>
     </View>
   );
 };
@@ -158,6 +169,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     alignItems: 'center',
     justifyContent: 'center',
+    alignSelf:'center',
     marginBottom: 20,
   },
   buttonText: {
@@ -167,6 +179,7 @@ const styles = StyleSheet.create({
   },
   editButton: {
     backgroundColor: '#3077b2',
+    marginTop:10,
   },
   logoutButton: {
     backgroundColor: '#3077b2',

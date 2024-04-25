@@ -67,13 +67,13 @@ export default function Login() {
             <Text style={[styles.text, {fontWeight: 'bold'}]}>Login: </Text>
             <TextInput
                 style={styles.input}
-                placeholder="Email*"
+                placeholder="Email or Login"
                 onChangeText={(text) => setFormData({ ...formData, login: text })}
             />
             <Text style={[styles.text, {fontWeight: 'bold'}]}>Password: </Text>
             <TextInput
                 style={styles.input}
-                placeholder="Password*"
+                placeholder="Password"
                 secureTextEntry={true}
                 onChangeText={(text) => setFormData({ ...formData, password: text })}
             />
