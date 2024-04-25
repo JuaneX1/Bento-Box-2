@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Dimensions,StyleSheet, TextInput, Button, Alert, Pressable, Image } from 'react-native';
+import { View, Text, Dimensions,KeyboardAvoidingView ,StyleSheet, TextInput, Button, Alert, Pressable, Image } from 'react-native';
 import axios from 'axios'; // Import axios for API requests
 import { LinearGradient } from 'expo-linear-gradient';
 const PRODUCTION = true;
@@ -34,7 +34,7 @@ export default function ForgotPassword() {
   }
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView  style={styles.container}>
       <LinearGradient
               colors={['transparent', 'rgba(48, 119, 178, 0.5)', 'rgba(48, 119, 178, 1)']}
               style={{ width: windowWidth, height: windowHeight*0.55, transform: [{ translateY: windowHeight*0.30}]}}
@@ -65,9 +65,9 @@ export default function ForgotPassword() {
         style={styles.submitButton}
         onPress={handleForgotPassword}
       >
-        <Text style={[styles.text, {fontWeight: 'bold', color: '#fff'}]}>Reset Password</Text>
+        <Text style={[styles.text, {fontWeight: 'bold', color: '#111920'}]}>Reset Password</Text>
       </Pressable>
-    </View>
+    </KeyboardAvoidingView >
   );
 }
 
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 50,
     borderRadius: 25,
     elevation: 3,
-    backgroundColor: '#3077b2',
+    backgroundColor: '#e7e6e1',
   },
   text: {
     color: '#000' // Black text color

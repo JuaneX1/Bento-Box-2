@@ -20,9 +20,10 @@ const ProfileScreen = () => {
 
   useEffect(() => {
     const fetchUserInfo = async () => {
-      try [
+      try {
           const token = await AsyncStorage.getItem('token');
           const { user, error } = await getUserInfo(token);
+          
           if (user) {
             setUserInfo(user);
           } else {
@@ -72,6 +73,7 @@ const ProfileScreen = () => {
         style={styles.logo}
         source={require('../assets/LOGO/Logo w Red Tagline/BB Logo Horizontal_COLOR 1.png')}
       />
+      
       <View style={styles.infoContainer}>
         <View style={styles.infoRow}>
           <Text style={styles.infoLabel}>First Name:</Text>

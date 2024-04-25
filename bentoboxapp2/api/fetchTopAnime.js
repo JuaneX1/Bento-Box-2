@@ -6,8 +6,8 @@ import AxiosRateLimit from 'axios-rate-limit';
 const axiosInstance = axios.create();
 
 // Apply rate limiting to the axios instance
-const axiosWithRateLimit = AxiosRateLimit(axiosInstance, { maxRequests: 1, perMilliseconds: 5000 }); // Example: 1 request per 1 seconds
-
+const axiosWithRateLimit = AxiosRateLimit(axiosInstance, { maxRequests: 1, perMilliseconds: 1000 }); // Example: 1 request per 1 seconds
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 // Function to fetch top anime with caching and expiration
 export const fetchTopAnime = async () => {
     try {
@@ -23,6 +23,7 @@ export const fetchTopAnime = async () => {
         console.log("api request!");
       
         // Fetch fresh data from the API
+       
         const response = await axiosWithRateLimit.get('https://api.jikan.moe/v4/top/anime', {
             params: {
                 sfw: true,

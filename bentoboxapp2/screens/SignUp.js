@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView,Text, View, TextInput, Pressable, Modal, Dimensions, Animated } from 'react-native';
+import { StyleSheet, ScrollView,Text, View, KeyboardAvoidingView,TextInput, Pressable, Modal, Dimensions, Animated } from 'react-native';
 import {doSignUp} from '../api/doSignUp';
 import { useAuth } from '../Components/AuthContext';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -83,7 +83,7 @@ export default function SignUp() {
   };
 
   return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container}>
          {errorMessage ? (
         <Text style={styles.errorText}>{errorMessage}</Text>
       ): (null)}
@@ -137,7 +137,7 @@ export default function SignUp() {
           <Text style={styles.text}>Sign Up</Text>
         </Pressable>
         </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   input: {
-    height: 35,
+    height: 40,
     marginVertical: 8,
     borderWidth: 2,
     width: 300,
@@ -203,11 +203,15 @@ const styles = StyleSheet.create({
   },
   errorText:{
     color:'red',
-    fontWeight:'700'
+    fontWeight:'700',
+    paddingLeft:5,
+    paddingRight:5,
   },
   successText:{
     color:'green',
-    fontWeight:'700'
+    fontWeight:'700',
+    paddingLeft:5,
+    paddingRight:5,
   },
   modalButton: {
     backgroundColor: "#3077b2",

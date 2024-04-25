@@ -30,20 +30,20 @@ const RecommendationsScreen = () => {
   const fetchAnime = async () => {
     try {
       
-      if(favorite.length===0){
-        setAnimeData(null);
-        return;
-      }
-     const cachedData = await AsyncStorage.getItem(`recommendedAnime_${authData}`);
-      if (cachedData) {
+     const cachedData = await AsyncStorage.getItem(`recommendedAnimeItem_${authData}`);
+      if (cachedData ) {
         console.log("cache");
         const { data, timestamp } = JSON.parse(cachedData);
-        console.log(data);
+        {data !=null}{
+          console.log("data is: ");
         // Check if cached data has expired (e.g., cache duration is 1 day)
-        if (Date.now() - timestamp < 24 * 60 * 60 * 1000) {
+        if (Date.now() - timestamp < 24 * 60 * 60* 1000) {
           setAnimeData(data); // No need to parse again
+          console.log(favorite);
           return; // Exit early if cached data is still valid
         }
+        }
+        
       }
 
       //const favoritesString = await AsyncStorage.getItem('favorites');
@@ -52,6 +52,14 @@ const RecommendationsScreen = () => {
       /*if (!favorites || favorites.length === 0) {
         throw new Error('No favorites found.');
       }*/
+      /*await delay(400);
+      const top = await axiosWithRateLimit.get('https://api.jikan.moe/v4/top/anime', {
+        params: {
+            sfw: true,
+            filter: 'bypopularity'
+        }
+    });*/
+
       const favsResponse = await instance.get(`/getFavorite`,  {
        
         headers: {
@@ -61,20 +69,16 @@ const RecommendationsScreen = () => {
         
         const  f  = favsResponse.data;
 
-        const favs = [...f];
-        if(favs != null){
-          console.log(...f);
-        }
-        else{
-          console.log(f);
-        }
-        setFavorite(favs);
-      const randomIndex = Math.floor(Math.random() * favs.length);
+        console.log(f);
+        setFavorite(f);
+      const randomIndex = Math.floor(Math.random() * f.length);
       console.log("index = "+randomIndex);
-      const randomItem = favs[randomIndex];
+      const randomItem = f[randomIndex];
       console.log("rand ani = "+randomItem);
       // Fetch recommendations based on the random item's mal_id
-      const recommendations = await fetchRecommendations({ id: randomItem });
+      
+      const recommendations = await fetchRecommendations({ id: randomItem, uD:authData });
+
       console.log(recommendations);
       // Store recommendations in AsyncStorage
       const timestamp = Date.now();
@@ -82,16 +86,19 @@ const RecommendationsScreen = () => {
 
       // Set animeData state with the fetched recommendations
       setAnimeData(recommendations);
+      return;
     } catch (error) {
       if(error.response && error.response.status !== 404){
-        console.log("no favorites");
+        console.log("no favoritesbbb");
         console.error('Error fetching anime:', error);
         
         
       }else{
         console.log("no favorites");
+        console.error('Error fetching anime:', error);
+        setAnimeData(null);
       }
-      setAnimeData(null);
+     
     }
   };
 
@@ -105,7 +112,7 @@ const RecommendationsScreen = () => {
         position="absolute"
       />
       <View contentContainerStyle={styles.scrollContent}>
-        {animeData && animeData.length !== 0 ? (
+        {animeData ? (
           <>
             <Text style={styles.headerText}>Daily Pick</Text>
             <Text style={styles.infoText}>Here’s our pick for today. Come back tomorrow to see what else we have for you!</Text>
@@ -115,13 +122,16 @@ const RecommendationsScreen = () => {
             </View>
           </>
         ) : (
-          <View style={styles.animeContainer}>
-            <MaterialIcons name="sentiment-neutral" size={72} color="#fff" style={styles.sadIcon} />
-            <Text style={styles.headerText}>Daily Pick</Text>
-            <Text style={styles.noFavoritesText}>Oops no favorites found.</Text>
-            <Text style={styles.noFavoritesText}>Continue exploring and add some favorites</Text>
-            <Text style={styles.noFavoritesText}>so we can recommend you a daily pick !</Text>
-          </View>
+          <View>
+          <Text style={styles.headerText}>Daily Pick</Text>
+            <View style={styles.animeContainer}>
+              <MaterialIcons name="sentiment-neutral" size={72} color="#fff" style={styles.sadIcon} />
+              <Text style={styles.headerText}>Daily Pick</Text>
+              <Text style={styles.noFavoritesText}>Oops no favorites found.</Text>
+              <Text style={styles.noFavoritesText}>Continue exploring and add some favorites</Text>
+              <Text style={styles.noFavoritesText}>so we can recommend you a daily pick !</Text>
+            </View>
+            </View>
         )}
       </View>
     </SafeAreaView>
@@ -157,7 +167,8 @@ const styles = StyleSheet.create({
   animeContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 20,
+    marginTop:30,
+    alignSelf:'center',
   },
   noFavoritesText: {
     color: '#fff',

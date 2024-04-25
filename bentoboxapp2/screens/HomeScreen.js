@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Dimensions, FlatList,TouchableOpacity,SafeAreaView,ActivityIndicator, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, FlatList,TouchableOpacity,SafeAreaView,ActivityIndicator, ScrollView, Button } from 'react-native';
 import React, { useEffect, useState } from 'react'; // Import useEffect and useState
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FavoriteAnime from '../Components/FavoriteAnime';
@@ -10,6 +10,7 @@ import AnimeListing from '../Components/AnimeListing';
 import { LinearGradient } from 'expo-linear-gradient';
 import AxiosRateLimit from 'axios-rate-limit';
 import { MaterialIcons } from '@expo/vector-icons'; // Add this import statement
+import { FontAwesome } from '@expo/vector-icons';
 
 // Import statements...
 const windowWidth = Dimensions.get('window').width;
@@ -23,23 +24,70 @@ const axiosInstance = axios.create();
 // Apply rate limiting to the axios instance
 const axiosWithRateLimit = AxiosRateLimit(axiosInstance, { maxRequests: 3, perMilliseconds: 1000 }); // Example: 1 request per 1 seconds
 export default function HomeScreen({ navigation }) {
-  const [favorites, setFavorites] = useState(null);
+  const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
   const [animeData, setanimeData]= useState([]);
-  const [user, setUser] = useState(null);
   const { authData } = useAuth();
   const { userInfo, setUserInfo, favorite, setFavorite } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   useEffect(() => {
     let isActive = true;
+
+     const areArraysEqualUnorderedAsync = async (array1, array2) =>{
+      // Simulating fetch or asynchronous preparation of arrays
+      console.log('checking if same: '+array1+' '+array2);
+      if (array1.length !== array2.length) {
+        console.log('false');
+          return false;
+      }
+      console.log('true');
+      return true;
+    };
+    const fetchAnimeDetails = async (favorites, token) => {
+      console.log('Fetching details for favorites:', favorites);
+      const details = [];
+      for (const fav of favorites) {
+          try {
+              /*const cacheKey = `favorites_${authData}_${fav}`;
+              const cachedData = await AsyncStorage.getItem(cacheKey);
   
+              if (cachedData) {
+                  const { data, timestamp } = JSON.parse(cachedData);
+                  if (Date.now() - timestamp < 30 * 1000) { // Cached data is valid for 60 seconds
+                      details.push(data);
+                      continue; // Skip the API call if cached data is still valid
+                  }
+              }*/
+            
+              const response = await axios.get(`https://api.jikan.moe/v4/anime/${fav}`);
+              const newData = response.data.data;
+              const newTimestamp = Date.now();
+  
+              //await AsyncStorage.setItem(cacheKey, JSON.stringify({ data: newData, timestamp: newTimestamp }));
+              details.push(newData);
+          } catch (error) {
+              console.error('Error fetching anime details for:', favorite, error);
+              details.push(null); // Handle the error by pushing null or some error indicator
+          }
+  
+          // Wait for 333 milliseconds before making the next request
+          await new Promise(resolve => setTimeout(resolve, 335));
+      }
+      setanimeData(details.filter(detail => detail !== null)); // Filter out any null entries from the details array
+  };
+
     const fetchData = async () => {
       try {
+        console.log('Fetching favorites:');
+        console.log(favorite);
+        setIsLoading(true);
         const token = await AsyncStorage.getItem('token');
         if (!token) {
           console.log("No token found.");
           return;
         }
         
-        /*const cachedData = await AsyncStorage.getItem(`favorites_${authData}_${favorite}`);
+       /* const cachedData = await AsyncStorage.getItem(`favorites_${authData}_${favorite}`);
         if (cachedData) {
           console.log("cache favorites");
           const { data, timestamp } = JSON.parse(cachedData);
@@ -60,21 +108,29 @@ export default function HomeScreen({ navigation }) {
           headers: { Authorization: token }
         });
         
-          const isEqual = await areArraysEqualUnorderedAsync(favorite, favoritesData);
-          if (isEqual === false) {
+         console.log("favoriteData: "+ favoritesData);
+          if (areArraysEqualUnorderedAsync(favorite, favoritesData)===false) {
+            console.log("verdict is false!");
             setFavorite(favoritesData);
-            console.log(favoritesData);
+            console.log("favoriteData added: "+ favoritesData);
             console.log("fav+ "+favorite);
-            fetchAnimeDetails(favoritesData, token);
+            fetchAnimeDetails(favorite, token);
             
           
+        }else{
+          console.log("verdict is true!");
+          console.log("favoriteData added: "+ favoritesData);
+          setFavorite(favoritesData);
+          fetchAnimeDetails(favoritesData, token);
         }
       } catch (error) {
         if(error.response && error.response.status !== 404){
           console.error('Error fetching data:', error);
         }
-        setFavorite([]);
+        
         setanimeData(null);
+      }finally {
+        setIsLoading(false); // End loading
       }
     };
   
@@ -84,49 +140,11 @@ export default function HomeScreen({ navigation }) {
     return () => {
       isActive = false; // Prevents state update on an unmounted component
     };
-  }, [userInfo, favorite]); // Consider what really needs to trigger a re-fetch
+  }, [refresh]); // Consider what really needs to trigger a re-fetch
 
-  async function areArraysEqualUnorderedAsync(array1, array2) {
-    // Simulating fetch or asynchronous preparation of arrays
-   
-    if (array1.length !== array2.length) {
-        return false;
-    }
-    return true;
-  };
-
-  const fetchAnimeDetails = async (favorites, token) => {
-    const details = [];
-    for (const favorite of favorites) {
-        try {
-            const cacheKey = `favorites_${authData}_${favorite}`;
-            const cachedData = await AsyncStorage.getItem(cacheKey);
-
-            if (cachedData) {
-                const { data, timestamp } = JSON.parse(cachedData);
-                if (Date.now() - timestamp < 30 * 1000) { // Cached data is valid for 60 seconds
-                    details.push(data);
-                    continue; // Skip the API call if cached data is still valid
-                }
-            }
-
-            const response = await axios.get(`https://api.jikan.moe/v4/anime/${favorite}`);
-            const newData = response.data.data;
-            const newTimestamp = Date.now();
-
-            await AsyncStorage.setItem(cacheKey, JSON.stringify({ data: newData, timestamp: newTimestamp }));
-            details.push(newData);
-        } catch (error) {
-            console.error('Error fetching anime details for:', favorite, error);
-            details.push(null); // Handle the error by pushing null or some error indicator
-        }
-
-        // Wait for 333 milliseconds before making the next request
-        await new Promise(resolve => setTimeout(resolve, 335));
-    }
-    setanimeData(details.filter(detail => detail !== null)); // Filter out any null entries from the details array
+  const handleRefresh = () => {
+    setRefresh(prev => !prev); // Toggle the state to re-run the effect
 };
-
 
   return (
     <SafeAreaView style={styles.container}>
@@ -137,9 +155,12 @@ export default function HomeScreen({ navigation }) {
         end={{ x: 0.5, y: 1 }}
         position="absolute"
       />
-        {userInfo ? (
-          <>
+        { userInfo ? (
+          <View style={{marginTop:20}}>
             <Text style={[styles.userFavorites, { textAlign: 'center' }]}>{userInfo ? `${userInfo.login}'s Favorites` : "User's Favorites"}</Text>
+            <TouchableOpacity style={{borderRadius:10,alignSelf:'center',alignContent:'center', backgroundColor:"#3077b2",marginBottom:10,width:80,height:30}}onPress={handleRefresh}>
+            <FontAwesome name="refresh" size={24} style ={{marginTop:3,alignSelf:'center'}}color="white" />
+              </TouchableOpacity>
             {favorite.length === 0 ? (
               <View style={styles.noFavoritesContainer}>
                 <Text style={styles.noFavoritesText}>Looks like you have no favorites at the moment</Text>
@@ -148,22 +169,20 @@ export default function HomeScreen({ navigation }) {
               </View>
             ) : (
               <FlatList
-                style={{ width: windowWidth }}
+                style={{ alignSelf:'center', alignContent:'center' }}
                 data={animeData}
                 keyExtractor={(item) => item.mal_id.toString()}
                 numColumns={2}
                 renderItem={({ item }) => (
+                  <TouchableOpacity>
                   <AnimeListing anime={item} />
+                  </TouchableOpacity>
                 )}
               />
             )}
-          </>
+          </View>
         ) : (
-          <>
-            <StatusBar style="auto" />
-            <Text style={styles.title}>Welcome sdhiuda</Text>
-            
-          </>
+          null
         )}
     </SafeAreaView>
   );

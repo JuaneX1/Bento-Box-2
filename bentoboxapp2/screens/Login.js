@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput, Pressable, Modal, Animated, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView,Pressable, Modal, Animated, Dimensions } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { doLogin } from '../api/doLogin';
@@ -59,7 +59,8 @@ export default function Login() {
         }
     };
     return (
-        <View style={styles.container}>
+        
+        <KeyboardAvoidingView style={styles.container}>
              {errorMessage ? (
                                  <Text style={styles.errorText}>{errorMessage}</Text>
                              ): (null)}
@@ -102,7 +103,7 @@ export default function Login() {
             </View>
             </View >
         </Modal>
-        </View>
+        </KeyboardAvoidingView>
     );
 }
 
@@ -114,7 +115,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     input: {
-        height: 35,
+        height: 40,
         margin: 12,
         borderWidth: 2,
         width: 200,

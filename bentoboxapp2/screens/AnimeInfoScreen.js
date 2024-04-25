@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Dimensions, Linking, TouchableOpacity, ScrollView, StyleSheet, Text, View, Image, FlatList } from 'react-native'; // Import withNavigation
+import { Dimensions, Linking, TouchableOpacity, ActivityIndicator,ScrollView, StyleSheet, Text, View, Image, FlatList } from 'react-native'; // Import withNavigation
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -236,7 +236,7 @@ class AnimeInfoScreen extends React.PureComponent {
                                 
                             </View>
                             {loading ? (
-                                <Text>Loading...</Text>
+                                <ActivityIndicator size="large" color="#ffffff" />
                             ) : recommendations.length > 0 ? (
                                 <View style={styles.recommendationsContainer}>
                                     <Text style={[tw`text-white font-bold text-lg`,{marginLeft:5}]}>You Might Also Like:</Text>

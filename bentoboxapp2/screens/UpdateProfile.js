@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, Image, Pressable } from 'react-native';
+import { View, Text, StyleSheet, KeyboardAvoidingView, TouchableOpacity,Dimensions,TextInput, Image, Pressable } from 'react-native';
 import { updateProfile } from '../api/doUpdate'; // Import the updateProfile function
 import { useAuth } from '../Components/AuthContext';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const UpdateProfile = () => {
   const [firstName, setFirstName] = useState('');
@@ -12,6 +15,8 @@ const UpdateProfile = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const { userInfo, setUserInfo } = useAuth();
+  const navigation = useNavigation();
+
   const handleUpdateProfile = async () => {
     // Check if any required field is empty
     if (!firstName || !lastName || !username) {
@@ -33,7 +38,7 @@ const UpdateProfile = () => {
 
     // Handle response
     if (response.success) {
-      setSuccessMessage('Profile updated successfully. Please relog in to see changes.');
+      setSuccessMessage('Profile updated successfully!');
       setErrorMessage('');
       setUserInfo(profileData);
       setTimeout(() => setSuccessMessage(''), 3000); // Clear success message after 3 seconds
@@ -51,7 +56,8 @@ const UpdateProfile = () => {
       start={[0, 0]}
       end={[1, 1]}
     >
-      <View style={styles.content}>
+      <KeyboardAvoidingView style={styles.content}>
+      
         <Image
           style={styles.logo}
           source={require('../assets/BB Logo Icon_COLOR.png')}
@@ -83,7 +89,7 @@ const UpdateProfile = () => {
         </Pressable>
         {successMessage ? <Text style={[styles.message, styles.success]}>{successMessage}</Text> : null}
         {errorMessage ? <Text style={[styles.message, styles.error]}>{errorMessage}</Text> : null}
-      </View>
+      </KeyboardAvoidingView >
     </LinearGradient>
   );
 };
@@ -123,6 +129,18 @@ const styles = StyleSheet.create({
   blackText: {
     color: '#000',
   },
+  searchButton: {
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    width: 28,
+    height: 30,
+    borderRadius: 15,
+    marginLeft: 20,
+    marginTop: windowHeight / 19,
+    position: 'absolute',
+    justifyContent: 'center',
+    zIndex: 2
+
+},
   submitButton: {
     alignItems: 'center',
     justifyContent: 'center',
