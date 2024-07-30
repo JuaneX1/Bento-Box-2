@@ -16,7 +16,7 @@ const register = (user, token) => {
 	
 	return {
 		to: user.email,
-		subject: 'Bento Box! Verify Your Account\'d',
+		subject: 'Bento Box! Verify Your Account\d',
 		text: 'xd',
 		html: htmlContent
 	};
