@@ -1,18 +1,18 @@
 import React from 'react';
-import BigLogo from '../assets/BB_Logo_Horizontal_COLOR_1.png';
-import Gino from '../assets/gino.png';
-import Ronit from '../assets/ronit.png';
-import Juan from '../assets/juan.png';
-import Conner from '../assets/conner.png';
-import Nate from '../assets/nate.png';
-import Sergio from '../assets/sergio.png';
-import Sonny from '../assets/sonny.png';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import BigLogo from '../assets/BB_Logo_Horizontal_COLOR_1.png';
+import Conner from '../assets/conner.png';
+import Gino from '../assets/gino.png';
+import Juan from '../assets/juan.png';
+import Nate from '../assets/nate.png';
+import Ronit from '../assets/ronit.png';
+import Sergio from '../assets/sergio.png';
+import Sonny from '../assets/sonny.png';
 
 const AboutUsPage = () => {
     const teamMembers = [
-        { id: 1, name: 'Juan Peñuela', role: 'Project Manager', image: Juan, link: 'https://juanex1.github.io/juaneportfolio.github.io/portfolio/' },
+        { id: 1, name: 'Juan Peñuela', role: 'Project Manager', image: Juan, link: 'https://tinyurl.com/juanex02' },
         { id: 2, name: 'Nathaniel Gibson', role: 'Front End', image: Nate, link: 'https://github.com/gibs0nnn' },
         { id: 3, name: 'Conner Harbaugh', role: 'Front End', image: Conner, link: 'https://github.com/SavvyDolphin77' },
         { id: 4, name: 'Ronit Mahalmani', role: 'API Integration', image: Ronit, link: 'https://github.com/Ronit1120' },
