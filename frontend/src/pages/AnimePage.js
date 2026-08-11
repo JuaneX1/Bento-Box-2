@@ -1,56 +1,24 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState } from 'react';
-import { BsHeart, BsHeartFill } from 'react-icons/bs';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { instance } from '../App';
 import bigLogo from '../assets/BB_Logo_Horizontal_COLOR_1.png';
 import highScoreImage from '../assets/highScoreImg.webp';
 import lowScoreImage from '../assets/lowScoreImg.png';
 import mediumScoreImage from '../assets/mediumScoreImg.png';
+import fetchJikan from '../utils/fetchJikan';
 
 const AnimePage = () => {
-  const navigate = useNavigate();
   const { id } = useParams();
   const [animeData, setAnimeData] = useState(null);
   const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showHeart, setShowHeart] = useState(true);
-  const [buttonText, setButtonText] = useState('Favorite');
-
-  const toggleFavorite = async () => {
-    try {
-      const response = await instance.post(`/setFavorite/`, { mal_id: id }, { headers: { Authorization: sessionStorage.getItem('token') } });
-      const message = response.data.message;
-      
-      if (message === "Removing Favorite") {
-        setButtonText('Favorite');
-        setShowHeart(true);
-      }
-      else if (message === "Adding Favorite") {
-        setButtonText('Unfavorite');
-        setShowHeart(false);
-      }
-
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   useEffect(() => {
     const fetchAnimeDetails = async () => {
       try {
-        const response = await instance.get(`https://api.jikan.moe/v4/anime/${id}`);
-        const data = response.data;
-        const anime = data.data;
-        setAnimeData(anime);
-		const favoritesArr = await instance.get(`/getFavorite`, { headers: { Authorization: sessionStorage.getItem('token') } });
-        
-       
-		if (favoritesArr.data.includes(anime.mal_id.toString())) {
-			setButtonText('Unfavorite');
-			setShowHeart(false);
-		}
+        const data = await fetchJikan(`https://api.jikan.moe/v4/anime/${id}`);
+        setAnimeData(data.data);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching anime details:', error);
@@ -60,8 +28,7 @@ const AnimePage = () => {
 
     const fetchAnimeRecommendations = async () => {
       try {
-        const response = await instance.get(`https://api.jikan.moe/v4/anime/${id}/recommendations`);
-        const data = response.data;
+        const data = await fetchJikan(`https://api.jikan.moe/v4/anime/${id}/recommendations`);
         const animeRecommendationsList = data.data.slice(0, 3);
 
         setRecommendations(animeRecommendationsList);
@@ -79,10 +46,6 @@ const AnimePage = () => {
   if (loading) {
     return <h1>Loading...</h1>;
   }
-
-  const handleLogOut = () => {
-    navigate('/');
-  };  
 
   const TopNavbar = styled.nav`
     background-color: #111920;
@@ -112,11 +75,6 @@ const AnimePage = () => {
           <Link to="/dashboard" className="navbar-brand ml-auto">
             <img src={bigLogo} alt="Big Logo" className="logo img-fluid mr-3" style={{ minHeight: '50px', maxHeight: '50px' }} />
           </Link>
-          <div className="ml-auto">
-            <button onClick={handleLogOut} className="btn btn-danger">
-              <strong>Log Out</strong>
-            </button>
-          </div>
         </div>
       </TopNavbar>
       <div className="p-4 text-white" style={{ background: "linear-gradient(to bottom, #2e77AE, #000000)" }}>
@@ -131,15 +89,6 @@ const AnimePage = () => {
               ) : (
                 <p>No Data Available</p>
               )}
-              <button id='favorite-button' onClick={toggleFavorite} className="d-flex align-items-center m-5 ml-2 text-center btn btn-secondary">
-                {showHeart ? (
-                  <BsHeart className="p-1" style={{ fontSize: '25px' }} />
-                  
-                ) : (
-                  <BsHeartFill className="p-1" style={{ color: 'red', fontSize: '25px' }} />
-                )}
-                <p className='mb-0 ml-2'>{buttonText}</p>
-              </button>
             </div>
           </div>
 

@@ -1,28 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { instance } from '../../App';
 import BrowseContent from '../pageFeatures/BrowseContent'
 import styled from 'styled-components';
+import fetchJikan from '../../utils/fetchJikan';
 
 function AnimeSearch({ typeDefault }) {
     const [animeList, setAnimeList] = useState([]);
     const [search, setSearch] = useState("");
     const [animeFound, setAnimeFound] = useState([]);
-    const [userData, setUserData] = useState('');
-    const [error, setError] = useState('');
-    
-    useEffect(() => {
-        const getUserInfo = async () => {
-            try {
-                const token = sessionStorage.getItem('token');
-                const response = await instance.get(`/info`, { headers: { Authorization: token }});
-                setUserData(response.data);
-            } catch (error) {
-                console.error('Error fetching user info:', error);
-                setError('Failed to fetch user information');
-            }
-        };
-        getUserInfo();
-    }, []);
 
     useEffect(() => {
         // Fetch top anime if typeDefault is "topAnime"
@@ -33,12 +17,8 @@ function AnimeSearch({ typeDefault }) {
 
     const fetchAnime = async (query) => {
         try {
-            const search = await fetch(`https://api.jikan.moe/v4/anime?q=${query}&sfw=true&genres_exclude=9,49,12`)
-                .then(res => res.json());
-            
-            if (search.status === 429)
-                throw new Error('Too many requests');
-            
+            const search = await fetchJikan(`https://api.jikan.moe/v4/anime?q=${query}&genres_exclude=9,49,12`);
+
             if (search && search.data) {
                 const filteredData = search.data.filter(anime => {
                     return (anime.type === 'TV' || anime.type === 'Movie') && anime.source === 'Manga';
@@ -55,9 +35,12 @@ function AnimeSearch({ typeDefault }) {
     };
 
     const fetchTopAnime = async () => {
-        const temp = await fetch(`https://api.jikan.moe/v4/anime?limit=24`)
-            .then(res => res.json());
-        setAnimeFound(temp.data);
+        try {
+            const temp = await fetchJikan(`https://api.jikan.moe/v4/top/anime?limit=24`);
+            setAnimeFound(temp.data);
+        } catch (error) {
+            console.error('Error fetching top anime:', error);
+        }
     };
     
     
@@ -79,7 +62,6 @@ function AnimeSearch({ typeDefault }) {
 
     return (
         <div className="">
-            <h1 className='text-white text-center p-2'>Welcome, {userData.first}</h1>
             <div className="search-bar-wrapper d-flex justify-content-center align-items-center" style={{ width: '100%' }}>
                 <form className='text-center p-4 d-flex align-items-center text-white' style={{ maxWidth: '500px', width: '100%' }}>
                     <input

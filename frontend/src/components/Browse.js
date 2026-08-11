@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import BrowseContent from './pageFeatures/BrowseContent';
+import fetchJikan from '../utils/fetchJikan';
 
 const Browse = () => {
     const [selectedCategory, setSelectedCategory] = useState('top rated');
@@ -21,8 +22,7 @@ const Browse = () => {
         setIsLoading(true);
         setError('');
         try {
-            const response = await fetch(`${endpoint}&page=${page}`);
-            const data = await response.json();
+            const data = await fetchJikan(`${endpoint}&page=${page}`);
             setIsLoading(false);
             return data.data;
         } catch (error) {

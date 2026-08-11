@@ -1,95 +1,40 @@
 import React, { useEffect, useState } from 'react';
-import { instance } from '../../App';
-import { BsHeart, BsHeartFill } from 'react-icons/bs';
 import { Container } from 'react-bootstrap';
+import fetchJikan from '../../utils/fetchJikan';
 
-const RecommendationPage = () => {
+const DailyBox = () => {
+  const [pool, setPool] = useState([]);
   const [recommendedAnime, setRecommendedAnime] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [favorites, setFavorites] = useState([]);
-  const [showHeart, setShowHeart] = useState(true);
-  const [buttonText, setButtonText] = useState('');
-
-  const toggleFavorite = async (id) => {
-    try {
-      const response = await instance.post(`/setFavorite/`, { mal_id: id }, { headers: { Authorization: sessionStorage.getItem('token') } });
-      const message = response.data.message;
-
-      if (message === "Removing Favorite") {
-        setButtonText('Favorite');
-        setShowHeart(true);
-      } else if (message === "Adding Favorite") {
-        setButtonText('Unfavorite');
-        setShowHeart(false);
-      }
-
-      console.log(message);
-      console.log(buttonText);
-
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  let ignore = false;
 
   useEffect(() => {
-    let isMounted = true;
-
-    async function fetchFavorites() {
-      if (!isMounted) return;
-
+    async function fetchPool() {
       try {
-        const favoritesArr = await instance.get(`/getFavorite`, { headers: { Authorization: sessionStorage.getItem('token') } });
-        setFavorites(favoritesArr.data);
+        const randomPage = Math.floor(Math.random() * 10) + 1;
+        const data = await fetchJikan(`https://api.jikan.moe/v4/top/anime?limit=24&page=${randomPage}`);
+        setPool(data.data || []);
       } catch (error) {
-        console.error("Error fetching favorites:", error);
+        console.error('Error fetching daily box pool:', error);
+      } finally {
+        setLoading(false);
       }
     }
 
-    fetchFavorites();
-
-    return () => {
-      isMounted = false;
-    };
+    fetchPool();
   }, []);
 
   useEffect(() => {
-    async function fetchRecommendation() {
-      if (favorites.length === 0 || ignore) return;
-
-      try {
-        let recommendedAnimeId = null;
-
-        while (!recommendedAnimeId) {
-          const randomIndex = Math.floor(Math.random() * favorites.length);
-          recommendedAnimeId = favorites[randomIndex];
-
-          const response = await instance.get(`https://api.jikan.moe/v4/anime/${recommendedAnimeId}/recommendations`);
-          const data = response.data;
-          const animeRecommendationsList = data.data;
-
-          for (let anime of animeRecommendationsList) {
-            const malId = anime.entry.mal_id;
-
-            if (!favorites.includes(malId.toString())) {
-              setRecommendedAnime(anime.entry);
-              setLoading(false);
-              return;
-            }
-          }
-        }
-      } catch (error) {
-        console.error("Error fetching recommendation:", error);
-      }
+    if (pool.length > 0) {
+      const randomIndex = Math.floor(Math.random() * pool.length);
+      setRecommendedAnime(pool[randomIndex]);
     }
+  }, [pool]);
 
-    fetchRecommendation();
-
-    return () => {
-      ignore = true;
-    };
-  }, [favorites]);
+  const shuffle = () => {
+    if (pool.length === 0) return;
+    const randomIndex = Math.floor(Math.random() * pool.length);
+    setRecommendedAnime(pool[randomIndex]);
+  };
 
   const navigateToAnimePage = () => {
     window.location.href = `/anime/${recommendedAnime.mal_id}`;
@@ -97,8 +42,8 @@ const RecommendationPage = () => {
 
   return (
     <div>
-      {loading ? (
-        <h1 className='text-white text-center p-4'>No Favorites to Pull Reccomendations!</h1>
+      {loading || !recommendedAnime ? (
+        <h1 className='text-white text-center p-4'>Loading a recommendation...</h1>
       ) : (
         <div>
           <Container className='p-5'>
@@ -107,9 +52,10 @@ const RecommendationPage = () => {
                 <div className="col-md-8 p-4 text-center">
                   <h2 className="mb-4">{recommendedAnime.title}</h2>
                   <img src={recommendedAnime.images.jpg.image_url} alt={"anime pic"} className="img-fluid mb-4" />
-                  <div className="anime-synopsis-box">
-                    <div className="synopsis-content">
-                    </div>
+                  <div className="anime-synopsis-box d-flex justify-content-center">
+                    <button className="btn btn-secondary mt-4 me-2" onClick={shuffle}>
+                      Shuffle
+                    </button>
                     <button className="btn btn-primary mt-4" onClick={navigateToAnimePage}>
                       More Details
                     </button>
@@ -124,4 +70,4 @@ const RecommendationPage = () => {
   );
 };
 
-export default RecommendationPage;
+export default DailyBox;

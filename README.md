@@ -14,21 +14,7 @@ gh repo clone JuaneX1/Bento-Box-2
 You will need gh installed and to be logged in.
 
 ### Add .env file
-You will also need to add a .env file. Create one using any method, just ensure its in the root directory (same folder as server.js etc.).
-
-Then you will need to add the MONGODB_URI="{whatever_database_connection_string_is}"
-
-There are a few other fields as well such as:
-ACCESS_TOKEN_SECRET
-EMAIL_SECRET
-FRONTEND_URL
-SERVER_EMAIL
-EMAIL_PASSWORD
-
-These are all for node email so if running locally, check your configuration to see what they should be. 
-If maintainer and on Discord, check there or the settings as all above are provided. 
-
-**DO NOT** PUSH THE .env file to Github. It should be already ignored in .gitignore, but that contains secrets you should not push, etc.
+The backend no longer requires a database or any external service credentials — anime data is fetched client-side from the public Jikan API. A .env file is only needed if you want to override `PORT`.
 
 ### Contributing & Making Edits
 Once you have the files you can begin working on the project. For more details in how to create a branch, commit, etc., please view the [CONTRIBUTION guide](CONTRIBUTION.md).
@@ -61,17 +47,6 @@ npm start # starts server
 
 Sometimes you may get auto directed to the application once it starts, as it opens in your browser, but if that does not happen you can view the application live at "localhost:3000" (just type that without quotes into browser to view).
 
-## Running on Heroku
+## Deploying
 
-If you for some reason need to test deployment on Heroku, we have a testing application which deploys the testing branch.
-
-Go to Heroku, go to app bento-box-3, click settings and verify the MONGODB_URI matches the one in your .env file. 
-
-NOTE: You will need to switch the app name in the various areas where this is applicable. For example, in the signUpForm.js. All the areas that you need to do this are marked.
-
-There are comments with both app names to not have to worry about it. Essentially, just uncomment and re-comment as applicable depending on where you are deploying.
-
-Bento-Box-2 is for Production and should be changed before merging with main branch.
-Bento-Box-3 is for Testing.
-
-Then you will go to deploy, scroll to the bottom and click deploy from branch. Deploy from the branch you created, and 
+The app is a single Node process: `npm run heroku-postbuild` builds the React frontend, and `npm start` serves it via Express alongside the (now DB-free) backend. It no longer needs a database, so any Node-friendly host with a free tier (e.g. Render) works — just point the frontend's `REACT_APP_BACKEND_URL` / `frontend/src/components/Path.js` at wherever the backend ends up deployed.
