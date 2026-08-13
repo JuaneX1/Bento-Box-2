@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
-import fetchJikan from '../../utils/fetchJikan';
+import { fetchTopAnime } from '../../utils/fetchAniList';
 
 const DailyBox = () => {
   const [pool, setPool] = useState([]);
@@ -11,8 +11,8 @@ const DailyBox = () => {
     async function fetchPool() {
       try {
         const randomPage = Math.floor(Math.random() * 10) + 1;
-        const data = await fetchJikan(`https://api.jikan.moe/v4/top/anime?limit=24&page=${randomPage}`);
-        setPool(data.data || []);
+        const data = await fetchTopAnime(randomPage, 24);
+        setPool(data || []);
       } catch (error) {
         console.error('Error fetching daily box pool:', error);
       } finally {
@@ -37,7 +37,7 @@ const DailyBox = () => {
   };
 
   const navigateToAnimePage = () => {
-    window.location.href = `/anime/${recommendedAnime.mal_id}`;
+    window.location.href = `/anime/${recommendedAnime.id}`;
   };
 
   return (
