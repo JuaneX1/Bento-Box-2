@@ -14,7 +14,7 @@ gh repo clone JuaneX1/Bento-Box-2
 You will need gh installed and to be logged in.
 
 ### Add .env file
-The backend no longer requires a database or any external service credentials — anime data is fetched client-side from the public Jikan API. A .env file is only needed if you want to override `PORT`.
+The backend no longer requires a database or any external service credentials — anime data is fetched client-side from the AniList GraphQL API. A .env file is only needed if you want to override `PORT`.
 
 ### Contributing & Making Edits
 Once you have the files you can begin working on the project. For more details in how to create a branch, commit, etc., please view the [CONTRIBUTION guide](CONTRIBUTION.md).
@@ -49,4 +49,6 @@ Sometimes you may get auto directed to the application once it starts, as it ope
 
 ## Deploying
 
-The app is a single Node process: `npm run heroku-postbuild` builds the React frontend, and `npm start` serves it via Express alongside the (now DB-free) backend. It no longer needs a database, so any Node-friendly host with a free tier (e.g. Render) works — just point the frontend's `REACT_APP_BACKEND_URL` / `frontend/src/components/Path.js` at wherever the backend ends up deployed.
+The app deploys to Vercel. `vercel.json` at the repo root tells Vercel to build the frontend (`npm run build --prefix frontend`) and serve `frontend/build` as a static site; `api/index.js` exposes the Express app in `server.js` as a Vercel serverless function for any backend logic added later (there are no API routes today — anime data is fetched client-side from the AniList GraphQL API).
+
+To deploy: import this repo into a Vercel project (Vercel auto-detects `vercel.json`), then push to the connected branch to trigger a build. No environment variables or database are required.
