@@ -60,28 +60,12 @@ const HomePage = () => {
     }
   `;
 
-  const CustomLink = styled.div`
-    border: none;
-    transition: all 0.3s ease;
-
-    &:hover,
-    &:focus {
-      border: 2px solid white;
-      transform: scale(1.05);
-    }
-  `;
-
   return (
     <>
       <TopNavbar className="navbar navbar-expand-lg navbar-dark d-flex justify-content-between p-2">
         <Link to="/" className="navbar-brand">
           <img src={bigLogo} alt="Big Logo" className="logo img-fluid mr-3" style={{ minHeight: '50px', maxHeight: '50px' }} />
         </Link>
-        <div className="navbar-brand ml-auto">
-          <CustomLink className="nav-link p-2" >
-            <Link className="text-white text-decoration-none" to="/about-us"><strong>About Us</strong></Link>
-          </CustomLink>
-        </div>
       </TopNavbar>
       <div style={{ background: "linear-gradient(to left, #2e77AE, #000000)" }}>
         <div className="container">
