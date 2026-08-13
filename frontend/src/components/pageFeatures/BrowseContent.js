@@ -10,7 +10,7 @@ function BrowseContent(props) {
                 <div className="col-sm-8">
                     <div className="anime-list row row-cols-1 row-cols-md-2 row-cols-lg-3 justify-content-center">
                         {props.animeList?.map(anime => (
-                            <div key={anime.mal_id} className="col mb-5 d-flex justify-content-center">
+                            <div key={anime.id} className="col mb-5 d-flex justify-content-center">
                                 <AnimeCard anime={anime} />
                             </div>
                         ))}

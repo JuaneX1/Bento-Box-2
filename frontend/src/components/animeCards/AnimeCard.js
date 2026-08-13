@@ -42,7 +42,7 @@ function AnimeCard({ anime }) {
        
         {showSynopsis && (
           <Link
-             to={`/anime/${anime.mal_id}`}
+             to={`/anime/${anime.id}`}
              state={{ anime }}
              className="text-decoration-none text-dark"
            >
