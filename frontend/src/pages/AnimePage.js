@@ -6,7 +6,7 @@ import bigLogo from '../assets/BB_Logo_Horizontal_COLOR_1.png';
 import highScoreImage from '../assets/highScoreImg.webp';
 import lowScoreImage from '../assets/lowScoreImg.png';
 import mediumScoreImage from '../assets/mediumScoreImg.png';
-import fetchJikan from '../utils/fetchJikan';
+import { fetchAnimeById, fetchAnimeRecommendations } from '../utils/fetchAniList';
 
 const AnimePage = () => {
   const { id } = useParams();
@@ -17,8 +17,8 @@ const AnimePage = () => {
   useEffect(() => {
     const fetchAnimeDetails = async () => {
       try {
-        const data = await fetchJikan(`https://api.jikan.moe/v4/anime/${id}`);
-        setAnimeData(data.data);
+        const data = await fetchAnimeById(id);
+        setAnimeData(data);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching anime details:', error);
@@ -26,12 +26,10 @@ const AnimePage = () => {
       }
     };
 
-    const fetchAnimeRecommendations = async () => {
+    const loadAnimeRecommendations = async () => {
       try {
-        const data = await fetchJikan(`https://api.jikan.moe/v4/anime/${id}/recommendations`);
-        const animeRecommendationsList = data.data.slice(0, 3);
-
-        setRecommendations(animeRecommendationsList);
+        const data = await fetchAnimeRecommendations(id, 3);
+        setRecommendations(data);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching anime recommendations:', error);
@@ -40,7 +38,7 @@ const AnimePage = () => {
     };
 
     fetchAnimeDetails();
-    fetchAnimeRecommendations();
+    loadAnimeRecommendations();
   }, [id]);
 
   if (loading) {
@@ -156,8 +154,8 @@ const AnimePage = () => {
                 <div className="recommendations-list d-flex justify-content-center">
                   {recommendations && recommendations.length > 0 ? (
                     recommendations.map((recommendation) => (
-                      <div key={recommendation.entry.mal_id} className="recommendation-item p-4">
-                        <Link className="text-decoration-none" to={`/anime/${recommendation.entry.mal_id}`}>
+                      <div key={recommendation.entry.id} className="recommendation-item p-4">
+                        <Link className="text-decoration-none" to={`/anime/${recommendation.entry.id}`}>
                           <div style={{ maxWidth: "225px" }}>
                             <img src={recommendation.entry.images.jpg.image_url} alt={recommendation.entry.title} className="recommendation-image align-content-center" style={{maxHeight: '300px'}} />
                             <h3 className='text-white text-truncate'>{recommendation.entry.title}</h3>
