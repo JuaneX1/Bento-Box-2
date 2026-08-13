@@ -3,7 +3,7 @@ import bigLogo from "../assets/BB_Logo_Horizontal_COLOR_1.png";
 import AnimeList from "../components/animeCards/AnimeList";
 import { Link, useNavigate } from "react-router-dom";
 import styled from 'styled-components';
-import fetchJikan from '../utils/fetchJikan';
+import { fetchSeasonalAnime, getCurrentSeason, fetchTopAnime } from '../utils/fetchAniList';
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -13,15 +13,14 @@ const HomePage = () => {
   // gets the animes to display in sidebar, 24 is to make it flush since in 3 by 3 grid
   const getData = async () => {
     try {
-      const resData = await fetchJikan(
-        `https://api.jikan.moe/v4/seasons/now?limit=24`
-      );
-      setAnimeData(resData.data);
+      const { season, seasonYear } = getCurrentSeason();
+      const resData = await fetchSeasonalAnime(season, seasonYear, 1, 24);
+      setAnimeData(resData);
     } catch (error) {
       console.error('Error fetching seasonal anime, falling back to top anime:', error);
       try {
-        const fallbackData = await fetchJikan(`https://api.jikan.moe/v4/top/anime?limit=24`);
-        setAnimeData(fallbackData.data);
+        const fallbackData = await fetchTopAnime(1, 24);
+        setAnimeData(fallbackData);
       } catch (fallbackError) {
         console.error('Error fetching fallback anime:', fallbackError);
       }
