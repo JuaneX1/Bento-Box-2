@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import BrowseContent from '../pageFeatures/BrowseContent'
 import styled from 'styled-components';
-import fetchJikan from '../../utils/fetchJikan';
+import { searchAnime, fetchTopAnime } from '../../utils/fetchAniList';
 
 function AnimeSearch({ typeDefault }) {
     const [animeList, setAnimeList] = useState([]);
@@ -11,33 +11,23 @@ function AnimeSearch({ typeDefault }) {
     useEffect(() => {
         // Fetch top anime if typeDefault is "topAnime"
         if (typeDefault === "topAnime") {
-            fetchTopAnime();
+            loadTopAnime();
         }
     }, [typeDefault]);
 
     const fetchAnime = async (query) => {
         try {
-            const search = await fetchJikan(`https://api.jikan.moe/v4/anime?q=${query}&genres_exclude=9,49,12`);
-
-            if (search && search.data) {
-                const filteredData = search.data.filter(anime => {
-                    return (anime.type === 'TV' || anime.type === 'Movie') && anime.source === 'Manga';
-                });
-                setAnimeList(filteredData);
-            }
-            else {
-                console.error('Data structure not as expected: ', search);
-            }
-        }
-        catch (error) {
+            const results = await searchAnime(query);
+            setAnimeList(results);
+        } catch (error) {
             console.error('Error fetching search anime: ', error);
         }
     };
 
-    const fetchTopAnime = async () => {
+    const loadTopAnime = async () => {
         try {
-            const temp = await fetchJikan(`https://api.jikan.moe/v4/top/anime?limit=24`);
-            setAnimeFound(temp.data);
+            const results = await fetchTopAnime();
+            setAnimeFound(results);
         } catch (error) {
             console.error('Error fetching top anime:', error);
         }
