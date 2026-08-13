@@ -50,7 +50,7 @@ const DailyBox = () => {
             <div className="container text-white p-4 " style={{ border: '2px solid #ffffff', backgroundColor: '#111920', maxWidth: '800px' }}>
               <div className="row justify-content-center">
                 <div className="col-md-8 p-4 text-center">
-                  <h2 className="mb-4">{recommendedAnime.title}</h2>
+                  <h2 className="mb-4">{recommendedAnime.title_english}</h2>
                   <img src={recommendedAnime.images.jpg.image_url} alt={"anime pic"} className="img-fluid mb-4" />
                   <div className="anime-synopsis-box d-flex justify-content-center">
                     <button className="btn btn-secondary mt-4 me-2" onClick={shuffle}>
