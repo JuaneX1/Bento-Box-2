@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import BrowseContent from './pageFeatures/BrowseContent';
-import fetchJikan from '../utils/fetchJikan';
+import { fetchTopAnime, fetchSeasonalAnime, getCurrentSeason, getUpcomingSeason } from '../utils/fetchAniList';
 
 const Browse = () => {
     const [selectedCategory, setSelectedCategory] = useState('top rated');
@@ -13,18 +13,30 @@ const Browse = () => {
     let ignoreScroll = false;
 
     const categories = [
-        { name: 'top rated', endpoint: 'https://api.jikan.moe/v4/top/anime?limit=24' },
-        { name: 'upcoming', endpoint: 'https://api.jikan.moe/v4/seasons/upcoming?limit=24' },
-        { name: 'airing now', endpoint: 'https://api.jikan.moe/v4/seasons/now?limit=24' },
+        { name: 'top rated', fetch: (page) => fetchTopAnime(page, 24) },
+        {
+            name: 'upcoming',
+            fetch: (page) => {
+                const { season, seasonYear } = getUpcomingSeason();
+                return fetchSeasonalAnime(season, seasonYear, page, 24);
+            },
+        },
+        {
+            name: 'airing now',
+            fetch: (page) => {
+                const { season, seasonYear } = getCurrentSeason();
+                return fetchSeasonalAnime(season, seasonYear, page, 24);
+            },
+        },
     ];
 
-    const fetchAnimeByCategory = async (endpoint, page = 1) => {
+    const fetchAnimeByCategory = async (fetchFn, page = 1) => {
         setIsLoading(true);
         setError('');
         try {
-            const data = await fetchJikan(`${endpoint}&page=${page}`);
+            const data = await fetchFn(page);
             setIsLoading(false);
-            return data.data;
+            return data;
         } catch (error) {
             console.error('Error fetching anime:', error);
             setError(`Error fetching data: ${error.message}`);
@@ -40,7 +52,7 @@ const Browse = () => {
                 console.log(animeList.length);
                 const animes = categories.find(category => category.name === selectedCategory);
                 if (animes) {
-                    fetchAnimeByCategory(animes.endpoint, 1).then(initialData => {
+                    fetchAnimeByCategory(animes.fetch, 1).then(initialData => {
                         setAnimeList(initialData);
                     });
                 }
@@ -92,7 +104,7 @@ const Browse = () => {
         const category = categories.find(cat => cat.name === selectedCategory);
         if (category) {
             const nextPage = currentPage;
-            fetchAnimeByCategory(category.endpoint, nextPage) 
+            fetchAnimeByCategory(category.fetch, nextPage) 
                 .then(newData => {
                     setAnimeList(prevList => [...prevList, ...newData]);
                 })
@@ -108,7 +120,7 @@ const Browse = () => {
         setIsFetching(false);
     };
 
-    const handleCategoryChange = (categoryName, endpoint) => {
+    const handleCategoryChange = (categoryName) => {
         setSelectedCategory(categoryName);
         setAnimeList([]); // Clear anime list
         setCurrentPage(1); // Reset page count
@@ -123,7 +135,7 @@ const Browse = () => {
                         <button
                             className="btn btn-outline-light text-center category-btn m-4"
                             key={category.name}
-                            onClick={() => handleCategoryChange(category.name, category.endpoint)}
+                            onClick={() => handleCategoryChange(category.name)}
                         >
                             {category.name.toUpperCase()}
                         </button>
