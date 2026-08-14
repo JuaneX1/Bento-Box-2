@@ -1,18 +1,46 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import styled from 'styled-components';
 import bigLogo from '../assets/BB_Logo_Horizontal_COLOR_1.png';
 import highScoreImage from '../assets/highScoreImg.webp';
 import lowScoreImage from '../assets/lowScoreImg.png';
 import mediumScoreImage from '../assets/mediumScoreImg.png';
+import '../components/Stylesheet.css';
 import { fetchAnimeById, fetchAnimeRecommendations } from '../utils/fetchAniList';
+
+// Ticks a displayed number up from 0 to the target score over a short duration
+const useCountUp = (target, durationMs = 700) => {
+  const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    if (!target) return;
+    if (typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setValue(target);
+      return;
+    }
+
+    const startTime = performance.now();
+    let frame;
+
+    const tick = (now) => {
+      const progress = Math.min((now - startTime) / durationMs, 1);
+      setValue(Number((target * progress).toFixed(1)));
+      if (progress < 1) frame = requestAnimationFrame(tick);
+    };
+
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [target, durationMs]);
+
+  return value;
+};
 
 const AnimePage = () => {
   const { id } = useParams();
   const [animeData, setAnimeData] = useState(null);
   const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(true);
+  const displayedScore = useCountUp(animeData?.score);
 
   useEffect(() => {
     const fetchAnimeDetails = async () => {
@@ -41,131 +69,109 @@ const AnimePage = () => {
     loadAnimeRecommendations();
   }, [id]);
 
-  if (loading) {
-    return <h1>Loading...</h1>;
+  if (loading || !animeData) {
+    return (
+      <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh', backgroundColor: 'var(--void)' }}>
+        <div className="compartment-skeleton" style={{ width: '280px', aspectRatio: '2 / 3' }} />
+      </div>
+    );
   }
 
-  const TopNavbar = styled.nav`
-    background-color: #111920;
-  `;
-
-  const CustomLink = styled.div`
-      border: none;
-      transition: all 0.3s ease;
-
-      &:hover,
-      &:focus {
-      border: 2px solid white;
-      transform: scale(1.05);
-      }
-  `;
-  
+  const scoreTier = animeData.score >= 8.0
+    ? { image: highScoreImage, label: 'Top Pick!' }
+    : animeData.score >= 4.0
+      ? { image: mediumScoreImage, label: 'Good Pick!' }
+      : { image: lowScoreImage, label: 'Not Recommended/Unrated' };
 
   return (
-    <div className="anime-container">
-      <TopNavbar className="navbar navbar-expand-lg navbar-dark d-flex justify-content-between p-2">
+    <div style={{ backgroundColor: 'var(--void)', minHeight: '100vh' }}>
+      <nav className="navbar navbar-expand-lg navbar-dark d-flex justify-content-between p-2" style={{ backgroundColor: 'var(--ink)', borderBottom: '1px solid var(--blue-shade)' }}>
         <div className="container-fluid">
-        <CustomLink className='p-2 ml-2 navbar-brand'>   
-                <Link to="/dashboard" className="text-white text-decoration-none">
-                        <strong>Back to Anime</strong>
-                    </Link>
-        </CustomLink>
+          <Link to="/dashboard" className="btn-bento-outline px-3 py-2 text-decoration-none">
+            Back to Anime
+          </Link>
           <Link to="/dashboard" className="navbar-brand ml-auto">
             <img src={bigLogo} alt="Big Logo" className="logo img-fluid mr-3" style={{ minHeight: '50px', maxHeight: '50px' }} />
           </Link>
         </div>
-      </TopNavbar>
-      <div className="p-4 text-white" style={{ background: "linear-gradient(to bottom, #2e77AE, #000000)" }}>
-        <div className="container">
-          <div className="row justify-content-center">
-          <div className="col-md-6 d-flex align-items-center justify-content-center">
-            <div className="anime-details-box mb-4">
-              {animeData ? (
-                <div className="anime-info d-flex justify-content-center">
-                  <img src={animeData.images.jpg.image_url} alt="anime pic" className="img-fluid" />
+      </nav>
+      <div className="container p-4">
+        <div className="row justify-content-center">
+          <div className="col-md-5 mb-4">
+            <img src={animeData.images.jpg.image_url} alt={animeData.title_english} className="img-fluid w-100" style={{ border: '1px solid var(--blue-shade)' }} />
+          </div>
+
+          <div className="col-md-7 mb-4">
+            <div className="tray p-4 h-100">
+              {animeData.genres.length > 0 && (
+                <div className="d-flex flex-wrap gap-2 mb-3">
+                  {animeData.genres.map((genre) => (
+                    <span key={genre} className="tray-eyebrow" style={{ border: '1px solid var(--blue-shade)', padding: '0.2rem 0.6rem' }}>{genre}</span>
+                  ))}
                 </div>
-              ) : (
-                <p>No Data Available</p>
+              )}
+              <h1 style={{ color: 'var(--cheek)' }}>{animeData.title_english}</h1>
+              <p className="score-figure mb-3" style={{ color: 'var(--cheek-dim)', fontSize: '0.85rem' }}>
+                {[animeData.format, animeData.studio, animeData.status?.replace(/_/g, ' ')].filter(Boolean).join(' · ')}
+              </p>
+              <p style={{ color: 'var(--cheek-dim)', lineHeight: 1.6 }}>{animeData.synopsis}</p>
+              {animeData.trailer && animeData.trailer.url && (
+                <a href={animeData.trailer.url} target="_blank" rel="noopener noreferrer" className="btn-bento-accent d-inline-block mt-2 px-4 py-2 text-decoration-none">
+                  Watch a Trailer Here!
+                </a>
               )}
             </div>
           </div>
+        </div>
 
-            <div className="col-md-6">
-              <div className="anime-synopsis-box border p-4 mb-4" style={{ backgroundColor: "#111920" }}>
-                {animeData && (
-                  <>
-                    <h1>{animeData.title_english}</h1>
-                    <div className="synopsis-content">
-                      <p className="anime-synopsis">{animeData.synopsis}</p>
-                    </div>
-                  </>
-                )}
+        <div className="row justify-content-center">
+          <div className="col-12 mb-4">
+            <div className="tray d-flex flex-wrap">
+              <div className="d-flex flex-column align-items-center justify-content-center text-center p-3" style={{ flex: '1 1 160px', borderRight: '1px solid var(--blue-shade)' }}>
+                <img src={scoreTier.image} alt={scoreTier.label} style={{ width: '64px', height: '64px' }} />
+                <p className="score-figure mb-0 mt-1" style={{ fontSize: '1.5rem', color: 'var(--blue-tint)' }}>
+                  {displayedScore.toFixed(1)} <span style={{ fontSize: '0.9rem', color: 'var(--cheek-dim)' }}>/ 10</span>
+                </p>
+                <p className="tray-eyebrow mb-0">{scoreTier.label}</p>
+              </div>
+              <div className="d-flex flex-column align-items-center justify-content-center text-center p-3" style={{ flex: '1 1 160px', borderRight: '1px solid var(--blue-shade)' }}>
+                <p className="score-figure mb-0" style={{ fontSize: '1.5rem', color: 'var(--cheek)' }}>{animeData.episodes ?? '—'}</p>
+                <p className="tray-eyebrow mb-0">Episodes</p>
+              </div>
+              <div className="d-flex flex-column align-items-center justify-content-center text-center p-3" style={{ flex: '1 1 160px', borderRight: '1px solid var(--blue-shade)' }}>
+                <p className="score-figure mb-0" style={{ fontSize: '1.5rem', color: 'var(--cheek)' }}>{animeData.duration ?? '—'}</p>
+                <p className="tray-eyebrow mb-0">Min / Episode</p>
+              </div>
+              <div className="d-flex flex-column align-items-center justify-content-center text-center p-3" style={{ flex: '1 1 160px' }}>
+                <p className="score-figure mb-0" style={{ fontSize: '1.5rem', color: 'var(--cheek)' }}>{animeData.format ?? '—'}</p>
+                <p className="tray-eyebrow mb-0">Format</p>
               </div>
             </div>
           </div>
-          <div className="row justify-content-center">
-            <div className="col-md-6">
-              <div className="more-info-box border border-white p-3 mb-4 text-white" style={{ backgroundColor: "#111920", minHeight: '376px', maxHeight: '376px' }}>
-                <h2 className='p-3 m-2'>More About This Show:</h2>
-                <p className='m-2 p-3 fs-5'>Episode Count: {animeData && animeData.episodes !== null ? animeData.episodes : 0}</p>
-                {animeData.trailer && animeData.trailer.url && (
-                    <a href={animeData.trailer.url} target="_blank" rel="noopener noreferrer" className='m-3 text-center fs-5 btn btn-danger'>
-                    Watch a Trailer Here!
-                  </a>
-                 )}
-                </div>
-            </div>
-            <div className="col-md-6">
-              <div className="score-box container-fluid border p-4 mb-4" style={{ backgroundColor: "#111920" }}>
-                {animeData && (
-                  <>
-                    <h2 className='fs-2 text-center'>Overall Score</h2>
-                    <p className="big-score text-center">{animeData.score} / 10</p>
-                    <div className="stuff text-center">
-                      {animeData.score >= 8.0 ? (
-                        <>
-                          <img src={highScoreImage} alt="High Score" style={{ width: '200px', height: '200px' }} />
-                          <p>Top Pick!</p>
-                        </>
-                      ) : animeData.score >= 4.0 ? (
-                        <>
-                          <img src={mediumScoreImage} alt="Medium Score" style={{ width: '200px', height: '200px' }} />
-                          <p>Good Pick!</p>
-                        </>
-                      ) : (
-                        <>
-                          <img src={lowScoreImage} alt="Low Score" style={{ width: '200px', height: '200px' }} />
-                          <p>Not Recommended/Unrated</p>
-                        </>
-                      )}
-                    </div>
-                  </>
+        </div>
+
+        <div className="row justify-content-center">
+          <div className="col-12 mb-4">
+            <div className="tray p-4">
+              {recommendations && recommendations.length > 0 && (
+                <h2 style={{ color: 'var(--cheek)' }}>You Might Also Like</h2>
+              )}
+              <div className="d-flex flex-wrap justify-content-center gap-4 pt-2">
+                {recommendations && recommendations.length > 0 ? (
+                  recommendations.map((recommendation) => (
+                    <Link
+                      key={recommendation.entry.id}
+                      className="text-decoration-none"
+                      to={`/anime/${recommendation.entry.id}`}
+                      style={{ maxWidth: '200px' }}
+                    >
+                      <img src={recommendation.entry.images.jpg.image_url} alt={recommendation.entry.title} className="img-fluid mb-2" style={{ border: '1px solid var(--blue-shade)' }} />
+                      <h3 className="text-truncate" style={{ color: 'var(--cheek)', fontSize: '1rem' }}>{recommendation.entry.title}</h3>
+                    </Link>
+                  ))
+                ) : (
+                  <p style={{ color: 'var(--cheek-dim)' }}>No recommendations available yet</p>
                 )}
-              </div>
-            </div>
-          </div>
-          <div className="row justify-content-center">
-            <div className="col-md-12">
-              <div className="recommendations-container border border-white p-3 mb-4" style={{backgroundColor: "#111920"}}>
-                {recommendations && recommendations.length > 0 && (
-                  <h2>You Might Also Like:</h2>
-                )}
-                <div className="recommendations-list d-flex justify-content-center">
-                  {recommendations && recommendations.length > 0 ? (
-                    recommendations.map((recommendation) => (
-                      <div key={recommendation.entry.id} className="recommendation-item p-4">
-                        <Link className="text-decoration-none" to={`/anime/${recommendation.entry.id}`}>
-                          <div style={{ maxWidth: "225px" }}>
-                            <img src={recommendation.entry.images.jpg.image_url} alt={recommendation.entry.title} className="recommendation-image align-content-center" style={{maxHeight: '300px'}} />
-                            <h3 className='text-white text-truncate'>{recommendation.entry.title}</h3>
-                          </div>
-                        </Link>
-                      </div>
-                    ))
-                  ) : (
-                    <h2>No recommendations available Yet</h2>
-                  )}
-                </div>
               </div>
             </div>
           </div>

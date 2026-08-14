@@ -74,9 +74,7 @@ const Browse = () => {
             const clientHeight = document.documentElement.clientHeight || window.innerHeight;
             const threshold = 100;
 
-            console.log(!ignoreScroll);
-
-            if (!ignoreScroll && scrollTop + clientHeight + threshold >= scrollHeight) {
+            if (!ignoreScroll && !isFetching && scrollTop + clientHeight + threshold >= scrollHeight) {
                 setCurrentPage(prevPage => prevPage + 1);
                 ignoreScroll = true;
             } else {
@@ -90,7 +88,7 @@ const Browse = () => {
             window.removeEventListener('scroll', handleScroll);
         };
 
-    }, []);
+    }, [isFetching]);
 
     useEffect(() => {
 
@@ -104,15 +102,14 @@ const Browse = () => {
         const category = categories.find(cat => cat.name === selectedCategory);
         if (category) {
             const nextPage = currentPage;
-            fetchAnimeByCategory(category.fetch, nextPage) 
-                .then(newData => {
-                    setAnimeList(prevList => [...prevList, ...newData]);
-                })
-                .catch(error => {
-                    console.error('Error fetching more anime:', error);
-                    setError(`Error fetching more data: ${error.message}`);
-                    setIsLoading(false);
-                });
+            try {
+                const newData = await fetchAnimeByCategory(category.fetch, nextPage);
+                setAnimeList(prevList => [...prevList, ...newData]);
+            } catch (error) {
+                console.error('Error fetching more anime:', error);
+                setError(`Error fetching more data: ${error.message}`);
+                setIsLoading(false);
+            }
         } else {
             console.error('Selected category not found:', selectedCategory);
             setIsLoading(false);
@@ -129,32 +126,39 @@ const Browse = () => {
 
     return (
         <div>
-            <div className="row justify-content-center">
-                <div className="category-buttons d-flex justify-content-center">
+            <div className="d-flex justify-content-center py-4">
+                <div className="tray-tabs">
                     {categories?.map(category => (
                         <button
-                            className="btn btn-outline-light text-center category-btn m-4"
+                            className={`tray-tab ${selectedCategory === category.name ? 'is-active' : ''}`}
                             key={category.name}
                             onClick={() => handleCategoryChange(category.name)}
                         >
-                            {category.name.toUpperCase()}
+                            {category.name}
                         </button>
                     ))}
                 </div>
-                <div className="">
-                    {isLoading && <div className='text-white'>Loading...</div>}
-                    {error && <div>Error: {error}</div>}
-                    {!isLoading && !error && (
-                        <div>
-                            <h2 className="category-title text-white text-center p-4"><strong>{selectedCategory.toUpperCase()}</strong></h2>
+            </div>
+            <div>
+                {isLoading && (
+                    <div className="compartment-grid d-flex flex-wrap justify-content-center gap-4 p-4">
+                        {Array.from({ length: 12 }).map((_, index) => (
+                            <div key={`skeleton-${index}`} className="compartment-skeleton" />
+                        ))}
+                    </div>
+                )}
+                {error && <div className="text-center py-4" style={{ color: 'var(--red)' }}>Error: {error}</div>}
+                {!isLoading && !error && (
+                    <div className="tray-content" key={selectedCategory}>
+                        <p className="tray-eyebrow text-center mt-3 mb-0">Compartment</p>
+                        <h2 className="text-center pt-1 pb-3" style={{ color: 'var(--cheek)' }}>{selectedCategory}</h2>
 
-                            <BrowseContent
-                                animeList={animeList}
-                            />
-
-                        </div>
-                    )}
-                </div>
+                        <BrowseContent
+                            animeList={animeList}
+                            isLoadingMore={isFetching}
+                        />
+                    </div>
+                )}
             </div>
         </div>
     );

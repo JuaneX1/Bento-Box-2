@@ -1,0 +1,43 @@
+- generic [ref=f8e3]:
+  - navigation [ref=f8e4]:
+    - link [ref=f8e6] [cursor=pointer]:
+      - /url: /
+      - img "Big Logo" [ref=f8e7]
+  - generic [ref=f8e10]:
+    - generic [ref=f8e11]:
+      - button "Search" [ref=f8e12] [cursor=pointer]
+      - button "Browse" [ref=f8e13] [cursor=pointer]
+      - button "For You" [ref=f8e14] [cursor=pointer]
+    - generic [ref=f8e16]:
+      - textbox "Search anime..." [active] [ref=f8e19]: bleach
+      - main [ref=f8e21]:
+        - generic [ref=f8e23]:
+          - img "AnimeImage" [ref=f8e24]
+          - link "Ichigo Kurosaki is a rather normal high school student apart from the fact he has the ability to see ghosts. This ability never impacted his life in a...":
+            - /url: /anime/269
+            - paragraph [ref=f8e26] [cursor=pointer]: Ichigo Kurosaki is a rather normal high school student apart from the fact he has the ability to see ghosts. This ability never impacted his life in a...
+          - heading "Bleach" [level=5] [ref=f8e28]
+        - generic [ref=f8e30]:
+          - img "AnimeImage" [ref=f8e31]
+          - link "Was it all just a coincidence, or was it inevitable? Ichigo Kurosaki gained the powers of a Soul Reaper through a chance encounter. As a Substitute...":
+            - /url: /anime/116674
+            - paragraph [ref=f8e33] [cursor=pointer]: Was it all just a coincidence, or was it inevitable? Ichigo Kurosaki gained the powers of a Soul Reaper through a chance encounter. As a Substitute...
+          - 'heading "BLEACH: Thousand-Year Blood War" [level=5] [ref=f8e35]'
+        - generic [ref=f8e37]:
+          - img "AnimeImage" [ref=f8e38]
+          - 'link "The third part of BLEACH: Sennen Kessen-hen. After an awe-inspiring battle with Ichibei Hyousube—leader of the Soul Society''s Royal Guard—the power..."':
+            - /url: /anime/169755
+            - paragraph [ref=f8e40] [cursor=pointer]: "The third part of BLEACH: Sennen Kessen-hen. After an awe-inspiring battle with Ichibei Hyousube—leader of the Soul Society's Royal Guard—the power..."
+          - 'heading "BLEACH: Thousand-Year Blood War - The Conflict" [level=5] [ref=f8e42]'
+        - generic [ref=f8e44]:
+          - img "AnimeImage" [ref=f8e45]
+          - 'link "The second part of BLEACH: Sennen Kessen-hen. After a brutal surprise attack by the forces of Quincy King Yhwach, the resident Reapers of the Soul..."':
+            - /url: /anime/159322
+            - paragraph [ref=f8e47] [cursor=pointer]: "The second part of BLEACH: Sennen Kessen-hen. After a brutal surprise attack by the forces of Quincy King Yhwach, the resident Reapers of the Soul..."
+          - 'heading "BLEACH: Thousand-Year Blood War - The Separation" [level=5] [ref=f8e49]'
+        - generic [ref=f8e51]:
+          - img "AnimeImage" [ref=f8e52]
+          - 'link "The fourth and final part of BLEACH: Sennen Kessen-hen. Destruction looms at the end of the Thousand-Year Blood War between the Soul Reapers and Q..."':
+            - /url: /anime/185874
+            - paragraph [ref=f8e54] [cursor=pointer]: "The fourth and final part of BLEACH: Sennen Kessen-hen. Destruction looms at the end of the Thousand-Year Blood War between the Soul Reapers and Q..."
+          - 'heading "BLEACH: Thousand-Year Blood War - The Calamity" [level=5] [ref=f8e56]'

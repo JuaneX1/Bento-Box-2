@@ -1,0 +1,46 @@
+[     390ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://localhost:3100/static/js/bundle.js:38375
+[     627ms] TypeError: Cannot read properties of null (reading 'score')
+    at AnimePage (http://localhost:3100/static/js/bundle.js:1344:31)
+    at renderWithHooks (http://localhost:3100/static/js/bundle.js:26790:22)
+    at updateFunctionComponent (http://localhost:3100/static/js/bundle.js:29670:24)
+    at beginWork (http://localhost:3100/static/js/bundle.js:31382:20)
+    at HTMLUnknownElement.callCallback (http://localhost:3100/static/js/bundle.js:16386:18)
+    at Object.invokeGuardedCallbackDev (http://localhost:3100/static/js/bundle.js:16430:20)
+    at invokeGuardedCallback (http://localhost:3100/static/js/bundle.js:16487:35)
+    at beginWork$1 (http://localhost:3100/static/js/bundle.js:36351:11)
+    at performUnitOfWork (http://localhost:3100/static/js/bundle.js:35599:16)
+    at workLoopSync (http://localhost:3100/static/js/bundle.js:35522:9)
+[     628ms] TypeError: Cannot read properties of null (reading 'score')
+    at AnimePage (http://localhost:3100/static/js/bundle.js:1344:31)
+    at renderWithHooks (http://localhost:3100/static/js/bundle.js:26790:22)
+    at updateFunctionComponent (http://localhost:3100/static/js/bundle.js:29670:24)
+    at beginWork (http://localhost:3100/static/js/bundle.js:31382:20)
+    at HTMLUnknownElement.callCallback (http://localhost:3100/static/js/bundle.js:16386:18)
+    at Object.invokeGuardedCallbackDev (http://localhost:3100/static/js/bundle.js:16430:20)
+    at invokeGuardedCallback (http://localhost:3100/static/js/bundle.js:16487:35)
+    at beginWork$1 (http://localhost:3100/static/js/bundle.js:36351:11)
+    at performUnitOfWork (http://localhost:3100/static/js/bundle.js:35599:16)
+    at workLoopSync (http://localhost:3100/static/js/bundle.js:35522:9)
+[     599ms] [ERROR] The above error occurred in the <AnimePage> component:
+
+    at AnimePage (http://localhost:3100/static/js/bundle.js:1291:66)
+    at RenderedRoute (http://localhost:3100/static/js/bundle.js:41228:5)
+    at Routes (http://localhost:3100/static/js/bundle.js:41919:5)
+    at div
+    at Router (http://localhost:3100/static/js/bundle.js:41853:15)
+    at BrowserRouter (http://localhost:3100/static/js/bundle.js:39806:5)
+    at App
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries. @ http://localhost:3100/static/js/bundle.js:28892
+[     628ms] TypeError: Cannot read properties of null (reading 'score')
+    at AnimePage (http://localhost:3100/static/js/bundle.js:1344:31)
+    at renderWithHooks (http://localhost:3100/static/js/bundle.js:26790:22)
+    at updateFunctionComponent (http://localhost:3100/static/js/bundle.js:29670:24)
+    at beginWork (http://localhost:3100/static/js/bundle.js:31382:20)
+    at beginWork$1 (http://localhost:3100/static/js/bundle.js:36329:18)
+    at performUnitOfWork (http://localhost:3100/static/js/bundle.js:35599:16)
+    at workLoopSync (http://localhost:3100/static/js/bundle.js:35522:9)
+    at renderRootSync (http://localhost:3100/static/js/bundle.js:35495:11)
+    at recoverFromConcurrentError (http://localhost:3100/static/js/bundle.js:34987:24)
+    at performConcurrentWorkOnRoot (http://localhost:3100/static/js/bundle.js:34900:26)

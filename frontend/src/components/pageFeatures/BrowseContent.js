@@ -1,22 +1,17 @@
 import React from 'react';
 import AnimeCard from '../animeCards/AnimeCard';
 
-function BrowseContent(props) {
+function BrowseContent({ animeList, isLoadingMore }) {
     return (
-        <main className="container-fluid">
-            <div className="row justify-content-center p-4">
-            </div>
-            <div className="row justify-content-center">
-                <div className="col-sm-8">
-                    <div className="anime-list row row-cols-1 row-cols-md-2 row-cols-lg-3 justify-content-center">
-                        {props.animeList?.map(anime => (
-                            <div key={anime.id} className="col mb-5 d-flex justify-content-center">
-                                <AnimeCard anime={anime} />
-                            </div>
-                        ))}
-                    </div>
+        <main className="compartment-grid d-flex flex-wrap justify-content-center gap-4 p-4">
+            {animeList?.map((anime, index) => (
+                <div key={anime.id} style={{ animationDelay: `${(index % 12) * 40}ms` }}>
+                    <AnimeCard anime={anime} />
                 </div>
-            </div>
+            ))}
+            {isLoadingMore && Array.from({ length: 6 }).map((_, index) => (
+                <div key={`skeleton-${index}`} className="compartment-skeleton" />
+            ))}
         </main>
     );
 }

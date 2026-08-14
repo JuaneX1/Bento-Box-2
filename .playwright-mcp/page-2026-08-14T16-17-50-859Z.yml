@@ -1,0 +1,463 @@
+- generic [ref=f10e3]:
+  - navigation [ref=f10e4]:
+    - link [ref=f10e6] [cursor=pointer]:
+      - /url: /
+      - img "Big Logo" [ref=f10e7]
+  - generic [ref=f10e10]:
+    - generic [ref=f10e11]:
+      - button "Search" [ref=f10e12] [cursor=pointer]
+      - button "Browse" [ref=f10e13] [cursor=pointer]
+      - button "For You" [ref=f10e14] [cursor=pointer]
+    - generic [ref=f10e16]:
+      - textbox "Search anime..." [active] [ref=f10e19]: d
+      - main [ref=f10e33]:
+        - generic [ref=f10e42]:
+          - img "AnimeImage" [ref=f10e43]
+          - link "It is the Taisho Period in Japan. Tanjiro, a kindhearted boy who sells charcoal for a living, finds his family slaughtered by a demon. To make matters...":
+            - /url: /anime/101922
+            - paragraph [ref=f10e45] [cursor=pointer]: It is the Taisho Period in Japan. Tanjiro, a kindhearted boy who sells charcoal for a living, finds his family slaughtered by a demon. To make matters...
+          - 'heading "Demon Slayer: Kimetsu no Yaiba" [level=5] [ref=f10e47]'
+        - generic [ref=f10e56]:
+          - img "AnimeImage" [ref=f10e57]
+          - link "Light Yagami is a genius high school student who is about to learn about life through a book of death. When a bored shinigami, a God of Death, named R...":
+            - /url: /anime/1535
+            - paragraph [ref=f10e59] [cursor=pointer]: Light Yagami is a genius high school student who is about to learn about life through a book of death. When a bored shinigami, a God of Death, named R...
+          - heading "Death Note" [level=5] [ref=f10e61]
+        - generic [ref=f10e273]:
+          - img "AnimeImage" [ref=f10e274]
+          - link "After five years of harboring unspoken feelings, high-schooler Taiju Ooki is finally ready to confess his love to Yuzuriha Ogawa. Just when Taiju begi...":
+            - /url: /anime/105333
+            - paragraph [ref=f10e276] [cursor=pointer]: After five years of harboring unspoken feelings, high-schooler Taiju Ooki is finally ready to confess his love to Yuzuriha Ogawa. Just when Taiju begi...
+          - heading "Dr. STONE" [level=5] [ref=f10e278]
+        - generic [ref=f10e357]:
+          - img "AnimeImage" [ref=f10e358]
+          - link "This Demon Slayer movie sees Tanjiro Kamado and friends from the Demon Slayer corps board the Infinity Train on a new mission to investigate a mysteri...":
+            - /url: /anime/112151
+            - paragraph [ref=f10e360] [cursor=pointer]: This Demon Slayer movie sees Tanjiro Kamado and friends from the Demon Slayer corps board the Infinity Train on a new mission to investigate a mysteri...
+          - 'heading "Demon Slayer -Kimetsu no Yaiba- The Movie: Mugen Train" [level=5] [ref=f10e362]'
+        - generic [ref=f10e371]:
+          - img "AnimeImage" [ref=f10e372]
+          - 'link "The distant future: Humanity established the mobile fort city, Plantation, upon the ruined wasteland. Within the city were pilot quarters, Mistilteinn..."':
+            - /url: /anime/99423
+            - paragraph [ref=f10e374] [cursor=pointer]: "The distant future: Humanity established the mobile fort city, Plantation, upon the ruined wasteland. Within the city were pilot quarters, Mistilteinn..."
+          - heading "DARLING in the FRANXX" [level=5] [ref=f10e376]
+        - generic [ref=f10e406]:
+          - img "AnimeImage" [ref=f10e407]
+          - link "After visiting the Rengoku residence, Tanjirou and his comrades volunteer for a mission within the Entertainment District, a place where desires are s...":
+            - /url: /anime/142329
+            - paragraph [ref=f10e409] [cursor=pointer]: After visiting the Rengoku residence, Tanjirou and his comrades volunteer for a mission within the Entertainment District, a place where desires are s...
+          - 'heading "Demon Slayer: Kimetsu no Yaiba Entertainment District Arc" [level=5] [ref=f10e411]'
+        - generic [ref=f10e434]:
+          - img "AnimeImage" [ref=f10e435]
+          - link "When two people die at the same time, they’re sent to a place that’s neither heaven nor hell—a lavish bar between worlds where the stakes are high and...":
+            - /url: /anime/20931
+            - paragraph [ref=f10e437] [cursor=pointer]: When two people die at the same time, they’re sent to a place that’s neither heaven nor hell—a lavish bar between worlds where the stakes are high and...
+          - heading "Death Parade" [level=5] [ref=f10e439]
+        - generic [ref=f10e672]:
+          - img "AnimeImage" [ref=f10e673]
+          - link "This is a story about Momo, a high school girl who comes from a family of spirit mediums, and her classmate Okarun, an occult fanatic. After Momo resc...":
+            - /url: /anime/171018
+            - paragraph [ref=f10e675] [cursor=pointer]: This is a story about Momo, a high school girl who comes from a family of spirit mediums, and her classmate Okarun, an occult fanatic. After Momo resc...
+          - heading "DAN DA DAN" [level=5] [ref=f10e677]
+        - generic [ref=f10e714]:
+          - img "AnimeImage" [ref=f10e715]
+          - link "Dororo, a young orphan thief, meets Hyakkimaru, a powerful ronin. Hyakkimaru's father, a greedy feudal lord, had made a pact with 12 demons, offering ...":
+            - /url: /anime/101347
+            - paragraph [ref=f10e717] [cursor=pointer]: Dororo, a young orphan thief, meets Hyakkimaru, a powerful ronin. Hyakkimaru's father, a greedy feudal lord, had made a pact with 12 demons, offering ...
+          - heading "Dororo" [level=5] [ref=f10e719]
+        - generic [ref=f10e728]:
+          - img "AnimeImage" [ref=f10e729]
+          - link "Adaptation of the Swordsmith Village Arc. Tanjiro’s journey leads him to the Swordsmith Village, where he reunites with two Hashira, members of the...":
+            - /url: /anime/145139
+            - paragraph [ref=f10e731] [cursor=pointer]: Adaptation of the Swordsmith Village Arc. Tanjiro’s journey leads him to the Swordsmith Village, where he reunites with two Hashira, members of the...
+          - 'heading "Demon Slayer: Kimetsu no Yaiba Swordsmith Village Arc" [level=5] [ref=f10e733]'
+        - generic [ref=f10e763]:
+          - img "AnimeImage" [ref=f10e764]
+          - 'link "In Demon Slayer: Kimetsu no Yaiba Mugen Train Arc, Tanjiro Kamado and his fellow Demon Slayer members embark on a mission aboard the Infinity Train. T..."':
+            - /url: /anime/129874
+            - paragraph [ref=f10e766] [cursor=pointer]: "In Demon Slayer: Kimetsu no Yaiba Mugen Train Arc, Tanjiro Kamado and his fellow Demon Slayer members embark on a mission aboard the Infinity Train. T..."
+          - 'heading "Demon Slayer: Kimetsu no Yaiba Mugen Train Arc" [level=5] [ref=f10e768]'
+        - generic [ref=f10e805]:
+          - img "AnimeImage" [ref=f10e806]
+          - link "New Devilman project marking Go Nagai's 50th anniversary as a creator. The protagonist Akira Fudou learns from his best friend, Ryou Asuka, that an a...":
+            - /url: /anime/98460
+            - paragraph [ref=f10e808] [cursor=pointer]: New Devilman project marking Go Nagai's 50th anniversary as a creator. The protagonist Akira Fudou learns from his best friend, Ryou Asuka, that an a...
+          - heading "Devilman Crybaby" [level=5] [ref=f10e810]
+        - generic [ref=f10e854]:
+          - img "AnimeImage" [ref=f10e855]
+          - link "The second season of Dr. STONE Armed with the power of science and a genius intellect, Senkuu is determined to save humanity. However, Tsukasa’s em...":
+            - /url: /anime/113936
+            - paragraph [ref=f10e857] [cursor=pointer]: The second season of Dr. STONE Armed with the power of science and a genius intellect, Senkuu is determined to save humanity. However, Tsukasa’s em...
+          - 'heading "Dr. STONE: STONE WARS" [level=5] [ref=f10e859]'
+        - generic [ref=f10e63]:
+          - img "AnimeImage" [ref=f10e64]
+          - link "What would the world be like if 80 percent of the population manifested extraordinary superpowers called “Quirks” at age four? Heroes and villains wou...":
+            - /url: /anime/21459
+            - paragraph [ref=f10e66] [cursor=pointer]: What would the world be like if 80 percent of the population manifested extraordinary superpowers called “Quirks” at age four? Heroes and villains wou...
+          - heading "My Hero Academia" [level=5] [ref=f10e68]
+        - generic [ref=f10e105]:
+          - img "AnimeImage" [ref=f10e106]
+          - link "\"In order for something to be obtained, something of equal value must be lost.\" Alchemy is bound by this Law of Equivalent Exchange—something the y...":
+            - /url: /anime/5114
+            - paragraph [ref=f10e108] [cursor=pointer]: "\"In order for something to be obtained, something of equal value must be lost.\" Alchemy is bound by this Law of Equivalent Exchange—something the y..."
+          - 'heading "Fullmetal Alchemist: Brotherhood" [level=5] [ref=f10e110]'
+        - generic [ref=f10e119]:
+          - img "AnimeImage" [ref=f10e120]
+          - link "In the near future, a Virtual Reality Massive Multiplayer Online Role-Playing Game (VRMMORPG) called Sword Art Online has been released where players ...":
+            - /url: /anime/11757
+            - paragraph [ref=f10e122] [cursor=pointer]: In the near future, a Virtual Reality Massive Multiplayer Online Role-Playing Game (VRMMORPG) called Sword Art Online has been released where players ...
+          - heading "Sword Art Online" [level=5] [ref=f10e124]
+        - generic [ref=f10e147]:
+          - img "AnimeImage" [ref=f10e148]
+          - link "Taking off right after the last episode of the first season. The school is temporarily closed due to security. When U.A. restarts, it is announced tha...":
+            - /url: /anime/21856
+            - paragraph [ref=f10e150] [cursor=pointer]: Taking off right after the last episode of the first season. The school is temporarily closed due to security. When U.A. restarts, it is announced tha...
+          - heading "My Hero Academia Season 2" [level=5] [ref=f10e152]
+        - generic [ref=f10e161]:
+          - img "AnimeImage" [ref=f10e162]
+          - link "Emma, Norman and Ray are the brightest kids at the Grace Field House orphanage. And under the care of the woman they refer to as “Mom,” all the kids h...":
+            - /url: /anime/101759
+            - paragraph [ref=f10e164] [cursor=pointer]: Emma, Norman and Ray are the brightest kids at the Grace Field House orphanage. And under the care of the woman they refer to as “Mom,” all the kids h...
+          - heading "The Promised Neverland" [level=5] [ref=f10e166]
+        - generic [ref=f10e189]:
+          - img "AnimeImage" [ref=f10e190]
+          - link "In the story, Subaru Natsuki is an ordinary high school student who is lost in an alternate world, where he is rescued by a beautiful, silver-haired g...":
+            - /url: /anime/21355
+            - paragraph [ref=f10e192] [cursor=pointer]: In the story, Subaru Natsuki is an ordinary high school student who is lost in an alternate world, where he is rescued by a beautiful, silver-haired g...
+          - heading "Re:ZERO -Starting Life in Another World-" [level=5] [ref=f10e194]
+        - generic [ref=f10e210]:
+          - img "AnimeImage" [ref=f10e211]
+          - 'link "Naruto: Shippuuden is the continuation of the original animated TV series Naruto. The story revolves around an older and slightly more matured Uzumaki..."':
+            - /url: /anime/1735
+            - paragraph [ref=f10e213] [cursor=pointer]: "Naruto: Shippuuden is the continuation of the original animated TV series Naruto. The story revolves around an older and slightly more matured Uzumaki..."
+          - 'heading "Naruto: Shippuden" [level=5] [ref=f10e215]'
+        - generic [ref=f10e217]:
+          - img "AnimeImage" [ref=f10e218]
+          - link "Satoru Fujinuma is a 29 year old manga artist struggling to make a name for himself following his debut. But, that was not the only thing in his life ...":
+            - /url: /anime/21234
+            - paragraph [ref=f10e220] [cursor=pointer]: Satoru Fujinuma is a 29 year old manga artist struggling to make a name for himself following his debut. But, that was not the only thing in his life ...
+          - heading "ERASED" [level=5] [ref=f10e222]
+        - generic [ref=f10e224]:
+          - img "AnimeImage" [ref=f10e225]
+          - link "Summer is here, and the heroes of Class 1-A and 1-B are in for the toughest training camp of their lives! A group of seasoned pros pushes everyone's Q...":
+            - /url: /anime/100166
+            - paragraph [ref=f10e227] [cursor=pointer]: Summer is here, and the heroes of Class 1-A and 1-B are in for the toughest training camp of their lives! A group of seasoned pros pushes everyone's Q...
+          - heading "My Hero Academia Season 3" [level=5] [ref=f10e229]
+        - generic [ref=f10e252]:
+          - img "AnimeImage" [ref=f10e253]
+          - link "There's a rumor about a mysterious phenomenon called \"puberty syndrome.\" For example, Sakuta Azusagawa is a high school student who suddenly sees a bu...":
+            - /url: /anime/101291
+            - paragraph [ref=f10e255] [cursor=pointer]: There's a rumor about a mysterious phenomenon called "puberty syndrome." For example, Sakuta Azusagawa is a high school student who suddenly sees a bu...
+          - heading "Rascal Does Not Dream of Bunny Girl Senpai" [level=5] [ref=f10e257]
+        - generic [ref=f10e280]:
+          - img "AnimeImage" [ref=f10e281]
+          - link "A certain point in time, in the continent of Telesis. The great war which divided the continent into North and South has ended after four years, and t...":
+            - /url: /anime/21827
+            - paragraph [ref=f10e283] [cursor=pointer]: A certain point in time, in the continent of Telesis. The great war which divided the continent into North and South has ended after four years, and t...
+          - heading "Violet Evergarden" [level=5] [ref=f10e285]
+        - generic [ref=f10e287]:
+          - img "AnimeImage" [ref=f10e288]
+          - link "Thorfinn is son to one of the Vikings' greatest warriors, but when his father is killed in battle by the mercenary leader Askeladd, he swears to have ...":
+            - /url: /anime/101348
+            - paragraph [ref=f10e290] [cursor=pointer]: Thorfinn is son to one of the Vikings' greatest warriors, but when his father is killed in battle by the mercenary leader Askeladd, he swears to have ...
+          - heading "Vinland Saga" [level=5] [ref=f10e292]
+        - generic [ref=f10e294]:
+          - img "AnimeImage" [ref=f10e295]
+          - link "Ryuuji Takasu is a gentle high school student with a love for housework; but in contrast to his kind nature, he has an intimidating face that often ge...":
+            - /url: /anime/4224
+            - paragraph [ref=f10e297] [cursor=pointer]: Ryuuji Takasu is a gentle high school student with a love for housework; but in contrast to his kind nature, he has an intimidating face that often ge...
+          - heading "Toradora!" [level=5] [ref=f10e299]
+        - generic [ref=f10e329]:
+          - img "AnimeImage" [ref=f10e330]
+          - link "The villain world teeters on the brink of war now that All For One is out of the picture. Shigaraki of the League of Villains squares off with Overhau...":
+            - /url: /anime/104276
+            - paragraph [ref=f10e332] [cursor=pointer]: The villain world teeters on the brink of war now that All For One is out of the picture. Shigaraki of the League of Villains squares off with Overhau...
+          - heading "My Hero Academia Season 4" [level=5] [ref=f10e334]
+        - generic [ref=f10e336]:
+          - img "AnimeImage" [ref=f10e337]
+          - link "When they were accused of trying to overthrow the monarchy, the feared warriors the Seven Deadly Sins were sent into exile. Princess Elizabeth discove...":
+            - /url: /anime/20789
+            - paragraph [ref=f10e339] [cursor=pointer]: When they were accused of trying to overthrow the monarchy, the feared warriors the Seven Deadly Sins were sent into exile. Princess Elizabeth discove...
+          - heading "The Seven Deadly Sins" [level=5] [ref=f10e341]
+        - generic [ref=f10e343]:
+          - img "AnimeImage" [ref=f10e344]
+          - link "Kazuma Satou decides that today is the day to get out of the house for a bit. Since he dies, pointlessly, it's clearly a bad choice. The goddess who g...":
+            - /url: /anime/21202
+            - paragraph [ref=f10e346] [cursor=pointer]: Kazuma Satou decides that today is the day to get out of the house for a bit. Since he dies, pointlessly, it's clearly a bad choice. The goddess who g...
+          - heading "KONOSUBA -God's blessing on this wonderful world!" [level=5] [ref=f10e348]
+        - generic [ref=f10e378]:
+          - img "AnimeImage" [ref=f10e379]
+          - link "On August 10th of the year 2010 the Holy Empire of Britannia began a campaign of conquest, its sights set on Japan. Operations were completed in one m...":
+            - /url: /anime/1575
+            - paragraph [ref=f10e381] [cursor=pointer]: On August 10th of the year 2010 the Holy Empire of Britannia began a campaign of conquest, its sights set on Japan. Operations were completed in one m...
+          - 'heading "Code Geass: Lelouch of the Rebellion" [level=5] [ref=f10e383]'
+        - generic [ref=f10e413]:
+          - img "AnimeImage" [ref=f10e414]
+          - link "On the way to their new home, 10-year-old Chihiro Ogino's family stumbles upon a deserted theme park. Intrigued, the family investigates the park, tho...":
+            - /url: /anime/199
+            - paragraph [ref=f10e416] [cursor=pointer]: On the way to their new home, 10-year-old Chihiro Ogino's family stumbles upon a deserted theme park. Intrigued, the family investigates the park, tho...
+          - heading "Spirited Away" [level=5] [ref=f10e418]
+        - generic [ref=f10e420]:
+          - img "AnimeImage" [ref=f10e421]
+          - link "Beginning its tale in 19th century England, young aristocrat Jonathan Joestar finds himself locked in bitter rivalry with Dio Brando, a low-born boy w...":
+            - /url: /anime/14719
+            - paragraph [ref=f10e423] [cursor=pointer]: Beginning its tale in 19th century England, young aristocrat Jonathan Joestar finds himself locked in bitter rivalry with Dio Brando, a low-born boy w...
+          - heading "JoJo's Bizarre Adventure (TV)" [level=5] [ref=f10e425]
+        - generic [ref=f10e427]:
+          - img "AnimeImage" [ref=f10e428]
+          - link "The adventure is over but life goes on for an elf mage just beginning to learn what living is all about. Elf mage Frieren and her courageous fellow ad...":
+            - /url: /anime/154587
+            - paragraph [ref=f10e430] [cursor=pointer]: The adventure is over but life goes on for an elf mage just beginning to learn what living is all about. Elf mage Frieren and her courageous fellow ad...
+          - 'heading "Frieren: Beyond Journey’s End" [level=5] [ref=f10e432]'
+        - generic [ref=f10e462]:
+          - img "AnimeImage" [ref=f10e463]
+          - link "Naofumi Iwatani, an uncharismatic Otaku who spends his days on games and manga, suddenly finds himself summoned to a parallel universe! He discovers h...":
+            - /url: /anime/99263
+            - paragraph [ref=f10e465] [cursor=pointer]: Naofumi Iwatani, an uncharismatic Otaku who spends his days on games and manga, suddenly finds himself summoned to a parallel universe! He discovers h...
+          - heading "The Rising of the Shield Hero" [level=5] [ref=f10e467]
+        - generic [ref=f10e469]:
+          - img "AnimeImage" [ref=f10e470]
+          - link "Lonely thirty-seven-year-old Satoru Mikami is stuck in a dead-end job, unhappy with his mundane life, but after dying at the hands of a robber, he awa...":
+            - /url: /anime/101280
+            - paragraph [ref=f10e472] [cursor=pointer]: Lonely thirty-seven-year-old Satoru Mikami is stuck in a dead-end job, unhappy with his mundane life, but after dying at the hands of a robber, he awa...
+          - heading "That Time I Got Reincarnated as a Slime" [level=5] [ref=f10e474]
+        - generic [ref=f10e490]:
+          - img "AnimeImage" [ref=f10e491]
+          - link "One year after the SAO incident, Kirito is approached by Seijiro Kikuoka from Japan's Ministry of Internal Affairs and Communications Department \"VR D...":
+            - /url: /anime/20594
+            - paragraph [ref=f10e493] [cursor=pointer]: One year after the SAO incident, Kirito is approached by Seijiro Kikuoka from Japan's Ministry of Internal Affairs and Communications Department "VR D...
+          - heading "Sword Art Online II" [level=5] [ref=f10e495]
+        - generic [ref=f10e560]:
+          - img "AnimeImage" [ref=f10e561]
+          - link "This psychological thriller, based on the manga written and illustrated by Sakae Esuno, is about Yuki, a loner who's not very good with people. He pre...":
+            - /url: /anime/10620
+            - paragraph [ref=f10e563] [cursor=pointer]: This psychological thriller, based on the manga written and illustrated by Sakae Esuno, is about Yuki, a loner who's not very good with people. He pre...
+          - heading "The Future Diary" [level=5] [ref=f10e565]
+        - generic [ref=f10e567]:
+          - img "AnimeImage" [ref=f10e568]
+          - 'link "High schooler Wakana Gojou cares about one thing: making Hina dolls. With nobody to share his obsession, he has trouble finding friends—or even holdin..."':
+            - /url: /anime/132405
+            - paragraph [ref=f10e570] [cursor=pointer]: "High schooler Wakana Gojou cares about one thing: making Hina dolls. With nobody to share his obsession, he has trouble finding friends—or even holdin..."
+          - heading "My Dress-Up Darling" [level=5] [ref=f10e572]
+        - generic [ref=f10e574]:
+          - img "AnimeImage" [ref=f10e575]
+          - link "Stalked by a beastly white tiger, Atsushi Nakajima has no idea that the menace lives inside him—a power that catches the attention of the Armed Detect...":
+            - /url: /anime/21311
+            - paragraph [ref=f10e577] [cursor=pointer]: Stalked by a beastly white tiger, Atsushi Nakajima has no idea that the menace lives inside him—a power that catches the attention of the Armed Detect...
+          - heading "Bungo Stray Dogs" [level=5] [ref=f10e579]
+        - generic [ref=f10e588]:
+          - img "AnimeImage" [ref=f10e589]
+          - link "The rivalry between Class 1-A and Class 1-B heats up in a joint training battle. Eager to be a part of the hero course, brainwashing buff Shinso is ta...":
+            - /url: /anime/117193
+            - paragraph [ref=f10e591] [cursor=pointer]: The rivalry between Class 1-A and Class 1-B heats up in a joint training battle. Eager to be a part of the hero course, brainwashing buff Shinso is ta...
+          - heading "My Hero Academia Season 5" [level=5] [ref=f10e593]
+        - generic [ref=f10e602]:
+          - img "AnimeImage" [ref=f10e603]
+          - link "The \"Abyss\" is the last unexplored place in the world. Strange and wonderful creatures roam within, and it is full of precious relics that present hum...":
+            - /url: /anime/97986
+            - paragraph [ref=f10e605] [cursor=pointer]: The "Abyss" is the last unexplored place in the world. Strange and wonderful creatures roam within, and it is full of precious relics that present hum...
+          - heading "Made in Abyss" [level=5] [ref=f10e607]
+        - generic [ref=f10e609]:
+          - img "AnimeImage" [ref=f10e610]
+          - link "Ever since he was little, Souma Yukihira’s main goals have been to beat his father in a cooking contest and take over the family diner. That’s why, wh...":
+            - /url: /anime/20923
+            - paragraph [ref=f10e612] [cursor=pointer]: Ever since he was little, Souma Yukihira’s main goals have been to beat his father in a cooking contest and take over the family diner. That’s why, wh...
+          - heading "Food Wars!" [level=5] [ref=f10e614]
+        - generic [ref=f10e616]:
+          - img "AnimeImage" [ref=f10e617]
+          - link "The story takes place in the year 2138 when virtual reality gaming is booming. Yggdrasil, a popular online game is quietly shut down one day. However,...":
+            - /url: /anime/20832
+            - paragraph [ref=f10e619] [cursor=pointer]: The story takes place in the year 2138 when virtual reality gaming is booming. Yggdrasil, a popular online game is quietly shut down one day. However,...
+          - heading "Overlord" [level=5] [ref=f10e621]
+        - generic [ref=f10e623]:
+          - img "AnimeImage" [ref=f10e624]
+          - link "Following their participation at the Inter-High, the Karasuno High School volleyball team attempts to refocus their efforts, aiming to conquer the Spr...":
+            - /url: /anime/20992
+            - paragraph [ref=f10e626] [cursor=pointer]: Following their participation at the Inter-High, the Karasuno High School volleyball team attempts to refocus their efforts, aiming to conquer the Spr...
+          - heading "HAIKYU!! 2nd Season" [level=5] [ref=f10e628]
+        - generic [ref=f10e630]:
+          - img "AnimeImage" [ref=f10e631]
+          - 'link "Devil King Sadao is only one step away from conquering the world when he is beaten by Hero Emilia and forced to drift to the other world: modern-day T..."':
+            - /url: /anime/15809
+            - paragraph [ref=f10e633] [cursor=pointer]: "Devil King Sadao is only one step away from conquering the world when he is beaten by Hero Emilia and forced to drift to the other world: modern-day T..."
+          - heading "The Devil is a Part-Timer!" [level=5] [ref=f10e635]
+        - generic [ref=f10e637]:
+          - img "AnimeImage" [ref=f10e638]
+          - link "Some adventurers delve into the sprawling labyrinths beneath the city of Orario to find fame and fortune. Others come to test their skills against the...":
+            - /url: /anime/20920
+            - paragraph [ref=f10e640] [cursor=pointer]: Some adventurers delve into the sprawling labyrinths beneath the city of Orario to find fame and fortune. Others come to test their skills against the...
+          - heading "Is It Wrong to Try to Pick Up Girls in a Dungeon?" [level=5] [ref=f10e642]
+        - generic [ref=f10e644]:
+          - img "AnimeImage" [ref=f10e645]
+          - link "Jinta Yadomi and his group of childhood friends have become estranged after a tragic accident split them apart. Now in their high school years, a sudd...":
+            - /url: /anime/9989
+            - paragraph [ref=f10e647] [cursor=pointer]: Jinta Yadomi and his group of childhood friends have become estranged after a tragic accident split them apart. Now in their high school years, a sudd...
+          - 'heading "Anohana: The Flower We Saw That Day" [level=5] [ref=f10e649]'
+        - generic [ref=f10e665]:
+          - img "AnimeImage" [ref=f10e666]
+          - 'link "An original anime series set in in the universe of Cyberpunk 2077. Cyberpunk: Edgerunners tells a standalone, 10-episode story about a street kid t..."':
+            - /url: /anime/120377
+            - paragraph [ref=f10e668] [cursor=pointer]: "An original anime series set in in the universe of Cyberpunk 2077. Cyberpunk: Edgerunners tells a standalone, 10-episode story about a street kid t..."
+          - 'heading "Cyberpunk: Edgerunners" [level=5] [ref=f10e670]'
+        - generic [ref=f10e679]:
+          - img "AnimeImage" [ref=f10e680]
+          - link "This romantic comedy revolves around an antisocial high school student named Hikigaya Hachiman with a distorted view on life and no friends or girlfri...":
+            - /url: /anime/14813
+            - paragraph [ref=f10e682] [cursor=pointer]: This romantic comedy revolves around an antisocial high school student named Hikigaya Hachiman with a distorted view on life and no friends or girlfri...
+          - heading "My Teen Romantic Comedy SNAFU" [level=5] [ref=f10e684]
+        - generic [ref=f10e700]:
+          - img "AnimeImage" [ref=f10e701]
+          - link "Even after dying countless times, Subaru finally ended the threat of the White Whale and defeated the Witch Cult's Sin Archbishop representing sloth, ...":
+            - /url: /anime/108632
+            - paragraph [ref=f10e703] [cursor=pointer]: Even after dying countless times, Subaru finally ended the threat of the White Whale and defeated the Witch Cult's Sin Archbishop representing sloth, ...
+          - heading "Re:ZERO -Starting Life in Another World- Season 2" [level=5] [ref=f10e705]
+        - generic [ref=f10e707]:
+          - img "AnimeImage" [ref=f10e708]
+          - 'link "When Kazuma Satou died, he was given two choices: pass on to heaven or be revived in a fantasy world. After choosing the new world, the goddess Aqua t..."':
+            - /url: /anime/21699
+            - paragraph [ref=f10e710] [cursor=pointer]: "When Kazuma Satou died, he was given two choices: pass on to heaven or be revived in a fantasy world. After choosing the new world, the goddess Aqua t..."
+          - heading "KONOSUBA -God's blessing on this wonderful world! 2" [level=5] [ref=f10e712]
+        - generic [ref=f10e735]:
+          - img "AnimeImage" [ref=f10e736]
+          - link "The second season of Ansatsu Kyoushitsu. The students return as school is back in session for the second semester. Following their exploits on the ...":
+            - /url: /anime/21170
+            - paragraph [ref=f10e738] [cursor=pointer]: The second season of Ansatsu Kyoushitsu. The students return as school is back in session for the second semester. Following their exploits on the ...
+          - heading "Assassination Classroom Second Season" [level=5] [ref=f10e740]
+        - generic [ref=f10e749]:
+          - img "AnimeImage" [ref=f10e750]
+          - link "After the victory against Aoba Jousai High, Karasuno High School, once called “a fallen powerhouse, a crow that can’t fly,” has finally reached the cl...":
+            - /url: /anime/21698
+            - paragraph [ref=f10e752] [cursor=pointer]: After the victory against Aoba Jousai High, Karasuno High School, once called “a fallen powerhouse, a crow that can’t fly,” has finally reached the cl...
+          - heading "HAIKYU!! 3rd Season" [level=5] [ref=f10e754]
+        - generic [ref=f10e756]:
+          - img "AnimeImage" [ref=f10e757]
+          - link "A year has passed since \"The Black Rebellion\" and the remaining Black Knights have vanished into the shadows, their leader and figurehead, Zero, execu...":
+            - /url: /anime/2904
+            - paragraph [ref=f10e759] [cursor=pointer]: A year has passed since "The Black Rebellion" and the remaining Black Knights have vanished into the shadows, their leader and figurehead, Zero, execu...
+          - 'heading "Code Geass: Lelouch of the Rebellion R2" [level=5] [ref=f10e761]'
+        - generic [ref=f10e770]:
+          - img "AnimeImage" [ref=f10e771]
+          - link "The Edo period is nearing its end. Gabimaru, a shinobi formerly known as the strongest in Iwagakure who is now a death row convict, is told that he wi...":
+            - /url: /anime/128893
+            - paragraph [ref=f10e773] [cursor=pointer]: The Edo period is nearing its end. Gabimaru, a shinobi formerly known as the strongest in Iwagakure who is now a death row convict, is told that he wi...
+          - heading "Hell’s Paradise" [level=5] [ref=f10e775]
+        - generic [ref=f10e777]:
+          - img "AnimeImage" [ref=f10e778]
+          - link "To the average person, psychic abilities might seem a blessing; for Kusuo Saiki, however, this couldn't be further from the truth. Gifted with a wide ...":
+            - /url: /anime/21804
+            - paragraph [ref=f10e780] [cursor=pointer]: To the average person, psychic abilities might seem a blessing; for Kusuo Saiki, however, this couldn't be further from the truth. Gifted with a wide ...
+          - heading "The Disastrous Life of Saiki K." [level=5] [ref=f10e782]
+        - generic [ref=f10e798]:
+          - img "AnimeImage" [ref=f10e799]
+          - link "Everybody has had that stage in their life where they have thought themselves to be special, different from the masses of ordinary humans. They might ...":
+            - /url: /anime/14741
+            - paragraph [ref=f10e801] [cursor=pointer]: Everybody has had that stage in their life where they have thought themselves to be special, different from the masses of ordinary humans. They might ...
+          - heading "Love, Chunibyo & Other Delusions" [level=5] [ref=f10e803]
+        - generic [ref=f10e826]:
+          - img "AnimeImage" [ref=f10e827]
+          - 'link "In a Japanese jail sits 17-year-old Jotaro Kujo: punk, fighter, delinquent...and possessed by a force beyond his control! Around the world, evil spiri..."':
+            - /url: /anime/20474
+            - paragraph [ref=f10e829] [cursor=pointer]: "In a Japanese jail sits 17-year-old Jotaro Kujo: punk, fighter, delinquent...and possessed by a force beyond his control! Around the world, evil spiri..."
+          - 'heading "JoJo''s Bizarre Adventure: Stardust Crusaders" [level=5] [ref=f10e831]'
+        - generic [ref=f10e847]:
+          - img "AnimeImage" [ref=f10e848]
+          - link "There is a tower that summons chosen people called \"Regulars\" with the promise of granting their deepest desires. Whether it be wealth, fame, authorit...":
+            - /url: /anime/115230
+            - paragraph [ref=f10e850] [cursor=pointer]: There is a tower that summons chosen people called "Regulars" with the promise of granting their deepest desires. Whether it be wealth, fame, authorit...
+          - heading "Tower of God" [level=5] [ref=f10e852]
+        - generic [ref=f10e861]:
+          - img "AnimeImage" [ref=f10e862]
+          - link "What happens when a drunken promise leads to living with a dragon? That’s Miss Kobayashi’s new reality when Tohru appears in her life. With a maid-sla...":
+            - /url: /anime/21776
+            - paragraph [ref=f10e864] [cursor=pointer]: What happens when a drunken promise leads to living with a dragon? That’s Miss Kobayashi’s new reality when Tohru appears in her life. With a maid-sla...
+          - heading "Miss Kobayashi's Dragon Maid" [level=5] [ref=f10e866]
+        - generic [ref=f10e875]:
+          - img "AnimeImage" [ref=f10e876]
+          - link "The story takes place in a world where an unknown virus has killed the entire human population except for children under 13. Those children were then ...":
+            - /url: /anime/20829
+            - paragraph [ref=f10e878] [cursor=pointer]: The story takes place in a world where an unknown virus has killed the entire human population except for children under 13. Those children were then ...
+          - 'heading "Seraph of the End: Vampire Reign" [level=5] [ref=f10e880]'
+        - generic [ref=f10e882]:
+          - img "AnimeImage" [ref=f10e883]
+          - link "Having slept through all four of her alarms, the energetic Narumi Momose finds herself running late for her first day of work at a new office. As she ...":
+            - /url: /anime/99578
+            - paragraph [ref=f10e885] [cursor=pointer]: Having slept through all four of her alarms, the energetic Narumi Momose finds herself running late for her first day of work at a new office. As she ...
+          - 'heading "Wotakoi: Love is Hard for Otaku" [level=5] [ref=f10e887]'
+        - generic [ref=f10e896]:
+          - img "AnimeImage" [ref=f10e897]
+          - link "One night, 14-year-old Madoka Kaname has a terrible nightmare - against the backdrop of a devastated city, she witnesses a girl fight a losing battle ...":
+            - /url: /anime/9756
+            - paragraph [ref=f10e899] [cursor=pointer]: One night, 14-year-old Madoka Kaname has a terrible nightmare - against the backdrop of a devastated city, she witnesses a girl fight a losing battle ...
+          - heading "Puella Magi Madoka Magica" [level=5] [ref=f10e901]
+        - generic [ref=f10e910]:
+          - img "AnimeImage" [ref=f10e911]
+          - link "The second season of Yakusoku no Neverland. Fifteen children escape Grace Field House, a false paradise, hoping for a chance at freedom. Instead, t...":
+            - /url: /anime/108725
+            - paragraph [ref=f10e913] [cursor=pointer]: The second season of Yakusoku no Neverland. Fifteen children escape Grace Field House, a false paradise, hoping for a chance at freedom. Instead, t...
+          - heading "The Promised Neverland Season 2" [level=5] [ref=f10e915]
+        - generic [ref=f10e938]:
+          - img "AnimeImage" [ref=f10e939]
+          - link "Maomao lived a peaceful life with her apothecary father. Until one day, she’s sold as a lowly servant to the emperor’s palace. But she wasn’t meant fo...":
+            - /url: /anime/161645
+            - paragraph [ref=f10e941] [cursor=pointer]: Maomao lived a peaceful life with her apothecary father. Until one day, she’s sold as a lowly servant to the emperor’s palace. But she wasn’t meant fo...
+          - heading "The Apothecary Diaries" [level=5] [ref=f10e943]
+        - generic [ref=f10e952]:
+          - img "AnimeImage" [ref=f10e953]
+          - link "The second season of Tensei Shitara Slime Datta Ken. Now that the Jura Tempest Alliance is growing even further, they will now be meeting the anima...":
+            - /url: /anime/108511
+            - paragraph [ref=f10e955] [cursor=pointer]: The second season of Tensei Shitara Slime Datta Ken. Now that the Jura Tempest Alliance is growing even further, they will now be meeting the anima...
+          - heading "That Time I Got Reincarnated as a Slime Season 2" [level=5] [ref=f10e957]
+        - generic [ref=f10e966]:
+          - img "AnimeImage" [ref=f10e967]
+          - 'link "JoJo no Kimyou na Bouken: Diamond wa Kudakenai adapts the fourth part of the JoJo no Kimyou na Bouken manga series. It''s the year 1999, 11 years af..."':
+            - /url: /anime/21450
+            - paragraph [ref=f10e969] [cursor=pointer]: "JoJo no Kimyou na Bouken: Diamond wa Kudakenai adapts the fourth part of the JoJo no Kimyou na Bouken manga series. It's the year 1999, 11 years af..."
+          - 'heading "JoJo''s Bizarre Adventure: Diamond is Unbreakable" [level=5] [ref=f10e971]'
+        - generic [ref=f10e973]:
+          - img "AnimeImage" [ref=f10e974]
+          - link "Issei Hyodo is your average perverted high school student whose one wish in life is to have his own harem, but he's got to be one of the unluckiest gu...":
+            - /url: /anime/11617
+            - paragraph [ref=f10e976] [cursor=pointer]: Issei Hyodo is your average perverted high school student whose one wish in life is to have his own harem, but he's got to be one of the unluckiest gu...
+          - heading "High School DxD" [level=5] [ref=f10e978]
+        - generic [ref=f10e987]:
+          - img "AnimeImage" [ref=f10e988]
+          - link "Some people just aren’t suited to playing the part of the flashy, in-your-face hero or the dastardly, mustache-twirling villain with larger-than-life ...":
+            - /url: /anime/130298
+            - paragraph [ref=f10e990] [cursor=pointer]: Some people just aren’t suited to playing the part of the flashy, in-your-face hero or the dastardly, mustache-twirling villain with larger-than-life ...
+          - heading "The Eminence in Shadow" [level=5] [ref=f10e992]
+        - generic [ref=f10e1008]:
+          - img "AnimeImage" [ref=f10e1009]
+          - link "Kinoshita Kazuya is a 20-year-old failure of a college student. He managed to kiss his girlfriend once, but was dumped after a month. \"Ugh... Damn it....":
+            - /url: /anime/113813
+            - paragraph [ref=f10e1011] [cursor=pointer]: Kinoshita Kazuya is a 20-year-old failure of a college student. He managed to kiss his girlfriend once, but was dumped after a month. "Ugh... Damn it....
+          - heading "Rent-a-Girlfriend" [level=5] [ref=f10e1013]
+        - generic [ref=f10e1022]:
+          - img "AnimeImage" [ref=f10e1023]
+          - 'link "After learning more behind the Death Loop and Witches of Sin, Subaru vows to save Emilia and his friends from further doom. (Source: Crunchyroll)"':
+            - /url: /anime/119661
+            - paragraph [ref=f10e1025] [cursor=pointer]: "After learning more behind the Death Loop and Witches of Sin, Subaru vows to save Emilia and his friends from further doom. (Source: Crunchyroll)"
+          - heading "Re:ZERO -Starting Life in Another World- Season 2 Part 2" [level=5] [ref=f10e1027]
+        - generic [ref=f10e1029]:
+          - img "AnimeImage" [ref=f10e1030]
+          - link "The second season of Solo Leveling. Mastering his new abilities in secret, Jin-U must battle humanity's toughest foes to save his mother. (Source...":
+            - /url: /anime/176496
+            - paragraph [ref=f10e1032] [cursor=pointer]: The second season of Solo Leveling. Mastering his new abilities in secret, Jin-U must battle humanity's toughest foes to save his mother. (Source...
+          - heading "Solo Leveling Season 2 -Arise from the Shadow-" [level=5] [ref=f10e1034]
+        - generic [ref=f10e1057]:
+          - img "AnimeImage" [ref=f10e1058]
+          - link "The fifth story arc of the long-running JoJo's Bizarre Adventure series. Giorno Giovanna, a young man living in Naples, has the blood of DIO -- the ...":
+            - /url: /anime/102883
+            - paragraph [ref=f10e1060] [cursor=pointer]: The fifth story arc of the long-running JoJo's Bizarre Adventure series. Giorno Giovanna, a young man living in Naples, has the blood of DIO -- the ...
+          - 'heading "JoJo''s Bizarre Adventure: Golden Wind" [level=5] [ref=f10e1062]'
+        - generic [ref=f10e1064]:
+          - img "AnimeImage" [ref=f10e1065]
+          - link "Tomoya is a bitter, third year high school student. His mother passed away, causing his father to resort to alcohol and gambling. Tomoya is distant wi...":
+            - /url: /anime/2167
+            - paragraph [ref=f10e1067] [cursor=pointer]: Tomoya is a bitter, third year high school student. His mother passed away, causing his father to resort to alcohol and gambling. Tomoya is distant wi...
+          - heading "Clannad" [level=5] [ref=f10e1069]
+        - generic [ref=f10e1071]:
+          - img "AnimeImage" [ref=f10e1072]
+          - link "It all began as a fighting tournament to seek out for the best fighter among all high school students in Korea. Mori Jin, a Taekwondo specialist and a...":
+            - /url: /anime/116006
+            - paragraph [ref=f10e1074] [cursor=pointer]: It all began as a fighting tournament to seek out for the best fighter among all high school students in Korea. Mori Jin, a Taekwondo specialist and a...
+          - heading "The God of High School" [level=5] [ref=f10e1076]

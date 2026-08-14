@@ -1,0 +1,18 @@
+- generic [ref=f5e3]:
+  - navigation [ref=f5e4]:
+    - link [ref=f5e6] [cursor=pointer]:
+      - /url: /
+      - img "Big Logo" [ref=f5e7]
+  - generic [ref=f5e10]:
+    - generic [ref=f5e11]:
+      - button "Search" [ref=f5e12] [cursor=pointer]
+      - button "Browse" [ref=f5e13] [cursor=pointer]
+      - button "For You" [active] [ref=f5e14] [cursor=pointer]
+    - generic [ref=f5e206]:
+      - paragraph [ref=f5e207]: Today's pick
+      - generic [ref=f5e208]:
+        - 'heading "Attack on Titan: No Regrets" [level=2] [ref=f5e209]'
+        - img "anime pic" [ref=f5e210]
+      - generic [ref=f5e211]:
+        - button "Shuffle" [ref=f5e212] [cursor=pointer]
+        - button "More Details" [ref=f5e213] [cursor=pointer]

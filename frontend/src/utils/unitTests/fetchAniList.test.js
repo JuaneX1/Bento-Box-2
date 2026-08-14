@@ -19,6 +19,11 @@ const RAW_MEDIA = {
     episodes: 12,
     averageScore: 85,
     trailer: { id: 'abc123', site: 'youtube' },
+    genres: ['Action', 'Comedy'],
+    status: 'FINISHED',
+    duration: 24,
+    format: 'TV',
+    studios: { nodes: [{ name: 'Test Studio' }] },
 };
 
 describe('fetchAniList normalization', () => {
@@ -44,6 +49,11 @@ describe('fetchAniList normalization', () => {
             episodes: 12,
             score: 8.5,
             trailer: { url: 'https://www.youtube.com/watch?v=abc123' },
+            genres: ['Action', 'Comedy'],
+            status: 'FINISHED',
+            duration: 24,
+            format: 'TV',
+            studio: 'Test Studio',
         });
     });
 

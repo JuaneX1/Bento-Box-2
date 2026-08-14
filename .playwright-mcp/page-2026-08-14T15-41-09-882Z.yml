@@ -1,0 +1,159 @@
+- generic [ref=f5e3]:
+  - navigation [ref=f5e4]:
+    - link [ref=f5e6] [cursor=pointer]:
+      - /url: /
+      - img "Big Logo" [ref=f5e7]
+  - generic [ref=f5e10]:
+    - generic [ref=f5e11]:
+      - button "Search" [ref=f5e12] [cursor=pointer]
+      - button "Browse" [ref=f5e13] [cursor=pointer]
+      - button "For You" [ref=f5e14] [cursor=pointer]
+    - generic [ref=f5e16]:
+      - generic [ref=f5e18]:
+        - textbox "Search anime..." [ref=f5e19]
+        - button "Search" [ref=f5e20] [cursor=pointer]
+      - main [ref=f5e34]:
+        - generic [ref=f5e36]:
+          - img "AnimeImage" [ref=f5e37]
+          - link "The adventure is over but life goes on for an elf mage just beginning to learn what living is all about. Elf mage Frieren and her courageous fellow ad...":
+            - /url: /anime/154587
+            - paragraph [ref=f5e39] [cursor=pointer]: The adventure is over but life goes on for an elf mage just beginning to learn what living is all about. Elf mage Frieren and her courageous fellow ad...
+          - 'heading "Frieren: Beyond Journey’s End" [level=5] [ref=f5e41]'
+        - generic [ref=f5e43]:
+          - img "AnimeImage" [ref=f5e44]
+          - 'link "Gintama: THE FINAL is the 3rd and final film adaptation of the remainder of the Silver Soul arc and is the series finale. Two years have passed fol..."':
+            - /url: /anime/114129
+            - paragraph [ref=f5e46] [cursor=pointer]: "Gintama: THE FINAL is the 3rd and final film adaptation of the remainder of the Silver Soul arc and is the series finale. Two years have passed fol..."
+          - 'heading "Gintama: THE VERY FINAL" [level=5] [ref=f5e48]'
+        - generic [ref=f5e50]:
+          - img "AnimeImage" [ref=f5e51]
+          - link "Gintoki, Shinpachi, and Kagura return as the fun-loving but broke members of the Yorozuya team! Living in an alternate-reality Edo, where swords are p...":
+            - /url: /anime/20996
+            - paragraph [ref=f5e53] [cursor=pointer]: Gintoki, Shinpachi, and Kagura return as the fun-loving but broke members of the Yorozuya team! Living in an alternate-reality Edo, where swords are p...
+          - heading "Gintama Season 3" [level=5] [ref=f5e55]
+        - generic [ref=f5e57]:
+          - img "AnimeImage" [ref=f5e58]
+          - link "Theatrical follow-up to Chainsaw Man. Denji became “Chainsaw Man”, a boy with a devil’s heart, and is now part of Special Division 4’s devil hunters...":
+            - /url: /anime/171627
+            - paragraph [ref=f5e60] [cursor=pointer]: Theatrical follow-up to Chainsaw Man. Denji became “Chainsaw Man”, a boy with a devil’s heart, and is now part of Special Division 4’s devil hunters...
+          - 'heading "Chainsaw Man – The Movie: Reze Arc" [level=5] [ref=f5e62]'
+        - generic [ref=f5e64]:
+          - img "AnimeImage" [ref=f5e65]
+          - link "\"In order for something to be obtained, something of equal value must be lost.\" Alchemy is bound by this Law of Equivalent Exchange—something the y...":
+            - /url: /anime/5114
+            - paragraph [ref=f5e67] [cursor=pointer]: "\"In order for something to be obtained, something of equal value must be lost.\" Alchemy is bound by this Law of Equivalent Exchange—something the y..."
+          - 'heading "Fullmetal Alchemist: Brotherhood" [level=5] [ref=f5e69]'
+        - generic [ref=f5e71]:
+          - img "AnimeImage" [ref=f5e72]
+          - link "The fourth season of Re:Zero kara Hajimeru Isekai Seikatsu. To save his stricken allies, Subaru faces a deadly desert to find the Sage at Pleiades ...":
+            - /url: /anime/189046
+            - paragraph [ref=f5e74] [cursor=pointer]: The fourth season of Re:Zero kara Hajimeru Isekai Seikatsu. To save his stricken allies, Subaru faces a deadly desert to find the Sage at Pleiades ...
+          - heading "Re:ZERO -Starting Life in Another World- Season 4" [level=5] [ref=f5e76]
+        - generic [ref=f5e78]:
+          - img "AnimeImage" [ref=f5e79]
+          - 'link "To commemorate the 25th anniversary of the ONE PIECE TV anime: an animated adaptation of the \"ONE PIECE novel: Mugiwara Stories\". Two years after ..."':
+            - /url: /anime/182469
+            - paragraph [ref=f5e81] [cursor=pointer]: "To commemorate the 25th anniversary of the ONE PIECE TV anime: an animated adaptation of the \"ONE PIECE novel: Mugiwara Stories\". Two years after ..."
+          - heading "ONE PIECE FAN LETTER" [level=5] [ref=f5e83]
+        - generic [ref=f5e85]:
+          - img "AnimeImage" [ref=f5e86]
+          - link "The battle to retake Wall Maria begins now! With Eren’s new hardening ability, the Scouts are confident they can seal the wall and take back Shiganshi...":
+            - /url: /anime/104578
+            - paragraph [ref=f5e88] [cursor=pointer]: The battle to retake Wall Maria begins now! With Eren’s new hardening ability, the Scouts are confident they can seal the wall and take back Shiganshi...
+          - heading "Attack on Titan Season 3 Part 2" [level=5] [ref=f5e90]
+        - generic [ref=f5e92]:
+          - img "AnimeImage" [ref=f5e93]
+          - link "After last season’s revelations, the Soma family moves forward, but the emotional chains that bind them are not easily broken. Unable to admit why she...":
+            - /url: /anime/124194
+            - paragraph [ref=f5e95] [cursor=pointer]: After last season’s revelations, the Soma family moves forward, but the emotional chains that bind them are not easily broken. Unable to admit why she...
+          - heading "Fruits Basket The Final Season" [level=5] [ref=f5e97]
+        - generic [ref=f5e99]:
+          - img "AnimeImage" [ref=f5e100]
+          - link "A new adaption of the manga of the same name by Togashi Yoshihiro. A Hunter is one who travels the world doing all sorts of dangerous tasks. From ca...":
+            - /url: /anime/11061
+            - paragraph [ref=f5e102] [cursor=pointer]: A new adaption of the manga of the same name by Togashi Yoshihiro. A Hunter is one who travels the world doing all sorts of dangerous tasks. From ca...
+          - heading "Hunter x Hunter (2011)" [level=5] [ref=f5e104]
+        - generic [ref=f5e106]:
+          - img "AnimeImage" [ref=f5e107]
+          - link "Self-proclaimed mad scientist Okabe Rintarou lives in a small room in Akihabara, where he invents \"future gadgets\" with fellow lab members Shiina Mayu...":
+            - /url: /anime/9253
+            - paragraph [ref=f5e109] [cursor=pointer]: Self-proclaimed mad scientist Okabe Rintarou lives in a small room in Akihabara, where he invents "future gadgets" with fellow lab members Shiina Mayu...
+          - heading "Steins;Gate" [level=5] [ref=f5e111]
+        - generic [ref=f5e113]:
+          - img "AnimeImage" [ref=f5e114]
+          - link "Third and “Final Season” of the Monogatari Series, part 4/5. Contains the arcs Mayoi Hell, Hitagi Rendezvous, and Ougi Dark from the Owarimonogatari l...":
+            - /url: /anime/21745
+            - paragraph [ref=f5e116] [cursor=pointer]: Third and “Final Season” of the Monogatari Series, part 4/5. Contains the arcs Mayoi Hell, Hitagi Rendezvous, and Ougi Dark from the Owarimonogatari l...
+          - heading "Owarimonogatari Second Season" [level=5] [ref=f5e118]
+        - generic [ref=f5e120]:
+          - img "AnimeImage" [ref=f5e121]
+          - 'link "While Gintoki Sakata was away, the Yorozuya found themselves a new leader: Kintoki, Gintoki''s golden-haired doppelganger. In order to regain his forme..."':
+            - /url: /anime/15417
+            - paragraph [ref=f5e123] [cursor=pointer]: "While Gintoki Sakata was away, the Yorozuya found themselves a new leader: Kintoki, Gintoki's golden-haired doppelganger. In order to regain his forme..."
+          - heading "Gintama Season 2 Part 2" [level=5] [ref=f5e125]
+        - generic [ref=f5e127]:
+          - img "AnimeImage" [ref=f5e128]
+          - link "The second season of 3-gatsu no Lion. Now in his second year of high school, Rei Kiriyama continues pushing through his struggles in the profession...":
+            - /url: /anime/98478
+            - paragraph [ref=f5e130] [cursor=pointer]: The second season of 3-gatsu no Lion. Now in his second year of high school, Rei Kiriyama continues pushing through his struggles in the profession...
+          - heading "March comes in like a lion Season 2" [level=5] [ref=f5e132]
+        - generic [ref=f5e134]:
+          - img "AnimeImage" [ref=f5e135]
+          - 'link "After a one-year hiatus, Shinpachi Shimura returns to Edo, only to stumble upon a shocking surprise: Gintoki and Kagura, his fellow Yorozuya members, ..."':
+            - /url: /anime/9969
+            - paragraph [ref=f5e137] [cursor=pointer]: "After a one-year hiatus, Shinpachi Shimura returns to Edo, only to stumble upon a shocking surprise: Gintoki and Kagura, his fellow Yorozuya members, ..."
+          - heading "Gintama Season 2" [level=5] [ref=f5e139]
+        - generic [ref=f5e141]:
+          - img "AnimeImage" [ref=f5e142]
+          - link "The elite members of Shuchiin Academy's student council continue their competitive day-to-day antics. Council president Miyuki Shirogane clashes daily...":
+            - /url: /anime/125367
+            - paragraph [ref=f5e144] [cursor=pointer]: The elite members of Shuchiin Academy's student council continue their competitive day-to-day antics. Council president Miyuki Shirogane clashes daily...
+          - 'heading "Kaguya-sama: Love is War -Ultra Romantic-" [level=5] [ref=f5e146]'
+        - generic [ref=f5e148]:
+          - img "AnimeImage" [ref=f5e149]
+          - link "After joining the resistance against the bakufu, Gintoki and the gang are in hiding, along with Katsura and his Joui rebels. The Yorozuya is soon appr...":
+            - /url: /anime/97889
+            - paragraph [ref=f5e151] [cursor=pointer]: After joining the resistance against the bakufu, Gintoki and the gang are in hiding, along with Katsura and his Joui rebels. The Yorozuya is soon appr...
+          - heading "Gintama Season 4" [level=5] [ref=f5e153]
+        - generic [ref=f5e155]:
+          - img "AnimeImage" [ref=f5e156]
+          - link "Yabuki Joe is left downhearted and hopeless after a certain tragic event. In attempt to put the past behind him, Joe leaves the gym behind and begins ...":
+            - /url: /anime/2921
+            - paragraph [ref=f5e158] [cursor=pointer]: Yabuki Joe is left downhearted and hopeless after a certain tragic event. In attempt to put the past behind him, Joe leaves the gym behind and begins ...
+          - heading "Tomorrow's Joe 2" [level=5] [ref=f5e160]
+        - generic [ref=f5e162]:
+          - img "AnimeImage" [ref=f5e163]
+          - link "Using her wit and vast knowledge of medicines and poisons alike, Maomao played a pivotal role in solving a series of mysteries and conspiracies that p...":
+            - /url: /anime/176301
+            - paragraph [ref=f5e165] [cursor=pointer]: Using her wit and vast knowledge of medicines and poisons alike, Maomao played a pivotal role in solving a series of mysteries and conspiracies that p...
+          - heading "The Apothecary Diaries Season 2" [level=5] [ref=f5e167]
+        - generic [ref=f5e169]:
+          - img "AnimeImage" [ref=f5e170]
+          - link "Was it all just a coincidence, or was it inevitable? Ichigo Kurosaki gained the powers of a Soul Reaper through a chance encounter. As a Substitute...":
+            - /url: /anime/116674
+            - paragraph [ref=f5e172] [cursor=pointer]: Was it all just a coincidence, or was it inevitable? Ichigo Kurosaki gained the powers of a Soul Reaper through a chance encounter. As a Substitute...
+          - 'heading "BLEACH: Thousand-Year Blood War" [level=5] [ref=f5e174]'
+        - generic [ref=f5e176]:
+          - img "AnimeImage" [ref=f5e177]
+          - link "For decades, the Galactic Empire has been locked in an interstellar war with the Free Planets Alliance, a conflict that involves thousands of spaceshi...":
+            - /url: /anime/820
+            - paragraph [ref=f5e179] [cursor=pointer]: For decades, the Galactic Empire has been locked in an interstellar war with the Free Planets Alliance, a conflict that involves thousands of spaceshi...
+          - heading "Legend of the Galactic Heroes" [level=5] [ref=f5e181]
+        - generic [ref=f5e183]:
+          - img "AnimeImage" [ref=f5e184]
+          - link "The beginning of the seventh story arc in the long-running JoJo's Bizarre Adventure series. It’s 1890, in America, the Steel Ball Run — the first h...":
+            - /url: /anime/190327
+            - paragraph [ref=f5e186] [cursor=pointer]: The beginning of the seventh story arc in the long-running JoJo's Bizarre Adventure series. It’s 1890, in America, the Steel Ball Run — the first h...
+          - heading "STEEL BALL RUN JoJo's Bizarre Adventure 1st STAGE" [level=5] [ref=f5e188]
+        - generic [ref=f5e190]:
+          - img "AnimeImage" [ref=f5e191]
+          - link "The second season of Vinland Saga. After his father's death and the destruction of his village at the hands of English raiders, Einar wishes for a ...":
+            - /url: /anime/136430
+            - paragraph [ref=f5e193] [cursor=pointer]: The second season of Vinland Saga. After his father's death and the destruction of his village at the hands of English raiders, Einar wishes for a ...
+          - heading "Vinland Saga Season 2" [level=5] [ref=f5e195]
+        - generic [ref=f5e197]:
+          - img "AnimeImage" [ref=f5e198]
+          - 'link "The fourth and final part of BLEACH: Sennen Kessen-hen. Destruction looms at the end of the Thousand-Year Blood War between the Soul Reapers and Q..."':
+            - /url: /anime/185874
+            - paragraph [ref=f5e200] [cursor=pointer]: "The fourth and final part of BLEACH: Sennen Kessen-hen. Destruction looms at the end of the Thousand-Year Blood War between the Soul Reapers and Q..."
+          - 'heading "BLEACH: Thousand-Year Blood War - The Calamity" [level=5] [ref=f5e202]'

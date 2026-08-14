@@ -1,0 +1,157 @@
+- generic [ref=f9e3]:
+  - navigation [ref=f9e4]:
+    - link [ref=f9e6] [cursor=pointer]:
+      - /url: /
+      - img "Big Logo" [ref=f9e7]
+  - generic [ref=f9e10]:
+    - generic [ref=f9e11]:
+      - button "Search" [ref=f9e12] [cursor=pointer]
+      - button "Browse" [ref=f9e13] [cursor=pointer]
+      - button "For You" [ref=f9e14] [cursor=pointer]
+    - generic [ref=f9e16]:
+      - textbox "Search anime..." [active] [ref=f9e19]: death
+      - main [ref=f9e528]:
+        - generic [ref=f9e530]:
+          - img "AnimeImage" [ref=f9e531]
+          - link "Light Yagami is a genius high school student who is about to learn about life through a book of death. When a bored shinigami, a God of Death, named R...":
+            - /url: /anime/1535
+            - paragraph [ref=f9e533] [cursor=pointer]: Light Yagami is a genius high school student who is about to learn about life through a book of death. When a bored shinigami, a God of Death, named R...
+          - heading "Death Note" [level=5] [ref=f9e535]
+        - generic [ref=f9e537]:
+          - img "AnimeImage" [ref=f9e538]
+          - link "The second season of Jujutsu Kaisen. The past comes to light when second-year students Satoru Gojou and Suguru Getou are tasked with escorting youn...":
+            - /url: /anime/145064
+            - paragraph [ref=f9e540] [cursor=pointer]: The second season of Jujutsu Kaisen. The past comes to light when second-year students Satoru Gojou and Suguru Getou are tasked with escorting youn...
+          - heading "JUJUTSU KAISEN Season 2" [level=5] [ref=f9e542]
+        - generic [ref=f9e544]:
+          - img "AnimeImage" [ref=f9e545]
+          - link "When two people die at the same time, they’re sent to a place that’s neither heaven nor hell—a lavish bar between worlds where the stakes are high and...":
+            - /url: /anime/20931
+            - paragraph [ref=f9e547] [cursor=pointer]: When two people die at the same time, they’re sent to a place that’s neither heaven nor hell—a lavish bar between worlds where the stakes are high and...
+          - heading "Death Parade" [level=5] [ref=f9e549]
+        - generic [ref=f9e551]:
+          - img "AnimeImage" [ref=f9e552]
+          - link "13-year old Rachel awakens to find herself trapped in the basement of an abandoned building. Without any memories, or even a clue as to where she coul...":
+            - /url: /anime/99629
+            - paragraph [ref=f9e554] [cursor=pointer]: 13-year old Rachel awakens to find herself trapped in the basement of an abandoned building. Without any memories, or even a clue as to where she coul...
+          - heading "Angels of Death" [level=5] [ref=f9e556]
+        - generic [ref=f9e558]:
+          - img "AnimeImage" [ref=f9e559]
+          - link "The story of the light novel series and manga follows a 29-year-old programmer who is on a \"death march,\" but one day he wakes up in another world aft...":
+            - /url: /anime/97907
+            - paragraph [ref=f9e561] [cursor=pointer]: The story of the light novel series and manga follows a 29-year-old programmer who is on a "death march," but one day he wakes up in another world aft...
+          - heading "Death March to the Parallel World Rhapsody" [level=5] [ref=f9e563]
+        - generic [ref=f9e565]:
+          - img "AnimeImage" [ref=f9e566]
+          - link "As a legendary hero nears victory against a necromancer known as The Corpse God, things take an unexpected turn with the dark sorcerer’s final gambit—...":
+            - /url: /anime/157198
+            - paragraph [ref=f9e568] [cursor=pointer]: As a legendary hero nears victory against a necromancer known as The Corpse God, things take an unexpected turn with the dark sorcerer’s final gambit—...
+          - heading "Dead Mount Death Play" [level=5] [ref=f9e570]
+        - generic [ref=f9e572]:
+          - img "AnimeImage" [ref=f9e573]
+          - link "How can you fall in love when you can’t even hold hands? Due to a childhood curse, anything that the Duke touches will die—which makes his flirty maid...":
+            - /url: /anime/129277
+            - paragraph [ref=f9e575] [cursor=pointer]: How can you fall in love when you can’t even hold hands? Due to a childhood curse, anything that the Duke touches will die—which makes his flirty maid...
+          - heading "The Duke of Death and His Maid" [level=5] [ref=f9e577]
+        - generic [ref=f9e579]:
+          - img "AnimeImage" [ref=f9e580]
+          - link "Yogiri Takatou missed out on a few things while napping during a school trip... mainly how his entire class got transported to another world and how a...":
+            - /url: /anime/158028
+            - paragraph [ref=f9e582] [cursor=pointer]: Yogiri Takatou missed out on a few things while napping during a school trip... mainly how his entire class got transported to another world and how a...
+          - heading "My Instant Death Ability is Overpowered" [level=5] [ref=f9e584]
+        - generic [ref=f9e586]:
+          - img "AnimeImage" [ref=f9e587]
+          - link "Two men have just arrived at a location known as Quindecim and are unable to remember how they got there. They are immediately greeted by a young woma...":
+            - /url: /anime/14353
+            - paragraph [ref=f9e589] [cursor=pointer]: Two men have just arrived at a location known as Quindecim and are unable to remember how they got there. They are immediately greeted by a young woma...
+          - heading "Death Billiards" [level=5] [ref=f9e591]
+        - generic [ref=f9e593]:
+          - img "AnimeImage" [ref=f9e594]
+          - link "Compilation recap movie for the series Shin Seiki Evangelion. Due to the struggling production of the movie 'End of Evangelion' delaying the film a mo...":
+            - /url: /anime/31
+            - paragraph [ref=f9e596] [cursor=pointer]: Compilation recap movie for the series Shin Seiki Evangelion. Due to the struggling production of the movie 'End of Evangelion' delaying the film a mo...
+          - 'heading "Neon Genesis Evangelion: Death & Rebirth" [level=5] [ref=f9e598]'
+        - generic [ref=f9e600]:
+          - img "AnimeImage" [ref=f9e601]
+          - link "At just seventeen, Yuki is a professional death game player. She’s survived enough rounds to know that survival is calculation, not luck—and that fail...":
+            - /url: /anime/180746
+            - paragraph [ref=f9e603] [cursor=pointer]: At just seventeen, Yuki is a professional death game player. She’s survived enough rounds to know that survival is calculation, not luck—and that fail...
+          - 'heading "SHIBOYUGI: Playing Death Games to Put Food on the Table" [level=5] [ref=f9e605]'
+        - generic [ref=f9e607]:
+          - img "AnimeImage" [ref=f9e608]
+          - link "The second cour of Dead Mount Death Play. Polka Shinoyama's life takes a dramatic turn after being forced to use his magical powers in public. His ...":
+            - /url: /anime/162803
+            - paragraph [ref=f9e610] [cursor=pointer]: The second cour of Dead Mount Death Play. Polka Shinoyama's life takes a dramatic turn after being forced to use his magical powers in public. His ...
+          - heading "Dead Mount Death Play Part 2" [level=5] [ref=f9e612]
+        - generic [ref=f9e614]:
+          - img "AnimeImage" [ref=f9e615]
+          - link "The second season of Shinigami Bocchan to Kuro Maid. The duke, full of love and kindness, treads carefully around every living being, be it a tende...":
+            - /url: /anime/139435
+            - paragraph [ref=f9e617] [cursor=pointer]: The second season of Shinigami Bocchan to Kuro Maid. The duke, full of love and kindness, treads carefully around every living being, be it a tende...
+          - heading "The Duke of Death and His Maid Season 2" [level=5] [ref=f9e619]
+        - generic [ref=f9e621]:
+          - img "AnimeImage" [ref=f9e622]
+          - link "Two damaged warriors wear the scars of a twisted and violent past. Bitter rivals for the secrets of their master's sword and the right to his daughter...":
+            - /url: /anime/2216
+            - paragraph [ref=f9e624] [cursor=pointer]: Two damaged warriors wear the scars of a twisted and violent past. Bitter rivals for the secrets of their master's sword and the right to his daughter...
+          - 'heading "Shigurui: Death Frenzy" [level=5] [ref=f9e626]'
+        - generic [ref=f9e628]:
+          - img "AnimeImage" [ref=f9e629]
+          - link "On Meg’s seventeenth birthday, she learns that she only has one year left to live. Her mentor—the Eternal Witch, Faust—explains that she is cursed and...":
+            - /url: /anime/178701
+            - paragraph [ref=f9e631] [cursor=pointer]: On Meg’s seventeenth birthday, she learns that she only has one year left to live. Her mentor—the Eternal Witch, Faust—explains that she is cursed and...
+          - heading "Once Upon a Witch's Death" [level=5] [ref=f9e633]
+        - generic [ref=f9e635]:
+          - img "AnimeImage" [ref=f9e636]
+          - link "\"The strongest duo—A youth they can never return to.\" Recompilation film of Jujutsu Kaisen 2nd Season's \"Kaigyoku・Gyokusetsu\" (Hidden Inventory / P...":
+            - /url: /anime/192809
+            - paragraph [ref=f9e638] [cursor=pointer]: "\"The strongest duo—A youth they can never return to.\" Recompilation film of Jujutsu Kaisen 2nd Season's \"Kaigyoku・Gyokusetsu\" (Hidden Inventory / P..."
+          - 'heading "JUJUTSU KAISEN: Hidden Inventory / Premature Death – The Movie" [level=5] [ref=f9e640]'
+        - generic [ref=f9e642]:
+          - img "AnimeImage" [ref=f9e643]
+          - link "The third season of Shinigami Bocchan to Kuro Maid. The Duke and Alice will have their fates collide as their untouchable relationship comes to it...":
+            - /url: /anime/169584
+            - paragraph [ref=f9e645] [cursor=pointer]: The third season of Shinigami Bocchan to Kuro Maid. The Duke and Alice will have their fates collide as their untouchable relationship comes to it...
+          - heading "The Duke of Death and His Maid Season 3" [level=5] [ref=f9e647]
+        - generic [ref=f9e649]:
+          - img "AnimeImage" [ref=f9e650]
+          - 'link "Third cour of Bishoujo Senshi Sailor Moon: Crystal. The new season will assemble all 10 Senshi — specifically, the popular outer Senshi such as Sai..."':
+            - /url: /anime/21462
+            - paragraph [ref=f9e652] [cursor=pointer]: "Third cour of Bishoujo Senshi Sailor Moon: Crystal. The new season will assemble all 10 Senshi — specifically, the popular outer Senshi such as Sai..."
+          - 'heading "Pretty Guardian Sailor Moon Crystal: Season 3" [level=5] [ref=f9e654]'
+        - generic [ref=f9e656]:
+          - img "AnimeImage" [ref=f9e657]
+          - link "Fifth Break Blade Movie.":
+            - /url: /anime/9724
+            - paragraph [ref=f9e659] [cursor=pointer]: Fifth Break Blade Movie.
+          - heading "Broken Blade 5" [level=5] [ref=f9e661]
+        - generic [ref=f9e663]:
+          - img "AnimeImage" [ref=f9e664]
+          - link "A girl wrapped in white, her name is Momo...in her hand lies a blunt yet shiny scythe. By her side is a winged black cat by the name of Daniel. Carryi...":
+            - /url: /anime/789
+            - paragraph [ref=f9e666] [cursor=pointer]: A girl wrapped in white, her name is Momo...in her hand lies a blunt yet shiny scythe. By her side is a winged black cat by the name of Daniel. Carryi...
+          - heading "Momo, the Girl God of Death" [level=5] [ref=f9e668]
+        - generic [ref=f9e670]:
+          - img "AnimeImage" [ref=f9e671]
+          - link "Returning to the Digital World, Taiki and Shoutmon learn that the Bagra Army has taken it over and reformatted the world to have Seven Kingdoms, each ...":
+            - /url: /anime/10444
+            - paragraph [ref=f9e673] [cursor=pointer]: Returning to the Digital World, Taiki and Shoutmon learn that the Bagra Army has taken it over and reformatted the world to have Seven Kingdoms, each ...
+          - 'heading "Digimon Xros Wars: The Evil Death Generals and the Seven Kingdoms" [level=5] [ref=f9e675]'
+        - generic [ref=f9e677]:
+          - img "AnimeImage" [ref=f9e678]
+          - link "D.S.O. agent Leon S. Kennedy is on a mission to rescue Dr. Antonio Taylor from kidnappers, when a mysterious woman thwarts his pursuit. Meanwhile, B.S...":
+            - /url: /anime/161441
+            - paragraph [ref=f9e680] [cursor=pointer]: D.S.O. agent Leon S. Kennedy is on a mission to rescue Dr. Antonio Taylor from kidnappers, when a mysterious woman thwarts his pursuit. Meanwhile, B.S...
+          - 'heading "Resident Evil: Death Island" [level=5] [ref=f9e682]'
+        - generic [ref=f9e684]:
+          - img "AnimeImage" [ref=f9e685]
+          - link "A sequel to Death March Kara Hajimaru Isekai Kyousoukyoku.":
+            - /url: /anime/184376
+            - paragraph [ref=f9e687] [cursor=pointer]: A sequel to Death March Kara Hajimaru Isekai Kyousoukyoku.
+          - heading "Death March Kara Hajimaru Isekai Kyousoukyoku (Zoku-hen)" [level=5] [ref=f9e689]
+        - generic [ref=f9e691]:
+          - img "AnimeImage" [ref=f9e692]
+          - link "An animated film describing the bullying of a Japanese child.":
+            - /url: /anime/7273
+            - paragraph [ref=f9e694] [cursor=pointer]: An animated film describing the bullying of a Japanese child.
+          - heading "The Death Lullaby" [level=5] [ref=f9e696]

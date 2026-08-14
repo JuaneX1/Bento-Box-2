@@ -1,0 +1,13 @@
+- generic [ref=f8e3]:
+  - navigation [ref=f8e4]:
+    - link [ref=f8e6] [cursor=pointer]:
+      - /url: /
+      - img "Big Logo" [ref=f8e7]
+  - generic [ref=f8e10]:
+    - generic [ref=f8e11]:
+      - button "Search" [ref=f8e12] [cursor=pointer]
+      - button "Browse" [ref=f8e13] [cursor=pointer]
+      - button "For You" [ref=f8e14] [cursor=pointer]
+    - generic [ref=f8e16]:
+      - textbox "Search anime..." [ref=f8e19]
+      - main [ref=f8e20]

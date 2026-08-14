@@ -1,16 +1,333 @@
-@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,600;0,700;0,800;0,900;1,700&family=Sora:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
 
-/* Custom fonts for headings */
-h1, h2, h3 {
-  font-family: 'Kanit';
-  font-weight: bold;
+:root {
+  --void: #0A0E13;
+  --ink: #111920;
+  --ink-raised: #17222B;
+  --blue: #2E77AE;
+  --blue-shade: #1B4965;
+  --blue-tint: #6BA9D6;
+  --cheek: #E9E6E1;
+  --cheek-dim: #A9AEB4;
+  --red: #EF4136;
+
+  --font-display: 'Kanit', sans-serif;
+  --font-body: 'Sora', sans-serif;
+  --font-mono: 'Space Mono', monospace;
 }
 
-/* AnimeCards Hover */
+body {
+  background-color: var(--void);
+  font-family: var(--font-body);
+  color: var(--cheek);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+
+a {
+  color: var(--blue-tint);
+}
+
+/* Eyebrow / label text used above section headings */
+.tray-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--blue-tint);
+}
+
+/* Divided tray: the shell that holds compartments, with visible interior walls */
+.tray {
+  background-color: var(--ink);
+  border: 1px solid var(--blue-shade);
+  border-radius: 4px;
+}
+
+.tray-divider {
+  border-color: var(--blue-shade) !important;
+}
+
+/* Tray lid tabs used to switch compartments (Search / Browse / For You) */
+.tray-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--blue-shade);
+}
+
+.tray-tab {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--blue-shade);
+  color: var(--cheek-dim);
+  padding: 1rem 1.75rem;
+  cursor: pointer;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.tray-tab:last-child {
+  border-right: none;
+}
+
+.tray-tab:hover,
+.tray-tab:focus-visible {
+  color: var(--cheek);
+  background-color: var(--ink-raised);
+  outline: none;
+}
+
+.tray-tab.is-active {
+  color: var(--void);
+  background-color: var(--blue);
+}
+
+/* Crossfade for compartment content when switching tray tabs */
+.tray-content {
+  animation: compartment-in 0.25s ease both;
+}
+
+/* Anime card: the compartment. Lid (title bar) lifts on hover/focus to reveal synopsis. */
 .anime-card {
-  transition: transform 0.3s ease;
+  position: relative;
+  background-color: var(--ink);
+  border: 1px solid var(--blue-shade);
+  border-radius: 3px;
+  overflow: hidden;
+  min-width: 200px;
+  max-width: 220px;
+  transition: border-color 0.2s ease, transform 0.2s ease;
 }
 
-.anime-card:hover {
-transform: translateY(-15px);
+.anime-card:hover,
+.anime-card:focus-within {
+  border-color: var(--blue-tint);
+  transform: translateY(-4px);
+}
+
+.anime-card .card-img-top {
+  display: block;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+}
+
+.anime-card .card-lid {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--ink);
+  border-top: 1px solid var(--blue-shade);
+  padding: 0.5rem 0.65rem;
+  transition: transform 0.28s ease;
+}
+
+.anime-card:hover .card-lid,
+.anime-card:focus-within .card-lid,
+.anime-card.is-open .card-lid {
+  transform: translateY(100%);
+}
+
+.anime-card .card-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--cheek);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.anime-card .card-synopsis {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(10, 14, 19, 0.94);
+  padding: 0.85rem;
+  opacity: 0;
+  transition: opacity 0.22s ease 0.06s;
+  overflow-y: auto;
+}
+
+.anime-card:hover .card-synopsis,
+.anime-card:focus-within .card-synopsis,
+.anime-card.is-open .card-synopsis {
+  opacity: 1;
+}
+
+.anime-card .card-synopsis p {
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: var(--cheek);
+  margin: 0;
+}
+
+/* Staggered reveal for a grid of compartments as data resolves */
+.compartment-grid .anime-card {
+  animation: compartment-in 0.35s ease both;
+}
+
+@keyframes compartment-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Skeleton placeholder shaped like a compartment, shown while data loads */
+.compartment-skeleton {
+  min-width: 200px;
+  max-width: 220px;
+  aspect-ratio: 2 / 3;
+  border-radius: 3px;
+  background: linear-gradient(100deg, var(--ink) 40%, var(--ink-raised) 50%, var(--ink) 60%);
+  background-size: 250% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  border: 1px solid var(--blue-shade);
+}
+
+@keyframes shimmer {
+  from { background-position: 120% 0; }
+  to { background-position: -20% 0; }
+}
+
+/* Clickable thumbnail in the homepage marquee rail, title revealed on hover/focus as a preview */
+.marquee-thumb {
+  position: relative;
+  display: block;
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  border: 1px solid var(--blue-shade);
+  transition: border-color 0.2s ease;
+}
+
+.marquee-thumb:hover,
+.marquee-thumb:focus-visible {
+  border-color: var(--blue-tint);
+  outline: none;
+}
+
+.marquee-thumb-title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(10, 14, 19, 0.88);
+  color: var(--cheek);
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.35rem 0.4rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.marquee-thumb:hover .marquee-thumb-title,
+.marquee-thumb:focus-visible .marquee-thumb-title {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Continuous seamless marquee for the homepage anime rail */
+.marquee-track {
+  animation: marquee-scroll 40s linear infinite;
+}
+
+.marquee-viewport:hover .marquee-track,
+.marquee-viewport:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+  from { transform: translateY(0); }
+  to { transform: translateY(-50%); }
+}
+
+/* Score count-up ticks a number from 0 to its final value */
+.score-figure {
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+.btn-bento-primary {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  background-color: var(--blue);
+  border: 1px solid var(--blue);
+  color: var(--void);
+  transition: all 0.2s ease;
+}
+
+.btn-bento-primary:hover,
+.btn-bento-primary:focus-visible {
+  background-color: var(--blue-tint);
+  border-color: var(--blue-tint);
+  color: var(--void);
+  transform: scale(1.03);
+}
+
+.btn-bento-outline {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  background-color: transparent;
+  border: 1px solid var(--blue-shade);
+  color: var(--cheek);
+  transition: all 0.2s ease;
+}
+
+.btn-bento-outline:hover,
+.btn-bento-outline:focus-visible {
+  border-color: var(--blue-tint);
+  color: var(--blue-tint);
+}
+
+.btn-bento-accent {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  background-color: var(--red);
+  border: 1px solid var(--red);
+  color: var(--cheek);
+  transition: all 0.2s ease;
+}
+
+.btn-bento-accent:hover,
+.btn-bento-accent:focus-visible {
+  transform: scale(1.03);
+  filter: brightness(1.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .compartment-grid .anime-card,
+  .tray-content,
+  .compartment-skeleton,
+  .marquee-track,
+  .anime-card .card-lid,
+  .anime-card .card-synopsis,
+  .marquee-thumb-title,
+  .btn-bento-primary,
+  .btn-bento-accent {
+    animation: none !important;
+    transition: none !important;
+  }
 }

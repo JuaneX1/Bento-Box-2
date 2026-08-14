@@ -1,0 +1,11 @@
+[     193ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://localhost:3100/static/js/bundle.js:38436
+[   26736ms] [ERROR] WebSocket connection to 'ws://localhost:3100/ws' failed:  @ http://localhost:3100/static/js/bundle.js:46395
+[   27821ms] [ERROR] WebSocket connection to 'ws://localhost:3100/ws' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3100/static/js/bundle.js:46395
+[   29877ms] [ERROR] WebSocket connection to 'ws://localhost:3100/ws' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3100/static/js/bundle.js:46395
+[   33887ms] [ERROR] WebSocket connection to 'ws://localhost:3100/ws' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3100/static/js/bundle.js:46395
+[   41934ms] [ERROR] WebSocket connection to 'ws://localhost:3100/ws' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3100/static/js/bundle.js:46395
+[   57997ms] [ERROR] WebSocket connection to 'ws://localhost:3100/ws' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3100/static/js/bundle.js:46395
+[   90009ms] [ERROR] WebSocket connection to 'ws://localhost:3100/ws' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3100/static/js/bundle.js:46395
+[  154045ms] [ERROR] WebSocket connection to 'ws://localhost:3100/ws' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3100/static/js/bundle.js:46395
+[  282146ms] [ERROR] WebSocket connection to 'ws://localhost:3100/ws' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3100/static/js/bundle.js:46395
+[  538190ms] [ERROR] WebSocket connection to 'ws://localhost:3100/ws' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3100/static/js/bundle.js:46395

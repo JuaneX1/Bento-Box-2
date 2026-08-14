@@ -17,6 +17,15 @@ const MEDIA_FIELDS = `
         id
         site
     }
+    genres
+    status
+    duration
+    format
+    studios(isMain: true) {
+        nodes {
+            name
+        }
+    }
 `;
 
 const SEASON_ORDER = ['WINTER', 'SPRING', 'SUMMER', 'FALL'];
@@ -48,6 +57,11 @@ function normalizeMedia(media) {
         episodes: media.episodes ?? null,
         score: typeof media.averageScore === 'number' ? Math.round(media.averageScore) / 10 : null,
         trailer: { url: buildTrailerUrl(media.trailer) },
+        genres: media.genres || [],
+        status: media.status || null,
+        duration: media.duration ?? null,
+        format: media.format || null,
+        studio: media.studios?.nodes?.[0]?.name || null,
     };
 }
 
@@ -91,6 +105,20 @@ export async function fetchTopAnime(page = 1, perPage = 24) {
     return data.Page.media.map(normalizeMedia);
 }
 
+export async function fetchPopularAnime(page = 1, perPage = 50) {
+    const query = `
+        query ($page: Int, $perPage: Int) {
+            Page(page: $page, perPage: $perPage) {
+                media(type: ANIME, sort: POPULARITY_DESC, isAdult: false) {
+                    ${MEDIA_FIELDS}
+                }
+            }
+        }
+    `;
+    const data = await queryAniList(query, { page, perPage });
+    return data.Page.media.map(normalizeMedia);
+}
+
 export async function fetchSeasonalAnime(season, seasonYear, page = 1, perPage = 24) {
     const query = `
         query ($season: MediaSeason, $seasonYear: Int, $page: Int, $perPage: Int) {
@@ -113,10 +141,9 @@ export async function searchAnime(search, page = 1, perPage = 24) {
                     type: ANIME
                     search: $search
                     format_in: [TV, MOVIE]
-                    source: MANGA
                     genre_not_in: ["Ecchi", "Hentai"]
                     isAdult: false
-                    sort: SEARCH_MATCH
+                    sort: POPULARITY_DESC
                 ) {
                     ${MEDIA_FIELDS}
                 }

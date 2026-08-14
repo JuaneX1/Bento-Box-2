@@ -1,0 +1,204 @@
+- generic [ref=f6e3]:
+  - navigation [ref=f6e4]:
+    - link [ref=f6e5] [cursor=pointer]:
+      - /url: /
+      - img "Big Logo" [ref=f6e6]
+  - generic [ref=f6e9]:
+    - generic [ref=f6e12]:
+      - generic [ref=f6e19]:
+        - 'link "Mushoku Tensei: Jobless Reincarnation Season 3 Mushoku Tensei: Jobless Reincarnation Season 3" [ref=f6e21] [cursor=pointer]':
+          - /url: /anime/178789
+          - 'img "Mushoku Tensei: Jobless Reincarnation Season 3" [ref=f6e22]'
+          - generic [ref=f6e23]: "Mushoku Tensei: Jobless Reincarnation Season 3"
+        - link "Smoking Behind the Supermarket with You Smoking Behind the Supermarket with You" [ref=f6e25] [cursor=pointer]:
+          - /url: /anime/196187
+          - img "Smoking Behind the Supermarket with You" [ref=f6e26]
+          - generic [ref=f6e27]: Smoking Behind the Supermarket with You
+        - link "Saga of Tanya the Evil Season 2 Saga of Tanya the Evil Season 2" [ref=f6e29] [cursor=pointer]:
+          - /url: /anime/135865
+          - img "Saga of Tanya the Evil Season 2" [ref=f6e30]
+          - generic [ref=f6e31]: Saga of Tanya the Evil Season 2
+        - 'link "BLEACH: Thousand-Year Blood War - The Calamity BLEACH: Thousand-Year Blood War - The Calamity" [ref=f6e33] [cursor=pointer]':
+          - /url: /anime/185874
+          - 'img "BLEACH: Thousand-Year Blood War - The Calamity" [ref=f6e34]'
+          - generic [ref=f6e35]: "BLEACH: Thousand-Year Blood War - The Calamity"
+        - link "Chainsmoker Cat Chainsmoker Cat" [ref=f6e37] [cursor=pointer]:
+          - /url: /anime/207141
+          - img "Chainsmoker Cat" [ref=f6e38]
+          - generic [ref=f6e39]: Chainsmoker Cat
+        - link "BLACK TORCH BLACK TORCH" [ref=f6e41] [cursor=pointer]:
+          - /url: /anime/187538
+          - img "BLACK TORCH" [ref=f6e42]
+          - generic [ref=f6e43]: BLACK TORCH
+        - link "The Exiled Heavy Knight Knows How to Game the System The Exiled Heavy Knight Knows How to Game the System" [ref=f6e45] [cursor=pointer]:
+          - /url: /anime/180136
+          - img "The Exiled Heavy Knight Knows How to Game the System" [ref=f6e46]
+          - generic [ref=f6e47]: The Exiled Heavy Knight Knows How to Game the System
+        - link "You and I Are Polar Opposites Season 2 You and I Are Polar Opposites Season 2" [ref=f6e49] [cursor=pointer]:
+          - /url: /anime/210031
+          - img "You and I Are Polar Opposites Season 2" [ref=f6e50]
+          - generic [ref=f6e51]: You and I Are Polar Opposites Season 2
+        - link "Sparks of Tomorrow Sparks of Tomorrow" [ref=f6e53] [cursor=pointer]:
+          - /url: /anime/103303
+          - img "Sparks of Tomorrow" [ref=f6e54]
+          - generic [ref=f6e55]: Sparks of Tomorrow
+        - link "I Want to Love You Till Your Dying Day I Want to Love You Till Your Dying Day" [ref=f6e57] [cursor=pointer]:
+          - /url: /anime/187260
+          - img "I Want to Love You Till Your Dying Day" [ref=f6e58]
+          - generic [ref=f6e59]: I Want to Love You Till Your Dying Day
+        - link "THE GHOST IN THE SHELL THE GHOST IN THE SHELL" [ref=f6e61] [cursor=pointer]:
+          - /url: /anime/177699
+          - img "THE GHOST IN THE SHELL" [ref=f6e62]
+          - generic [ref=f6e63]: THE GHOST IN THE SHELL
+        - 'link "Puella Magi Madoka Magica the Movie -Walpurgisnacht: Rising- Puella Magi Madoka Magica the Movie -Walpurgisnacht: Rising-" [ref=f6e65] [cursor=pointer]':
+          - /url: /anime/133007
+          - 'img "Puella Magi Madoka Magica the Movie -Walpurgisnacht: Rising-" [ref=f6e66]'
+          - generic [ref=f6e67]: "Puella Magi Madoka Magica the Movie -Walpurgisnacht: Rising-"
+        - 'link "Trapped in a Dating Sim: The World of Otome Games is Tough for Mobs Season 2 Trapped in a Dating Sim: The World of Otome Games is Tough for Mobs Season 2" [ref=f6e69] [cursor=pointer]':
+          - /url: /anime/159309
+          - 'img "Trapped in a Dating Sim: The World of Otome Games is Tough for Mobs Season 2" [ref=f6e70]'
+          - generic [ref=f6e71]: "Trapped in a Dating Sim: The World of Otome Games is Tough for Mobs Season 2"
+        - link "Skeleton Knight in Another World Season 2 Skeleton Knight in Another World Season 2" [ref=f6e73] [cursor=pointer]:
+          - /url: /anime/185542
+          - img "Skeleton Knight in Another World Season 2" [ref=f6e74]
+          - generic [ref=f6e75]: Skeleton Knight in Another World Season 2
+        - 'link "From Overshadowed to Overpowered: Second Reincarnation of a Talentless Sage From Overshadowed to Overpowered: Second Reincarnation of a Talentless Sage" [ref=f6e77] [cursor=pointer]':
+          - /url: /anime/208044
+          - 'img "From Overshadowed to Overpowered: Second Reincarnation of a Talentless Sage" [ref=f6e78]'
+          - generic [ref=f6e79]: "From Overshadowed to Overpowered: Second Reincarnation of a Talentless Sage"
+        - link "Clevatess Season 2 Clevatess Season 2" [ref=f6e81] [cursor=pointer]:
+          - /url: /anime/198946
+          - img "Clevatess Season 2" [ref=f6e82]
+          - generic [ref=f6e83]: Clevatess Season 2
+        - link "From Old Country Bumpkin to Master Swordsman II From Old Country Bumpkin to Master Swordsman II" [ref=f6e85] [cursor=pointer]:
+          - /url: /anime/194829
+          - img "From Old Country Bumpkin to Master Swordsman II" [ref=f6e86]
+          - generic [ref=f6e87]: From Old Country Bumpkin to Master Swordsman II
+        - 'link "Jaadugar: A Witch in Mongolia Jaadugar: A Witch in Mongolia" [ref=f6e89] [cursor=pointer]':
+          - /url: /anime/190569
+          - 'img "Jaadugar: A Witch in Mongolia" [ref=f6e90]'
+          - generic [ref=f6e91]: "Jaadugar: A Witch in Mongolia"
+        - link "Grand Blue Dreaming Season 3 Grand Blue Dreaming Season 3" [ref=f6e93] [cursor=pointer]:
+          - /url: /anime/199111
+          - img "Grand Blue Dreaming Season 3" [ref=f6e94]
+          - generic [ref=f6e95]: Grand Blue Dreaming Season 3
+        - 'link "Rich Girl Caretaker: I''m Secretly the Caregiver of the Most Popular Girl in This Rich Kid School Rich Girl Caretaker: I''m Secretly the Caregiver of the Most Popular Girl in This Rich Kid School" [ref=f6e97] [cursor=pointer]':
+          - /url: /anime/201514
+          - 'img "Rich Girl Caretaker: I''m Secretly the Caregiver of the Most Popular Girl in This Rich Kid School" [ref=f6e98]'
+          - generic [ref=f6e99]: "Rich Girl Caretaker: I'm Secretly the Caregiver of the Most Popular Girl in This Rich Kid School"
+        - link "Love Unseen Beneath the Clear Night Sky Love Unseen Beneath the Clear Night Sky" [ref=f6e101] [cursor=pointer]:
+          - /url: /anime/202269
+          - img "Love Unseen Beneath the Clear Night Sky" [ref=f6e102]
+          - generic [ref=f6e103]: Love Unseen Beneath the Clear Night Sky
+        - link "The 100 Girlfriends Who Really, Really, Really, Really, REALLY Love You Season 3 The 100 Girlfriends Who Really, Really, Really, Really, REALLY Love You Season 3" [ref=f6e105] [cursor=pointer]:
+          - /url: /anime/200637
+          - img "The 100 Girlfriends Who Really, Really, Really, Really, REALLY Love You Season 3" [ref=f6e106]
+          - generic [ref=f6e107]: The 100 Girlfriends Who Really, Really, Really, Really, REALLY Love You Season 3
+        - link "I Became a Legend After My 10 Year-Long Last Stand I Became a Legend After My 10 Year-Long Last Stand" [ref=f6e109] [cursor=pointer]:
+          - /url: /anime/199748
+          - img "I Became a Legend After My 10 Year-Long Last Stand" [ref=f6e110]
+          - generic [ref=f6e111]: I Became a Legend After My 10 Year-Long Last Stand
+        - link "Oh Boy, Was I Wrong About Her Oh Boy, Was I Wrong About Her" [ref=f6e113] [cursor=pointer]:
+          - /url: /anime/169583
+          - img "Oh Boy, Was I Wrong About Her" [ref=f6e114]
+          - generic [ref=f6e115]: Oh Boy, Was I Wrong About Her
+      - generic [ref=f6e116]:
+        - 'link "Mushoku Tensei: Jobless Reincarnation Season 3 Mushoku Tensei: Jobless Reincarnation Season 3" [ref=f6e118] [cursor=pointer]':
+          - /url: /anime/178789
+          - 'img "Mushoku Tensei: Jobless Reincarnation Season 3" [ref=f6e119]'
+          - generic [ref=f6e120]: "Mushoku Tensei: Jobless Reincarnation Season 3"
+        - link "Smoking Behind the Supermarket with You Smoking Behind the Supermarket with You" [ref=f6e122] [cursor=pointer]:
+          - /url: /anime/196187
+          - img "Smoking Behind the Supermarket with You" [ref=f6e123]
+          - generic [ref=f6e124]: Smoking Behind the Supermarket with You
+        - link "Saga of Tanya the Evil Season 2 Saga of Tanya the Evil Season 2" [ref=f6e126] [cursor=pointer]:
+          - /url: /anime/135865
+          - img "Saga of Tanya the Evil Season 2" [ref=f6e127]
+          - generic [ref=f6e128]: Saga of Tanya the Evil Season 2
+        - 'link "BLEACH: Thousand-Year Blood War - The Calamity BLEACH: Thousand-Year Blood War - The Calamity" [ref=f6e130] [cursor=pointer]':
+          - /url: /anime/185874
+          - 'img "BLEACH: Thousand-Year Blood War - The Calamity" [ref=f6e131]'
+          - generic [ref=f6e132]: "BLEACH: Thousand-Year Blood War - The Calamity"
+        - link "Chainsmoker Cat Chainsmoker Cat" [ref=f6e134] [cursor=pointer]:
+          - /url: /anime/207141
+          - img "Chainsmoker Cat" [ref=f6e135]
+          - generic [ref=f6e136]: Chainsmoker Cat
+        - link "BLACK TORCH BLACK TORCH" [ref=f6e138] [cursor=pointer]:
+          - /url: /anime/187538
+          - img "BLACK TORCH" [ref=f6e139]
+          - generic [ref=f6e140]: BLACK TORCH
+        - link "The Exiled Heavy Knight Knows How to Game the System The Exiled Heavy Knight Knows How to Game the System" [ref=f6e142] [cursor=pointer]:
+          - /url: /anime/180136
+          - img "The Exiled Heavy Knight Knows How to Game the System" [ref=f6e143]
+          - generic [ref=f6e144]: The Exiled Heavy Knight Knows How to Game the System
+        - link "You and I Are Polar Opposites Season 2 You and I Are Polar Opposites Season 2" [ref=f6e146] [cursor=pointer]:
+          - /url: /anime/210031
+          - img "You and I Are Polar Opposites Season 2" [ref=f6e147]
+          - generic [ref=f6e148]: You and I Are Polar Opposites Season 2
+        - link "Sparks of Tomorrow Sparks of Tomorrow" [ref=f6e150] [cursor=pointer]:
+          - /url: /anime/103303
+          - img "Sparks of Tomorrow" [ref=f6e151]
+          - generic [ref=f6e152]: Sparks of Tomorrow
+        - link "I Want to Love You Till Your Dying Day I Want to Love You Till Your Dying Day" [ref=f6e154] [cursor=pointer]:
+          - /url: /anime/187260
+          - img "I Want to Love You Till Your Dying Day" [ref=f6e155]
+          - generic [ref=f6e156]: I Want to Love You Till Your Dying Day
+        - link "THE GHOST IN THE SHELL THE GHOST IN THE SHELL" [ref=f6e158] [cursor=pointer]:
+          - /url: /anime/177699
+          - img "THE GHOST IN THE SHELL" [ref=f6e159]
+          - generic [ref=f6e160]: THE GHOST IN THE SHELL
+        - 'link "Puella Magi Madoka Magica the Movie -Walpurgisnacht: Rising- Puella Magi Madoka Magica the Movie -Walpurgisnacht: Rising-" [ref=f6e162] [cursor=pointer]':
+          - /url: /anime/133007
+          - 'img "Puella Magi Madoka Magica the Movie -Walpurgisnacht: Rising-" [ref=f6e163]'
+          - generic [ref=f6e164]: "Puella Magi Madoka Magica the Movie -Walpurgisnacht: Rising-"
+        - 'link "Trapped in a Dating Sim: The World of Otome Games is Tough for Mobs Season 2 Trapped in a Dating Sim: The World of Otome Games is Tough for Mobs Season 2" [ref=f6e166] [cursor=pointer]':
+          - /url: /anime/159309
+          - 'img "Trapped in a Dating Sim: The World of Otome Games is Tough for Mobs Season 2" [ref=f6e167]'
+          - generic [ref=f6e168]: "Trapped in a Dating Sim: The World of Otome Games is Tough for Mobs Season 2"
+        - link "Skeleton Knight in Another World Season 2 Skeleton Knight in Another World Season 2" [ref=f6e170] [cursor=pointer]:
+          - /url: /anime/185542
+          - img "Skeleton Knight in Another World Season 2" [ref=f6e171]
+          - generic [ref=f6e172]: Skeleton Knight in Another World Season 2
+        - 'link "From Overshadowed to Overpowered: Second Reincarnation of a Talentless Sage From Overshadowed to Overpowered: Second Reincarnation of a Talentless Sage" [ref=f6e174] [cursor=pointer]':
+          - /url: /anime/208044
+          - 'img "From Overshadowed to Overpowered: Second Reincarnation of a Talentless Sage" [ref=f6e175]'
+          - generic [ref=f6e176]: "From Overshadowed to Overpowered: Second Reincarnation of a Talentless Sage"
+        - link "Clevatess Season 2 Clevatess Season 2" [ref=f6e178] [cursor=pointer]:
+          - /url: /anime/198946
+          - img "Clevatess Season 2" [ref=f6e179]
+          - generic [ref=f6e180]: Clevatess Season 2
+        - link "From Old Country Bumpkin to Master Swordsman II From Old Country Bumpkin to Master Swordsman II" [ref=f6e182] [cursor=pointer]:
+          - /url: /anime/194829
+          - img "From Old Country Bumpkin to Master Swordsman II" [ref=f6e183]
+          - generic [ref=f6e184]: From Old Country Bumpkin to Master Swordsman II
+        - 'link "Jaadugar: A Witch in Mongolia Jaadugar: A Witch in Mongolia" [ref=f6e186] [cursor=pointer]':
+          - /url: /anime/190569
+          - 'img "Jaadugar: A Witch in Mongolia" [ref=f6e187]'
+          - generic [ref=f6e188]: "Jaadugar: A Witch in Mongolia"
+        - link "Grand Blue Dreaming Season 3 Grand Blue Dreaming Season 3" [ref=f6e190] [cursor=pointer]:
+          - /url: /anime/199111
+          - img "Grand Blue Dreaming Season 3" [ref=f6e191]
+          - generic [ref=f6e192]: Grand Blue Dreaming Season 3
+        - 'link "Rich Girl Caretaker: I''m Secretly the Caregiver of the Most Popular Girl in This Rich Kid School Rich Girl Caretaker: I''m Secretly the Caregiver of the Most Popular Girl in This Rich Kid School" [ref=f6e194] [cursor=pointer]':
+          - /url: /anime/201514
+          - 'img "Rich Girl Caretaker: I''m Secretly the Caregiver of the Most Popular Girl in This Rich Kid School" [ref=f6e195]'
+          - generic [ref=f6e196]: "Rich Girl Caretaker: I'm Secretly the Caregiver of the Most Popular Girl in This Rich Kid School"
+        - link "Love Unseen Beneath the Clear Night Sky Love Unseen Beneath the Clear Night Sky" [ref=f6e198] [cursor=pointer]:
+          - /url: /anime/202269
+          - img "Love Unseen Beneath the Clear Night Sky" [ref=f6e199]
+          - generic [ref=f6e200]: Love Unseen Beneath the Clear Night Sky
+        - link "The 100 Girlfriends Who Really, Really, Really, Really, REALLY Love You Season 3 The 100 Girlfriends Who Really, Really, Really, Really, REALLY Love You Season 3" [ref=f6e202] [cursor=pointer]:
+          - /url: /anime/200637
+          - img "The 100 Girlfriends Who Really, Really, Really, Really, REALLY Love You Season 3" [ref=f6e203]
+          - generic [ref=f6e204]: The 100 Girlfriends Who Really, Really, Really, Really, REALLY Love You Season 3
+        - link "I Became a Legend After My 10 Year-Long Last Stand I Became a Legend After My 10 Year-Long Last Stand" [ref=f6e206] [cursor=pointer]:
+          - /url: /anime/199748
+          - img "I Became a Legend After My 10 Year-Long Last Stand" [ref=f6e207]
+          - generic [ref=f6e208]: I Became a Legend After My 10 Year-Long Last Stand
+        - link "Oh Boy, Was I Wrong About Her Oh Boy, Was I Wrong About Her" [ref=f6e210] [cursor=pointer]:
+          - /url: /anime/169583
+          - img "Oh Boy, Was I Wrong About Her" [ref=f6e211]
+          - generic [ref=f6e212]: Oh Boy, Was I Wrong About Her
+    - generic [ref=f6e16]:
+      - img "Big Logo" [ref=f6e17]
+      - button "Enter Site" [ref=f6e18] [cursor=pointer]

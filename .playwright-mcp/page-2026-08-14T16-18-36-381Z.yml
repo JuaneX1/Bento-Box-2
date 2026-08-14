@@ -1,0 +1,37 @@
+- generic [ref=f10e3]:
+  - navigation [ref=f10e4]:
+    - link [ref=f10e6] [cursor=pointer]:
+      - /url: /
+      - img "Big Logo" [ref=f10e7]
+  - generic [ref=f10e10]:
+    - generic [ref=f10e11]:
+      - button "Search" [ref=f10e12] [cursor=pointer]
+      - button "Browse" [ref=f10e13] [cursor=pointer]
+      - button "For You" [ref=f10e14] [cursor=pointer]
+    - generic [ref=f10e16]:
+      - textbox "Search anime..." [active] [ref=f10e19]: dea
+      - main [ref=f10e33]:
+        - generic [ref=f10e56]:
+          - img "AnimeImage" [ref=f10e57]
+          - link "Light Yagami is a genius high school student who is about to learn about life through a book of death. When a bored shinigami, a God of Death, named R...":
+            - /url: /anime/1535
+            - paragraph [ref=f10e59] [cursor=pointer]: Light Yagami is a genius high school student who is about to learn about life through a book of death. When a bored shinigami, a God of Death, named R...
+          - heading "Death Note" [level=5] [ref=f10e61]
+        - generic [ref=f10e434]:
+          - img "AnimeImage" [ref=f10e435]
+          - link "When two people die at the same time, they’re sent to a place that’s neither heaven nor hell—a lavish bar between worlds where the stakes are high and...":
+            - /url: /anime/20931
+            - paragraph [ref=f10e437] [cursor=pointer]: When two people die at the same time, they’re sent to a place that’s neither heaven nor hell—a lavish bar between worlds where the stakes are high and...
+          - heading "Death Parade" [level=5] [ref=f10e439]
+        - generic [ref=f10e336]:
+          - img "AnimeImage" [ref=f10e337]
+          - link "When they were accused of trying to overthrow the monarchy, the feared warriors the Seven Deadly Sins were sent into exile. Princess Elizabeth discove...":
+            - /url: /anime/20789
+            - paragraph [ref=f10e339] [cursor=pointer]: When they were accused of trying to overthrow the monarchy, the feared warriors the Seven Deadly Sins were sent into exile. Princess Elizabeth discove...
+          - heading "The Seven Deadly Sins" [level=5] [ref=f10e341]
+        - generic [ref=f10e1085]:
+          - img "AnimeImage" [ref=f10e1086]
+          - link "Eris is the goddess of chaos and uses the body of Elien, who is a friend of Hyoga, to revive herself. She obtains the golden apple to drain Athena's l...":
+            - /url: /anime/1256
+            - paragraph [ref=f10e1088] [cursor=pointer]: Eris is the goddess of chaos and uses the body of Elien, who is a friend of Hyoga, to revive herself. She obtains the golden apple to drain Athena's l...
+          - 'heading "Saint Seiya: Evil Goddess Eris" [level=5] [ref=f10e1090]'

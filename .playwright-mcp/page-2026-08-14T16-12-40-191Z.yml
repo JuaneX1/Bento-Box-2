@@ -1,0 +1,109 @@
+- generic [ref=f9e3]:
+  - navigation [ref=f9e4]:
+    - link [ref=f9e6] [cursor=pointer]:
+      - /url: /
+      - img "Big Logo" [ref=f9e7]
+  - generic [ref=f9e10]:
+    - generic [ref=f9e11]:
+      - button "Search" [ref=f9e12] [cursor=pointer]
+      - button "Browse" [ref=f9e13] [cursor=pointer]
+      - button "For You" [ref=f9e14] [cursor=pointer]
+    - generic [ref=f9e698]:
+      - textbox "Search anime..." [active] [ref=f9e701]: naruto
+      - main [ref=f9e702]:
+        - generic [ref=f9e704]:
+          - img "AnimeImage" [ref=f9e705]
+          - link "Naruto Uzumaki, a hyperactive and knuckle-headed ninja, lives in Konohagakure, the Hidden Leaf village. Moments prior to his birth, a huge demon known...":
+            - /url: /anime/20
+            - paragraph [ref=f9e707] [cursor=pointer]: Naruto Uzumaki, a hyperactive and knuckle-headed ninja, lives in Konohagakure, the Hidden Leaf village. Moments prior to his birth, a huge demon known...
+          - heading "Naruto" [level=5] [ref=f9e709]
+        - generic [ref=f9e711]:
+          - img "AnimeImage" [ref=f9e712]
+          - 'link "Naruto: Shippuuden is the continuation of the original animated TV series Naruto. The story revolves around an older and slightly more matured Uzumaki..."':
+            - /url: /anime/1735
+            - paragraph [ref=f9e714] [cursor=pointer]: "Naruto: Shippuuden is the continuation of the original animated TV series Naruto. The story revolves around an older and slightly more matured Uzumaki..."
+          - 'heading "Naruto: Shippuden" [level=5] [ref=f9e716]'
+        - generic [ref=f9e718]:
+          - img "AnimeImage" [ref=f9e719]
+          - link "Naruto was a young shinobi with an incorrigible knack for mischief. He achieved his dream to become the greatest ninja in the village and his face sit...":
+            - /url: /anime/97938
+            - paragraph [ref=f9e721] [cursor=pointer]: Naruto was a young shinobi with an incorrigible knack for mischief. He achieved his dream to become the greatest ninja in the village and his face sit...
+          - 'heading "Boruto: Naruto Next Generations" [level=5] [ref=f9e723]'
+        - generic [ref=f9e725]:
+          - img "AnimeImage" [ref=f9e726]
+          - link "The moon is beginning to fall, and at the rate it's going, it is doomed to fall on the Earth. The countdown for the survival of the planet begins. Amo...":
+            - /url: /anime/16870
+            - paragraph [ref=f9e728] [cursor=pointer]: The moon is beginning to fall, and at the rate it's going, it is doomed to fall on the Earth. The countdown for the survival of the planet begins. Amo...
+          - 'heading "The Last: Naruto the Movie" [level=5] [ref=f9e730]'
+        - generic [ref=f9e732]:
+          - img "AnimeImage" [ref=f9e733]
+          - link "Boruto is the son of Naruto who completely rejects his father. Behind this, he has feelings of wanting to surpass Naruto, who is respected as a hero. ...":
+            - /url: /anime/21220
+            - paragraph [ref=f9e735] [cursor=pointer]: Boruto is the son of Naruto who completely rejects his father. Behind this, he has feelings of wanting to surpass Naruto, who is respected as a hero. ...
+          - 'heading "Boruto: Naruto the Movie" [level=5] [ref=f9e737]'
+        - generic [ref=f9e739]:
+          - img "AnimeImage" [ref=f9e740]
+          - link "Naruto and his friends are trapped in a Genjutsu created by the mysterious Masked Shinobi who is testing it for a greater plan. In this new world, or ...":
+            - /url: /anime/13667
+            - paragraph [ref=f9e742] [cursor=pointer]: Naruto and his friends are trapped in a Genjutsu created by the mysterious Masked Shinobi who is testing it for a greater plan. In this new world, or ...
+          - 'heading "Road to Ninja: Naruto the Movie" [level=5] [ref=f9e744]'
+        - generic [ref=f9e746]:
+          - img "AnimeImage" [ref=f9e747]
+          - link "Demons that once almost destroyed the world, are revived by someone. To prevent the world from being destroyed, the demon has to be sealed and the onl...":
+            - /url: /anime/2472
+            - paragraph [ref=f9e749] [cursor=pointer]: Demons that once almost destroyed the world, are revived by someone. To prevent the world from being destroyed, the demon has to be sealed and the onl...
+          - heading "Naruto Shippuden the Movie" [level=5] [ref=f9e751]
+        - generic [ref=f9e753]:
+          - img "AnimeImage" [ref=f9e754]
+          - link "After being captured for attempting to assassinate the leader of Kumogakure, the Raikage, and killing Jounin from Kirigakure and Iwagakure, Naruto is ...":
+            - /url: /anime/10589
+            - paragraph [ref=f9e756] [cursor=pointer]: After being captured for attempting to assassinate the leader of Kumogakure, the Raikage, and killing Jounin from Kirigakure and Iwagakure, Naruto is ...
+          - 'heading "Naruto Shippuden the Movie: Blood Prison" [level=5] [ref=f9e758]'
+        - generic [ref=f9e760]:
+          - img "AnimeImage" [ref=f9e761]
+          - link "Assigned on a mission to capture Mukade, a missing-nin, Naruto Uzumaki sets out for the once glorious historic ruins of \"Ouran\", where he pursues and ...":
+            - /url: /anime/8246
+            - paragraph [ref=f9e763] [cursor=pointer]: Assigned on a mission to capture Mukade, a missing-nin, Naruto Uzumaki sets out for the once glorious historic ruins of "Ouran", where he pursues and ...
+          - 'heading "Naruto Shippuden the Movie: The Lost Tower" [level=5] [ref=f9e765]'
+        - generic [ref=f9e767]:
+          - img "AnimeImage" [ref=f9e768]
+          - link "A mysterious group of ninjas makes a surprise attack on the Konohagakure, which takes great damage. The nightmare of another Shinobi World War could b...":
+            - /url: /anime/4437
+            - paragraph [ref=f9e770] [cursor=pointer]: A mysterious group of ninjas makes a surprise attack on the Konohagakure, which takes great damage. The nightmare of another Shinobi World War could b...
+          - 'heading "Naruto Shippuden the Movie: Bonds" [level=5] [ref=f9e772]'
+        - generic [ref=f9e774]:
+          - img "AnimeImage" [ref=f9e775]
+          - link "Ninjas with bloodline limits begin disappearing in all the countries and blame points toward the fire nation. By Tsunade's order, Kakashi is sacrifice...":
+            - /url: /anime/6325
+            - paragraph [ref=f9e777] [cursor=pointer]: Ninjas with bloodline limits begin disappearing in all the countries and blame points toward the fire nation. By Tsunade's order, Kakashi is sacrifice...
+          - 'heading "Naruto Shippuden the Movie: The Will of Fire" [level=5] [ref=f9e779]'
+        - generic [ref=f9e781]:
+          - img "AnimeImage" [ref=f9e782]
+          - link "Naruto, Shikamaru, and Sakura are executing their mission of delivering a lost pet to a certain village. However, right in the midst of things, troops...":
+            - /url: /anime/936
+            - paragraph [ref=f9e784] [cursor=pointer]: Naruto, Shikamaru, and Sakura are executing their mission of delivering a lost pet to a certain village. However, right in the midst of things, troops...
+          - 'heading "Naruto the Movie: Legend of the Stone of Gelel" [level=5] [ref=f9e786]'
+        - generic [ref=f9e788]:
+          - img "AnimeImage" [ref=f9e789]
+          - link "Led by Kakashi Hatake, Naruto Uzumaki, Sakura Haruno, and Rock Lee are tasked to escort the extravagant Prince Michiru Tsuki and his spoiled son Hikar...":
+            - /url: /anime/2144
+            - paragraph [ref=f9e791] [cursor=pointer]: Led by Kakashi Hatake, Naruto Uzumaki, Sakura Haruno, and Rock Lee are tasked to escort the extravagant Prince Michiru Tsuki and his spoiled son Hikar...
+          - 'heading "Naruto the Movie: Guardians of the Crescent Moon Kingdom" [level=5] [ref=f9e793]'
+        - generic [ref=f9e795]:
+          - img "AnimeImage" [ref=f9e796]
+          - 'link "Naruto faces off against his old pupil Konohamaru in a tournament during the chuunin entrance exams. Note: Screened together with NARUTO: Blood Pri..."':
+            - /url: /anime/10686
+            - paragraph [ref=f9e798] [cursor=pointer]: "Naruto faces off against his old pupil Konohamaru in a tournament during the chuunin entrance exams. Note: Screened together with NARUTO: Blood Pri..."
+          - 'heading "NARUTO: Honoo no Chuunin Shiken! Naruto vs Konohamaru!!" [level=5] [ref=f9e800]'
+        - generic [ref=f9e802]:
+          - img "AnimeImage" [ref=f9e803]
+          - 'link "The official website for the NARUTO anime franchise announced a new anime project: to air four \"brand-new\" episodes to celebrate the TV anime''s 20th a..."':
+            - /url: /anime/162561
+            - paragraph [ref=f9e805] [cursor=pointer]: "The official website for the NARUTO anime franchise announced a new anime project: to air four \"brand-new\" episodes to celebrate the TV anime's 20th a..."
+          - heading "NARUTO (Shinsaku Anime)" [level=5] [ref=f9e807]
+        - generic [ref=f9e809]:
+          - img "AnimeImage" [ref=f9e810]
+          - 'link "The second part of BORUTO: NARUTO NEXT GENERATIONS."':
+            - /url: /anime/165523
+            - paragraph [ref=f9e812] [cursor=pointer]: "The second part of BORUTO: NARUTO NEXT GENERATIONS."
+          - 'heading "BORUTO: NARUTO NEXT GENERATIONS Part 2" [level=5] [ref=f9e814]'
